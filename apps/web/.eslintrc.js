@@ -10,5 +10,6 @@ module.exports = {
 		next: {
 			rootDir: 'apps/web/'
 		}
-	}
+	},
+	ignorePatterns: ['postcss.config.js', 'next.config.js'],
 };

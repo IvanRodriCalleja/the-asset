@@ -1,0 +1,51 @@
+{
+  "name": "@theasset/style-system",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./css": {
+      "types": "./generated/css/index.d.ts",
+      "require": "./generated/css/index.js",
+      "import": "./generated/css/index.js"
+    },
+    "./tokens": {
+      "types": "./generated/tokens/index.d.ts",
+      "require": "./generated/tokens/index.js",
+      "import": "./generated/tokens/index.js"
+    },
+    "./types": {
+      "types": "./generated/types/index.d.ts",
+      "require": "./generated/types/index.js",
+      "import": "./generated/types/index.js"
+    },
+    "./patterns": {
+      "types": "./generated/patterns/index.d.ts",
+      "require": "./generated/patterns/index.js",
+      "import": "./generated/patterns/index.js"
+    },
+    "./recipes": {
+      "types": "./generated/recipes/index.d.ts",
+      "require": "./generated/recipes/index.js",
+      "import": "./generated/recipes/index.js"
+    },
+    "./jsx": {
+      "types": "./generated/jsx/index.d.ts",
+      "require": "./generated/jsx/index.js",
+      "import": "./generated/jsx/index.js"
+    },
+    "./global.css": "./global.css"
+  },
+  "scripts": {
+    "tsc": "tsc",
+    "generate:panda": "panda codegen",
+    "prepare": "yarn generate:panda",
+    "postinstall": "yarn generate:panda"
+  },
+  "devDependencies": {
+    "@pandacss/dev": "^0.41.0",
+    "@types/node": "20.14.10"
+  },
+  "dependencies": {
+    "@shadow-panda/preset": "^0.7.1"
+  }
+}

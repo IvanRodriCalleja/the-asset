@@ -6,6 +6,8 @@ import { LocaleParam } from '@theasset/internationalization/domain';
 import { useLocale } from '@theasset/internationalization/hooks';
 import { I18nProvider } from '@theasset/internationalization/ui';
 
+import '@theasset/style-system/global.css';
+
 const geistSans = localFont({
 	src: '../fonts/GeistVF.woff',
 	variable: '--font-geist-sans'
