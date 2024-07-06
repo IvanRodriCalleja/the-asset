@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@theasset/eslint-config": "*",
+    "@theasset/internationalization": "*",
     "@theasset/typescript-config": "*",
     "typescript": "^5",
     "@types/node": "^20",

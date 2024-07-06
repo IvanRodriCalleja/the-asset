@@ -1,0 +1,31 @@
+{
+  "name": "@theasset/internationalization",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./config": "./src/config.ts",
+    "./domain": "./src/domain/index.ts",
+    "./hooks": "./src/hooks/index.ts",
+    "./server": "./src/server/index.ts",
+    "./ui": "./src/ui/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint src --ext .ts,.tsx --quiet --cache",
+    "tsc": "tsc"
+  },
+  "devDependencies": {
+    "@theasset/eslint-config": "*",
+    "@theasset/typescript-config": "*",
+    "@types/negotiator": "0.6.3",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@formatjs/intl-localematcher": "0.5.4",
+    "negotiator": "^0.6.3",
+    "react": "19.0.0-rc-f994737d14-20240522",
+    "next": "15.0.0-rc.0",
+    "server-only": "0.0.1"
+  }
+}
