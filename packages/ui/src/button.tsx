@@ -23,7 +23,7 @@ const StyledButton = styled('button', {
 			outline: '2px solid transparent',
 			outlineOffset: '2px',
 			focusRingWidth: '2',
-			focusRingColor: 'ringFocus',
+			focusRingColor: 'ring',
 			focusRingOffsetWidth: '2'
 		},
 

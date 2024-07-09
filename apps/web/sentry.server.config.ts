@@ -11,8 +11,9 @@ Sentry.init({
 	tracesSampleRate: 1,
 
 	// Setting this option to true will print useful information to the console while you're setting up Sentry.
-	debug: false
+	debug: false,
 
 	// Uncomment the line below to enable Spotlight (https://spotlightjs.com)
 	// spotlight: process.env.NODE_ENV === 'development',
+	enabled: process.env.NODE_ENV === 'production'
 });

@@ -36,16 +36,17 @@
     "./global.css": "./global.css"
   },
   "scripts": {
+    "lint": "eslint src --ext .ts,.tsx --quiet --cache",
     "tsc": "tsc",
     "generate:panda": "panda codegen",
     "prepare": "yarn generate:panda",
     "postinstall": "yarn generate:panda"
   },
   "devDependencies": {
+
+    "@theasset/eslint-config": "*",
+    "@theasset/typescript-config": "*",
     "@pandacss/dev": "^0.41.0",
     "@types/node": "20.14.10"
-  },
-  "dependencies": {
-    "@shadow-panda/preset": "^0.7.1"
   }
 }
