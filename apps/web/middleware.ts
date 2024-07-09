@@ -7,5 +7,5 @@ const comeraiMiddleware = (request: NextRequest) => i18nMiddleware(request, i18n
 export default comeraiMiddleware;
 
 export const config = {
-	matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)']
+	matcher: ['/((?!api|monitoring|_next/static|_next/image|favicon.ico).*)']
 };
