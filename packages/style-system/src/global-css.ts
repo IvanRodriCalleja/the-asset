@@ -5,12 +5,21 @@ export const globalCss = defineGlobalStyles({
 		MozOsxFontSmoothing: 'grayscale',
 		textRendering: 'optimizeLegibility',
 		WebkitFontSmoothing: 'antialiased',
-		WebkitTextSizeAdjust: '100%'
+		WebkitTextSizeAdjust: '100%',
+		tabSize: 4,
+		fontFamily: 'sans',
+		fontFeatureSettings: 'normal',
+		fontVariationSettings: 'normal',
+		'-webkit-tap-highlight-color': 'transparent',
+
+		'@supports (font-synthesis-weight:none)': {
+			fontSynthesis: 'initial',
+			fontSynthesisWeight: 'none'
+		}
 	},
 	body: {
 		bg: 'background',
-		color: 'foreground',
-		fontFamily: 'sans'
+		color: 'foreground'
 	},
 	button: {
 		color: 'inherit',

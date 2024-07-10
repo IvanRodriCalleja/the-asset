@@ -4,9 +4,10 @@ import { PropsWithChildren, useRef } from 'react';
 import { useButton, AriaButtonProps } from '@react-aria/button';
 
 import { styled } from '@theasset/style-system/jsx';
+import { cva } from '@theasset/style-system/css';
 import { StyledVariantProps } from '@theasset/style-system/types';
 
-const StyledButton = styled('button', {
+export const buttonRecipe = cva({
 	base: {
 		display: 'inline-flex',
 		alignItems: 'center',
@@ -110,9 +111,11 @@ const StyledButton = styled('button', {
 	}
 });
 
-type ButtonVariants = StyledVariantProps<typeof StyledButton> & AriaButtonProps;
+const StyledButton = styled('button', buttonRecipe);
 
-type ButtonProps = ButtonVariants;
+export type ButtonVariant = StyledVariantProps<typeof StyledButton> & AriaButtonProps;
+
+type ButtonProps = ButtonVariant;
 
 export const Button = ({ children, ...props }: PropsWithChildren<ButtonProps>) => {
 	const ref = useRef<HTMLButtonElement>(null);

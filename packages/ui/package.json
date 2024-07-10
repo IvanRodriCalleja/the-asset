@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./button": "./src/button.tsx"
+    "./button": "./src/batton.tsx",
+    "./next/link": "./src/next/link.tsx"
   },
   "scripts": {
     "lint": "eslint src --ext .ts,.tsx --quiet --cache",
@@ -11,6 +12,7 @@
   },
   "devDependencies": {
     "@theasset/eslint-config": "*",
+    "@theasset/internationalization": "*",
     "@theasset/typescript-config": "*",
     "@theasset/style-system": "*",
     "@turbo/gen": "^1.12.4",

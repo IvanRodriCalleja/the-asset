@@ -8,11 +8,11 @@ import { I18nProvider } from '@theasset/internationalization/ui';
 
 import '@theasset/style-system/global.css';
 
-const geistSans = localFont({
+const GeistSans = localFont({
 	src: '../fonts/GeistVF.woff',
 	variable: '--font-geist-sans'
 });
-const geistMono = localFont({
+const GeistMono = localFont({
 	src: '../fonts/GeistMonoVF.woff',
 	variable: '--font-geist-mono'
 });
@@ -26,7 +26,7 @@ const RootLayout = async ({ children, params: { lang } }: PropsWithChildren<Loca
 	const locales = await useLocale();
 
 	return (
-		<html lang={lang} className={`${geistSans.className} ${geistMono.className}`}>
+		<html lang={lang} className={`${GeistSans.variable} ${GeistMono.variable}`}>
 			<I18nProvider locales={locales} currentLanguage={lang}>
 				<body>{children}</body>
 			</I18nProvider>

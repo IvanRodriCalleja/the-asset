@@ -129,6 +129,12 @@ export const semanticTokens = defineSemanticTokens({
 				base: '{colors.primary}',
 				_dark: '{colors.primary}'
 			}
+		},
+		textClear: {
+			value: {
+				base: 'rgb(102, 102, 102)',
+				_dark: 'rgb(136, 136, 136)'
+			}
 		}
 	},
 	borders: {

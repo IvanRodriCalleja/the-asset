@@ -1,6 +1,7 @@
 {
   "extends": "@theasset/typescript-config/nextjs.json",
   "compilerOptions": {
+    "baseUrl": ".",
     "plugins": [
       {
         "name": "next"
@@ -8,6 +9,7 @@
     ]
   },
   "include": [
+    "./types/svgr.d.ts",
     "next-env.d.ts",
     "next.config.js",
     "**/*.ts",
