@@ -18,7 +18,7 @@ export const globalCss = defineGlobalStyles({
 		}
 	},
 	body: {
-		bg: 'background',
+		background: 'hsl(0 0% 98% / 1)',
 		color: 'foreground'
 	},
 	button: {

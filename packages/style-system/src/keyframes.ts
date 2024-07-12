@@ -22,5 +22,13 @@ export const keyframes = defineKeyframes({
 	'accordion-up': {
 		from: { height: 'var(--radix-accordion-content-height)' },
 		to: { height: 0 }
+	},
+	spin: {
+		'0%': {
+			transform: 'translate(-50%, -50%) rotate(1turn)'
+		},
+		'100%': {
+			transform: 'translate(-50%, -50%) rotate(0)'
+		}
 	}
 });

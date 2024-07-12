@@ -5,7 +5,7 @@ import { PropsWithChildren, forwardRef } from 'react';
 import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 
 import { useDynamicSegments } from '../../utils/useDynamicSegments';
-import { type ButtonVariant, buttonRecipe } from '../batton';
+import { type ButtonVariant, buttonRecipe } from '../Button';
 
 import { styled } from '@theasset/style-system/jsx';
 

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./button": "./src/batton.tsx",
+    "./button": "./src/Button.tsx",
     "./next/link": "./src/next/link.tsx"
   },
   "scripts": {
