@@ -35,7 +35,7 @@ export const buttonRecipe = cva({
 	},
 	variants: {
 		variant: {
-			default: {
+			primary: {
 				bg: 'primary',
 				color: 'primary.foreground',
 
@@ -106,7 +106,7 @@ export const buttonRecipe = cva({
 		}
 	},
 	defaultVariants: {
-		variant: 'default',
+		variant: 'primary',
 		size: 'default'
 	}
 });
@@ -121,5 +121,11 @@ export const Button = ({ children, ...props }: PropsWithChildren<ButtonProps>) =
 	const ref = useRef<HTMLButtonElement>(null);
 	const { buttonProps } = useButton(props, ref);
 
-	return <StyledButton {...buttonProps}>{children}</StyledButton>;
+	const { size, variant } = props;
+
+	return (
+		<StyledButton {...buttonProps} size={size} variant={variant}>
+			{children}
+		</StyledButton>
+	);
 };

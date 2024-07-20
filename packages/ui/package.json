@@ -3,8 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    "./badge": "./src/Badge.tsx",
     "./button": "./src/Button.tsx",
-    "./next/link": "./src/next/link.tsx"
+    "./card": "./src/Card.tsx",
+    "./file-picker": "./src/form/FilePicker.tsx",
+    "./skeleton": "./src/Skeleton.tsx",
+    "./tooltip": "./src/Tooltip.tsx",
+    "./next/link": "./src/next/link.tsx",
+    "./pdf/thumbnail": "./src/pdf/Thumbnail.tsx"
   },
   "scripts": {
     "lint": "eslint src --ext .ts,.tsx --quiet --cache",
@@ -13,17 +19,21 @@
   "devDependencies": {
     "@theasset/eslint-config": "*",
     "@theasset/internationalization": "*",
-    "@theasset/typescript-config": "*",
     "@theasset/style-system": "*",
+    "@theasset/typescript-config": "*",
     "@turbo/gen": "^1.12.4",
-    "@types/node": "^20.11.24",
     "@types/eslint": "^8.56.5",
+    "@types/node": "^20.11.24",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8.57.0",
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "react": "19.0.0-rc-f994737d14-20240522"
+    "@radix-ui/react-tooltip": "^1.1.2",
+    "@react-types/shared": "^3.23.1",
+    "@theasset/cache": "*",
+    "react": "19.0.0-rc-f994737d14-20240522",
+    "react-dropzone": "^14.2.3"
   }
 }

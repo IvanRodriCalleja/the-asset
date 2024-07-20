@@ -1,0 +1,23 @@
+{
+  "name": "@theasset/pdf",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./thumbnail": "./src/thumbnail/index.ts",
+    "./document": "./src/document/index.ts"
+  },
+  "scripts": {
+    "lint": "eslint src --ext .ts,.tsx --quiet --cache",
+    "tsc": "tsc"
+  },
+  "devDependencies": {
+    "@theasset/eslint-config": "*",
+    "@theasset/typescript-config": "*",
+    "@types/eslint": "^8.56.5",
+    "eslint": "^8.57.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "pdfjs-dist": "^4.4.168"
+  }
+}

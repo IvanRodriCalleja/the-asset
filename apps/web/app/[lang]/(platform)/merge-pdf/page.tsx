@@ -1,3 +1,5 @@
-const MergePdf = () => {};
+import { MergePdf } from 'modules/pdf/MergePdf';
 
-export default MergePdf;
+const MergePdfPage = () => <MergePdf />;
+
+export default MergePdfPage;

@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@sentry/nextjs": "^8",
+    "@theasset/pdf": "*",
+    "@theasset/pdf-react": "*",
     "@theasset/ui": "*",
     "next": "15.0.0-rc.0",
     "react": "19.0.0-rc-f994737d14-20240522",

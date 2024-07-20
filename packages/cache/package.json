@@ -1,0 +1,23 @@
+{
+  "name": "@theasset/cache",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./useCache": "./src/useCache.ts"
+  },
+  "scripts": {
+    "lint": "eslint src --ext .ts,.tsx --quiet --cache",
+    "tsc": "tsc"
+  },
+  "devDependencies": {
+    "@theasset/eslint-config": "*",
+    "@theasset/typescript-config": "*",
+    "@types/eslint": "^8.56.5",
+    "@types/react": "^18",
+    "eslint": "^8.57.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "react": "19.0.0-rc-f994737d14-20240522"
+  }
+}
