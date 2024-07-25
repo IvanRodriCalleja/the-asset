@@ -1,7 +1,7 @@
-import { useSyncExternalStore, useCallback } from 'react';
+import { useSyncExternalStore } from 'react';
 
 type CacheEntry<T> = {
-	promise: Promise<void>;
+	promise?: Promise<void>;
 	result?: T;
 	error?: unknown;
 };
@@ -11,62 +11,55 @@ type Cache = {
 };
 
 const cache: Cache = {};
-const listeners: { [key: string]: Set<() => void> } = {};
+let listeners: (() => void)[] = [];
 
-function getCacheValue<T>(key: string): T | undefined {
-	return cache[key]?.result as T | undefined;
-}
-
-function subscribe(key: string, callback: () => void) {
-	if (!listeners[key]) {
-		listeners[key] = new Set();
+export const cacheStore = {
+	addEntry(key: string, value: CacheEntry<unknown>) {
+		cache[key] = value;
+		emitChange();
+	},
+	subscribe(listener: () => void) {
+		listeners = [...listeners, listener];
+		return () => {
+			listeners = listeners.filter(l => l !== listener);
+		};
+	},
+	getSnapshot() {
+		return cache;
 	}
-	listeners[key].add(callback);
-	return () => {
-		listeners[key]!.delete(callback);
-	};
-}
+};
 
-function notify(key: string) {
-	if (listeners[key]) {
-		for (const callback of listeners[key]) {
-			callback();
-		}
+function emitChange() {
+	for (const listener of listeners) {
+		listener();
 	}
 }
 
 export function useCache<T>(key: string, asyncFunction: () => Promise<T>): T {
-	const getSnapshot = useCallback(() => getCacheValue<T>(key), [key]);
+	const cache = useSyncExternalStore(cacheStore.subscribe, cacheStore.getSnapshot);
+	const state = cache[key] as CacheEntry<T> | undefined;
 
-	const state = useSyncExternalStore(
-		callback => subscribe(key, callback),
-		getSnapshot,
-		getSnapshot
-	);
+	console.log({ state });
 
-	if (state !== undefined) {
-		return state;
+	if (state?.result !== undefined) {
+		return state.result;
 	}
 
-	if (!cache[key]) {
+	if (!state) {
 		const promise = asyncFunction()
 			.then(result => {
-				// @ts-expect-error
-				cache[key] = { ...cache[key], result };
-				notify(key);
+				cacheStore.addEntry(key, { result });
 			})
 			.catch(error => {
-				// @ts-expect-error
-				cache[key] = { ...cache[key], error };
-				notify(key);
+				cacheStore.addEntry(key, { error });
 			});
 
-		cache[key] = { promise };
+		cacheStore.addEntry(key, { promise });
 	}
 
-	if (cache[key].error) {
-		throw cache[key].error;
+	if (state?.error) {
+		throw state.error;
 	}
 
-	throw cache[key].promise;
+	throw state!.promise;
 }

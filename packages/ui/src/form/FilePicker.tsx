@@ -1,6 +1,6 @@
 'use client';
 
-import { PropsWithChildren, ReactNode } from 'react';
+import { Dispatch, PropsWithChildren, ReactNode, SetStateAction } from 'react';
 
 import { Accept, useDropzone } from 'react-dropzone';
 import { Box, Stack, styled } from '@theasset/style-system/jsx';
@@ -37,15 +37,16 @@ export type TheAssetFileItem<T> = {
 	metadata: T;
 };
 
-type FilePickerChildrenProps<T> = {
+type FilePickerPreviewProps<T> = {
 	files: TheAssetFileItem<T>[];
+	setFiles: Dispatch<SetStateAction<TheAssetFileItem<T>[]>>;
 };
 
 interface FilePickerProps<T extends FileMetadata = FileMetadata> {
 	buttonText: string;
 	accept?: Accept;
 	metadata: T;
-	preview(props: FilePickerChildrenProps<T>): ReactNode;
+	preview(props: FilePickerPreviewProps<T>): ReactNode;
 }
 
 export type FileMetadata = Record<string, unknown>;
@@ -56,8 +57,8 @@ export const FilePicker = <T extends FileMetadata>({
 	children,
 	metadata,
 	preview
-}: PropsWithChildren<FilePickerProps>) => {
-	const { files, onChange } = useFilePickerState<T>(metadata as T);
+}: PropsWithChildren<FilePickerProps<T>>) => {
+	const { files, onChange, setFiles } = useFilePickerState<T>(metadata as T);
 
 	const { getRootProps, getInputProps, open, isDragAccept, isDragReject } = useDropzone({
 		accept,
@@ -65,11 +66,13 @@ export const FilePicker = <T extends FileMetadata>({
 		onDropAccepted: onChange
 	});
 
+	const hasFiles = files.length > 0;
+
 	return (
 		<DropZoneArea {...getRootProps()}>
 			{(isDragAccept || isDragReject) && <DragOverlay />}
 			<Stack>
-				{children}
+				{!hasFiles && children}
 				{files.length === 0 && (
 					<Box display="flex" justifyContent="center">
 						<Button size="lg" onPress={open}>
@@ -77,7 +80,7 @@ export const FilePicker = <T extends FileMetadata>({
 						</Button>
 					</Box>
 				)}
-				{files.length > 0 && preview({ files })}
+				{files.length > 0 && preview({ files, setFiles })}
 			</Stack>
 			<input {...getInputProps()} />
 		</DropZoneArea>

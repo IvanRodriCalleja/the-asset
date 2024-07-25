@@ -1,17 +1,10 @@
 {
-  "name": "@theasset/ui",
+  "name": "@theasset/utilities-react",
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./badge": "./src/Badge.tsx",
-    "./button": "./src/Button.tsx",
-    "./card": "./src/Card.tsx",
-    "./file-picker": "./src/form/FilePicker.tsx",
-    "./skeleton": "./src/Skeleton.tsx",
-    "./sortable": "./src/Sortable.tsx",
-    "./tooltip": "./src/Tooltip.tsx",
-    "./next/link": "./src/next/link.tsx",
-    "./pdf/thumbnail": "./src/pdf/Thumbnail.tsx"
+    "./compose-refs": "./src/compose-refs.ts",
+    "./useMediaQuery": "./src/useMediaQuery.ts"
   },
   "scripts": {
     "lint": "eslint src --ext .ts,.tsx --quiet --cache",

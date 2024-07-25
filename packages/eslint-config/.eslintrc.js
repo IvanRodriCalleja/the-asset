@@ -4,7 +4,7 @@ const project = resolve(process.cwd(), 'tsconfig.json');
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
 	root: true,
-	plugins: ['eslint-plugin-json'],
+	plugins: ['eslint-plugin-json', 'eslint-plugin-react-compiler'],
 	extends: ['plugin:@typescript-eslint/recommended', 'prettier', 'plugin:prettier/recommended'],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
@@ -28,6 +28,7 @@ module.exports = {
 		RequestInit: true
 	},
 	rules: {
+		'react-compiler/react-compiler': "error",
 		'no-console': 0,
 		'no-debugger': 0,
 		'typescript/no-type-alias': 0,

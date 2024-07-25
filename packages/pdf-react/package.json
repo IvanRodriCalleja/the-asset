@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
-    "./thumbnail": "./src/Thumbnail.tsx"
+    "./thumbnail": "./src/thumbnail/index.ts"
   },
   "scripts": {
     "lint": "eslint src --ext .ts,.tsx --quiet --cache",
@@ -19,6 +19,8 @@
   "dependencies": {
     "@theasset/cache": "*",
     "@theasset/pdf": "*",
-    "@theasset/ui": "*"
+    "@theasset/ui": "*",
+    "lucide-react": "^0.414.0",
+    "react": "19.0.0-rc-f994737d14-20240522"
   }
 }

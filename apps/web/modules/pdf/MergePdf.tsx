@@ -1,23 +1,23 @@
 'use client';
 
 import { MainSection } from 'modules/shared/ui/MainSection';
-import { FilePicker, type TheAssetFileItem } from '@theasset/ui/file-picker';
-import { Thumbnail } from '@theasset/pdf-react/thumbnail';
+import { FilePicker } from '@theasset/ui/file-picker';
 
 import { SectionGradient } from 'modules/shared/ui/SectionGradient';
 import { styled } from '@theasset/style-system/jsx';
 
+import { FilePreview } from 'modules/shared/ui/FilePreview';
+import { PdfMergeMetadata } from '@theasset/pdf';
+
 const UploadSection = styled('section', {
 	base: {
 		position: 'relative',
-		display: 'flex',
-		flexDirection: 'column',
+		display: 'block',
 		width: 'full',
-		height: 'calc(100vh - 64px)'
+		height: 'full',
+		minHeight: 'calc(100vh - 64px)'
 	}
 });
-
-type PdfMetadata = {};
 
 //TODO: REPLACE BY LITERALS
 
@@ -26,27 +26,13 @@ export const MergePdf = () => {
 		<UploadSection>
 			<SectionGradient />
 
-			<FilePicker<PdfMetadata>
-				metadata={{}}
+			<FilePicker<PdfMergeMetadata>
+				metadata={{ rotation: 0 }}
 				accept={{ 'application/pdf': [] }}
 				buttonText="Upload PDF"
-				preview={FilePreview}>
+				preview={props => <FilePreview {...props} />}>
 				<MainSection title="Merge PDF" description="dederi frioej f" />
 			</FilePicker>
 		</UploadSection>
-	);
-};
-
-type FilePreviewProps = {
-	files: TheAssetFileItem<PdfMetadata>[];
-};
-
-const FilePreview = ({ files }: FilePreviewProps) => {
-	return (
-		<div>
-			{files.map(({ id, buffer, name, kbSize }) => (
-				<Thumbnail key={id} buffer={buffer} id={id} name={name} kbSize={kbSize} />
-			))}
-		</div>
 	);
 };

@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "exports": {
+    "./breakpoints": "./src/breakpoints.ts",
     "./css": {
       "types": "./generated/css/index.d.ts",
       "require": "./generated/css/index.js",

@@ -1,6 +1,6 @@
 'use client';
 
-import { PropsWithChildren, useRef } from 'react';
+import { forwardRef, PropsWithChildren, RefObject } from 'react';
 import { useButton, AriaButtonProps } from '@react-aria/button';
 
 import { styled } from '@theasset/style-system/jsx';
@@ -115,17 +115,20 @@ const StyledButton = styled('button', buttonRecipe);
 
 export type ButtonVariant = StyledVariantProps<typeof StyledButton> & AriaButtonProps;
 
-type ButtonProps = ButtonVariant;
-
-export const Button = ({ children, ...props }: PropsWithChildren<ButtonProps>) => {
-	const ref = useRef<HTMLButtonElement>(null);
-	const { buttonProps } = useButton(props, ref);
-
-	const { size, variant } = props;
-
-	return (
-		<StyledButton {...buttonProps} size={size} variant={variant}>
-			{children}
-		</StyledButton>
-	);
+export type ButtonProps = ButtonVariant & {
+	className?: string;
 };
+
+export const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
+	({ children, ...props }, ref) => {
+		const { buttonProps } = useButton(props, ref as RefObject<HTMLButtonElement>);
+
+		const { size, variant, className } = props;
+
+		return (
+			<StyledButton {...buttonProps} className={className} ref={ref} size={size} variant={variant}>
+				{children}
+			</StyledButton>
+		);
+	}
+);

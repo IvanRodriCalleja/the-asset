@@ -37,8 +37,8 @@ export const useFilePickerState = <T extends FileMetadata>(defaultMetadata: T) =
 			})
 		);
 
-		setFiles(fileItems);
+		setFiles(currentFiles => [...currentFiles, ...fileItems]);
 	};
 
-	return { files, onChange };
+	return { files, onChange, setFiles };
 };

@@ -6,7 +6,19 @@ const Root = styled('div', {
 		border: 'base',
 		bg: 'card',
 		color: 'card.foreground',
-		shadow: 'sm'
+		shadow: 'sm',
+		transitionProperty: 'border-color',
+		transitionDuration: '',
+		transitionTimingFunction: 'ease-in-out'
+	},
+	variants: {
+		hoverable: {
+			true: {
+				'&:hover': {
+					borderColor: 'primary'
+				}
+			}
+		}
 	}
 });
 

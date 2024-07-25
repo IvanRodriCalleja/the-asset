@@ -1,6 +1,6 @@
 import { styled } from '@theasset/style-system/jsx';
 
-export const UploadSectionSection = styled('section', {
+export const Section = styled('section', {
 	base: {
 		position: 'relative',
 		display: 'flex',
