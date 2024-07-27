@@ -1,3 +1,3 @@
 export type PdfMergeMetadata = {
-	rotation: number;
+	rotation: 0 | 90 | 180 | 270;
 };

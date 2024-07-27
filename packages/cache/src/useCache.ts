@@ -39,27 +39,27 @@ export function useCache<T>(key: string, asyncFunction: () => Promise<T>): T {
 	const cache = useSyncExternalStore(cacheStore.subscribe, cacheStore.getSnapshot);
 	const state = cache[key] as CacheEntry<T> | undefined;
 
-	console.log({ state });
-
 	if (state?.result !== undefined) {
 		return state.result;
-	}
-
-	if (!state) {
-		const promise = asyncFunction()
-			.then(result => {
-				cacheStore.addEntry(key, { result });
-			})
-			.catch(error => {
-				cacheStore.addEntry(key, { error });
-			});
-
-		cacheStore.addEntry(key, { promise });
 	}
 
 	if (state?.error) {
 		throw state.error;
 	}
 
-	throw state!.promise;
+	if (state?.promise) {
+		throw state.promise;
+	}
+
+	const promise = asyncFunction()
+		.then(result => {
+			cacheStore.addEntry(key, { result });
+		})
+		.catch(error => {
+			cacheStore.addEntry(key, { error });
+		});
+
+	cacheStore.addEntry(key, { promise });
+
+	throw promise;
 }

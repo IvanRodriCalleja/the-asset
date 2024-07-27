@@ -74,6 +74,13 @@ export const buttonRecipe = cva({
 					color: 'accent.foreground'
 				}
 			},
+			transparent: {
+				bg: 'transparent',
+
+				_hover: {
+					bg: 'rgba(0, 0, 0, 0.1)'
+				}
+			},
 			link: {
 				color: 'primary',
 				textUnderlineOffset: '4px',

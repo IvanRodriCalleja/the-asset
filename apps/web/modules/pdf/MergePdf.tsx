@@ -6,8 +6,8 @@ import { FilePicker } from '@theasset/ui/file-picker';
 import { SectionGradient } from 'modules/shared/ui/SectionGradient';
 import { styled } from '@theasset/style-system/jsx';
 
-import { FilePreview } from 'modules/shared/ui/FilePreview';
 import { PdfMergeMetadata } from '@theasset/pdf';
+import { FilePreview } from './mergePdf/FilePreview';
 
 const UploadSection = styled('section', {
 	base: {

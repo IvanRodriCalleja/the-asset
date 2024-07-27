@@ -6,6 +6,7 @@ import { breakpoints } from '@theasset/style-system/breakpoints';
 import { FilePreviewDesktop } from './filePreview/FilePreviewDesktop';
 import { PdfMergeMetadata } from '@theasset/pdf';
 import { Dispatch, SetStateAction } from 'react';
+import { FilePreviewMobile } from './filePreview/FilePreviewMobile';
 
 export type FilePreviewProps = {
 	files: TheAssetFileItem<PdfMergeMetadata>[];
@@ -15,5 +16,5 @@ export type FilePreviewProps = {
 export const FilePreview = (props: FilePreviewProps) => {
 	const isDesktop = useMediaQuery(`(min-width: ${breakpoints.md})`);
 
-	return isDesktop ? <FilePreviewDesktop {...props} /> : <div>Mobile</div>;
+	return isDesktop ? <FilePreviewDesktop {...props} /> : <FilePreviewMobile {...props} />;
 };

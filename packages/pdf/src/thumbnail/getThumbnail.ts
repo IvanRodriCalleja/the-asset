@@ -5,7 +5,16 @@ type GetThumbnail = {
 	page?: number;
 };
 
-export const getThumbnail = async ({ pdf, page = 1 }: GetThumbnail): Promise<string> => {
+type GethTHumbnailResult = {
+	src: string;
+	width: number;
+	height: number;
+};
+
+export const getThumbnail = async ({
+	pdf,
+	page = 1
+}: GetThumbnail): Promise<GethTHumbnailResult> => {
 	const pdfPage = await pdf.getPage(page);
 	const scale = 1;
 	const viewport = pdfPage.getViewport({ scale });
@@ -21,6 +30,6 @@ export const getThumbnail = async ({ pdf, page = 1 }: GetThumbnail): Promise<str
 	};
 	await pdfPage.render(renderContext).promise;
 
-	const thumbnail = canvas.toDataURL();
-	return thumbnail;
+	const src = canvas.toDataURL();
+	return { src, width: viewport.width, height: viewport.height };
 };

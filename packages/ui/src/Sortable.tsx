@@ -42,10 +42,11 @@ import {
 	useMemo,
 	useState
 } from 'react';
-import { Button, ButtonProps } from './Button';
+import { ButtonProps, buttonRecipe } from './Button';
 
 import { composeRefs } from '@theasset/utilities-react/compose-refs';
 import { cva, cx } from '@theasset/style-system/css';
+import { styled } from '@theasset/style-system/jsx';
 
 const orientationConfig = {
 	vertical: {
@@ -322,9 +323,11 @@ interface SortableDragHandleProps extends ButtonProps {
 	withHandle?: boolean;
 }
 
+const Button = styled('button', buttonRecipe);
+
 const SortableDragHandle = forwardRef<HTMLButtonElement, SortableDragHandleProps>(
 	({ className, ...props }, ref) => {
-		const { /*attributes,*/ listeners, isDragging } = useSortableItem();
+		const { attributes, listeners, isDragging } = useSortableItem();
 
 		const grabClassName = cursorGrab({ dragging: isDragging, grab: true });
 
@@ -333,7 +336,7 @@ const SortableDragHandle = forwardRef<HTMLButtonElement, SortableDragHandleProps
 				ref={composeRefs(ref)}
 				data-state={isDragging ? 'dragging' : undefined}
 				className={cx(grabClassName, className)}
-				//{...attributes} TODO: Implement
+				{...attributes}
 				{...listeners}
 				{...props}
 			/>
