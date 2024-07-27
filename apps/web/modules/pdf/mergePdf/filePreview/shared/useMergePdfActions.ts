@@ -1,6 +1,7 @@
+import { Dispatch, SetStateAction } from 'react';
+
 import { PdfMergeMetadata } from '@theasset/pdf';
 import { TheAssetFileItem } from '@theasset/ui/file-picker';
-import { Dispatch, SetStateAction } from 'react';
 
 type UseMergePdfActions = {
 	setFiles: Dispatch<SetStateAction<TheAssetFileItem<PdfMergeMetadata>[]>>;

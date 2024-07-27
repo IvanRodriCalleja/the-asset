@@ -2,8 +2,9 @@ import { DOMAttributes, PropsWithChildren, createContext, useContext, useRef } f
 
 import { AriaDialogProps, useDialog } from '@react-aria/dialog';
 import { FocusableElement } from '@react-types/shared';
-import { ShadowToken } from '@theasset/style-system/tokens';
+
 import { Box } from '@theasset/style-system/jsx';
+import { ShadowToken } from '@theasset/style-system/tokens';
 
 type DialogProps = AriaDialogProps & {
 	boxShadow?: ShadowToken;

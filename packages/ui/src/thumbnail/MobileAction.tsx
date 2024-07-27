@@ -1,6 +1,8 @@
-import { styled } from '@theasset/style-system/jsx';
-import { Button, ButtonProps } from '../Button';
 import { PropsWithChildren } from 'react';
+
+import { styled } from '@theasset/style-system/jsx';
+
+import { Button, ButtonProps } from '../Button';
 
 const Action = styled(Button, {
 	base: {

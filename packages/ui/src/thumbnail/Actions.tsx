@@ -1,5 +1,6 @@
-import { styled } from '@theasset/style-system/jsx';
 import { PropsWithChildren } from 'react';
+
+import { styled } from '@theasset/style-system/jsx';
 
 const ThumbnailActionsContainer = styled('div', {
 	base: {

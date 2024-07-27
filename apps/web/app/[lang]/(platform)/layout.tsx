@@ -1,6 +1,8 @@
-import { styled } from '@theasset/style-system/jsx';
-import { Header } from 'modules/layout/ui/Header';
 import { PropsWithChildren } from 'react';
+
+import { styled } from '@theasset/style-system/jsx';
+
+import { Header } from 'modules/layout/ui/Header';
 
 const Main = styled('main', {
 	base: {

@@ -1,7 +1,8 @@
 import { use } from 'react';
+
 import { Locales } from '../domain/Locales';
-import { I18nContext } from '../ui/LocalesContext';
 import { getCurrentLanguage } from '../server/localeHeader';
+import { I18nContext } from '../ui/LocalesContext';
 
 export const useLocale = () => {
 	if (typeof window === 'undefined') {

@@ -1,4 +1,5 @@
 import { type PDFDocumentProxy } from 'pdfjs-dist/build/pdf.min.mjs';
+
 import { styled } from '../../style-system/generated/jsx/factory';
 
 type ViewerProps = {

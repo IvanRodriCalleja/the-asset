@@ -1,11 +1,11 @@
+import { PropsWithChildren } from 'react';
+
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
-import { PropsWithChildren } from 'react';
 
 import { LocaleParam } from '@theasset/internationalization/domain';
 import { useLocale } from '@theasset/internationalization/hooks';
 import { I18nProvider } from '@theasset/internationalization/ui';
-
 import '@theasset/style-system/global.css';
 
 const GeistSans = localFont({

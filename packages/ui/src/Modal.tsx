@@ -1,17 +1,17 @@
 import { DOMAttributes, ReactNode, RefObject, createContext, useContext, useRef } from 'react';
 
-import { AriaButtonProps } from '@react-types/button';
 import { AriaModalOverlayProps, useModalOverlay, useOverlayTrigger } from '@react-aria/overlays';
 import {
 	OverlayTriggerProps,
 	OverlayTriggerState,
 	useOverlayTriggerState
 } from '@react-stately/overlays';
+import { AriaButtonProps } from '@react-types/button';
 import { DOMProps, FocusableElement } from '@react-types/shared';
 
 import { Body } from './modal/Body';
-import { Overlay } from './modal/Overlay';
 import { Footer } from './modal/Footer';
+import { Overlay } from './modal/Overlay';
 import { Trigger } from './modal/Trigger';
 
 type ModalRootChildrenProps = {

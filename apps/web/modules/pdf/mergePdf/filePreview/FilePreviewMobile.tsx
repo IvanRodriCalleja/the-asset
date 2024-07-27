@@ -1,8 +1,8 @@
-import { Sortable } from '@theasset/ui/sortable';
-import { FilePreviewProps } from '../FilePreview';
-import { Stack } from '@theasset/style-system/jsx';
-
 import { PdfThumbnailMobile } from '@theasset/pdf-react/thumbnail';
+import { Stack } from '@theasset/style-system/jsx';
+import { Sortable } from '@theasset/ui/sortable';
+
+import { FilePreviewProps } from '../FilePreview';
 import { MergePdfActionsMobile } from './filePreviewMobile/MergePdfActionsMobile';
 
 export const FilePreviewMobile = ({ files, setFiles }: FilePreviewProps) => (

@@ -1,16 +1,19 @@
-import { PdfMergeMetadata } from '@theasset/pdf';
-import { TheAssetFileItem } from '@theasset/ui/file-picker';
-import { Sortable } from '@theasset/ui/sortable';
 import { ReactNode, Suspense } from 'react';
-import { ThumbnailSkeletonMobile } from './thumbnailMobile/ThumbnailSkeletonMobile';
-import { Thumbnail } from '@theasset/ui/thumbnail';
+
+import { GripVertical } from 'lucide-react';
+
 import { useCache } from '@theasset/cache/useCache';
+import { PdfMergeMetadata } from '@theasset/pdf';
 import { getDocument } from '@theasset/pdf/document';
 import { getThumbnail } from '@theasset/pdf/thumbnail';
 import { Box, Flex, Stack, styled } from '@theasset/style-system/jsx';
-import { GripVertical } from 'lucide-react';
 import { Badge } from '@theasset/ui/badge';
+import { TheAssetFileItem } from '@theasset/ui/file-picker';
+import { Sortable } from '@theasset/ui/sortable';
+import { Thumbnail } from '@theasset/ui/thumbnail';
+
 import { getScale } from './shared/getScale';
+import { ThumbnailSkeletonMobile } from './thumbnailMobile/ThumbnailSkeletonMobile';
 
 type PdfThumbnailMobileProp = {
 	file: TheAssetFileItem<PdfMergeMetadata>;

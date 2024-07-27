@@ -1,17 +1,16 @@
-import { Suspense, ReactNode } from 'react';
+import { ReactNode, Suspense } from 'react';
 
-import { ThumbnailSkeletonDesktop } from './thumbnailDesktop/ThumbnailSkeletonDesktop';
+import { useCache } from '@theasset/cache/useCache';
+import { PdfMergeMetadata } from '@theasset/pdf';
+import { getDocument } from '@theasset/pdf/document';
+import { getThumbnail } from '@theasset/pdf/thumbnail';
+import { Box, styled } from '@theasset/style-system/jsx';
+import { Badge } from '@theasset/ui/badge';
 import { TheAssetFileItem } from '@theasset/ui/file-picker';
 import { Thumbnail } from '@theasset/ui/thumbnail';
 
-import { PdfMergeMetadata } from '@theasset/pdf';
-import { useCache } from '@theasset/cache/useCache';
-import { getDocument } from '@theasset/pdf/document';
-import { getThumbnail } from '@theasset/pdf/thumbnail';
-
-import { Box, styled } from '@theasset/style-system/jsx';
-import { Badge } from '@theasset/ui/badge';
 import { getScale } from './shared/getScale';
+import { ThumbnailSkeletonDesktop } from './thumbnailDesktop/ThumbnailSkeletonDesktop';
 
 type ThumbnailProps = {
 	file: TheAssetFileItem<PdfMergeMetadata>;

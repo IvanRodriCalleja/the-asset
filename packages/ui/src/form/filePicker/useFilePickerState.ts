@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { FileMetadata, TheAssetFileItem } from '../FilePicker';
 
 export const useFilePickerState = <T extends FileMetadata>(defaultMetadata: T) => {

@@ -1,7 +1,9 @@
+import Logo from 'assets/logo.svg';
+
 import { css } from '@theasset/style-system/css';
 import { HStack, styled } from '@theasset/style-system/jsx';
 import { Link } from '@theasset/ui/next/link';
-import Logo from 'assets/logo.svg';
+
 import { homePath } from 'routes';
 
 const HeaderComponent = styled('header', {

@@ -1,4 +1,5 @@
 import type { UtilityConfig } from '@pandacss/types';
+
 import { colorMix } from '../lib/color-mix';
 
 export const textAlpha: UtilityConfig = {

@@ -42,12 +42,6 @@ module.exports = {
 				allow: ['__REDUX_DEVTOOLS_EXTENSION_COMPOSE__', '__webpack_hash__']
 			}
 		],
-		'prettier/prettier': [
-			'error',
-			{
-				endOfLine: 'auto'
-			}
-		],
 		'@typescript-eslint/prefer-interface': 0,
 		'@typescript-eslint/explicit-function-return-type': 0,
 		'@typescript-eslint/no-unused-vars': 'error',

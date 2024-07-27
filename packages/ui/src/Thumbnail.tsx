@@ -1,9 +1,10 @@
 import { Stack, styled } from '@theasset/style-system/jsx';
-import { Image } from './thumbnail/Image';
-import { Actions } from './thumbnail/Actions';
+
 import { ActionButton } from './thumbnail/ActionButton';
-import { ImageContent } from './thumbnail/ImageContent';
+import { Actions } from './thumbnail/Actions';
 import { Footer } from './thumbnail/Footer';
+import { Image } from './thumbnail/Image';
+import { ImageContent } from './thumbnail/ImageContent';
 import { MobileAction } from './thumbnail/MobileAction';
 import { MobileActions } from './thumbnail/MobileActions';
 

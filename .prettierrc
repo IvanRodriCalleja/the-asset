@@ -8,6 +8,7 @@
   "bracketSpacing": true,
   "parser": "typescript",
   "arrowParens": "avoid",
+  "endOfLine": "auto",
   "overrides": [
     {
       "files": "*.json",
@@ -17,10 +18,12 @@
       }
     }
   ],
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
   "importOrder": [
     "^react$",
+    "^(next)(.*)$",
     "<THIRD_PARTY_MODULES>",
-    "^@agentero/(.*)$",
+    "^@theasset/(.*)$",
     "^(packages|modules|routes)(.*)$",
     "^[./]"
   ],

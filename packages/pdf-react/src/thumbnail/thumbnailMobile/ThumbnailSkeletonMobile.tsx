@@ -1,9 +1,9 @@
-import { Box, Flex, Stack } from '@theasset/style-system/jsx';
+import { GripVertical } from 'lucide-react';
 
+import { Box, Flex, Stack } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
 import { Skeleton } from '@theasset/ui/skeleton';
 import { Thumbnail } from '@theasset/ui/thumbnail';
-import { GripVertical } from 'lucide-react';
 
 export const ThumbnailSkeletonMobile = () => (
 	<Thumbnail.Root width="100%" paddingBottom={0}>

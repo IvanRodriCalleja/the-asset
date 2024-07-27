@@ -3,7 +3,9 @@
 import { Dispatch, PropsWithChildren, ReactNode, SetStateAction } from 'react';
 
 import { Accept, useDropzone } from 'react-dropzone';
+
 import { Box, Stack, styled } from '@theasset/style-system/jsx';
+
 import { Button } from '../Button';
 import { useFilePickerState } from './filePicker/useFilePickerState';
 

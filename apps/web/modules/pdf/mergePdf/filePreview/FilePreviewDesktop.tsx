@@ -1,8 +1,8 @@
-import { Sortable } from '@theasset/ui/sortable';
-import { FilePreviewProps } from '../FilePreview';
-import { Stack } from '@theasset/style-system/jsx';
-
 import { PdfThumbnailDesktop } from '@theasset/pdf-react/thumbnail';
+import { Stack } from '@theasset/style-system/jsx';
+import { Sortable } from '@theasset/ui/sortable';
+
+import { FilePreviewProps } from '../FilePreview';
 import { MergePdfActionsDesktop } from './filePreviewDesktop/MergePdfActionsDesktop';
 
 export const FilePreviewDesktop = ({ files, setFiles }: FilePreviewProps) => (

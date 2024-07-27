@@ -1,16 +1,18 @@
 'use client';
 
-import { styled } from '@theasset/style-system/jsx';
+import { ComponentPropsWithoutRef, ElementRef, PropsWithChildren, forwardRef } from 'react';
 
 import {
+	Arrow,
 	Content,
 	Provider,
 	Root,
-	Arrow,
 	TooltipProps,
 	TooltipTriggerProps,
 	Trigger
 } from '@radix-ui/react-tooltip';
+
+import { styled } from '@theasset/style-system/jsx';
 
 const ToolContent = styled(Content, {
 	base: {
@@ -56,8 +58,6 @@ const ToolTrigger = styled(Trigger, {
 		width: '100%'
 	}
 });
-
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, PropsWithChildren } from 'react';
 
 const TooltipContent = forwardRef<
 	ElementRef<typeof Content>,

@@ -1,9 +1,11 @@
 import { PropsWithChildren } from 'react';
 
+import { Overlay as AriaOverlay } from '@react-aria/overlays';
+
+import { styled } from '@theasset/style-system/jsx';
+
 import { Dialog } from '../Dialog';
 import { useAgModal } from '../Modal';
-import { styled } from '@theasset/style-system/jsx';
-import { Overlay as AriaOverlay } from '@react-aria/overlays';
 
 const ModalOverlay = styled('div', {
 	base: {

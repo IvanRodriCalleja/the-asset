@@ -1,8 +1,11 @@
+import { Dispatch, SetStateAction } from 'react';
+
+import { RotateCw, Trash2, ZoomIn } from 'lucide-react';
+
 import { PdfMergeMetadata } from '@theasset/pdf';
 import { TheAssetFileItem } from '@theasset/ui/file-picker';
 import { Thumbnail } from '@theasset/ui/thumbnail';
-import { RotateCw, Trash2, ZoomIn } from 'lucide-react';
-import { Dispatch, SetStateAction } from 'react';
+
 import { useMergePdfActions } from '../shared/useMergePdfActions';
 
 type MergePdfActionsMobileProp = {

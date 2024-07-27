@@ -1,13 +1,14 @@
-import { useLocale } from '@theasset/internationalization/hooks';
+import Merge from 'assets/tools/merge.svg';
 
+import { useLocale } from '@theasset/internationalization/hooks';
 import { Grid } from '@theasset/style-system/jsx';
 
-import Merge from 'assets/tools/merge.svg';
-import { ToolCard } from './home/ToolCard';
-import { Tool } from '../domain/Tool';
+import { MainSection } from 'modules/shared/ui/MainSection';
 import { Section } from 'modules/shared/ui/Section';
 import { SectionGradient } from 'modules/shared/ui/SectionGradient';
-import { MainSection } from 'modules/shared/ui/MainSection';
+
+import { Tool } from '../domain/Tool';
+import { ToolCard } from './home/ToolCard';
 
 const tools: Tool[] = [
 	{

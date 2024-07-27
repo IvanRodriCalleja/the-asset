@@ -1,12 +1,12 @@
 'use client';
 
-import { MainSection } from 'modules/shared/ui/MainSection';
+import { PdfMergeMetadata } from '@theasset/pdf';
+import { styled } from '@theasset/style-system/jsx';
 import { FilePicker } from '@theasset/ui/file-picker';
 
+import { MainSection } from 'modules/shared/ui/MainSection';
 import { SectionGradient } from 'modules/shared/ui/SectionGradient';
-import { styled } from '@theasset/style-system/jsx';
 
-import { PdfMergeMetadata } from '@theasset/pdf';
 import { FilePreview } from './mergePdf/FilePreview';
 
 const UploadSection = styled('section', {
