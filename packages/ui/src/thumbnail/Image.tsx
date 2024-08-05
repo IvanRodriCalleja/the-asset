@@ -3,7 +3,8 @@ import { StyledVariantProps } from '@theasset/style-system/types';
 
 const ThumbnailImage = styled('img', {
 	base: {
-		position: 'relative'
+		position: 'relative',
+		width: '100%'
 	},
 	variants: {
 		shadow: {

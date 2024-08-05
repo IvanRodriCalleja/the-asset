@@ -1,6 +1,6 @@
 import { defineConfig } from '@pandacss/dev';
-
 import { resolve } from 'path';
+
 import theAssetPreset from './src';
 
 const uiPackage = resolve(__dirname, '../ui');

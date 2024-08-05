@@ -1,8 +1,9 @@
 'use client';
 
-import { PropsWithChildren, RefObject, forwardRef } from 'react';
+import { PropsWithChildren, forwardRef } from 'react';
 
 import { AriaButtonProps, useButton } from '@react-aria/button';
+import { useObjectRef } from '@react-aria/utils';
 
 import { cva } from '@theasset/style-system/css';
 import { styled } from '@theasset/style-system/jsx';
@@ -109,7 +110,12 @@ export const buttonRecipe = cva({
 			},
 			icon: {
 				h: '10',
-				w: '10'
+				w: '10',
+
+				'& svg': {
+					w: '4',
+					h: '4'
+				}
 			}
 		}
 	},
@@ -129,12 +135,18 @@ export type ButtonProps = ButtonVariant & {
 
 export const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
 	({ children, ...props }, ref) => {
-		const { buttonProps } = useButton(props, ref as RefObject<HTMLButtonElement>);
+		const objRef = useObjectRef(ref);
+		const { buttonProps } = useButton(props, objRef);
 
 		const { size, variant, className } = props;
 
 		return (
-			<StyledButton {...buttonProps} className={className} ref={ref} size={size} variant={variant}>
+			<StyledButton
+				{...buttonProps}
+				className={className}
+				ref={objRef}
+				size={size}
+				variant={variant}>
 				{children}
 			</StyledButton>
 		);

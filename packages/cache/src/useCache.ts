@@ -35,9 +35,13 @@ function emitChange() {
 	}
 }
 
-export function useCache<T>(key: string, asyncFunction: () => Promise<T>): T {
+type UseCacheKey = string | Record<string, string | number | boolean>;
+
+export function useCache<T>(key: UseCacheKey, asyncFunction: () => Promise<T>): T {
+	const cacheKey = typeof key === 'string' ? key : JSON.stringify(key);
+
 	const cache = useSyncExternalStore(cacheStore.subscribe, cacheStore.getSnapshot);
-	const state = cache[key] as CacheEntry<T> | undefined;
+	const state = cache[cacheKey] as CacheEntry<T> | undefined;
 
 	if (state?.result !== undefined) {
 		return state.result;
@@ -53,13 +57,13 @@ export function useCache<T>(key: string, asyncFunction: () => Promise<T>): T {
 
 	const promise = asyncFunction()
 		.then(result => {
-			cacheStore.addEntry(key, { result });
+			cacheStore.addEntry(cacheKey, { result });
 		})
 		.catch(error => {
-			cacheStore.addEntry(key, { error });
+			cacheStore.addEntry(cacheKey, { error });
 		});
 
-	cacheStore.addEntry(key, { promise });
+	cacheStore.addEntry(cacheKey, { promise });
 
 	throw promise;
 }

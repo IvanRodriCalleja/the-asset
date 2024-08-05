@@ -10,8 +10,9 @@ import { AriaButtonProps } from '@react-types/button';
 import { DOMProps, FocusableElement } from '@react-types/shared';
 
 import { Body } from './modal/Body';
+import { Close } from './modal/Close';
+import { Content } from './modal/Content';
 import { Footer } from './modal/Footer';
-import { Overlay } from './modal/Overlay';
 import { Trigger } from './modal/Trigger';
 
 type ModalRootChildrenProps = {
@@ -78,8 +79,9 @@ export const Root = ({ children, variant = 'dialog', ...props }: ModalProps) => 
 
 export const Modal = {
 	Root,
-	Overlay,
 	Trigger,
 	Body,
-	Footer
+	Footer,
+	Content,
+	Close
 };
