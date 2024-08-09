@@ -45,14 +45,14 @@ export const semanticTokens = defineSemanticTokens({
 		popover: {
 			DEFAULT: {
 				value: {
-					base: '{colors.grayscale.900}',
-					_dark: '{colors.grayscale.50}'
+					base: '{colors.grayscale.0}',
+					_dark: '{colors.grayscale.900}'
 				}
 			},
 			foreground: {
 				value: {
-					base: '{colors.grayscale.50}',
-					_dark: '{colors.grayscale.900}'
+					base: '{colors.grayscale.900}',
+					_dark: '{colors.grayscale.0}'
 				}
 			}
 		},

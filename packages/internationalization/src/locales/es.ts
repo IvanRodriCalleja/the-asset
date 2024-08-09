@@ -1,4 +1,6 @@
-const es = {
+import { type Locales } from '../domain/Locales';
+
+const es: Locales = {
 	home: {
 		title: 'Haz tu pdf realidad',
 		description:

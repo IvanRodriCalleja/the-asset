@@ -1,39 +1,6 @@
 import { useSyncExternalStore } from 'react';
 
-type CacheEntry<T> = {
-	promise?: Promise<void>;
-	result?: T;
-	error?: unknown;
-};
-
-type Cache = {
-	[key: string]: CacheEntry<unknown>;
-};
-
-const cache: Cache = {};
-let listeners: (() => void)[] = [];
-
-export const cacheStore = {
-	addEntry(key: string, value: CacheEntry<unknown>) {
-		cache[key] = value;
-		emitChange();
-	},
-	subscribe(listener: () => void) {
-		listeners = [...listeners, listener];
-		return () => {
-			listeners = listeners.filter(l => l !== listener);
-		};
-	},
-	getSnapshot() {
-		return cache;
-	}
-};
-
-function emitChange() {
-	for (const listener of listeners) {
-		listener();
-	}
-}
+import { type CacheEntry, cacheStore } from './cacheStore';
 
 type UseCacheKey = string | Record<string, string | number | boolean>;
 

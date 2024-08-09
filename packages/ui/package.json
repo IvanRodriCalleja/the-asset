@@ -9,6 +9,7 @@
     "./file-picker": "./src/form/FilePicker.tsx",
     "./form/input": "./src/form/inputs/Input.ts",
     "./form/number": "./src/form/inputs/Number.tsx",
+    "./label": "./src/Label.tsx",
     "./modal": "./src/Modal.tsx",
     "./skeleton": "./src/Skeleton.tsx",
     "./sortable": "./src/Sortable.tsx",
@@ -16,7 +17,9 @@
     "./tooltip": "./src/Tooltip.tsx",
     "./thumbnail": "./src/Thumbnail.tsx",
     "./next/link": "./src/next/link.tsx",
-    "./pdf/thumbnail": "./src/pdf/Thumbnail.tsx"
+    "./pdf/thumbnail": "./src/pdf/Thumbnail.tsx",
+    "./popover": "./src/Popover.tsx",
+    "./utils/replaceParams": "./utils/replaceParams.ts"
   },
   "scripts": {
     "lint": "eslint src --ext .ts,.tsx --quiet --cache",
@@ -48,6 +51,7 @@
     "@react-aria/overlays": "^3.23.1",
     "@react-aria/utils": "^3.25.1",
     "@react-stately/numberfield": "^3.9.5",
+    "@react-stately/overlays": "^3.6.9",
     "@react-types/shared": "^3.23.1",
     "@theasset/cache": "*",
     "lucide-react": "^0.414.0",

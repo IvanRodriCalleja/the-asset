@@ -1,27 +1,13 @@
 import { PropsWithChildren } from 'react';
 
-import { Overlay } from '@react-aria/overlays';
+import { Overlay as AriaOverlay } from '@react-aria/overlays';
 
 import { styled } from '@theasset/style-system/jsx';
 import { StyledVariantProps } from '@theasset/style-system/types';
 
 import { Dialog } from '../Dialog';
 import { useAgModal } from '../Modal';
-
-const ModalOverlay = styled('div', {
-	base: {
-		position: 'fixed',
-		zIndex: '10',
-		top: 0,
-		left: 0,
-		bottom: 0,
-		right: 0,
-		display: 'flex',
-		alignItems: 'center',
-		justifyContent: 'center',
-		background: 'rgba(0, 0, 0, .8)'
-	}
-});
+import { Overlay } from '../Overlay';
 
 export const ModalContent = styled('div', {
 	base: {
@@ -65,15 +51,15 @@ export const Content = ({ children, size = 'dialog' }: PropsWithChildren<Content
 	return (
 		<>
 			{state.isOpen && (
-				<Overlay>
-					<ModalOverlay {...underlayProps}>
+				<AriaOverlay>
+					<Overlay {...underlayProps}>
 						<Dialog role={variant === 'alert' ? 'alertdialog' : 'dialog'}>
 							<ModalContent size={size} {...modalProps} ref={modalRef}>
 								{children}
 							</ModalContent>
 						</Dialog>
-					</ModalOverlay>
-				</Overlay>
+					</Overlay>
+				</AriaOverlay>
 			)}
 		</>
 	);

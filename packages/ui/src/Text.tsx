@@ -7,7 +7,7 @@ type As = 'p' | 'span' | 'div' | 'label';
 const textRecipe = cva({
 	variants: {
 		color: {
-			primaryClear: { color: 'primary.40' }
+			textClear: { color: 'textClear' }
 		},
 		weight: {
 			normal: { fontWeight: 'normal' },
@@ -15,6 +15,9 @@ const textRecipe = cva({
 			semibold: { fontWeight: 'semibold' },
 			bold: { fontWeight: 'bold' },
 			extrabold: { fontWeight: 'extrabold' }
+		},
+		family: {
+			mono: { fontFamily: 'mono' }
 		},
 		size: {
 			xs: {
@@ -57,6 +60,7 @@ type TextVariants = RecipeVariantProps<typeof textRecipe>;
 
 export type TextProps = TextVariants & {
 	as?: As;
+	className?: string;
 };
 
 export const Text = (props: PropsWithChildren<TextProps>) => {

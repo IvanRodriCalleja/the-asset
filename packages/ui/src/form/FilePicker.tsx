@@ -33,7 +33,7 @@ const DragOverlay = styled('div', {
 
 export type TheAssetFileItem<T> = {
 	id: string;
-	buffer: Uint8Array;
+	buffer: ArrayBuffer;
 	name: string;
 	kbSize: string;
 	metadata: T;

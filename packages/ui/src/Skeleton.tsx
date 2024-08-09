@@ -4,6 +4,6 @@ export const Skeleton = styled('div', {
 	base: {
 		animation: 'pulse',
 		rounded: 'md',
-		bg: 'muted'
+		bg: 'grayscale.200'
 	}
 });

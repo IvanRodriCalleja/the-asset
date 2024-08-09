@@ -5,7 +5,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./thumbnail": "./src/thumbnail/index.ts",
-    "./document": "./src/document/index.ts"
+    "./document": "./src/document/index.ts",
+    "./merge": "./src/merge/index.ts"
   },
   "scripts": {
     "lint": "eslint src --ext .ts,.tsx --quiet --cache",
@@ -19,6 +20,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^4.4.168"
   }
 }

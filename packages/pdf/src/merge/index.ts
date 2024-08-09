@@ -1,0 +1,1 @@
+export { mergePdfs } from './mergePdfs';

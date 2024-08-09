@@ -78,6 +78,15 @@ export const buttonRecipe = cva({
 			},
 			transparent: {
 				bg: 'transparent',
+				borderRadius: 'none',
+
+				_focusVisible: {
+					outline: '2px solid transparent',
+					outlineOffset: '2px',
+					focusRingWidth: '0',
+					focusRingColor: 'transparent',
+					focusRingOffsetWidth: '0'
+				},
 
 				_hover: {
 					bg: 'rgba(0, 0, 0, 0.1)'
@@ -93,6 +102,11 @@ export const buttonRecipe = cva({
 			}
 		},
 		size: {
+			none: {
+				h: 'auto',
+				px: '0',
+				py: '0'
+			},
 			default: {
 				h: '10',
 				px: '4',
@@ -107,6 +121,16 @@ export const buttonRecipe = cva({
 				h: '11',
 				rounded: 'md',
 				px: '8'
+			},
+			xl: {
+				h: '12',
+				rounded: 'md',
+				px: '10'
+			},
+			'2xl': {
+				h: '14',
+				rounded: 'md',
+				px: '12'
 			},
 			icon: {
 				h: '10',

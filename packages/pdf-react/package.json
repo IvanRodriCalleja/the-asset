@@ -4,7 +4,8 @@
   "private": true,
   "exports": {
     "./thumbnail": "./src/thumbnail/index.ts",
-    "./viewer": "./src/Viewer.tsx"
+    "./viewer": "./src/Viewer.tsx",
+    "./scroll-viewer": "./src/ScrollViewer.tsx"
   },
   "scripts": {
     "lint": "eslint src --ext .ts,.tsx --quiet --cache",
@@ -24,6 +25,7 @@
     "@theasset/pdf": "*",
     "@theasset/ui": "*",
     "lucide-react": "^0.414.0",
-    "react": "19.0.0-rc-f994737d14-20240522"
+    "react": "19.0.0-rc-f994737d14-20240522",
+    "react-intersection-observer": "^9.13.0"
   }
 }
