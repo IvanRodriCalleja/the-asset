@@ -19,7 +19,8 @@
     "./next/link": "./src/next/link.tsx",
     "./pdf/thumbnail": "./src/pdf/Thumbnail.tsx",
     "./popover": "./src/Popover.tsx",
-    "./utils/replaceParams": "./utils/replaceParams.ts"
+    "./utils/replaceParams": "./utils/replaceParams.ts",
+    "./utils/use-intersection-observer": "./src/utils/useIntersectionObserver.ts"
   },
   "scripts": {
     "lint": "eslint src --ext .ts,.tsx --quiet --cache",
