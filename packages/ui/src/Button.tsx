@@ -140,6 +140,15 @@ export const buttonRecipe = cva({
 					w: '4',
 					h: '4'
 				}
+			},
+			'icon-lg': {
+				h: '11',
+				w: '11',
+
+				'& svg': {
+					w: '4',
+					h: '4'
+				}
 			}
 		}
 	},

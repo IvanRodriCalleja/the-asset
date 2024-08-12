@@ -2628,6 +2628,15 @@
     "@react-types/shared" "^3.24.1"
     "@swc/helpers" "^0.5.0"
 
+"@react-aria/separator@^3.4.1":
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/@react-aria/separator/-/separator-3.4.1.tgz#c8c643f9506b569ba2af7185761588a87ca73949"
+  integrity sha512-bZ+GQ936Y+WXAtsQjJdEMgYeqmqjhU90+wOlRGjmGdwf+/ht2yzBpeRuHEYUbE6F0iis/YoVc+b8ppAtPna/kA==
+  dependencies:
+    "@react-aria/utils" "^3.25.1"
+    "@react-types/shared" "^3.24.1"
+    "@swc/helpers" "^0.5.0"
+
 "@react-aria/spinbutton@^3.6.7":
   version "3.6.7"
   resolved "https://registry.yarnpkg.com/@react-aria/spinbutton/-/spinbutton-3.6.7.tgz#4c549039542e1215f68c791d5bb2d8be61b10979"

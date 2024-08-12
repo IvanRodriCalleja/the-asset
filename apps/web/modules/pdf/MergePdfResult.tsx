@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
 
 import { ScrollViewer } from '@theasset/pdf-react/scroll-viewer';
 import { Flex } from '@theasset/style-system/jsx';
@@ -16,6 +16,10 @@ type MergePdfResultProps = {
 };
 
 export const MergePdfResult = ({ file }: MergePdfResultProps) => {
+	const [isOpen, setIsOpen] = useState(true);
+
+	const toggleOpen = () => setIsOpen(isOpen => !isOpen);
+
 	return (
 		<InnerScrollSection>
 			<Flex direction="row" height="100%">
@@ -25,8 +29,8 @@ export const MergePdfResult = ({ file }: MergePdfResultProps) => {
 					</Suspense>
 				</MergePdfResultFileContainer>
 
-				<MergePdfResultSidebar>
-					<MergePdfResultConfig file={file} />
+				<MergePdfResultSidebar isOpen={isOpen}>
+					<MergePdfResultConfig file={file} isOpen={isOpen} toggleOpen={toggleOpen} />
 				</MergePdfResultSidebar>
 			</Flex>
 		</InnerScrollSection>

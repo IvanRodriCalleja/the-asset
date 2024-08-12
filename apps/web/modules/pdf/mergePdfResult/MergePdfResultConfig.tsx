@@ -1,38 +1,42 @@
 import { useState } from 'react';
 
-import { DownloadIcon, ReloadIcon } from '@radix-ui/react-icons';
+import { CrumpledPaperIcon, DownloadIcon, ReloadIcon } from '@radix-ui/react-icons';
 
-import { useLocale } from '@theasset/internationalization/hooks';
-import { Stack } from '@theasset/style-system/jsx';
-import { Button } from '@theasset/ui/button';
-import { Link } from '@theasset/ui/next/link';
-
-import { downloadFile } from 'modules/shared/infra/downloadFile';
-import { mergePdfPath } from 'routes';
+import { Box, Stack } from '@theasset/style-system/jsx';
+import { Separator } from '@theasset/ui/separator';
 
 import { MergeResultFile } from '../domain/MergeResultFile';
 import { ConfigFileInfo } from './mergePdfResultConfig/ConfigFileInfo';
 import { ConfigTitle } from './mergePdfResultConfig/ConfigTitle';
 import { ContinueTool, ContinueWith } from './mergePdfResultConfig/ContinueWith';
+import { MergePdfResultConfigActions } from './mergePdfResultConfig/MergePdfResultConfigActions';
 
 type MergePdfResultConfigProps = {
 	file: MergeResultFile;
+	isOpen: boolean;
+	toggleOpen: () => void;
 };
 
-const tools: ContinueTool[] = []; // TODO: Add tools when available
+const tools: ContinueTool[] = [
+	{
+		label: 'Compress',
+		icon: CrumpledPaperIcon,
+		href: '/compress-pdf'
+	}
+]; // TODO: Add tools when available
 
-export const MergePdfResultConfig = ({ file }: MergePdfResultConfigProps) => {
-	const { shared, mergePdfResult } = useLocale();
+export const MergePdfResultConfig = ({ file, isOpen, toggleOpen }: MergePdfResultConfigProps) => {
 	const [fileName, setFileName] = useState(file.name);
 
-	const onDownload = () => {
-		downloadFile(file.buffer, fileName, 'application/pdf');
-	};
-
 	return (
-		<Stack display="flex">
-			<Stack flex={1} overflow="auto" paddingInline={4}>
-				<Stack gap={8}>
+		<Box display="flex" flexDirection="column" width="100%">
+			<Stack
+				flex={1}
+				position="relative"
+				overflow="auto"
+				justifyContent="space-between"
+				paddingInline={4}>
+				<Stack gap={8} overflow="auto">
 					<ConfigTitle />
 
 					<ConfigFileInfo
@@ -44,18 +48,17 @@ export const MergePdfResultConfig = ({ file }: MergePdfResultConfigProps) => {
 
 					<ContinueWith tools={tools} />
 				</Stack>
+				<Box paddingBlock={4} position="sticky" bottom={1}>
+					<Separator orientation="horizontal" />
+				</Box>
 			</Stack>
 
-			<Stack paddingInline={4}>
-				<Link href={mergePdfPath} size="lg" variant="outline">
-					<ReloadIcon />
-					{mergePdfResult.mergeNewPdf}
-				</Link>
-				<Button size="lg" onPress={onDownload}>
-					<DownloadIcon />
-					{shared.download}
-				</Button>
-			</Stack>
-		</Stack>
+			<MergePdfResultConfigActions
+				file={file}
+				fileName={fileName}
+				isOpen={isOpen}
+				toggleOpen={toggleOpen}
+			/>
+		</Box>
 	);
 };

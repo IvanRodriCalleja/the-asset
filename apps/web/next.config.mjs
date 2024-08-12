@@ -4,6 +4,7 @@ const nextConfig = {
 	transpilePackages: ['@theasset/internationalization'],
 	experimental: {
 		reactCompiler: true,
+		
 	},
 	webpack(config) {
 		// Grab the existing rule that handles SVG imports
