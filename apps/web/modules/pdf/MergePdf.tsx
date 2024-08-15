@@ -1,22 +1,16 @@
 'use client';
 
-import { useParams, useRouter } from 'next/navigation';
-
-import { cacheStore } from '@theasset/cache/store';
+import { useLocale } from '@theasset/internationalization/hooks';
 import { PdfMergeMetadata } from '@theasset/pdf';
-import { mergePdfs } from '@theasset/pdf/merge';
-import { Box, Stack, styled } from '@theasset/style-system/jsx';
-import { Button } from '@theasset/ui/button';
-import { FilePicker, TheAssetFileItem } from '@theasset/ui/file-picker';
-import { replaceParams } from '@theasset/ui/utils/replaceParams';
+import { Box, styled } from '@theasset/style-system/jsx';
+import { FilePicker } from '@theasset/ui/file-picker';
+import { HighlightMaker } from '@theasset/ui/highlight-maker';
 
-import { hashArrayBuffer } from 'modules/shared/infra/hashArrayBuffer';
 import { MainSection } from 'modules/shared/ui/MainSection';
 import { SectionGradient } from 'modules/shared/ui/SectionGradient';
-import { mergePdfIdPath } from 'routes';
 
-import { MergeResultFile } from './domain/MergeResultFile';
 import { FilePreview } from './mergePdf/FilePreview';
+import { MergeButton } from './mergePdf/MergeButton';
 
 const UploadSection = styled('section', {
 	base: {
@@ -31,6 +25,8 @@ const UploadSection = styled('section', {
 //TODO: REPLACE BY LITERALS
 
 export const MergePdf = () => {
+	const { mergePdf } = useLocale();
+
 	return (
 		<>
 			<UploadSection>
@@ -39,7 +35,7 @@ export const MergePdf = () => {
 				<FilePicker<PdfMergeMetadata>
 					metadata={{ rotation: 0 }}
 					accept={{ 'application/pdf': [] }}
-					buttonText="Upload PDF"
+					buttonText={mergePdf.uploadPdf}
 					preview={props => {
 						return (
 							<>
@@ -56,49 +52,25 @@ export const MergePdf = () => {
 									borderTopWidth="1px"
 									borderTopColor="border"
 									width="100%"
-									background="#fcf3ff">
+									background="white">
 									<MergeButton files={props.files} />
 								</Box>
 							</>
 						);
 					}}>
-					<MainSection title="Merge PDF" description="dederi frioej f" /> {/* TODO: Add literal */}
+					<MainSection
+						title={mergePdf.title}
+						description={
+							<>
+								{mergePdf.description}{' '}
+								<HighlightMaker color="rgba(166 122 244 / 40%)">
+									{mergePdf.descriptionImportant}
+								</HighlightMaker>
+							</>
+						}
+					/>{' '}
 				</FilePicker>
 			</UploadSection>
 		</>
 	);
-};
-
-type MergeButtonProps = {
-	files: TheAssetFileItem<PdfMergeMetadata>[];
-};
-
-const MergeButton = ({ files }: MergeButtonProps) => {
-	const { push } = useRouter();
-	const params = useParams();
-
-	const onMerge = async () => {
-		const mergedPdf = await mergePdfs({
-			files: files.map(file => ({ buffer: file.buffer, metadata: file.metadata }))
-		});
-
-		const fileHash = await hashArrayBuffer(mergedPdf);
-
-		const resultFile: MergeResultFile = {
-			buffer: mergedPdf,
-			hash: fileHash,
-			name: files[0]!.name
-		};
-		cacheStore.addResult(fileHash, resultFile);
-
-		push(replaceParams(mergePdfIdPath, { id: fileHash, ...params }));
-	};
-
-	return (
-		<Stack width="100%" maxWidth="500px">
-			<Button size="2xl" onPress={onMerge}>
-				Merge PDFs
-			</Button>
-		</Stack>
-	); // TODO: Add literal
 };

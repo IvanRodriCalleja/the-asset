@@ -4,7 +4,13 @@ const en = {
 		description:
 			'Free online tools to merge, split, and compress PDFs, as well as convert Office documents to PDF and JPG.'
 	},
-	mergePdf: {},
+	mergePdf: {
+		title: 'Merge PDF',
+		description: 'Merge multiple PDFs instantly and securely,',
+		descriptionImportant: 'all without sending data outside your browser.',
+		uploadPdf: 'Upload PDF',
+		mergePdfAction: 'Merge PDFs'
+	},
 	mergePdfResult: {
 		successfullyMergedTitle: 'Files merged!',
 		successfullyMergedDescription:

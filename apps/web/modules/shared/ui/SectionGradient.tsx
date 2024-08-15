@@ -9,7 +9,10 @@ export const GradientLeft = styled('span', {
 		borderRadius: '100%',
 		mixBlendMode: 'normal',
 		filter: 'blur(50px)',
-		left: '-200px',
+		left: {
+			base: '-100px',
+			md: '-200px'
+		},
 		background: 'linear-gradient(180deg, #58a5ff, #a67af4)',
 		opacity: '0.15'
 	}
@@ -24,7 +27,10 @@ export const GradientRight = styled('span', {
 		borderRadius: '100%',
 		mixBlendMode: 'normal',
 		filter: 'blur(50px)',
-		right: '-200px',
+		right: {
+			base: '-100px',
+			md: '-200px'
+		},
 		background: 'linear-gradient(180deg, #ff3358, #ff4fd8);',
 		opacity: '0.15'
 	}

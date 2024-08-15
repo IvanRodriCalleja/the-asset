@@ -1,4 +1,4 @@
-import * as PDFJS from 'pdfjs-dist/build/pdf.min.mjs';
+import * as PDFJS from 'pdfjs-dist';
 import { PDFDocumentProxy } from 'pdfjs-dist/types/src/display/api';
 
 type GetDocumentProps = {

@@ -15,7 +15,8 @@ const tools: Tool[] = [
 		icon: Merge,
 		name: 'Merge PDF',
 		description: 'Merge multiple PDF files into one PDF file',
-		href: '/[lang]/merge-pdf'
+		href: '/[lang]/merge-pdf',
+		color: '#e92a67'
 	}
 ];
 

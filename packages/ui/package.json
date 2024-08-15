@@ -9,6 +9,7 @@
     "./file-picker": "./src/form/FilePicker.tsx",
     "./form/input": "./src/form/inputs/Input.ts",
     "./form/number": "./src/form/inputs/Number.tsx",
+    "./highlight-maker": "./src/HighlightMaker.tsx",
     "./label": "./src/Label.tsx",
     "./modal": "./src/Modal.tsx",
     "./separator": "./src/Separator.tsx",

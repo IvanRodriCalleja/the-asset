@@ -92,13 +92,11 @@ const ToolInnerCard = styled('div', {
 		justifyContent: 'center',
 		overflow: 'hidden',
 		borderRadius: '0.75rem',
-		borderWidth: '1px',
-		borderColor: 'hsla(0, 0%, 100%, .05)',
 		padding: '3',
 		pb: '12!',
 		pt: '8',
 		md: { pb: '4!', pt: '4!' },
-		//background: '#fff',
+		background: 'white',
 		boxShadow:
 			'0 0 0 1px rgba(0, 0, 0, .03), 0 2px 4px rgba(0, 0, 0, .05), 0 12px 24px rgba(0, 0, 0, .05)'
 	}
@@ -110,7 +108,6 @@ const ToolCardHeader = styled('div', {
 		position: 'relative',
 		alignItems: 'center',
 		justifyContent: 'center',
-		mb: '7',
 		md: { mb: '0' }
 	}
 });
@@ -128,7 +125,7 @@ const TooltipHeadBlur = styled('div', {
 		bgImage: 'linear-gradient(rgb(185 37 205), rgb(0 48 255))',
 		opacity: '0.05',
 		mixBlendMode: 'normal',
-		filter: 'blur(60px)'
+		filter: 'blur(20px)'
 	}
 });
 
@@ -164,9 +161,10 @@ const ToolCardDescription = styled('p', {
 
 const ToolCardImageContainer = styled('div', {
 	base: {
-		height: '64px',
-		width: '64px',
-		borderRadius: 'full',
+		height: '40px',
+		width: '40px',
+		padding: 2,
+		borderRadius: 'md',
 		boxShadow: '0 0 0 1px rgba(0, 0, 0, .03), 0 2px 4px rgba(0, 0, 0, .05)',
 
 		'& svg': {
@@ -180,14 +178,14 @@ type ToolCardProps = {
 	tool: Tool;
 };
 
-export const ToolCard = ({ tool: { icon: Icon, name, href } }: ToolCardProps) => (
+export const ToolCard = ({ tool: { icon: Icon, name, href, color } }: ToolCardProps) => (
 	<ToolCardContainer>
 		<Link className={toolCardLink} href={href} variant="none">
 			<ToolBorder aria-hidden="true" />
 			<ToolInnerCard>
 				<ToolCardHeader>
 					<TooltipHeadBlur />
-					<ToolCardImageContainer>
+					<ToolCardImageContainer style={{ background: color }}>
 						<Icon />
 					</ToolCardImageContainer>
 				</ToolCardHeader>

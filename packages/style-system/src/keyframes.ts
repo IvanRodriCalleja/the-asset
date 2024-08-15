@@ -30,5 +30,18 @@ export const keyframes = defineKeyframes({
 		'100%': {
 			transform: 'translate(-50%, -50%) rotate(0)'
 		}
+	},
+	grow: {
+		'0%': {
+			clipPath: 'polygon(50vmax 50vmax, 50vmax 50vmax, 50vmax 50vmax)'
+		},
+		'100%': {
+			clipPath: 'polygon(50vmax -100vmax, -100vmax 200vmax, 200vmax 200vmax)'
+		}
+	},
+	highlight: {
+		to: {
+			'--highlighted': 1
+		}
 	}
 });

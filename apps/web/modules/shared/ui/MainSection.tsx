@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 import { Flex, styled } from '@theasset/style-system/jsx';
 
 const MainTitle = styled('h1', {
@@ -35,16 +37,15 @@ const Description = styled('p', {
 		fontFamily: 'mono',
 		textStyle: 'xl',
 		color: 'textClear',
-		width: {
-			base: '315px',
-			md: '700px'
-		}
+		width: 'full',
+		maxWidth: '700px',
+		paddingInline: 4
 	}
 });
 
 type MainSectionProps = {
 	title: string;
-	description: string;
+	description: ReactNode;
 };
 
 export const MainSection = ({ title, description }: MainSectionProps) => (

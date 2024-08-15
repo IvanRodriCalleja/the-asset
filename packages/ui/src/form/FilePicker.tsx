@@ -2,8 +2,10 @@
 
 import { Dispatch, PropsWithChildren, ReactNode, SetStateAction } from 'react';
 
+import { UploadIcon } from '@radix-ui/react-icons';
 import { Accept, useDropzone } from 'react-dropzone';
 
+import { css } from '@theasset/style-system/css';
 import { Box, Stack, styled } from '@theasset/style-system/jsx';
 
 import { Button } from '../Button';
@@ -76,9 +78,9 @@ export const FilePicker = <T extends FileMetadata>({
 			<Stack>
 				{!hasFiles && children}
 				{files.length === 0 && (
-					<Box display="flex" justifyContent="center">
-						<Button size="lg" onPress={open}>
-							{buttonText}
+					<Box padding={4} marginInline="auto" width="full" maxWidth="500px">
+						<Button size="2xl" onPress={open} className={css({ width: 'full' })}>
+							<UploadIcon /> {buttonText}
 						</Button>
 					</Box>
 				)}
