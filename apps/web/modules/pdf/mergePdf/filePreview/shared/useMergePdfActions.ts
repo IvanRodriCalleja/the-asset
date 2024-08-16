@@ -1,43 +1,42 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useTransition } from 'react';
 
-import { PdfMergeMetadata } from '@theasset/pdf';
-import { TheAssetFileItem } from '@theasset/ui/file-picker';
+import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
+import { rotatePdf } from '@theasset/pdf/merge';
 
 type UseMergePdfActions = {
-	setFiles: Dispatch<SetStateAction<TheAssetFileItem<PdfMergeMetadata>[]>>;
+	file: TheAssetFile;
+	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
 };
 
-export const useMergePdfActions = ({ setFiles }: UseMergePdfActions) => {
-	const onRemoveFile = (id: string) => {
+export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
+	const [isPending, startTransition] = useTransition();
+
+	const onRemoveFile = () => {
 		setFiles(currentFiles => {
-			return currentFiles.filter(file => file.id !== id);
+			return currentFiles.filter(({ id }) => file.id !== id);
 		});
 	};
 
-	const onRotateFile = (id: string, direction: 'left' | 'right') => {
-		setFiles(currentFiles => {
-			const newFiles = currentFiles.map(file => {
-				if (file.id === id) {
-					const rotation =
-						direction === 'left' ? file.metadata.rotation - 90 : file.metadata.rotation + 90;
-
-					const newRotation = rotation >= 360 || rotation <= -360 ? 0 : rotation;
-
-					return {
-						...file,
-						metadata: {
-							...file.metadata,
-							rotation: newRotation as 0 | 90 | 180 | 270
-						}
-					};
-				}
-
-				return file;
+	const onRotateFile = async (direction: 'left' | 'right') => {
+		startTransition(async () => {
+			const newPdf = await rotatePdf({
+				buffer: file.buffer,
+				rotation: direction === 'left' ? -90 : 90
 			});
 
-			return newFiles;
+			setFiles(files => {
+				const fileIndex = files.findIndex(({ id }) => id === file.id);
+
+				const newFiles = [...files];
+				newFiles[fileIndex] = {
+					...file,
+					buffer: newPdf
+				};
+
+				return newFiles;
+			});
 		});
 	};
 
-	return { onRemoveFile, onRotateFile };
+	return { onRemoveFile, onRotateFile, isPending };
 };

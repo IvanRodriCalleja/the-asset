@@ -1,7 +1,6 @@
 'use client';
 
 import { useLocale } from '@theasset/internationalization/hooks';
-import { PdfMergeMetadata } from '@theasset/pdf';
 import { Box, styled } from '@theasset/style-system/jsx';
 import { FilePicker } from '@theasset/ui/file-picker';
 import { HighlightMaker } from '@theasset/ui/highlight-maker';
@@ -22,7 +21,7 @@ const UploadSection = styled('section', {
 	}
 });
 
-//TODO: REPLACE BY LITERALS
+//TODO: Use enum as color
 
 export const MergePdf = () => {
 	const { mergePdf } = useLocale();
@@ -32,8 +31,7 @@ export const MergePdf = () => {
 			<UploadSection>
 				<SectionGradient />
 
-				<FilePicker<PdfMergeMetadata>
-					metadata={{ rotation: 0 }}
+				<FilePicker
 					accept={{ 'application/pdf': [] }}
 					buttonText={mergePdf.uploadPdf}
 					preview={props => {

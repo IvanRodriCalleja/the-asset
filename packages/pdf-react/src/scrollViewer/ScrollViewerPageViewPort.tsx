@@ -1,7 +1,6 @@
 import { RefObject, Suspense } from 'react';
 
-import { PDFDocumentProxy } from 'pdfjs-dist/build/pdf.min.mjs';
-
+import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { Box } from '@theasset/style-system/jsx';
 import { useIntersectionObserver } from '@theasset/ui/utils/use-intersection-observer';
 
@@ -10,14 +9,12 @@ import { ScrollViewerPage } from './scrollViewerPageViewPort/ScrollViewerPage';
 
 type ScrollViewerPageViewPortProps = {
 	page: number;
-	hash: string;
-	pdf: PDFDocumentProxy;
+	file: TheAssetFile;
 	rootRef: RefObject<HTMLDivElement>;
 };
 
 export const ScrollViewerPageViewPort = ({
-	hash,
-	pdf,
+	file,
 	page,
 	rootRef
 }: ScrollViewerPageViewPortProps) => {
@@ -33,11 +30,7 @@ export const ScrollViewerPageViewPort = ({
 	return (
 		<Box ref={ref} boxShadow="lg" maxWidth="580px" width="100%">
 			<Suspense fallback={<ScrollViewerSkeleton />}>
-				{isInViewPort ? (
-					<ScrollViewerPage page={page} hash={hash} pdf={pdf} />
-				) : (
-					<ScrollViewerSkeleton />
-				)}
+				{isInViewPort ? <ScrollViewerPage page={page} file={file} /> : <ScrollViewerSkeleton />}
 			</Suspense>
 		</Box>
 	);

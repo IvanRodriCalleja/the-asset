@@ -1,18 +1,18 @@
 import { Suspense, useState } from 'react';
 
+import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { ScrollViewer } from '@theasset/pdf-react/scroll-viewer';
 import { Flex } from '@theasset/style-system/jsx';
 
 import { InnerScrollSection } from 'modules/shared/ui/InnerScrollSection';
 
-import { MergeResultFile } from './domain/MergeResultFile';
 import { MergePdfResultConfig } from './mergePdfResult/MergePdfResultConfig';
 import { MergePdfResultFileContainer } from './mergePdfResult/MergePdfResultFileContainer';
 import { MergePdfResultSidebar } from './mergePdfResult/MergePdfResultSidebar';
 import { MergePdfResultSkeleton } from './mergePdfResult/MergePdfResultSkeleton';
 
 type MergePdfResultProps = {
-	file: MergeResultFile;
+	file: TheAssetFile;
 };
 
 export const MergePdfResult = ({ file }: MergePdfResultProps) => {
@@ -25,7 +25,7 @@ export const MergePdfResult = ({ file }: MergePdfResultProps) => {
 			<Flex direction="row" height="100%">
 				<MergePdfResultFileContainer>
 					<Suspense fallback={<MergePdfResultSkeleton />}>
-						<ScrollViewer hash={file.hash} buffer={file.buffer} />
+						<ScrollViewer file={file} />
 					</Suspense>
 				</MergePdfResultFileContainer>
 

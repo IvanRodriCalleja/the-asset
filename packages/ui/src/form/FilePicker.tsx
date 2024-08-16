@@ -5,6 +5,7 @@ import { Dispatch, PropsWithChildren, ReactNode, SetStateAction } from 'react';
 import { UploadIcon } from '@radix-ui/react-icons';
 import { Accept, useDropzone } from 'react-dropzone';
 
+import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { css } from '@theasset/style-system/css';
 import { Box, Stack, styled } from '@theasset/style-system/jsx';
 
@@ -33,36 +34,24 @@ const DragOverlay = styled('div', {
 	}
 });
 
-export type TheAssetFileItem<T> = {
-	id: string;
-	buffer: ArrayBuffer;
-	name: string;
-	kbSize: string;
-	metadata: T;
+type FilePickerPreviewProps = {
+	files: TheAssetFile[];
+	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
 };
 
-type FilePickerPreviewProps<T> = {
-	files: TheAssetFileItem<T>[];
-	setFiles: Dispatch<SetStateAction<TheAssetFileItem<T>[]>>;
-};
-
-interface FilePickerProps<T extends FileMetadata = FileMetadata> {
+interface FilePickerProps {
 	buttonText: string;
 	accept?: Accept;
-	metadata: T;
-	preview(props: FilePickerPreviewProps<T>): ReactNode;
+	preview(props: FilePickerPreviewProps): ReactNode;
 }
 
-export type FileMetadata = Record<string, unknown>;
-
-export const FilePicker = <T extends FileMetadata>({
+export const FilePicker = ({
 	accept,
 	buttonText,
 	children,
-	metadata,
 	preview
-}: PropsWithChildren<FilePickerProps<T>>) => {
-	const { files, onChange, setFiles } = useFilePickerState<T>(metadata as T);
+}: PropsWithChildren<FilePickerProps>) => {
+	const { files, onChange, setFiles } = useFilePickerState();
 
 	const { getRootProps, getInputProps, open, isDragAccept, isDragReject } = useDropzone({
 		accept,

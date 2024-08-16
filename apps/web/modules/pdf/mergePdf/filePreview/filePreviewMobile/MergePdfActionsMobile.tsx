@@ -2,29 +2,29 @@ import { Dispatch, SetStateAction } from 'react';
 
 import { RotateCw, Trash2, ZoomIn } from 'lucide-react';
 
-import { PdfMergeMetadata } from '@theasset/pdf';
-import { TheAssetFileItem } from '@theasset/ui/file-picker';
+import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { Thumbnail } from '@theasset/ui/thumbnail';
 
 import { useMergePdfActions } from '../shared/useMergePdfActions';
 
 type MergePdfActionsMobileProp = {
-	file: TheAssetFileItem<PdfMergeMetadata>;
-	setFiles: Dispatch<SetStateAction<TheAssetFileItem<PdfMergeMetadata>[]>>;
+	file: TheAssetFile;
+	index: number;
+	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
 };
 
-export const MergePdfActionsMobile = ({ file, setFiles }: MergePdfActionsMobileProp) => {
-	const { onRemoveFile, onRotateFile } = useMergePdfActions({ setFiles });
+export const MergePdfActionsMobile = ({ file, index, setFiles }: MergePdfActionsMobileProp) => {
+	const { onRemoveFile, onRotateFile } = useMergePdfActions({ setFiles, file });
 
 	return (
 		<Thumbnail.MobileActions>
 			<Thumbnail.MobileAction>
 				<ZoomIn size={16} />
 			</Thumbnail.MobileAction>
-			<Thumbnail.MobileAction onPress={() => onRotateFile(file.id, 'right')}>
+			<Thumbnail.MobileAction onPress={() => onRotateFile(index, 'right')}>
 				<RotateCw size={16} />
 			</Thumbnail.MobileAction>
-			<Thumbnail.MobileAction onPress={() => onRemoveFile(file.id)}>
+			<Thumbnail.MobileAction onPress={() => onRemoveFile(index)}>
 				<Trash2 size={16} />
 			</Thumbnail.MobileAction>
 		</Thumbnail.MobileActions>

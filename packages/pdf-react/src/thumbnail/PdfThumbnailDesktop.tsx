@@ -1,19 +1,17 @@
-import { ReactNode, Suspense } from 'react';
+import { Dispatch, ReactNode, SetStateAction, Suspense } from 'react';
 
-import { useCache } from '@theasset/cache/useCache';
-import { PdfMergeMetadata } from '@theasset/pdf';
-import { getDocument } from '@theasset/pdf/document';
-import { getThumbnail } from '@theasset/pdf/thumbnail';
+import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
+import { usePdf } from '@theasset/pdf-react/usePdf';
 import { Box, styled } from '@theasset/style-system/jsx';
 import { Badge } from '@theasset/ui/badge';
-import { TheAssetFileItem } from '@theasset/ui/file-picker';
 import { Thumbnail } from '@theasset/ui/thumbnail';
 
-import { getScale } from './shared/getScale';
+import { useThumbnail } from '../infra/useThumbnail';
 import { ThumbnailSkeletonDesktop } from './thumbnailDesktop/ThumbnailSkeletonDesktop';
 
 type ThumbnailProps = {
-	file: TheAssetFileItem<PdfMergeMetadata>;
+	file: TheAssetFile;
+	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
 	actions?: (props: ActionProps) => ReactNode;
 };
 
@@ -36,30 +34,27 @@ const FileName = styled('span', {
 });
 
 type ActionProps = {
-	file: TheAssetFileItem<PdfMergeMetadata>;
+	file: TheAssetFile;
+	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
 };
 
 type PdfThumbnailProps = {
-	file: TheAssetFileItem<PdfMergeMetadata>;
+	file: TheAssetFile;
+	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
 	actions?: (props: ActionProps) => ReactNode;
 };
 
-const PdfThumbnail = ({ file, actions, ...props }: PdfThumbnailProps) => {
-	const pdf = useCache(`${file.id}-pdf`, () => getDocument({ buffer: file.buffer }));
-	const { src, width, height } = useCache(file.id, () => getThumbnail({ pdf }));
+const PdfThumbnail = ({ file, actions, setFiles, ...props }: PdfThumbnailProps) => {
+	const pdf = usePdf(file);
+
+	const src = useThumbnail({ file, page: 1 });
 
 	return (
 		<Thumbnail.Root width={180} {...props}>
-			{actions && actions({ file })}
+			{actions && actions({ file, setFiles })}
 
 			<Thumbnail.ImageContent>
-				<Thumbnail.Image
-					src={src}
-					alt={file.name}
-					shadow={file.metadata.rotation}
-					rotation={file.metadata.rotation}
-					scale={getScale(width, height, file.metadata.rotation)}
-				/>
+				<Thumbnail.Image src={src} alt={file.name} />
 			</Thumbnail.ImageContent>
 
 			<Thumbnail.Footer>

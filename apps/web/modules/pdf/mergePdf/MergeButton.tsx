@@ -3,21 +3,17 @@ import { useParams, useRouter } from 'next/navigation';
 import Merge from 'assets/tools/merge.svg';
 
 import { cacheStore } from '@theasset/cache/store';
+import { TheAssetFile, hashArrayBuffer } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks';
-import { PdfMergeMetadata } from '@theasset/pdf';
 import { mergePdfs } from '@theasset/pdf/merge';
 import { Stack } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
-import { TheAssetFileItem } from '@theasset/ui/file-picker';
 import { replaceParams } from '@theasset/ui/utils/replaceParams';
 
-import { hashArrayBuffer } from 'modules/shared/infra/hashArrayBuffer';
 import { mergePdfIdPath } from 'routes';
 
-import { MergeResultFile } from '../domain/MergeResultFile';
-
 type MergeButtonProps = {
-	files: TheAssetFileItem<PdfMergeMetadata>[];
+	files: TheAssetFile[];
 };
 
 export const MergeButton = ({ files }: MergeButtonProps) => {
@@ -26,13 +22,12 @@ export const MergeButton = ({ files }: MergeButtonProps) => {
 	const params = useParams();
 
 	const onMerge = async () => {
-		const mergedPdf = await mergePdfs({
-			files: files.map(file => ({ buffer: file.buffer, metadata: file.metadata }))
-		});
+		const mergedPdf = await mergePdfs({ files });
 
 		const fileHash = await hashArrayBuffer(mergedPdf);
 
-		const resultFile: MergeResultFile = {
+		const resultFile: TheAssetFile = {
+			id: Date.now().toString(),
 			buffer: mergedPdf,
 			hash: fileHash,
 			name: files[0]!.name

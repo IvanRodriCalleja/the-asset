@@ -1,14 +1,9 @@
-import { PDFDocument } from 'pdf-lib';
+import { PDFDocument, degrees } from 'pdf-lib';
 
-type MergeFileItem = {
-	buffer: ArrayBuffer;
-	metadata: {
-		rotation: number;
-	};
-};
+import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 
 type MergePdfs = {
-	files: MergeFileItem[];
+	files: TheAssetFile[];
 };
 
 export const mergePdfs = async ({ files }: MergePdfs) => {
@@ -21,4 +16,31 @@ export const mergePdfs = async ({ files }: MergePdfs) => {
 	}
 
 	return await mergedPdf.save();
+};
+
+type RotatePdfArgs = {
+	buffer: ArrayBuffer;
+	rotation: number;
+	page?: number;
+};
+
+//TODO: Create in specific file
+export const rotatePdf = async ({ buffer, rotation, page }: RotatePdfArgs): Promise<Uint8Array> => {
+	const pdfDoc = await PDFDocument.load(buffer);
+	const pages = pdfDoc.getPages();
+
+	if (page && (page < 0 || page >= pages.length)) {
+		throw new Error('Invalid page number');
+	}
+
+	if (!page) {
+		pages.forEach(page => {
+			const { angle } = page.getRotation();
+			page.setRotation(degrees(angle + rotation));
+		});
+	} else {
+		pages[page]!.setRotation(degrees(rotation));
+	}
+
+	return await pdfDoc.save();
 };

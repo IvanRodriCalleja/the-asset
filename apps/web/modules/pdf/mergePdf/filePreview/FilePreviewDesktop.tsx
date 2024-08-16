@@ -17,10 +17,7 @@ export const FilePreviewDesktop = ({ files, setFiles }: FilePreviewProps) => (
 			paddingInline={16}>
 			{files.map(file => (
 				<Sortable.SortableItem key={file.id} value={file.id} asTrigger asChild>
-					<PdfThumbnailDesktop
-						file={file}
-						actions={({ file }) => <MergePdfActionsDesktop file={file} setFiles={setFiles} />}
-					/>
+					<PdfThumbnailDesktop file={file} setFiles={setFiles} actions={MergePdfActionsDesktop} />
 				</Sortable.SortableItem>
 			))}
 		</Stack>

@@ -1,18 +1,17 @@
 import { useRef } from 'react';
 
-import { useCache } from '@theasset/cache/useCache';
-import { getDocument } from '@theasset/pdf/document';
+import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { Stack } from '@theasset/style-system/jsx';
 
+import { usePdf } from './infra/usePdf';
 import { ScrollViewerPageViewPort } from './scrollViewer/ScrollViewerPageViewPort';
 
 type ScrollViewerProps = {
-	hash: string;
-	buffer: ArrayBuffer;
+	file: TheAssetFile;
 };
 
-export const ScrollViewer = ({ hash, buffer }: ScrollViewerProps) => {
-	const pdf = useCache({ hash, type: 'pdf' }, () => getDocument({ buffer }));
+export const ScrollViewer = ({ file }: ScrollViewerProps) => {
+	const pdf = usePdf(file);
 
 	const rootRef = useRef<HTMLDivElement>(null);
 
@@ -25,13 +24,7 @@ export const ScrollViewer = ({ hash, buffer }: ScrollViewerProps) => {
 			overflow="auto"
 			padding={16}>
 			{[...new Array(pdf.numPages)].map((_, index) => (
-				<ScrollViewerPageViewPort
-					key={index}
-					hash={hash}
-					page={index + 1}
-					pdf={pdf}
-					rootRef={rootRef}
-				/>
+				<ScrollViewerPageViewPort key={index} file={file} page={index + 1} rootRef={rootRef} />
 			))}
 		</Stack>
 	);

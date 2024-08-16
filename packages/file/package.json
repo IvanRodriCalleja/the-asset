@@ -1,0 +1,12 @@
+{
+  "name": "@theasset/file",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./domain/the-asset-file": "./src/domain/TheAssetFile.ts"
+  },
+  "scripts": {
+    "lint": "eslint src --ext .ts,.tsx --quiet --cache",
+    "tsc": "tsc"
+  }
+}

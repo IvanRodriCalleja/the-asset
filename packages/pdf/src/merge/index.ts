@@ -1,1 +1,1 @@
-export { mergePdfs } from './mergePdfs';
+export { mergePdfs, rotatePdf } from './mergePdfs';
