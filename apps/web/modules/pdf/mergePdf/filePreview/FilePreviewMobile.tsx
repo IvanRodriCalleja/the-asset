@@ -10,10 +10,7 @@ export const FilePreviewMobile = ({ files, setFiles }: FilePreviewProps) => (
 		<Stack direction="column" marginInline="auto" width="100%" paddingBlock={4} paddingInline={4}>
 			{files.map(file => (
 				<Sortable.SortableItem key={file.id} value={file.id} asChild>
-					<PdfThumbnailMobile
-						file={file}
-						actions={({ file }) => <MergePdfActionsMobile file={file} setFiles={setFiles} />}
-					/>
+					<PdfThumbnailMobile file={file} setFiles={setFiles} actions={MergePdfActionsMobile} />
 				</Sortable.SortableItem>
 			))}
 		</Stack>

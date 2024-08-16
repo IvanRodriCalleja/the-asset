@@ -2,10 +2,8 @@ import { useState } from 'react';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 
-import { FileMetadata } from '../FilePicker';
-
-export const useFilePickerState = <T extends FileMetadata>(defaultMetadata: T) => {
-	const [files, setFiles] = useState<TheAssetFile<T>[]>([]);
+export const useFilePickerState = () => {
+	const [files, setFiles] = useState<TheAssetFile[]>([]);
 
 	const onChange = async (files: File[]) => {
 		const fileItems = await Promise.all(
@@ -26,14 +24,10 @@ export const useFilePickerState = <T extends FileMetadata>(defaultMetadata: T) =
 					fileReader.readAsArrayBuffer(file);
 				});
 
-				const kbSize = (file.size / 1024).toFixed(2);
-
-				const fileItem: TheAssetFile<T> = {
+				const fileItem: TheAssetFile = {
 					id,
 					buffer,
-					name,
-					metadata: defaultMetadata,
-					kbSize
+					name
 				};
 
 				return fileItem;

@@ -3,7 +3,6 @@ import { Dispatch, SetStateAction } from 'react';
 import { RotateCw, Trash2, ZoomIn } from 'lucide-react';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
-import { PdfMergeMetadata } from '@theasset/pdf';
 import { Viewer } from '@theasset/pdf-react/viewer';
 import { Modal } from '@theasset/ui/modal';
 import { Thumbnail } from '@theasset/ui/thumbnail';
@@ -11,8 +10,8 @@ import { Thumbnail } from '@theasset/ui/thumbnail';
 import { useMergePdfActions } from '../shared/useMergePdfActions';
 
 type MergePdfActionsDesktopProp = {
-	file: TheAssetFile<PdfMergeMetadata>;
-	setFiles: Dispatch<SetStateAction<TheAssetFile<PdfMergeMetadata>[]>>;
+	file: TheAssetFile;
+	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
 };
 
 export const MergePdfActionsDesktop = (props: MergePdfActionsDesktopProp) => <Actions {...props} />;

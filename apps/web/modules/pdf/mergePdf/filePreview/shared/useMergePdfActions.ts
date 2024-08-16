@@ -1,11 +1,11 @@
 import { Dispatch, SetStateAction } from 'react';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
-import { PdfMergeMetadata } from '@theasset/pdf';
+import { rotatePdf } from '@theasset/pdf/merge';
 
 type UseMergePdfActions = {
-	file: TheAssetFile<PdfMergeMetadata>;
-	setFiles: Dispatch<SetStateAction<TheAssetFile<PdfMergeMetadata>[]>>;
+	file: TheAssetFile;
+	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
 };
 
 export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
@@ -15,25 +15,21 @@ export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
 		});
 	};
 
-	const onRotateFile = (direction: 'left' | 'right') => {
-		const rotation =
-			direction === 'left' ? file.metadata.rotation - 90 : file.metadata.rotation + 90;
-
-		const newRotation = rotation >= 360 || rotation <= -360 ? 0 : rotation;
-
-		const newFile = {
-			...file,
-			metadata: {
-				...file.metadata,
-				rotation: newRotation as 0 | 90 | 180 | 270
-			}
-		};
+	const onRotateFile = async (direction: 'left' | 'right') => {
+		const newPdf = await rotatePdf({
+			buffer: file.buffer,
+			rotation: direction === 'left' ? -90 : 90
+		});
 
 		setFiles(files => {
 			const fileIndex = files.findIndex(({ id }) => id === file.id);
 
 			const newFiles = [...files];
-			newFiles[fileIndex] = newFile;
+			newFiles[fileIndex] = {
+				...file,
+				id: new Date().getTime().toString(),
+				buffer: newPdf
+			};
 
 			return newFiles;
 		});

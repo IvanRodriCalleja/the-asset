@@ -1,7 +1,5 @@
-export type TheAssetFile<T> = {
+export type TheAssetFile = {
 	id: string;
 	buffer: ArrayBuffer;
 	name: string;
-	kbSize: string;
-	metadata: T;
 };

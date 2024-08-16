@@ -5,7 +5,7 @@ import { getThumbnail } from '@theasset/pdf/thumbnail';
 import { usePdf } from './usePdf';
 
 type UseThumbnailProps = {
-	file: TheAssetFile<{}>;
+	file: TheAssetFile;
 	page?: number;
 };
 
@@ -13,6 +13,6 @@ export const useThumbnail = ({ file, page = 1 }: UseThumbnailProps) => {
 	const pdf = usePdf(file);
 
 	const src = useCache({ id: file.id, type: 'image', page }, () => getThumbnail({ pdf, page }));
-	console.timeEnd('render');
+
 	return src;
 };

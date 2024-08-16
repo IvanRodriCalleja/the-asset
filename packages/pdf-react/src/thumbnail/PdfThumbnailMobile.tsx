@@ -3,7 +3,6 @@ import { Dispatch, ReactNode, SetStateAction, Suspense } from 'react';
 import { GripVertical } from 'lucide-react';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
-import { PdfMergeMetadata } from '@theasset/pdf';
 import { usePdf } from '@theasset/pdf-react/infra/usePdf';
 import { Box, Flex, Stack, styled } from '@theasset/style-system/jsx';
 import { Badge } from '@theasset/ui/badge';
@@ -15,8 +14,8 @@ import { getScale } from './shared/getScale';
 import { ThumbnailSkeletonMobile } from './thumbnailMobile/ThumbnailSkeletonMobile';
 
 type PdfThumbnailMobileProp = {
-	file: TheAssetFile<PdfMergeMetadata>;
-	setFiles: Dispatch<SetStateAction<TheAssetFile<PdfMergeMetadata>[]>>;
+	file: TheAssetFile;
+	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
 	actions?: (props: ActionProps) => ReactNode;
 };
 
@@ -27,13 +26,13 @@ export const PdfThumbnailMobile = (props: PdfThumbnailMobileProp) => (
 );
 
 type ActionProps = {
-	file: TheAssetFile<PdfMergeMetadata>;
-	setFiles: Dispatch<SetStateAction<TheAssetFile<PdfMergeMetadata>[]>>;
+	file: TheAssetFile;
+	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
 };
 
 type PdfThumbnailProps = {
-	file: TheAssetFile<PdfMergeMetadata>;
-	setFiles: Dispatch<SetStateAction<TheAssetFile<PdfMergeMetadata>[]>>;
+	file: TheAssetFile;
+	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
 	actions?: (props: ActionProps) => ReactNode;
 };
 

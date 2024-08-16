@@ -1,10 +1,6 @@
 import { Dispatch, ReactNode, SetStateAction, Suspense } from 'react';
 
-import { useCache } from '@theasset/cache/useCache';
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
-import { PdfMergeMetadata } from '@theasset/pdf';
-import { getDocument } from '@theasset/pdf/document';
-import { getThumbnail } from '@theasset/pdf/thumbnail';
 import { Box, styled } from '@theasset/style-system/jsx';
 import { Badge } from '@theasset/ui/badge';
 import { Thumbnail } from '@theasset/ui/thumbnail';
@@ -15,8 +11,8 @@ import { getScale } from './shared/getScale';
 import { ThumbnailSkeletonDesktop } from './thumbnailDesktop/ThumbnailSkeletonDesktop';
 
 type ThumbnailProps = {
-	file: TheAssetFile<PdfMergeMetadata>;
-	setFiles: Dispatch<SetStateAction<TheAssetFile<PdfMergeMetadata>[]>>;
+	file: TheAssetFile;
+	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
 	actions?: (props: ActionProps) => ReactNode;
 };
 
@@ -39,13 +35,13 @@ const FileName = styled('span', {
 });
 
 type ActionProps = {
-	file: TheAssetFile<PdfMergeMetadata>;
-	setFiles: Dispatch<SetStateAction<TheAssetFile<PdfMergeMetadata>[]>>;
+	file: TheAssetFile;
+	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
 };
 
 type PdfThumbnailProps = {
-	file: TheAssetFile<PdfMergeMetadata>;
-	setFiles: Dispatch<SetStateAction<TheAssetFile<PdfMergeMetadata>[]>>;
+	file: TheAssetFile;
+	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
 	actions?: (props: ActionProps) => ReactNode;
 };
 

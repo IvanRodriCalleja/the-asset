@@ -34,28 +34,24 @@ const DragOverlay = styled('div', {
 	}
 });
 
-type FilePickerPreviewProps<T> = {
-	files: TheAssetFile<T>[];
-	setFiles: Dispatch<SetStateAction<TheAssetFile<T>[]>>;
+type FilePickerPreviewProps = {
+	files: TheAssetFile[];
+	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
 };
 
-interface FilePickerProps<T extends FileMetadata = FileMetadata> {
+type FilePickerProps = {
 	buttonText: string;
 	accept?: Accept;
-	metadata: T;
-	preview(props: FilePickerPreviewProps<T>): ReactNode;
-}
+	preview(props: FilePickerPreviewProps): ReactNode;
+};
 
-export type FileMetadata = Record<string, unknown>;
-
-export const FilePicker = <T extends FileMetadata>({
+export const FilePicker = ({
 	accept,
 	buttonText,
 	children,
-	metadata,
 	preview
-}: PropsWithChildren<FilePickerProps<T>>) => {
-	const { files, onChange, setFiles } = useFilePickerState<T>(metadata as T);
+}: PropsWithChildren<FilePickerProps>) => {
+	const { files, onChange, setFiles } = useFilePickerState();
 
 	const { getRootProps, getInputProps, open, isDragAccept, isDragReject } = useDropzone({
 		accept,
