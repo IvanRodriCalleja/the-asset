@@ -5,7 +5,9 @@
   "exports": {
     "./thumbnail": "./src/thumbnail/index.ts",
     "./viewer": "./src/Viewer.tsx",
-    "./scroll-viewer": "./src/ScrollViewer.tsx"
+    "./scroll-viewer": "./src/ScrollViewer.tsx",
+    "./infra/usePdf": "./src/infra/usePdf.ts",
+    "./infra/useThumbnail": "./src/infra/useThumbnail.ts"
   },
   "scripts": {
     "lint": "eslint src --ext .ts,.tsx --quiet --cache",

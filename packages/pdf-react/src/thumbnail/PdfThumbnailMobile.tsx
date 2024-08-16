@@ -2,16 +2,15 @@ import { Dispatch, ReactNode, SetStateAction, Suspense } from 'react';
 
 import { GripVertical } from 'lucide-react';
 
-import { useCache } from '@theasset/cache/useCache';
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { PdfMergeMetadata } from '@theasset/pdf';
-import { getDocument } from '@theasset/pdf/document';
-import { getThumbnail } from '@theasset/pdf/thumbnail';
+import { usePdf } from '@theasset/pdf-react/infra/usePdf';
 import { Box, Flex, Stack, styled } from '@theasset/style-system/jsx';
 import { Badge } from '@theasset/ui/badge';
 import { Sortable } from '@theasset/ui/sortable';
 import { Thumbnail } from '@theasset/ui/thumbnail';
 
+import { useThumbnail } from '../infra/useThumbnail';
 import { getScale } from './shared/getScale';
 import { ThumbnailSkeletonMobile } from './thumbnailMobile/ThumbnailSkeletonMobile';
 
@@ -46,8 +45,8 @@ const FileName = styled('span', {
 });
 
 const PdfThumbnail = ({ file, setFiles, actions, ...props }: PdfThumbnailProps) => {
-	const pdf = useCache(`${file.id}-pdf`, () => getDocument({ buffer: file.buffer }));
-	const { src, width, height } = useCache(file.id, () => getThumbnail({ pdf }));
+	const pdf = usePdf(file);
+	const { src, width, height } = useThumbnail({ file });
 
 	return (
 		<Thumbnail.Root width="100%" paddingBottom={0} {...props}>

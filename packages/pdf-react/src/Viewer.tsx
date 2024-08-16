@@ -1,12 +1,11 @@
 import { useState, useTransition } from 'react';
 
-import { useCache } from '@theasset/cache/useCache';
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
-import { getDocument } from '@theasset/pdf/document';
-import { getThumbnail } from '@theasset/pdf/thumbnail';
 import { Box } from '@theasset/style-system/jsx';
 import { Thumbnail } from '@theasset/ui/thumbnail';
 
+import { usePdf } from './infra/usePdf';
+import { useThumbnail } from './infra/useThumbnail';
 import { getRatio, getScale } from './thumbnail/shared/getScale';
 import { Toolbar } from './viewer/Toolbar';
 
@@ -24,8 +23,8 @@ export const Viewer = ({ file }: ViewerProps) => {
 		});
 	};
 
-	const pdf = useCache(`${file.id}-pdf`, () => getDocument({ buffer: file.buffer }));
-	const { src, width, height } = useCache({ id: file.id, page }, () => getThumbnail({ pdf, page }));
+	const pdf = usePdf(file);
+	const { src, width, height } = useThumbnail({ file, page });
 
 	const ratio = getRatio(width, height, file.metadata.rotation);
 

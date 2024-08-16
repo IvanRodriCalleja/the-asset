@@ -9,6 +9,8 @@ import { Box, styled } from '@theasset/style-system/jsx';
 import { Badge } from '@theasset/ui/badge';
 import { Thumbnail } from '@theasset/ui/thumbnail';
 
+import { usePdf } from '../infra/usePdf';
+import { useThumbnail } from '../infra/useThumbnail';
 import { getScale } from './shared/getScale';
 import { ThumbnailSkeletonDesktop } from './thumbnailDesktop/ThumbnailSkeletonDesktop';
 
@@ -48,8 +50,8 @@ type PdfThumbnailProps = {
 };
 
 const PdfThumbnail = ({ file, setFiles, actions, ...props }: PdfThumbnailProps) => {
-	const pdf = useCache(`${file.id}-pdf`, () => getDocument({ buffer: file.buffer }));
-	const { src, width, height } = useCache(`${file.id}-img`, () => getThumbnail({ pdf }));
+	const pdf = usePdf(file);
+	const { src, width, height } = useThumbnail({ file });
 
 	return (
 		<Thumbnail.Root width={180} {...props}>
