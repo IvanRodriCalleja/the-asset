@@ -1,39 +1,39 @@
 import { Dispatch, SetStateAction } from 'react';
 
+import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { PdfMergeMetadata } from '@theasset/pdf';
-import { TheAssetFileItem } from '@theasset/ui/file-picker';
 
 type UseMergePdfActions = {
-	setFiles: Dispatch<SetStateAction<TheAssetFileItem<PdfMergeMetadata>[]>>;
+	file: TheAssetFile<PdfMergeMetadata>;
+	setFiles: Dispatch<SetStateAction<TheAssetFile<PdfMergeMetadata>[]>>;
 };
 
-export const useMergePdfActions = ({ setFiles }: UseMergePdfActions) => {
-	const onRemoveFile = (id: string) => {
+export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
+	const onRemoveFile = () => {
 		setFiles(currentFiles => {
-			return currentFiles.filter(file => file.id !== id);
+			return currentFiles.filter(({ id }) => file.id !== id);
 		});
 	};
 
-	const onRotateFile = (id: string, direction: 'left' | 'right') => {
-		setFiles(currentFiles => {
-			const newFiles = currentFiles.map(file => {
-				if (file.id === id) {
-					const rotation =
-						direction === 'left' ? file.metadata.rotation - 90 : file.metadata.rotation + 90;
+	const onRotateFile = (direction: 'left' | 'right') => {
+		const rotation =
+			direction === 'left' ? file.metadata.rotation - 90 : file.metadata.rotation + 90;
 
-					const newRotation = rotation >= 360 || rotation <= -360 ? 0 : rotation;
+		const newRotation = rotation >= 360 || rotation <= -360 ? 0 : rotation;
 
-					return {
-						...file,
-						metadata: {
-							...file.metadata,
-							rotation: newRotation as 0 | 90 | 180 | 270
-						}
-					};
-				}
+		const newFile = {
+			...file,
+			metadata: {
+				...file.metadata,
+				rotation: newRotation as 0 | 90 | 180 | 270
+			}
+		};
 
-				return file;
-			});
+		setFiles(files => {
+			const fileIndex = files.findIndex(({ id }) => id === file.id);
+
+			const newFiles = [...files];
+			newFiles[fileIndex] = newFile;
 
 			return newFiles;
 		});

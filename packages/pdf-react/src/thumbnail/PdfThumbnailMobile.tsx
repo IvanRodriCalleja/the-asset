@@ -1,14 +1,14 @@
-import { ReactNode, Suspense } from 'react';
+import { Dispatch, ReactNode, SetStateAction, Suspense } from 'react';
 
 import { GripVertical } from 'lucide-react';
 
 import { useCache } from '@theasset/cache/useCache';
+import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { PdfMergeMetadata } from '@theasset/pdf';
 import { getDocument } from '@theasset/pdf/document';
 import { getThumbnail } from '@theasset/pdf/thumbnail';
 import { Box, Flex, Stack, styled } from '@theasset/style-system/jsx';
 import { Badge } from '@theasset/ui/badge';
-import { TheAssetFileItem } from '@theasset/ui/file-picker';
 import { Sortable } from '@theasset/ui/sortable';
 import { Thumbnail } from '@theasset/ui/thumbnail';
 
@@ -16,7 +16,8 @@ import { getScale } from './shared/getScale';
 import { ThumbnailSkeletonMobile } from './thumbnailMobile/ThumbnailSkeletonMobile';
 
 type PdfThumbnailMobileProp = {
-	file: TheAssetFileItem<PdfMergeMetadata>;
+	file: TheAssetFile<PdfMergeMetadata>;
+	setFiles: Dispatch<SetStateAction<TheAssetFile<PdfMergeMetadata>[]>>;
 	actions?: (props: ActionProps) => ReactNode;
 };
 
@@ -27,11 +28,13 @@ export const PdfThumbnailMobile = (props: PdfThumbnailMobileProp) => (
 );
 
 type ActionProps = {
-	file: TheAssetFileItem<PdfMergeMetadata>;
+	file: TheAssetFile<PdfMergeMetadata>;
+	setFiles: Dispatch<SetStateAction<TheAssetFile<PdfMergeMetadata>[]>>;
 };
 
 type PdfThumbnailProps = {
-	file: TheAssetFileItem<PdfMergeMetadata>;
+	file: TheAssetFile<PdfMergeMetadata>;
+	setFiles: Dispatch<SetStateAction<TheAssetFile<PdfMergeMetadata>[]>>;
 	actions?: (props: ActionProps) => ReactNode;
 };
 
@@ -42,7 +45,7 @@ const FileName = styled('span', {
 	}
 });
 
-const PdfThumbnail = ({ file, actions, ...props }: PdfThumbnailProps) => {
+const PdfThumbnail = ({ file, setFiles, actions, ...props }: PdfThumbnailProps) => {
 	const pdf = useCache(`${file.id}-pdf`, () => getDocument({ buffer: file.buffer }));
 	const { src, width, height } = useCache(file.id, () => getThumbnail({ pdf }));
 
@@ -74,7 +77,7 @@ const PdfThumbnail = ({ file, actions, ...props }: PdfThumbnailProps) => {
 				</Flex>
 			</Stack>
 
-			{actions && actions({ file })}
+			{actions && actions({ file, setFiles })}
 		</Thumbnail.Root>
 	);
 };

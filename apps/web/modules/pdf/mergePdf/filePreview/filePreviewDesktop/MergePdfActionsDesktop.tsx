@@ -2,21 +2,23 @@ import { Dispatch, SetStateAction } from 'react';
 
 import { RotateCw, Trash2, ZoomIn } from 'lucide-react';
 
+import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { PdfMergeMetadata } from '@theasset/pdf';
 import { Viewer } from '@theasset/pdf-react/viewer';
-import { TheAssetFileItem } from '@theasset/ui/file-picker';
 import { Modal } from '@theasset/ui/modal';
 import { Thumbnail } from '@theasset/ui/thumbnail';
 
 import { useMergePdfActions } from '../shared/useMergePdfActions';
 
 type MergePdfActionsDesktopProp = {
-	file: TheAssetFileItem<PdfMergeMetadata>;
-	setFiles: Dispatch<SetStateAction<TheAssetFileItem<PdfMergeMetadata>[]>>;
+	file: TheAssetFile<PdfMergeMetadata>;
+	setFiles: Dispatch<SetStateAction<TheAssetFile<PdfMergeMetadata>[]>>;
 };
 
-export const MergePdfActionsDesktop = ({ file, setFiles }: MergePdfActionsDesktopProp) => {
-	const { onRemoveFile, onRotateFile } = useMergePdfActions({ setFiles });
+export const MergePdfActionsDesktop = (props: MergePdfActionsDesktopProp) => <Actions {...props} />;
+
+const Actions = ({ file, setFiles }: MergePdfActionsDesktopProp) => {
+	const { onRemoveFile, onRotateFile } = useMergePdfActions({ file, setFiles });
 
 	return (
 		<Thumbnail.Actions>
@@ -31,10 +33,10 @@ export const MergePdfActionsDesktop = ({ file, setFiles }: MergePdfActionsDeskto
 					<Viewer file={file} />
 				</Modal.Content>
 			</Modal.Root>
-			<Thumbnail.ActionButton onPress={() => onRotateFile(file.id, 'right')}>
+			<Thumbnail.ActionButton onPress={() => onRotateFile('right')}>
 				<RotateCw size={16} />
 			</Thumbnail.ActionButton>
-			<Thumbnail.ActionButton onPress={() => onRemoveFile(file.id)}>
+			<Thumbnail.ActionButton onPress={() => onRemoveFile()}>
 				<Trash2 size={16} />
 			</Thumbnail.ActionButton>
 		</Thumbnail.Actions>

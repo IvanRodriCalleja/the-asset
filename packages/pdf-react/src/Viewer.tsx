@@ -1,27 +1,18 @@
-import { Dispatch, SetStateAction, useState, useTransition } from 'react';
+import { useState, useTransition } from 'react';
 
 import { useCache } from '@theasset/cache/useCache';
+import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { getDocument } from '@theasset/pdf/document';
 import { getThumbnail } from '@theasset/pdf/thumbnail';
-import { Box, Flex, Stack, styled } from '@theasset/style-system/jsx';
-import { Button } from '@theasset/ui/button';
-import { TheAssetFileItem } from '@theasset/ui/file-picker';
-import { Number } from '@theasset/ui/form/number';
-import { Text } from '@theasset/ui/text';
+import { Box } from '@theasset/style-system/jsx';
 import { Thumbnail } from '@theasset/ui/thumbnail';
 
 import { getRatio, getScale } from './thumbnail/shared/getScale';
 import { Toolbar } from './viewer/Toolbar';
 
 type ViewerProps = {
-	file: TheAssetFileItem<{}>;
+	file: TheAssetFile<{}>;
 };
-
-const ViewerImageContainer = styled('div', {
-	base: {
-		padding: '1rem'
-	}
-});
 
 export const Viewer = ({ file }: ViewerProps) => {
 	const [page, setPageA] = useState(1);
