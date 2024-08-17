@@ -11,7 +11,7 @@ type ScrollViewerPageProps = {
 };
 
 export const ScrollViewerPage = ({ page, hash, pdf }: ScrollViewerPageProps) => {
-	const { src } = useCache({ page, hash }, () => getThumbnail({ pdf, page })); // TODO: Create custom hook
+	const src = useCache({ page, hash }, () => getThumbnail({ pdf, page })); // TODO: Create custom hook
 
 	return <Thumbnail.Image src={src} alt="" />; // TODO: Add ALT
 };

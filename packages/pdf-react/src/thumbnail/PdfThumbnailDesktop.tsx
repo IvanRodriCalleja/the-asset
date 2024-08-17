@@ -7,7 +7,6 @@ import { Thumbnail } from '@theasset/ui/thumbnail';
 
 import { usePdf } from '../infra/usePdf';
 import { useThumbnail } from '../infra/useThumbnail';
-import { getScale } from './shared/getScale';
 import { ThumbnailSkeletonDesktop } from './thumbnailDesktop/ThumbnailSkeletonDesktop';
 
 type ThumbnailProps = {
@@ -47,20 +46,14 @@ type PdfThumbnailProps = {
 
 const PdfThumbnail = ({ file, setFiles, actions, ...props }: PdfThumbnailProps) => {
 	const pdf = usePdf(file);
-	const { src, width, height } = useThumbnail({ file });
+	const src = useThumbnail({ file });
 
 	return (
 		<Thumbnail.Root width={180} {...props}>
 			{actions && actions({ file, setFiles })}
 
 			<Thumbnail.ImageContent>
-				<Thumbnail.Image
-					src={src}
-					alt={file.name}
-					shadow={file.metadata.rotation}
-					rotation={file.metadata.rotation}
-					scale={getScale(width, height, file.metadata.rotation)}
-				/>
+				<Thumbnail.Image src={src} alt={file.name} shadow />
 			</Thumbnail.ImageContent>
 
 			<Thumbnail.Footer>

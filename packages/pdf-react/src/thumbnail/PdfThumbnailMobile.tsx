@@ -10,7 +10,6 @@ import { Sortable } from '@theasset/ui/sortable';
 import { Thumbnail } from '@theasset/ui/thumbnail';
 
 import { useThumbnail } from '../infra/useThumbnail';
-import { getScale } from './shared/getScale';
 import { ThumbnailSkeletonMobile } from './thumbnailMobile/ThumbnailSkeletonMobile';
 
 type PdfThumbnailMobileProp = {
@@ -45,20 +44,14 @@ const FileName = styled('span', {
 
 const PdfThumbnail = ({ file, setFiles, actions, ...props }: PdfThumbnailProps) => {
 	const pdf = usePdf(file);
-	const { src, width, height } = useThumbnail({ file });
+	const src = useThumbnail({ file });
 
 	return (
 		<Thumbnail.Root width="100%" paddingBottom={0} {...props}>
 			<Stack direction="row">
 				<Box width="48px">
 					<Thumbnail.ImageContent>
-						<Thumbnail.Image
-							src={src}
-							alt={file.name}
-							shadow={file.metadata.rotation}
-							rotation={file.metadata.rotation}
-							scale={getScale(width, height, file.metadata.rotation)}
-						/>
+						<Thumbnail.Image src={src} alt={file.name} shadow />
 					</Thumbnail.ImageContent>
 				</Box>
 				<Stack flex={1} justifyContent="center">

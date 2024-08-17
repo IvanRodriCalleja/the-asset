@@ -6,11 +6,10 @@ import { Thumbnail } from '@theasset/ui/thumbnail';
 
 import { usePdf } from './infra/usePdf';
 import { useThumbnail } from './infra/useThumbnail';
-import { getRatio, getScale } from './thumbnail/shared/getScale';
 import { Toolbar } from './viewer/Toolbar';
 
 type ViewerProps = {
-	file: TheAssetFile<{}>;
+	file: TheAssetFile;
 };
 
 export const Viewer = ({ file }: ViewerProps) => {
@@ -24,14 +23,7 @@ export const Viewer = ({ file }: ViewerProps) => {
 	};
 
 	const pdf = usePdf(file);
-	const { src, width, height } = useThumbnail({ file, page });
-
-	const ratio = getRatio(width, height, file.metadata.rotation);
-
-	const screenHeight = window.innerHeight;
-	const maxHeight = screenHeight - 56 - 3 * 16;
-
-	const imageWidth = maxHeight / ratio;
+	const src = useThumbnail({ file, page });
 
 	return (
 		<>
@@ -42,14 +34,8 @@ export const Viewer = ({ file }: ViewerProps) => {
 				transform="translate(-50%, calc(-50% - 2rem))"
 				bottom="72px"
 				height="fit-content"
-				maxHeight="calc(100vh - 56px - 3rem)"
-				style={{ width: `${imageWidth}px`, maxWidth: `${screenHeight}px` }}>
-				<Thumbnail.Image
-					src={src}
-					alt={file.name}
-					rotation={file.metadata.rotation}
-					scale={getScale(width, height, file.metadata.rotation)}
-				/>
+				maxHeight="calc(100vh - 56px - 3rem)">
+				<Thumbnail.Image src={src} alt={file.name} />
 			</Box>
 			<Box position="absolute" bottom={{ base: 0, md: '1rem' }} left={0} right={0}>
 				<Toolbar numPages={pdf.numPages} page={page} setPage={setPage} />
