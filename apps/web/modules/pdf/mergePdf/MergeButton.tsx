@@ -10,10 +10,7 @@ import { Stack } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
 import { replaceParams } from '@theasset/ui/utils/replaceParams';
 
-import { hashArrayBuffer } from 'modules/shared/infra/hashArrayBuffer';
 import { mergePdfIdPath } from 'routes';
-
-import { MergeResultFile } from '../domain/MergeResultFile';
 
 type MergeButtonProps = {
 	files: TheAssetFile[];
@@ -25,20 +22,18 @@ export const MergeButton = ({ files }: MergeButtonProps) => {
 	const params = useParams();
 
 	const onMerge = async () => {
-		const mergedPdf = await mergePdfs({
-			files: files.map(file => ({ buffer: file.buffer }))
-		});
+		const mergedPdf = await mergePdfs({ files });
 
-		const fileHash = await hashArrayBuffer(mergedPdf);
+		const id = new Date().getTime().toString();
 
-		const resultFile: MergeResultFile = {
+		const resultFile: TheAssetFile = {
+			id,
 			buffer: mergedPdf,
-			hash: fileHash,
 			name: files[0]!.name
 		};
-		cacheStore.addResult(fileHash, resultFile);
+		cacheStore.addResult(id, resultFile);
 
-		push(replaceParams(mergePdfIdPath, { id: fileHash, ...params }));
+		push(replaceParams(mergePdfIdPath, { id, ...params }));
 	};
 
 	return (

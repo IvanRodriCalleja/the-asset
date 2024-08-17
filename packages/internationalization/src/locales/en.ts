@@ -21,7 +21,8 @@ const en = {
 	shared: {
 		continueWith: 'Continue with',
 		pages: 'pages',
-		download: 'Download'
+		download: 'Download',
+		page: 'Page'
 	}
 };
 

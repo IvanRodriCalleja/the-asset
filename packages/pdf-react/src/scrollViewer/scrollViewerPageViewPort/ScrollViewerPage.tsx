@@ -1,17 +1,17 @@
-import { PDFDocumentProxy } from 'pdfjs-dist/build/pdf.min.mjs';
-
-import { useCache } from '@theasset/cache/useCache';
-import { getThumbnail } from '@theasset/pdf/thumbnail';
+import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
+import { useLocale } from '@theasset/internationalization/hooks';
 import { Thumbnail } from '@theasset/ui/thumbnail';
+
+import { useThumbnail } from '../../infra/useThumbnail';
 
 type ScrollViewerPageProps = {
 	page: number;
-	hash: string;
-	pdf: PDFDocumentProxy;
+	file: TheAssetFile;
 };
 
-export const ScrollViewerPage = ({ page, hash, pdf }: ScrollViewerPageProps) => {
-	const src = useCache({ page, hash }, () => getThumbnail({ pdf, page })); // TODO: Create custom hook
+export const ScrollViewerPage = ({ page, file }: ScrollViewerPageProps) => {
+	const { shared } = useLocale();
+	const src = useThumbnail({ file, page });
 
-	return <Thumbnail.Image src={src} alt="" />; // TODO: Add ALT
+	return <Thumbnail.Image src={src} alt={`${shared.page} ${page}`} />;
 };

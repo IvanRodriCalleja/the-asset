@@ -1,14 +1,9 @@
 import { PDFDocument } from 'pdf-lib';
 
-type MergeFileItem = {
-	buffer: ArrayBuffer;
-	metadata: {
-		rotation: number;
-	};
-};
+import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 
 type MergePdfs = {
-	files: MergeFileItem[];
+	files: TheAssetFile[];
 };
 
 export const mergePdfs = async ({ files }: MergePdfs) => {

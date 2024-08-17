@@ -21,7 +21,7 @@ const UploadSection = styled('section', {
 	}
 });
 
-//TODO: REPLACE BY LITERALS
+//TODO: HIGHLIGHT MARKER AS ENUM
 
 export const MergePdf = () => {
 	const { mergePdf } = useLocale();

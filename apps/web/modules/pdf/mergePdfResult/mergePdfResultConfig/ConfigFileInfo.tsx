@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, Suspense } from 'react';
 
+import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { Stack, styled } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
 import { Popover } from '@theasset/ui/popover';
@@ -19,13 +20,12 @@ const FileName = styled(Text, {
 });
 
 type ConfigFileInfoProps = {
-	hash: string;
-	buffer: ArrayBuffer;
+	file: TheAssetFile;
 	name: string;
 	setName: Dispatch<SetStateAction<string>>;
 };
 
-export const ConfigFileInfo = ({ name, hash, buffer, setName }: ConfigFileInfoProps) => {
+export const ConfigFileInfo = ({ file, name, setName }: ConfigFileInfoProps) => {
 	const extension = name.split('.').pop() || '';
 	const notExtension = name.replace(`.${extension}`, '');
 
@@ -51,7 +51,7 @@ export const ConfigFileInfo = ({ name, hash, buffer, setName }: ConfigFileInfoPr
 				</Text>
 			</Stack>
 			<Suspense fallback={<FileMetadataSkeleton />}>
-				<FileMetadata hash={hash} buffer={buffer} />
+				<FileMetadata file={file} />
 			</Suspense>
 		</Stack>
 	);

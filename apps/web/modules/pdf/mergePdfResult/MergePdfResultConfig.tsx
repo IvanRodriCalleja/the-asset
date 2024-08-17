@@ -1,18 +1,18 @@
 import { useState } from 'react';
 
-import { CrumpledPaperIcon, DownloadIcon, ReloadIcon } from '@radix-ui/react-icons';
+import { CrumpledPaperIcon } from '@radix-ui/react-icons';
 
+import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { Box, Stack } from '@theasset/style-system/jsx';
 import { Separator } from '@theasset/ui/separator';
 
-import { MergeResultFile } from '../domain/MergeResultFile';
 import { ConfigFileInfo } from './mergePdfResultConfig/ConfigFileInfo';
 import { ConfigTitle } from './mergePdfResultConfig/ConfigTitle';
 import { ContinueTool, ContinueWith } from './mergePdfResultConfig/ContinueWith';
 import { MergePdfResultConfigActions } from './mergePdfResultConfig/MergePdfResultConfigActions';
 
 type MergePdfResultConfigProps = {
-	file: MergeResultFile;
+	file: TheAssetFile;
 	isOpen: boolean;
 	toggleOpen: () => void;
 };
@@ -39,12 +39,7 @@ export const MergePdfResultConfig = ({ file, isOpen, toggleOpen }: MergePdfResul
 				<Stack gap={8} overflow="auto">
 					<ConfigTitle />
 
-					<ConfigFileInfo
-						name={fileName}
-						hash={file.hash}
-						buffer={file.buffer}
-						setName={setFileName}
-					/>
+					<ConfigFileInfo name={fileName} file={file} setName={setFileName} />
 
 					<ContinueWith tools={tools} />
 				</Stack>

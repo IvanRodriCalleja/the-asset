@@ -1,18 +1,18 @@
-import { useCache } from '@theasset/cache/useCache';
+import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks';
-import { getDocument, getSize } from '@theasset/pdf/document';
+import { usePdf } from '@theasset/pdf-react/infra/usePdf';
+import { getSize } from '@theasset/pdf/document';
 import { Text } from '@theasset/ui/text';
 
 type FileMetadataProps = {
-	buffer: ArrayBuffer;
-	hash: string;
+	file: TheAssetFile;
 };
 
-export const FileMetadata = ({ buffer, hash }: FileMetadataProps) => {
+export const FileMetadata = ({ file }: FileMetadataProps) => {
 	const { shared } = useLocale();
-	const pdf = useCache({ hash, type: 'pdf' }, () => getDocument({ buffer })); // TODO: Share in a unique hook
+	const pdf = usePdf(file);
 
-	const size = getSize(buffer);
+	const size = getSize(file.buffer);
 
 	return (
 		<Text size="xs" color="textClear" family="mono">
