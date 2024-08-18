@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
-import { RotateCw, Trash2, ZoomIn } from 'lucide-react';
+import { MagnifyingGlassIcon, ReloadIcon, TrashIcon } from '@radix-ui/react-icons';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { Viewer } from '@theasset/pdf-react/viewer';
@@ -24,7 +24,7 @@ const Actions = ({ file, setFiles }: MergePdfActionsDesktopProp) => {
 			<Modal.Root>
 				<Modal.Trigger>
 					<Thumbnail.ActionButton>
-						<ZoomIn size={16} />
+						<MagnifyingGlassIcon />
 					</Thumbnail.ActionButton>
 				</Modal.Trigger>
 				<Modal.Content size="none">
@@ -32,11 +32,15 @@ const Actions = ({ file, setFiles }: MergePdfActionsDesktopProp) => {
 					<Viewer file={file} />
 				</Modal.Content>
 			</Modal.Root>
+
+			<Thumbnail.ActionButton onPress={() => onRotateFile('left')}>
+				<ReloadIcon style={{ transform: 'scaleX(-1)' }} />
+			</Thumbnail.ActionButton>
 			<Thumbnail.ActionButton onPress={() => onRotateFile('right')}>
-				<RotateCw size={16} />
+				<ReloadIcon />
 			</Thumbnail.ActionButton>
 			<Thumbnail.ActionButton onPress={() => onRemoveFile()}>
-				<Trash2 size={16} />
+				<TrashIcon />
 			</Thumbnail.ActionButton>
 		</Thumbnail.Actions>
 	);

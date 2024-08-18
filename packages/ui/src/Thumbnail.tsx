@@ -17,7 +17,7 @@ const Root = styled(Stack, {
 		transition: 'background-color 0.2s',
 
 		background: {
-			base: 'rgb(186 163 255 / 20%)',
+			base: '#f3eaff',
 			md: 'transparent'
 		},
 
@@ -33,7 +33,7 @@ const Root = styled(Stack, {
 		},
 
 		_hover: {
-			background: 'rgb(186 163 255 / 20%)'
+			background: '#f3eaff'
 		}
 	}
 });

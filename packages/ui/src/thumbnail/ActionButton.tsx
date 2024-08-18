@@ -14,7 +14,11 @@ export const ActionButton = styled(Button, {
 		padding: 0,
 
 		_hover: {
-			bga: 'primary/80'
+			bga: 'primary/60'
+		},
+
+		_focusVisible: {
+			zIndex: 2
 		},
 
 		'& svg': {
