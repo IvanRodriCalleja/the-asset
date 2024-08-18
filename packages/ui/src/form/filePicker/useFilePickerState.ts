@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
+import { TheAssetFile, hashArrayBuffer } from '@theasset/file/domain/the-asset-file';
 
 export const useFilePickerState = () => {
 	const [files, setFiles] = useState<TheAssetFile[]>([]);
@@ -24,8 +24,11 @@ export const useFilePickerState = () => {
 					fileReader.readAsArrayBuffer(file);
 				});
 
+				const hash = await hashArrayBuffer(buffer);
+
 				const fileItem: TheAssetFile = {
 					id,
+					hash,
 					buffer,
 					name
 				};

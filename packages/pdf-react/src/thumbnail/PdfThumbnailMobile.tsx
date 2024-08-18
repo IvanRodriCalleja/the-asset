@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode, SetStateAction, Suspense } from 'react';
+import { Dispatch, ReactNode, SetStateAction } from 'react';
 
 import { GripVertical } from 'lucide-react';
 
@@ -7,7 +7,7 @@ import { usePdf } from '@theasset/pdf-react/infra/usePdf';
 import { Box, Flex, Stack, styled } from '@theasset/style-system/jsx';
 import { Badge } from '@theasset/ui/badge';
 import { Sortable } from '@theasset/ui/sortable';
-import { Thumbnail } from '@theasset/ui/thumbnail';
+import { Thumbnail, useThumbnailSuspense } from '@theasset/ui/thumbnail';
 
 import { useThumbnail } from '../infra/useThumbnail';
 import { ThumbnailSkeletonMobile } from './thumbnailMobile/ThumbnailSkeletonMobile';
@@ -19,9 +19,9 @@ type PdfThumbnailMobileProp = {
 };
 
 export const PdfThumbnailMobile = (props: PdfThumbnailMobileProp) => (
-	<Suspense fallback={<ThumbnailSkeletonMobile />}>
+	<Thumbnail.Suspense fallback={<ThumbnailSkeletonMobile />}>
 		<PdfThumbnail {...props} />
-	</Suspense>
+	</Thumbnail.Suspense>
 );
 
 type ActionProps = {
@@ -46,12 +46,14 @@ const PdfThumbnail = ({ file, setFiles, actions, ...props }: PdfThumbnailProps) 
 	const pdf = usePdf(file);
 	const src = useThumbnail({ file });
 
+	const { onLoad } = useThumbnailSuspense();
+
 	return (
 		<Thumbnail.Root width="100%" paddingBottom={0} {...props}>
 			<Stack direction="row">
 				<Box width="48px">
 					<Thumbnail.ImageContent>
-						<Thumbnail.Image src={src} alt={file.name} shadow />
+						<Thumbnail.Image src={src} alt={file.name} onLoad={onLoad} shadow />
 					</Thumbnail.ImageContent>
 				</Box>
 				<Stack flex={1} justifyContent="center">

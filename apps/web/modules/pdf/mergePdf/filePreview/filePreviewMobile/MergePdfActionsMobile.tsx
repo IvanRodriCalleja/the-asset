@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
-import { RotateCw, Trash2, ZoomIn } from 'lucide-react';
+import { MagnifyingGlassIcon, ReloadIcon, TrashIcon } from '@radix-ui/react-icons';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { Thumbnail } from '@theasset/ui/thumbnail';
@@ -20,13 +20,16 @@ const Actions = ({ file, setFiles }: MergePdfActionsMobileProp) => {
 	return (
 		<Thumbnail.MobileActions>
 			<Thumbnail.MobileAction>
-				<ZoomIn size={16} />
+				<MagnifyingGlassIcon />
+			</Thumbnail.MobileAction>
+			<Thumbnail.MobileAction onPress={() => onRotateFile('left')}>
+				<ReloadIcon style={{ transform: 'scaleX(-1)' }} />
 			</Thumbnail.MobileAction>
 			<Thumbnail.MobileAction onPress={() => onRotateFile('right')}>
-				<RotateCw size={16} />
+				<ReloadIcon />
 			</Thumbnail.MobileAction>
 			<Thumbnail.MobileAction onPress={() => onRemoveFile()}>
-				<Trash2 size={16} />
+				<TrashIcon />
 			</Thumbnail.MobileAction>
 		</Thumbnail.MobileActions>
 	);

@@ -1,3 +1,5 @@
+import { ReactEventHandler } from 'react';
+
 import { styled } from '@theasset/style-system/jsx';
 import { StyledVariantProps } from '@theasset/style-system/types';
 
@@ -24,6 +26,7 @@ type ImageVariants = StyledVariantProps<typeof ThumbnailImage>;
 type ImageProps = {
 	src: string;
 	alt: string;
+	onLoad?: ReactEventHandler<HTMLImageElement>;
 } & ImageVariants;
 
 export const Image = (props: ImageProps) => <ThumbnailImage {...props} />;

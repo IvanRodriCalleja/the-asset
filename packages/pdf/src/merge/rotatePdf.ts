@@ -6,23 +6,24 @@ type RotatePdfArgs = {
 	page?: number;
 };
 
-//TODO: Create in specific file
 export const rotatePdf = async ({ buffer, rotation, page }: RotatePdfArgs): Promise<Uint8Array> => {
 	const pdfDoc = await PDFDocument.load(buffer);
 	const pages = pdfDoc.getPages();
 
-	if (page && (page < 0 || page >= pages.length)) {
+	const pageNumber = page ? page - 1 : page;
+
+	if (pageNumber && (pageNumber < 0 || pageNumber >= pages.length)) {
 		throw new Error('Invalid page number');
 	}
 
-	if (!page) {
+	if (!pageNumber) {
 		pages.forEach(page => {
 			const { angle } = page.getRotation();
 			page.setRotation(degrees(angle + rotation));
 		});
 	} else {
-		const { angle } = pages[page]!.getRotation();
-		pages[page]!.setRotation(degrees(angle + rotation));
+		const { angle } = pages[pageNumber]!.getRotation();
+		pages[pageNumber]!.setRotation(degrees(angle + rotation));
 	}
 
 	return await pdfDoc.save();

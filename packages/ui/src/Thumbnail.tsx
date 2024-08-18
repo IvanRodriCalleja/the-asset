@@ -7,6 +7,7 @@ import { Image } from './thumbnail/Image';
 import { ImageContent } from './thumbnail/ImageContent';
 import { MobileAction } from './thumbnail/MobileAction';
 import { MobileActions } from './thumbnail/MobileActions';
+import { Suspense, useThumbnailSuspense } from './thumbnail/Suspense';
 
 const Root = styled(Stack, {
 	base: {
@@ -46,5 +47,8 @@ export const Thumbnail = {
 	ActionButton,
 	Footer,
 	MobileAction,
-	MobileActions
+	MobileActions,
+	Suspense
 };
+
+export { useThumbnailSuspense };

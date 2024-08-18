@@ -1,9 +1,9 @@
-import { Dispatch, ReactNode, SetStateAction, Suspense } from 'react';
+import { Dispatch, ReactNode, SetStateAction } from 'react';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { Box, styled } from '@theasset/style-system/jsx';
 import { Badge } from '@theasset/ui/badge';
-import { Thumbnail } from '@theasset/ui/thumbnail';
+import { Thumbnail, useThumbnailSuspense } from '@theasset/ui/thumbnail';
 
 import { usePdf } from '../infra/usePdf';
 import { useThumbnail } from '../infra/useThumbnail';
@@ -19,9 +19,9 @@ type ThumbnailProps = {
 
 export const PdfThumbnailDesktop = (props: ThumbnailProps) => {
 	return (
-		<Suspense fallback={<ThumbnailSkeletonDesktop />}>
+		<Thumbnail.Suspense fallback={<ThumbnailSkeletonDesktop />}>
 			<PdfThumbnail {...props} />
-		</Suspense>
+		</Thumbnail.Suspense>
 	);
 };
 
@@ -48,12 +48,14 @@ const PdfThumbnail = ({ file, setFiles, actions, ...props }: PdfThumbnailProps) 
 	const pdf = usePdf(file);
 	const src = useThumbnail({ file });
 
+	const { onLoad } = useThumbnailSuspense();
+
 	return (
 		<Thumbnail.Root width={180} {...props}>
 			{actions && actions({ file, setFiles })}
 
 			<Thumbnail.ImageContent>
-				<Thumbnail.Image src={src} alt={file.name} shadow />
+				<Thumbnail.Image src={src} alt={file.name} onLoad={onLoad} shadow />
 			</Thumbnail.ImageContent>
 
 			<Thumbnail.Footer>

@@ -12,7 +12,7 @@ type UseThumbnailProps = {
 export const useThumbnail = ({ file, page = 1 }: UseThumbnailProps) => {
 	const pdf = usePdf(file);
 
-	const src = useCache({ id: file.id, type: 'image', page }, () => getThumbnail({ pdf, page }));
+	const src = useCache({ hash: file.hash, type: 'image', page }, () => getThumbnail({ pdf, page }));
 
 	return src;
 };
