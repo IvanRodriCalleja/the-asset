@@ -8,11 +8,16 @@ import { usePdf } from './infra/usePdf';
 import { useThumbnail } from './infra/useThumbnail';
 import { Toolbar } from './viewer/Toolbar';
 
-type ViewerProps = {
-	file: TheAssetFile;
+type ChildrenProps = {
+	page: number;
 };
 
-export const Viewer = ({ file }: ViewerProps) => {
+type ViewerProps = {
+	file: TheAssetFile;
+	children: (props: ChildrenProps) => JSX.Element;
+};
+
+export const Viewer = ({ file, children }: ViewerProps) => {
 	const [page, setPageA] = useState(1);
 	const startTransition = useTransition()[1];
 
@@ -38,7 +43,9 @@ export const Viewer = ({ file }: ViewerProps) => {
 				<Thumbnail.Image src={src} alt={file.name} />
 			</Box>
 			<Box position="absolute" bottom={{ base: 0, md: '1rem' }} left={0} right={0}>
-				<Toolbar numPages={pdf.numPages} page={page} setPage={setPage} />
+				<Toolbar numPages={pdf.numPages} page={page} file={file} setPage={setPage}>
+					{children}
+				</Toolbar>
 			</Box>
 		</>
 	);

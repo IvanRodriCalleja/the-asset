@@ -21,8 +21,8 @@ export const rotatePdf = async ({ buffer, rotation, page }: RotatePdfArgs): Prom
 			page.setRotation(degrees(angle + rotation));
 		});
 	} else {
-		const { angle } = pages[page]!.getRotation();
-		pages[page]!.setRotation(degrees(angle + rotation));
+		const { angle } = pages[page - 1]!.getRotation();
+		pages[page - 1]!.setRotation(degrees(angle + rotation));
 	}
 
 	return await pdfDoc.save();

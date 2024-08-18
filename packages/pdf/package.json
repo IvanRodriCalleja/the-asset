@@ -5,7 +5,8 @@
   "exports": {
     "./thumbnail": "./src/thumbnail/index.ts",
     "./document": "./src/document/index.ts",
-    "./merge": "./src/merge/index.ts"
+    "./merge": "./src/merge/index.ts",
+    "./shared": "./src/shared/index.ts"
   },
   "scripts": {
     "lint": "eslint src --ext .ts,.tsx --quiet --cache",

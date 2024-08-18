@@ -26,6 +26,7 @@ export const useFilePickerState = () => {
 
 				const fileItem: TheAssetFile = {
 					id,
+					contentId: id,
 					buffer,
 					name
 				};

@@ -15,9 +15,14 @@ const ThumbnailActionsContainer = styled('div', {
 		top: 1,
 		background: 'neutral.400',
 		zIndex: 2,
-		overflow: 'hidden',
 		borderRadius: 'md',
-		boxShadow: 'xl'
+		boxShadow: 'xl',
+		'& button:first-child': {
+			borderLeftRadius: 'md !important'
+		},
+		'& button:last-child': {
+			borderRightRadius: 'md !important'
+		}
 	}
 });
 
