@@ -26,6 +26,7 @@ type ImageVariants = StyledVariantProps<typeof ThumbnailImage>;
 type ImageProps = {
 	src: string;
 	alt: string;
+	className?: string;
 	onLoad?: ReactEventHandler<HTMLImageElement>;
 } & ImageVariants;
 

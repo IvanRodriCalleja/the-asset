@@ -1,6 +1,7 @@
 import { useState, useTransition } from 'react';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
+import { css } from '@theasset/style-system/css';
 import { Box } from '@theasset/style-system/jsx';
 import { Thumbnail } from '@theasset/ui/thumbnail';
 
@@ -23,7 +24,10 @@ export const Viewer = ({ file }: ViewerProps) => {
 	};
 
 	const pdf = usePdf(file);
-	const src = useThumbnail({ file, page });
+	const { src, width, height } = useThumbnail({ file, page });
+
+	const isVertical = width < height;
+	const aspectRatio = width / height;
 
 	return (
 		<>
@@ -33,9 +37,16 @@ export const Viewer = ({ file }: ViewerProps) => {
 				left="50%"
 				transform="translate(-50%, calc(-50% - 2rem))"
 				bottom="72px"
-				height="fit-content"
-				maxHeight="calc(100vh - 56px - 3rem)">
-				<Thumbnail.Image src={src} alt={file.name} />
+				height={isVertical ? '100%' : 'fit-content'}
+				maxHeight="calc(100vh - 56px - 3rem)"
+				style={{ aspectRatio: `${aspectRatio} / 1` }}>
+				<Thumbnail.Image
+					src={src}
+					alt={file.name}
+					className={css(
+						isVertical ? { width: 'auto', height: '100%' } : { width: '100%', height: 'auto' }
+					)}
+				/>
 			</Box>
 			<Box position="absolute" bottom={{ base: 0, md: '1rem' }} left={0} right={0}>
 				<Toolbar numPages={pdf.numPages} page={page} setPage={setPage} />

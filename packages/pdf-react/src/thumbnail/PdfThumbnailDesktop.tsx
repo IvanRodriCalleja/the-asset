@@ -46,7 +46,7 @@ type PdfThumbnailProps = {
 
 const PdfThumbnail = ({ file, setFiles, actions, ...props }: PdfThumbnailProps) => {
 	const pdf = usePdf(file);
-	const src = useThumbnail({ file });
+	const { src } = useThumbnail({ file });
 
 	const { onLoad } = useThumbnailSuspense();
 
