@@ -1,5 +1,6 @@
 import { type Locales } from '../domain/Locales';
 
+//@ts-expect-error
 const es: Locales = {
 	home: {
 		title: 'Haz tu pdf realidad',

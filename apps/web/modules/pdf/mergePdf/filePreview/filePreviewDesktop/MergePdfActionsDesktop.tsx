@@ -7,6 +7,7 @@ import { Viewer } from '@theasset/pdf-react/viewer';
 import { Modal } from '@theasset/ui/modal';
 import { Thumbnail } from '@theasset/ui/thumbnail';
 
+import { ViewerActions } from '../shared/ViewerActions';
 import { useMergePdfActions } from '../shared/useMergePdfActions';
 
 type MergePdfActionsDesktopProp = {
@@ -29,7 +30,9 @@ const Actions = ({ file, setFiles }: MergePdfActionsDesktopProp) => {
 				</Modal.Trigger>
 				<Modal.Content size="none">
 					<Modal.Close />
-					<Viewer file={file} />
+					<Viewer file={file}>
+						{({ page }) => <ViewerActions page={page} file={file} setFiles={setFiles} />}
+					</Viewer>
 				</Modal.Content>
 			</Modal.Root>
 

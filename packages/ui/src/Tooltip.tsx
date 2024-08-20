@@ -53,12 +53,6 @@ const ToolContent = styled(Content, {
 	}
 });
 
-const ToolTrigger = styled(Trigger, {
-	base: {
-		width: '100%'
-	}
-});
-
 const TooltipContent = forwardRef<
 	ElementRef<typeof Content>,
 	ComponentPropsWithoutRef<typeof Content>
@@ -75,9 +69,7 @@ const TooltipRoot = (props: PropsWithChildren<TooltipProps>) => (
 	</Provider>
 );
 
-const TooltipTrigger = (props: PropsWithChildren<TooltipTriggerProps>) => (
-	<ToolTrigger {...props} />
-);
+const TooltipTrigger = (props: PropsWithChildren<TooltipTriggerProps>) => <Trigger {...props} />;
 
 export const Tooltip = {
 	Root: TooltipRoot,

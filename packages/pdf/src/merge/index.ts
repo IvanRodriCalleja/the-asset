@@ -1,2 +1,2 @@
 export { mergePdfs } from './mergePdfs';
-export { rotatePdf } from './rotatePdf';
+export { rotatePdfFile, rotatePdfPage } from './rotatePdf';
