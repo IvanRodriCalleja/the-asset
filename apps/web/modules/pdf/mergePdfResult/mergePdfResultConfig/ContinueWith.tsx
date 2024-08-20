@@ -4,7 +4,7 @@ import { ChevronRightIcon } from '@radix-ui/react-icons';
 
 import { useLocale } from '@theasset/internationalization/hooks';
 import { Flex, Stack } from '@theasset/style-system/jsx';
-import { Link } from '@theasset/ui/next/link';
+import { Link } from '@theasset/ui/nextjs/link';
 import { Text } from '@theasset/ui/text';
 
 type ContinueWithProps = {

@@ -4,7 +4,7 @@ import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks';
 import { Stack, styled } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
-import { Link } from '@theasset/ui/next/link';
+import { Link } from '@theasset/ui/nextjs/link';
 
 import { downloadFile } from 'modules/shared/infra/downloadFile';
 import { mergePdfPath } from 'routes';

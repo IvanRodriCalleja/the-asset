@@ -1,6 +1,6 @@
 import { css } from '@theasset/style-system/css';
 import { styled } from '@theasset/style-system/jsx';
-import { Link } from '@theasset/ui/next/link';
+import { Link } from '@theasset/ui/nextjs/link';
 
 import { Tool } from 'modules/home/domain/Tool';
 

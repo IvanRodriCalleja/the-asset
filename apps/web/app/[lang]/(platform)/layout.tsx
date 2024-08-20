@@ -17,7 +17,7 @@ const Main = styled('main', {
 	}
 });
 
-const PlatformLayout = async ({ children }: PropsWithChildren) => (
+const PlatformLayout = ({ children }: PropsWithChildren) => (
 	<>
 		<Header />
 		<Main>{children}</Main>
