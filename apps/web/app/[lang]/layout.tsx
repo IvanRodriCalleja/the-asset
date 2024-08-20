@@ -3,6 +3,8 @@ import { PropsWithChildren } from 'react';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 
+import { Analytics } from '@vercel/analytics/react';
+
 import { LocaleParam } from '@theasset/internationalization/domain';
 import { useLocale } from '@theasset/internationalization/hooks';
 import { I18nProvider } from '@theasset/internationalization/ui';
@@ -30,6 +32,7 @@ const RootLayout = async ({ children, params: { lang } }: PropsWithChildren<Loca
 			<I18nProvider locales={locales} currentLanguage={lang}>
 				<body>{children}</body>
 			</I18nProvider>
+			<Analytics />
 		</html>
 	);
 };
