@@ -4,7 +4,7 @@ import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks';
 import { Stack, styled } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
-import { Link } from '@theasset/ui/nextjs/link';
+import { TheLink } from '@theasset/ui/the-link';
 
 import { downloadFile } from 'modules/shared/infra/downloadFile';
 import { mergePdfPath } from 'routes';
@@ -50,10 +50,10 @@ export const MergePdfResultConfigActions = ({
 
 	return (
 		<Stack paddingInline={4}>
-			<Link href={mergePdfPath} size="lg" variant="outline">
+			<TheLink href={mergePdfPath} size="lg" variant="outline">
 				<ReloadIcon />
 				{mergePdfResult.mergeNewPdf}
-			</Link>
+			</TheLink>
 			<Stack direction="row" gap="1px">
 				<DownloadButton size="lg" onPress={onDownload}>
 					<DownloadIcon />

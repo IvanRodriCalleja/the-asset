@@ -2,7 +2,7 @@ import Logo from 'assets/logo.svg';
 
 import { css } from '@theasset/style-system/css';
 import { HStack, styled } from '@theasset/style-system/jsx';
-import { Link } from '@theasset/ui/nextjs/link';
+import { TheLink } from '@theasset/ui/the-link';
 
 import { homePath } from 'routes';
 
@@ -52,14 +52,14 @@ const linkClassName = css({ textDecoration: 'none !important' });
 export const Header = () => (
 	<HeaderComponent>
 		<Nav>
-			<Link href={homePath} className={linkClassName} variant="none">
+			<TheLink href={homePath} className={linkClassName} variant="none">
 				<HStack>
 					<TheAssetLogo />
 					<Title>
 						<b>THEPDF</b>
 					</Title>
 				</HStack>
-			</Link>
+			</TheLink>
 		</Nav>
 	</HeaderComponent>
 );

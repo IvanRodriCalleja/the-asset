@@ -18,7 +18,7 @@
     "./text": "./src/Text.tsx",
     "./tooltip": "./src/Tooltip.tsx",
     "./thumbnail": "./src/Thumbnail.tsx",
-    "./nextjs/link": "./src/next/link.tsx",
+    "./the-link": "./src/next/link.tsx",
     "./pdf/thumbnail": "./src/pdf/Thumbnail.tsx",
     "./popover": "./src/Popover.tsx",
     "./utils/replaceParams": "./utils/replaceParams.ts",

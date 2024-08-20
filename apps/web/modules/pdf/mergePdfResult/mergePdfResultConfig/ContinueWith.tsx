@@ -4,8 +4,8 @@ import { ChevronRightIcon } from '@radix-ui/react-icons';
 
 import { useLocale } from '@theasset/internationalization/hooks';
 import { Flex, Stack } from '@theasset/style-system/jsx';
-import { Link } from '@theasset/ui/nextjs/link';
 import { Text } from '@theasset/ui/text';
+import { TheLink } from '@theasset/ui/the-link';
 
 type ContinueWithProps = {
 	tools: ContinueTool[];
@@ -31,7 +31,7 @@ export const ContinueWith = ({ tools }: ContinueWithProps) => {
 			<Stack gap={2}>
 				{tools.map(({ icon: Icon, label, href }) => (
 					<Flex key={href} direction="column">
-						<Link variant="outline" href={href}>
+						<TheLink variant="outline" href={href}>
 							<Stack
 								width="100%"
 								direction="row"
@@ -42,7 +42,7 @@ export const ContinueWith = ({ tools }: ContinueWithProps) => {
 								</Stack>
 								<ChevronRightIcon />
 							</Stack>
-						</Link>
+						</TheLink>
 					</Flex>
 				))}
 			</Stack>

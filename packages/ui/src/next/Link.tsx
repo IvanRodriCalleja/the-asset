@@ -17,7 +17,7 @@ export type LinkProps = NextLinkProps &
 		variant: ButtonVariant['variant'] | 'none';
 	};
 
-export const Link = forwardRef<HTMLAnchorElement, PropsWithChildren<LinkProps>>(
+export const TheLink = forwardRef<HTMLAnchorElement, PropsWithChildren<LinkProps>>(
 	({ variant = 'link', ...props }, ref) => {
 		const href = useDynamicSegments(props.href.toString());
 
@@ -29,4 +29,4 @@ export const Link = forwardRef<HTMLAnchorElement, PropsWithChildren<LinkProps>>(
 	}
 );
 
-Link.displayName = 'Link';
+TheLink.displayName = 'Link';
