@@ -6,8 +6,8 @@ import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 
 import { styled } from '@theasset/style-system/jsx';
 
-import { useDynamicSegments } from '../../utils/useDynamicSegments';
-import { type ButtonVariant, buttonRecipe } from '../Button';
+import { useDynamicSegments } from '../utils/useDynamicSegments';
+import { type ButtonVariant, buttonRecipe } from './Button';
 
 const TheAssetLink = styled(NextLink, buttonRecipe);
 
