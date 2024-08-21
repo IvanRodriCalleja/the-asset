@@ -121,8 +121,6 @@ const TooltipHeadBlur = styled('div', {
 		h: '220px',
 		w: '220px',
 		transform: 'translate(-50%, -50%) rotate(0) skewX(0) skewY(0) scaleX(1) scaleY(1)',
-		//bgImage: 'linear-gradient(rgb(255, 51, 88), rgb(255, 79, 216))',
-		bgImage: 'linear-gradient(rgb(185 37 205), rgb(0 48 255))',
 		opacity: '0.05',
 		mixBlendMode: 'normal',
 		filter: 'blur(20px)'
@@ -178,22 +176,22 @@ type ToolCardProps = {
 	tool: Tool;
 };
 
-export const ToolCard = ({ tool: { icon: Icon, name, href, color } }: ToolCardProps) => (
+export const ToolCard = ({
+	tool: { icon: Icon, name, href, color, description }
+}: ToolCardProps) => (
 	<ToolCardContainer>
 		<TheLink className={toolCardLink} href={href} variant="none">
 			<ToolBorder aria-hidden="true" />
 			<ToolInnerCard>
 				<ToolCardHeader>
-					<TooltipHeadBlur />
+					<TooltipHeadBlur style={{ background: color }} />
 					<ToolCardImageContainer style={{ background: color }}>
 						<Icon />
 					</ToolCardImageContainer>
 				</ToolCardHeader>
 				<ToolCardBody>
 					<ToolCardTitle>{name}</ToolCardTitle>
-					<ToolCardDescription>
-						The build system for JavaScript and TypeScript codebases.
-					</ToolCardDescription>
+					<ToolCardDescription>{description}</ToolCardDescription>
 				</ToolCardBody>
 			</ToolInnerCard>
 		</TheLink>

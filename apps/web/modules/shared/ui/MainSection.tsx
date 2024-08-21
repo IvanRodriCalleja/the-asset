@@ -38,7 +38,7 @@ const Description = styled('p', {
 		textStyle: 'xl',
 		color: 'textClear',
 		width: 'full',
-		maxWidth: '700px',
+		maxWidth: '800px',
 		paddingInline: 4
 	}
 });

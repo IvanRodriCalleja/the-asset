@@ -1,15 +1,18 @@
 const en = {
 	home: {
 		title: 'Make PDF Happen',
-		description:
-			'Free online tools to merge, split, and compress PDFs, as well as convert Office documents to PDF and JPG.'
+		description: 'Free online PDF tools to Merge, split, compress, and convert PDFs,',
+		descriptionImportant: 'all securely without your files ever leaving your device.'
 	},
 	mergePdf: {
 		title: 'Merge PDF',
 		description: 'Merge multiple PDFs instantly and securely,',
 		descriptionImportant: 'all without sending data outside your browser.',
 		uploadPdf: 'Upload PDF',
-		mergePdfAction: 'Merge PDFs'
+		mergePdfAction: 'Merge PDFs',
+		card: {
+			description: 'Combine multiple PDFs in the order you want and rotate them easily.'
+		}
 	},
 	mergePdfResult: {
 		successfullyMergedTitle: 'Files merged!',
@@ -19,7 +22,7 @@ const en = {
 		mergeNewPdf: 'Merge a new PDF'
 	},
 	shared: {
-		continueWith: 'Continue with',
+		continueWith: 'Continue with:',
 		pages: 'pages',
 		download: 'Download',
 		page: 'Page'
