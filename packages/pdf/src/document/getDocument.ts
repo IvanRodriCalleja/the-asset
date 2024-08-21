@@ -6,6 +6,7 @@ type GetDocumentProps = {
 };
 
 export const getDocument = async ({ buffer }: GetDocumentProps): Promise<PDFDocumentProxy> => {
+	// @ts-ignore
 	await import('pdfjs-dist/build/pdf.worker.mjs');
 
 	const pdf = await PDFJS.getDocument({

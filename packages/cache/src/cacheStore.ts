@@ -11,9 +11,13 @@ type Cache = {
 const cache: Cache = {};
 let listeners: (() => void)[] = [];
 
+export type UseCacheKey = string | Record<string, string | number | boolean>;
+
 export const cacheStore = {
-	addEntry(key: string, value: CacheEntry<unknown>) {
-		cache[key] = value;
+	addEntry(key: UseCacheKey, value: CacheEntry<unknown>) {
+		const cacheKey = this.getKey(key);
+
+		cache[cacheKey] = value;
 		emitChange();
 	},
 	addResult(key: string, result: unknown) {
@@ -32,6 +36,9 @@ export const cacheStore = {
 	},
 	getSnapshot() {
 		return cache;
+	},
+	getKey(key: UseCacheKey) {
+		return typeof key === 'string' ? key : JSON.stringify(key);
 	}
 };
 

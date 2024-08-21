@@ -1,12 +1,14 @@
 import { useState } from 'react';
 
 import { TheAssetFile, hashArrayBuffer } from '@theasset/file/domain/the-asset-file';
+import { seedPdf } from '@theasset/pdf-react/infra/usePdf';
+import { getDocument } from '@theasset/pdf/document';
 
 export const useFilePickerState = () => {
 	const [files, setFiles] = useState<TheAssetFile[]>([]);
 
 	const onChange = async (files: File[]) => {
-		const fileItems = await Promise.all(
+		const fileItems = await Promise.allSettled(
 			files.map(async (file, index) => {
 				const id = `${Date.now() + index}`;
 				const name = file.name;
@@ -24,7 +26,11 @@ export const useFilePickerState = () => {
 					fileReader.readAsArrayBuffer(file);
 				});
 
+				const pdf = await getDocument(buffer); // NOTE: this is used to validate PDF content if wrong format, it throws an error
+
 				const hash = await hashArrayBuffer(buffer);
+
+				seedPdf(pdf, hash);
 
 				const fileItem: TheAssetFile = {
 					id,
@@ -37,7 +43,11 @@ export const useFilePickerState = () => {
 			})
 		);
 
-		setFiles(currentFiles => [...currentFiles, ...fileItems]);
+		const erroredFiles = fileItems.filter(item => item.status === 'rejected');
+		console.log('erroredFiles', erroredFiles); // TODO: Add toast
+		const pdfs = fileItems.filter(item => item.status === 'fulfilled').map(item => item.value);
+
+		setFiles(currentFiles => [...currentFiles, ...pdfs]);
 	};
 
 	return { files, onChange, setFiles };

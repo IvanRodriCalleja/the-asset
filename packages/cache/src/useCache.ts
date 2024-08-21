@@ -1,11 +1,9 @@
 import { useSyncExternalStore } from 'react';
 
-import { type CacheEntry, cacheStore } from './cacheStore';
-
-type UseCacheKey = string | Record<string, string | number | boolean>;
+import { type CacheEntry, UseCacheKey, cacheStore } from './cacheStore';
 
 export function useCache<T>(key: UseCacheKey, asyncFunction: () => Promise<T>): T {
-	const cacheKey = typeof key === 'string' ? key : JSON.stringify(key);
+	const cacheKey = cacheStore.getKey(key);
 
 	const cache = useSyncExternalStore(cacheStore.subscribe, cacheStore.getSnapshot);
 	const state = cache[cacheKey] as CacheEntry<T> | undefined;
