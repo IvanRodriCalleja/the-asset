@@ -12,6 +12,10 @@ const en = {
 		mergePdfAction: 'Merge PDFs',
 		card: {
 			description: 'Combine multiple PDFs in the order you want and rotate them easily.'
+		},
+		invalidPdfError: {
+			title: 'Invalid PDF file(s)',
+			description: 'Invalid PDF content for files:'
 		}
 	},
 	mergePdfResult: {

@@ -47,7 +47,7 @@ import { cva, cx } from '@theasset/style-system/css';
 import { styled } from '@theasset/style-system/jsx';
 import { composeRefs } from '@theasset/utilities-react/compose-refs';
 
-import { ButtonProps, buttonRecipe } from './Button';
+import { Button, ButtonProps, buttonRecipe } from './Button';
 
 const orientationConfig = {
 	vertical: {
@@ -324,7 +324,7 @@ interface SortableDragHandleProps extends ButtonProps {
 	withHandle?: boolean;
 }
 
-const Button = styled('button', buttonRecipe);
+const DragButton = styled(Button, buttonRecipe);
 
 const SortableDragHandle = forwardRef<HTMLButtonElement, SortableDragHandleProps>(
 	({ className, ...props }, ref) => {
@@ -333,7 +333,8 @@ const SortableDragHandle = forwardRef<HTMLButtonElement, SortableDragHandleProps
 		const grabClassName = cursorGrab({ dragging: isDragging, grab: true });
 
 		return (
-			<Button
+			// @ts-expect-error
+			<DragButton
 				ref={composeRefs(ref)}
 				data-state={isDragging ? 'dragging' : undefined}
 				className={cx(grabClassName, className)}

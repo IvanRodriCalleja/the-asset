@@ -15,6 +15,10 @@ const es: Locales = {
 		mergePdfAction: 'Unir PDFs',
 		card: {
 			description: 'Combina múltiples PDFs en el orden que desees y gíralos fácilmente.'
+		},
+		invalidPdfError: {
+			title: 'Ficheros PDF inválidos',
+			description: 'Contenido de los PDFs no válido para:'
 		}
 	},
 	mergePdfResult: {

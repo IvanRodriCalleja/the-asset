@@ -1,11 +1,15 @@
 import { useState } from 'react';
 
 import { TheAssetFile, hashArrayBuffer } from '@theasset/file/domain/the-asset-file';
+import { useLocale } from '@theasset/internationalization/hooks';
 import { seedPdf } from '@theasset/pdf-react/infra/usePdf';
 import { getDocument } from '@theasset/pdf/document';
 
+import { toaster } from '../../Toast';
+
 export const useFilePickerState = () => {
 	const [files, setFiles] = useState<TheAssetFile[]>([]);
+	const { mergePdf } = useLocale();
 
 	const onChange = async (files: File[]) => {
 		const fileItems = await Promise.allSettled(
@@ -26,7 +30,7 @@ export const useFilePickerState = () => {
 					fileReader.readAsArrayBuffer(file);
 				});
 
-				const pdf = await getDocument(buffer); // NOTE: this is used to validate PDF content if wrong format, it throws an error
+				const pdf = await getDocument(new Uint8Array(buffer)); // NOTE: this is used to validate PDF content if wrong format, it throws an error
 
 				const hash = await hashArrayBuffer(buffer);
 
@@ -44,7 +48,24 @@ export const useFilePickerState = () => {
 		);
 
 		const erroredFiles = fileItems.filter(item => item.status === 'rejected');
-		console.log('erroredFiles', erroredFiles); // TODO: Add toast
+		if (erroredFiles.length > 0) {
+			const erroredFileIndexes = fileItems.reduce((acc, item, index) => {
+				if (item.status === 'rejected') {
+					const name = files[index]!.name;
+					return [...acc, name];
+				}
+				return acc;
+			}, [] as string[]);
+
+			toaster.add(
+				{
+					title: mergePdf.invalidPdfError.title,
+					description: `${mergePdf.invalidPdfError.description} ${erroredFileIndexes.join(', ')}`,
+					variant: 'destructive'
+				},
+				{ timeout: 3000 }
+			);
+		}
 		const pdfs = fileItems.filter(item => item.status === 'fulfilled').map(item => item.value);
 
 		setFiles(currentFiles => [...currentFiles, ...pdfs]);

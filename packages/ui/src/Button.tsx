@@ -158,30 +158,25 @@ export const buttonRecipe = cva({
 	}
 });
 
-const StyledButton = styled('button', buttonRecipe);
-
-export type ButtonVariant = StyledVariantProps<typeof StyledButton> & AriaButtonProps;
-
-export type ButtonProps = ButtonVariant & {
+export type BaseButtonProps = AriaButtonProps & {
 	className?: string;
 };
 
-export const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
+export const BaseButton = forwardRef<HTMLButtonElement, PropsWithChildren<BaseButtonProps>>(
 	({ children, ...props }, ref) => {
 		const objRef = useObjectRef(ref);
 		const { buttonProps } = useButton(props, objRef);
 
-		const { size, variant, className } = props;
-
 		return (
-			<StyledButton
-				{...buttonProps}
-				className={className}
-				ref={objRef}
-				size={size}
-				variant={variant}>
+			<button {...buttonProps} className={props.className} ref={objRef}>
 				{children}
-			</StyledButton>
+			</button>
 		);
 	}
 );
+
+export const Button = styled(BaseButton, buttonRecipe);
+
+export type ButtonVariant = StyledVariantProps<typeof Button>;
+
+export type ButtonProps = BaseButtonProps & ButtonVariant;
