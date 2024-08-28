@@ -12,7 +12,10 @@ import { DOMProps, FocusableElement } from '@react-types/shared';
 import { Body } from './modal/Body';
 import { Close } from './modal/Close';
 import { Content } from './modal/Content';
+import { Description } from './modal/Description';
 import { Footer } from './modal/Footer';
+import { Header } from './modal/Header';
+import { Title } from './modal/Title';
 import { Trigger } from './modal/Trigger';
 
 type ModalRootChildrenProps = {
@@ -83,5 +86,8 @@ export const Modal = {
 	Body,
 	Footer,
 	Content,
-	Close
+	Close,
+	Header,
+	Title,
+	Description
 };

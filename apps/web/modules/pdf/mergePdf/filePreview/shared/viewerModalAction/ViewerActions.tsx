@@ -6,7 +6,7 @@ import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { Button } from '@theasset/ui/button';
 import { Tooltip } from '@theasset/ui/tooltip';
 
-import { useMergePdfActions } from './useMergePdfActions';
+import { useMergePdfActions } from '../useMergePdfActions';
 
 type ViewerActionsProps = {
 	page: number;

@@ -7,7 +7,8 @@ type As = 'p' | 'span' | 'div' | 'label';
 const textRecipe = cva({
 	variants: {
 		color: {
-			textClear: { color: 'textClear' }
+			textClear: { color: 'textClear' },
+			destructive: { color: 'destructive' }
 		},
 		weight: {
 			normal: { fontWeight: 'normal' },

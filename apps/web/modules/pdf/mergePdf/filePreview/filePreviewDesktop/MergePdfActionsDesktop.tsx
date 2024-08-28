@@ -3,11 +3,9 @@ import { Dispatch, SetStateAction } from 'react';
 import { MagnifyingGlassIcon, ReloadIcon, TrashIcon } from '@radix-ui/react-icons';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
-import { Viewer } from '@theasset/pdf-react/viewer';
-import { Modal } from '@theasset/ui/modal';
 import { Thumbnail } from '@theasset/ui/thumbnail';
 
-import { ViewerActions } from '../shared/ViewerActions';
+import { ViewerModalAction } from '../shared/ViewerModalAction';
 import { useMergePdfActions } from '../shared/useMergePdfActions';
 
 type MergePdfActionsDesktopProp = {
@@ -22,26 +20,25 @@ const Actions = ({ file, setFiles }: MergePdfActionsDesktopProp) => {
 
 	return (
 		<Thumbnail.Actions>
-			<Modal.Root>
-				<Modal.Trigger>
+			{!file.isEncrypted && (
+				<ViewerModalAction file={file} setFiles={setFiles}>
 					<Thumbnail.ActionButton>
 						<MagnifyingGlassIcon />
 					</Thumbnail.ActionButton>
-				</Modal.Trigger>
-				<Modal.Content size="none">
-					<Modal.Close />
-					<Viewer file={file}>
-						{({ page }) => <ViewerActions page={page} file={file} setFiles={setFiles} />}
-					</Viewer>
-				</Modal.Content>
-			</Modal.Root>
+				</ViewerModalAction>
+			)}
 
-			<Thumbnail.ActionButton onPress={() => onRotateFile('left')}>
-				<ReloadIcon style={{ transform: 'scaleX(-1)' }} />
-			</Thumbnail.ActionButton>
-			<Thumbnail.ActionButton onPress={() => onRotateFile('right')}>
-				<ReloadIcon />
-			</Thumbnail.ActionButton>
+			{!file.isEncrypted && (
+				<Thumbnail.ActionButton onPress={() => onRotateFile('left')}>
+					<ReloadIcon style={{ transform: 'scaleX(-1)' }} />
+				</Thumbnail.ActionButton>
+			)}
+
+			{!file.isEncrypted && (
+				<Thumbnail.ActionButton onPress={() => onRotateFile('right')}>
+					<ReloadIcon />
+				</Thumbnail.ActionButton>
+			)}
 			<Thumbnail.ActionButton onPress={() => onRemoveFile()}>
 				<TrashIcon />
 			</Thumbnail.ActionButton>

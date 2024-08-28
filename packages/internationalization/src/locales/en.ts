@@ -16,6 +16,12 @@ const en = {
 		invalidPdfError: {
 			title: 'Invalid PDF file(s)',
 			description: 'Invalid PDF content for files:'
+		},
+		unlockPdf: {
+			title: 'Unlock PDF with password',
+			description: 'This PDF is password protected. Please enter the password to unlock it.',
+			startAction: 'Unlock PDF',
+			unlock: 'Unlock'
 		}
 	},
 	mergePdfResult: {
@@ -27,9 +33,22 @@ const en = {
 	},
 	shared: {
 		continueWith: 'Continue with:',
-		pages: 'pages',
 		download: 'Download',
-		page: 'Page'
+		page: {
+			singular: 'page',
+			plural: 'pages'
+		},
+		cancel: 'Cancel',
+		form: {
+			optional: 'optional',
+			fields: {
+				password: 'Password'
+			},
+			validations: {
+				required: 'This field is required',
+				invalidPassword: 'Invalid password'
+			}
+		}
 	}
 };
 

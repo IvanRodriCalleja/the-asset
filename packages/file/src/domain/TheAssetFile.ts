@@ -3,6 +3,7 @@ export type TheAssetFile = {
 	hash: string;
 	buffer: ArrayBuffer;
 	name: string;
+	isEncrypted: boolean;
 };
 
 export const hashArrayBuffer = async (buffer: ArrayBuffer) => {

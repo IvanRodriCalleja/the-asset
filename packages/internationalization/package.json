@@ -7,7 +7,8 @@
     "./domain": "./src/domain/index.ts",
     "./hooks": "./src/hooks/index.ts",
     "./server": "./src/server/index.ts",
-    "./ui": "./src/ui/index.ts"
+    "./ui": "./src/ui/index.ts",
+    "./infra": "./src/infra/index.ts"
   },
   "scripts": {
     "lint": "eslint src --ext .ts,.tsx --quiet --cache",

@@ -1,4 +1,7 @@
+import { InputHTMLAttributes } from 'react';
+
 import { styled } from '@theasset/style-system/jsx';
+import { StyledVariantProps } from '@theasset/style-system/types';
 
 export const Input = styled('input', {
 	base: {
@@ -25,15 +28,30 @@ export const Input = styled('input', {
 		},
 
 		_focusVisible: {
-			outline: '2px solid transparent',
-			outlineOffset: '2px',
-			boxShadow:
-				'rgb(255, 255, 255) 0px 0px 0px 2px, rgb(24, 24, 27) 0px 0px 0px 4px, rgba(0, 0, 0, 0) 0px 0px 0px 0px'
+			outline: 'none',
+			borderColor: 'primary',
+			boxShadow: '0 0 0 1px var(--shadow-color)',
+			shadowColor: 'primary'
 		},
 
 		_disabled: {
 			cursor: 'not-allowed',
 			opacity: '0.5'
 		}
+	},
+	variants: {
+		hasError: {
+			true: {
+				borderColor: 'destructive',
+				_focusVisible: {
+					borderColor: 'destructive',
+					boxShadow: '0 0 0 1px var(--shadow-color)',
+					shadowColor: 'destructive'
+				}
+			}
+		}
 	}
 });
+
+export type InputVariantProps = StyledVariantProps<typeof Input>;
+export type InputProps = InputVariantProps & InputHTMLAttributes<HTMLInputElement>;

@@ -1,12 +1,10 @@
 import { Dispatch, ReactNode, SetStateAction } from 'react';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
-import { Box, styled } from '@theasset/style-system/jsx';
-import { Badge } from '@theasset/ui/badge';
 import { Thumbnail, useThumbnailSuspense } from '@theasset/ui/thumbnail';
 
-import { usePdf } from '../infra/usePdf';
 import { useThumbnail } from '../infra/useThumbnail';
+import { ThumbnailDesktopFooter } from './shared/ThumbnailDesktopFooter';
 import { ThumbnailSkeletonDesktop } from './thumbnailDesktop/ThumbnailSkeletonDesktop';
 
 type ThumbnailProps = {
@@ -25,14 +23,6 @@ export const PdfThumbnailDesktop = (props: ThumbnailProps) => {
 	);
 };
 
-const FileName = styled('span', {
-	base: {
-		truncate: true,
-		textStyle: 'xs',
-		textAlign: 'center'
-	}
-});
-
 type ActionProps = {
 	file: TheAssetFile;
 	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
@@ -45,7 +35,6 @@ type PdfThumbnailProps = {
 };
 
 const PdfThumbnail = ({ file, setFiles, actions, ...props }: PdfThumbnailProps) => {
-	const pdf = usePdf(file);
 	const { src } = useThumbnail({ file });
 
 	const { onLoad } = useThumbnailSuspense();
@@ -58,12 +47,7 @@ const PdfThumbnail = ({ file, setFiles, actions, ...props }: PdfThumbnailProps) 
 				<Thumbnail.Image src={src} alt={file.name} onLoad={onLoad} shadow />
 			</Thumbnail.ImageContent>
 
-			<Thumbnail.Footer>
-				<FileName>{file.name}</FileName>
-				<Box display="flex" justifyContent="center">
-					<Badge size="sm">{pdf.numPages} Pages</Badge>
-				</Box>
-			</Thumbnail.Footer>
+			<ThumbnailDesktopFooter file={file} />
 		</Thumbnail.Root>
 	);
 };

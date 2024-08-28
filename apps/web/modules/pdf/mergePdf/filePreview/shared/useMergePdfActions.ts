@@ -87,5 +87,22 @@ export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
 		});
 	};
 
-	return { onRemoveFile, onRotateFile, onRotatePage, onRemovePage, isPending };
+	const onUpdatePdf = async (newPdf: ArrayBuffer) => {
+		const hash = await hashArrayBuffer(newPdf);
+
+		setFiles(files => {
+			const fileIndex = files.findIndex(({ id }) => id === file.id);
+
+			const newFiles = [...files];
+			newFiles[fileIndex] = {
+				...file,
+				hash,
+				buffer: newPdf
+			};
+
+			return newFiles;
+		});
+	};
+
+	return { onRemoveFile, onRotateFile, onRotatePage, onRemovePage, onUpdatePdf, isPending };
 };

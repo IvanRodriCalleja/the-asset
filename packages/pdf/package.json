@@ -5,6 +5,7 @@
   "exports": {
     "./thumbnail": "./src/thumbnail/index.ts",
     "./document": "./src/document/index.ts",
+    "./decrypt": "./src/encryption/decrypt.ts",
     "./merge": "./src/merge/index.ts",
     "./shared": "./src/shared/index.ts"
   },
@@ -20,6 +21,9 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@jspawn/qpdf-wasm": "^0.0.2",
+    "coherentpdf": "^2.5.5",
+    "pdf-actions": "^1.2.2",
     "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^4.4.168"
   }

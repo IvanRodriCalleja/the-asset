@@ -11,6 +11,16 @@ export const Overlay = styled('div', {
 		display: 'flex',
 		alignItems: 'center',
 		justifyContent: 'center',
-		background: 'rgba(0, 0, 0, .8)'
+		background: 'rgba(0, 0, 0, .8)',
+
+		'&[data-state=open]': {
+			animateIn: true,
+			fadeIn: 0
+		},
+
+		'&[data-state=closed]': {
+			animateOut: true,
+			fadeOut: 0
+		}
 	}
 });

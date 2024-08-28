@@ -1,4 +1,4 @@
-import { PdfThumbnailMobile } from '@theasset/pdf-react/thumbnail';
+import { PdfEncryptedThumbnailMobile, PdfThumbnailMobile } from '@theasset/pdf-react/thumbnail';
 import { Stack } from '@theasset/style-system/jsx';
 import { Sortable } from '@theasset/ui/sortable';
 
@@ -10,7 +10,15 @@ export const FilePreviewMobile = ({ files, setFiles }: FilePreviewProps) => (
 		<Stack direction="column" marginInline="auto" width="100%" paddingBlock={4} paddingInline={4}>
 			{files.map(file => (
 				<Sortable.SortableItem key={file.id} value={file.id} asChild>
-					<PdfThumbnailMobile file={file} setFiles={setFiles} actions={MergePdfActionsMobile} />
+					{file.isEncrypted ? (
+						<PdfEncryptedThumbnailMobile
+							file={file}
+							setFiles={setFiles}
+							actions={MergePdfActionsMobile}
+						/>
+					) : (
+						<PdfThumbnailMobile file={file} setFiles={setFiles} actions={MergePdfActionsMobile} />
+					)}
 				</Sortable.SortableItem>
 			))}
 		</Stack>

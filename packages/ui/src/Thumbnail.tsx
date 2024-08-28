@@ -36,6 +36,21 @@ const Root = styled(Stack, {
 		_hover: {
 			background: '#f3eaff'
 		}
+	},
+	variants: {
+		status: {
+			default: {},
+			warning: {
+				background: '#ff3358b3',
+
+				_hover: {
+					background: '#ff3358cc'
+				}
+			}
+		}
+	},
+	defaultVariants: {
+		status: 'default'
 	}
 });
 

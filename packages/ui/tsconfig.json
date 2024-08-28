@@ -4,6 +4,6 @@
     "outDir": "dist",
     "noEmit": true
   },
-  "include": ["src"],
+  "include": ["src", "../pdf/coherent.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

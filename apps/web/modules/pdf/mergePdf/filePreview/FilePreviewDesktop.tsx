@@ -1,4 +1,4 @@
-import { PdfThumbnailDesktop } from '@theasset/pdf-react/thumbnail';
+import { PdfEncryptedThumbnailDesktop, PdfThumbnailDesktop } from '@theasset/pdf-react/thumbnail';
 import { Stack } from '@theasset/style-system/jsx';
 import { Sortable } from '@theasset/ui/sortable';
 
@@ -17,7 +17,15 @@ export const FilePreviewDesktop = ({ files, setFiles }: FilePreviewProps) => (
 			paddingInline={16}>
 			{files.map(file => (
 				<Sortable.SortableItem key={file.id} value={file.id} asTrigger asChild>
-					<PdfThumbnailDesktop file={file} setFiles={setFiles} actions={MergePdfActionsDesktop} />
+					{file.isEncrypted ? (
+						<PdfEncryptedThumbnailDesktop
+							file={file}
+							setFiles={setFiles}
+							actions={MergePdfActionsDesktop}
+						/>
+					) : (
+						<PdfThumbnailDesktop file={file} setFiles={setFiles} actions={MergePdfActionsDesktop} />
+					)}
 				</Sortable.SortableItem>
 			))}
 		</Stack>

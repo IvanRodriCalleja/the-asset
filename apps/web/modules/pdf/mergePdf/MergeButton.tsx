@@ -31,7 +31,8 @@ export const MergeButton = ({ files }: MergeButtonProps) => {
 			id,
 			hash,
 			buffer: mergedPdf,
-			name: files[0]!.name
+			name: files[0]!.name,
+			isEncrypted: false
 		};
 		cacheStore.addResult(id, resultFile);
 

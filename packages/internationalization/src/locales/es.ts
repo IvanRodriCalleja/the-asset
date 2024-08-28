@@ -19,6 +19,13 @@ const es: Locales = {
 		invalidPdfError: {
 			title: 'Ficheros PDF inválidos',
 			description: 'Contenido de los PDFs no válido para:'
+		},
+		unlockPdf: {
+			title: 'Desbloquea PDF con contraseña',
+			description:
+				'Este PDF está protegido con contraseña, porfavor introduce la contraseña para desbloquear.',
+			startAction: 'Desbloquear PDF',
+			unlock: 'Desbloquear'
 		}
 	},
 	mergePdfResult: {
@@ -29,9 +36,22 @@ const es: Locales = {
 	},
 	shared: {
 		continueWith: 'Continua con:',
-		pages: 'páginas',
 		download: 'Descargar',
-		page: 'Página'
+		page: {
+			singular: 'página',
+			plural: 'páginas'
+		},
+		cancel: 'Cancel',
+		form: {
+			optional: 'opcional',
+			fields: {
+				password: 'Contraseña'
+			},
+			validations: {
+				required: 'Campo obligatorio',
+				invalidPassword: 'Contraseña incorrecta'
+			}
+		}
 	}
 };
 

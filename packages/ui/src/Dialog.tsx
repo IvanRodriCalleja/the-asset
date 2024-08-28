@@ -5,7 +5,9 @@ import { FocusableElement } from '@react-types/shared';
 
 import { Box } from '@theasset/style-system/jsx';
 
-type DialogProps = AriaDialogProps & {};
+type DialogProps = AriaDialogProps & {
+	className?: string;
+};
 
 type DialogContextValue = {
 	titleProps: DOMAttributes<FocusableElement>;
@@ -17,7 +19,7 @@ const DialogContext = createContext<DialogContextValue>({
 	titleProps: {}
 });
 
-export const Dialog = ({ children, ...props }: PropsWithChildren<DialogProps>) => {
+export const Dialog = ({ children, className, ...props }: PropsWithChildren<DialogProps>) => {
 	const ref = useRef(null);
 	const { dialogProps, titleProps } = useDialog(
 		{
@@ -29,7 +31,14 @@ export const Dialog = ({ children, ...props }: PropsWithChildren<DialogProps>) =
 
 	return (
 		<DialogContext.Provider value={{ titleProps }}>
-			<Box {...dialogProps} ref={ref} outline="none">
+			<Box
+				{...dialogProps}
+				className={className}
+				width="100%"
+				justifyContent="center"
+				display="flex"
+				ref={ref}
+				outline="none">
 				{children}
 			</Box>
 		</DialogContext.Provider>

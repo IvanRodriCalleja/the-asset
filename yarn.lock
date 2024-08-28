@@ -1539,6 +1539,11 @@
   dependencies:
     tslib "^2.4.0"
 
+"@hookform/resolvers@^3.9.0":
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-3.9.0.tgz#cf540ac21c6c0cd24a40cf53d8e6d64391fb753d"
+  integrity sha512-bU0Gr4EepJ/EQsH/IwEzYLsT/PEj5C0ynLQ4m+GSHS+xKH4TfSelhluTgOaoc4kA5s7eCsQbM4wvZLzELmWzUg==
+
 "@humanwhocodes/config-array@^0.11.14":
   version "0.11.14"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.11.14.tgz#d78e481a039f7566ecc9660b4ea7fe6b1fec442b"
@@ -1760,6 +1765,11 @@
   dependencies:
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
+
+"@jspawn/qpdf-wasm@^0.0.2":
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/@jspawn/qpdf-wasm/-/qpdf-wasm-0.0.2.tgz#008eba4abe95fa45f8723bec57a679f3b241fef0"
+  integrity sha512-yPFv/0o5fvVEkJjEoXf393hfpZYUZfrRY8DaLq4AVw+KWZK0GiTVAecpYdxxVACbVKMHvBa+uHxtWlilYRiLzA==
 
 "@mapbox/node-pre-gyp@^1.0.0":
   version "1.0.11"
@@ -4662,6 +4672,11 @@ code-block-writer@^12.0.0:
   version "12.0.0"
   resolved "https://registry.yarnpkg.com/code-block-writer/-/code-block-writer-12.0.0.tgz#4dd58946eb4234105aff7f0035977b2afdc2a770"
   integrity sha512-q4dMFMlXtKR3XNBHyMHt/3pwYNA69EDk00lloMOaaUMKPUXBw6lpXtbu3MMVG6/uOihGnRDOlkyqsONEUj60+w==
+
+coherentpdf@^2.5.5:
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/coherentpdf/-/coherentpdf-2.5.5.tgz#890f6d20290953e92561a6b732404e37f8ddc97f"
+  integrity sha512-AAD3RG7lq2n34AtH352sbNDhJ82yfp2vFUp63/+Vu7snAqW0vyvY33XuhZdj6ubZUlFe1DNSSEaYcyc7+jTJ5Q==
 
 color-convert@^1.9.0:
   version "1.9.3"
@@ -7679,7 +7694,14 @@ pathe@^1.1.0, pathe@^1.1.2:
   resolved "https://registry.yarnpkg.com/pathe/-/pathe-1.1.2.tgz#6c4cb47a945692e48a1ddd6e4094d170516437ec"
   integrity sha512-whLdWMYL2TwI08hn8/ZqAbrVemu0LNaNNJZX73O6qaIdCTfXutsLhMkjdENX0qhsQ9uIimo4/aQOmXkoon2nDQ==
 
-pdf-lib@^1.17.1:
+pdf-actions@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/pdf-actions/-/pdf-actions-1.2.2.tgz#2434bd8a1da92b002426f8a64aa0450a8532ebc2"
+  integrity sha512-/qjCkur2WmBIfZnEIfMh/29plybUcag25D4224ibYuMBkUUZdw2g9I2YNW4+zKX7/ikyhxM48TF3tSCY0VbdJQ==
+  dependencies:
+    pdf-lib "^1.17.0"
+
+pdf-lib@^1.17.0, pdf-lib@^1.17.1:
   version "1.17.1"
   resolved "https://registry.yarnpkg.com/pdf-lib/-/pdf-lib-1.17.1.tgz#9e7dd21261a0c1fb17992580885b39e7d08f451f"
   integrity sha512-V/mpyJAoTsN4cnP31vc0wfNA1+p20evqqnap0KLoRUN0Yk/p3wN52DOEsL4oBFcLdb76hlpKPtzJIgo67j/XLw==
@@ -8047,6 +8069,11 @@ react-dropzone@^14.2.3:
     attr-accept "^2.2.2"
     file-selector "^0.6.0"
     prop-types "^15.8.1"
+
+react-hook-form@^7.53.0:
+  version "7.53.0"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.53.0.tgz#3cf70951bf41fa95207b34486203ebefbd3a05ab"
+  integrity sha512-M1n3HhqCww6S2hxLxciEXy2oISPnAzxY7gvwVPrtlczTM/1dDadXgUxDpHMrMTblDOcm/AXtXxHwZ3jpg1mqKQ==
 
 react-intersection-observer@^9.13.0:
   version "9.13.0"
@@ -9434,7 +9461,7 @@ zod-validation-error@^3.0.3:
   resolved "https://registry.yarnpkg.com/zod-validation-error/-/zod-validation-error-3.3.0.tgz#2cfe81b62d044e0453d1aa3ae7c32a2f36dde9af"
   integrity sha512-Syib9oumw1NTqEv4LT0e6U83Td9aVRk9iTXPUQr1otyV1PuXQKOvOwhMNqZIq5hluzHP2pMgnOmHEo7kPdI2mw==
 
-zod@^3.22.4:
+zod@^3.22.4, zod@^3.23.8:
   version "3.23.8"
   resolved "https://registry.yarnpkg.com/zod/-/zod-3.23.8.tgz#e37b957b5d52079769fb8097099b592f0ef4067d"
   integrity sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==

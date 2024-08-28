@@ -7,8 +7,11 @@
     "./button": "./src/Button.tsx",
     "./card": "./src/Card.tsx",
     "./file-picker": "./src/form/FilePicker.tsx",
+    "./form": "./src/form/Form.tsx",
     "./form/input": "./src/form/inputs/Input.ts",
     "./form/number": "./src/form/inputs/Number.tsx",
+    "./form/fields/field-input": "./src/form/fields/FieldInput.tsx",
+    "./form/fields/field-password": "./src/form/fields/FieldPassword.tsx",
     "./highlight-maker": "./src/HighlightMaker.tsx",
     "./label": "./src/Label.tsx",
     "./modal": "./src/Modal.tsx",
@@ -63,6 +66,7 @@
     "@theasset/cache": "*",
     "lucide-react": "^0.414.0",
     "react": "19.0.0-rc-f994737d14-20240522",
-    "react-dropzone": "^14.2.3"
+    "react-dropzone": "^14.2.3",
+    "react-hook-form": "^7.53.0"
   }
 }

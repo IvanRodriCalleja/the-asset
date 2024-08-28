@@ -11,12 +11,34 @@ import { Overlay } from '../Overlay';
 
 export const ModalContent = styled('div', {
 	base: {
-		display: 'flex',
-		flexDirection: 'column',
 		bg: 'background',
-		padding: '24',
 		borderRadius: 'lg',
-		maxHeight: 'calc(100% - 4rem)'
+		maxHeight: 'calc(100% - 4rem)',
+		zIndex: 50,
+		display: 'grid',
+		w: 'full',
+		maxWidth: 'lg',
+		transitionDuration: 'normal',
+		gap: '4',
+		border: 'base',
+		p: '6',
+		boxShadow: 'lg',
+
+		'&[data-state=open]': {
+			animateIn: true,
+			fadeIn: 0,
+			zoomIn: 95
+		},
+
+		'&[data-state=closed]': {
+			animateOut: true,
+			fadeOut: 0,
+			zoomOut: 95
+		},
+
+		sm: {
+			rounded: 'lg'
+		}
 	},
 	variants: {
 		size: {
@@ -42,11 +64,19 @@ export const ModalContent = styled('div', {
 });
 
 type ContentProps = {
+	className?: string;
 	size?: StyledVariantProps<typeof ModalContent>['size'];
 };
 
-export const Content = ({ children, size = 'dialog' }: PropsWithChildren<ContentProps>) => {
+export const Content = ({
+	children,
+	className,
+	size = 'dialog'
+}: PropsWithChildren<ContentProps>) => {
 	const { state, underlayProps, modalProps, modalRef, variant } = useAgModal();
+
+	//const entering = useEnterAnimation(modalRef);
+	//const exiting = useExitAnimation(modalRef, state.isOpen); // TODO: Exit animation doesn't work well
 
 	return (
 		<>
@@ -54,7 +84,14 @@ export const Content = ({ children, size = 'dialog' }: PropsWithChildren<Content
 				<AriaOverlay>
 					<Overlay {...underlayProps}>
 						<Dialog role={variant === 'alert' ? 'alertdialog' : 'dialog'}>
-							<ModalContent size={size} {...modalProps} ref={modalRef}>
+							<ModalContent
+								size={size}
+								{...modalProps}
+								ref={modalRef}
+								className={className}
+								onMouseDown={e => e.stopPropagation()}
+								//data-state={entering ? 'open' : exiting ? 'closed' : undefined}
+							>
 								{children}
 							</ModalContent>
 						</Dialog>

@@ -1,9 +1,14 @@
-import { PropsWithChildren } from 'react';
+import { styled } from '@theasset/style-system/jsx';
 
-import { HStack } from '@theasset/style-system/jsx';
+export const Footer = styled('div', {
+	base: {
+		display: 'flex',
+		flexDirection: 'column-reverse',
 
-export const Footer = ({ children }: PropsWithChildren) => (
-	<HStack alignItems="center" justifyContent="end" flex="0 0 auto">
-		{children}
-	</HStack>
-);
+		sm: {
+			flexDirection: 'row',
+			justifyContent: 'flex-end',
+			spaceX: '2'
+		}
+	}
+});

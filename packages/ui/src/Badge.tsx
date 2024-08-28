@@ -70,6 +70,11 @@ export const Badge = styled('div', {
 				py: '1',
 				textStyle: 'sm'
 			}
+		},
+		capitalize: {
+			true: {
+				textTransform: 'capitalize'
+			}
 		}
 	},
 	defaultVariants: {

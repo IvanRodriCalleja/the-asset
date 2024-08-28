@@ -15,7 +15,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "../../packages/pdf/pdfjs-dist.d.ts"
+    "../../packages/pdf/pdfjs-dist.d.ts",
+    "../../packages/pdf/coherent.d.ts"
   ],
   "exclude": ["node_modules"]
 }
