@@ -1,21 +1,14 @@
 'use client';
 
-//TODO: Use react-aria
-import { ComponentPropsWithoutRef, ElementRef, PropsWithChildren, forwardRef } from 'react';
-
-import {
-	Arrow,
-	Content,
-	Provider,
-	Root,
-	TooltipProps,
-	TooltipTriggerProps,
-	Trigger
-} from '@radix-ui/react-tooltip';
+import { Tooltip as AriaTooltip, OverlayArrow, TooltipTrigger } from 'react-aria-components';
 
 import { styled } from '@theasset/style-system/jsx';
 
-const ToolContent = styled(Content, {
+export { TooltipTrigger };
+
+export const TooltipArrow = styled(OverlayArrow, {});
+
+export const Tooltip = styled(AriaTooltip, {
 	base: {
 		zIndex: 50,
 		overflow: 'hidden',
@@ -53,27 +46,3 @@ const ToolContent = styled(Content, {
 		}
 	}
 });
-
-const TooltipContent = forwardRef<
-	ElementRef<typeof Content>,
-	ComponentPropsWithoutRef<typeof Content>
->(({ className, sideOffset = 4, ...props }, ref) => (
-	<ToolContent ref={ref} sideOffset={sideOffset} className={className} {...props}>
-		{props.children}
-		<Arrow />
-	</ToolContent>
-));
-
-const TooltipRoot = (props: PropsWithChildren<TooltipProps>) => (
-	<Provider delayDuration={0}>
-		<Root {...props} />
-	</Provider>
-);
-
-const TooltipTrigger = (props: PropsWithChildren<TooltipTriggerProps>) => <Trigger {...props} />;
-
-export const Tooltip = {
-	Root: TooltipRoot,
-	Trigger: TooltipTrigger,
-	Content: TooltipContent
-};

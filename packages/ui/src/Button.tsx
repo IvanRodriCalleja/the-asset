@@ -1,15 +1,13 @@
 'use client';
 
-import { PropsWithChildren, forwardRef } from 'react';
+import { PropsWithChildren } from 'react';
 
-import { AriaButtonProps, useButton } from '@react-aria/button';
-import { useObjectRef } from '@react-aria/utils';
+import { Button as AriaButton, ButtonProps as AriaButtonProps } from 'react-aria-components';
 
-import { cva } from '@theasset/style-system/css';
-import { styled } from '@theasset/style-system/jsx';
-import { StyledVariantProps } from '@theasset/style-system/types';
+import { cva, cx } from '@theasset/style-system/css';
+import { RecipeVariantProps } from '@theasset/style-system/types';
 
-export const buttonRecipe = cva({
+export const button = cva({
 	base: {
 		display: 'inline-flex',
 		alignItems: 'center',
@@ -169,49 +167,17 @@ export const buttonRecipe = cva({
 	}
 });
 
-const StyledButton = styled('button', buttonRecipe);
+export const Button = ({ size, variant, className, ...props }: PropsWithChildren<ButtonProps>) => {
+	const buttonClassName = button({ size, variant });
 
-export type ButtonVariant = StyledVariantProps<typeof StyledButton>;
-
-export type ButtonProps = BaseButtonProps & {
-	className?: string;
-	form?: string;
+	return <AriaButton {...props} className={cx(buttonClassName, className)} />;
 };
 
-export const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
-	({ children, ...props }, ref) => {
-		const objRef = useObjectRef(ref);
-		const { buttonProps } = useButton(props, objRef);
+export const BaseButton = AriaButton;
 
-		const { size, variant, className, form } = props;
-
-		return (
-			<StyledButton
-				{...buttonProps}
-				className={className}
-				ref={objRef}
-				size={size}
-				variant={variant}
-				form={form}>
-				{children}
-			</StyledButton>
-		);
-	}
-);
-
-type BaseButtonProps = ButtonVariant & AriaButtonProps;
-
-export const BaseButton = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
-	({ children, ...props }, ref) => {
-		const objRef = useObjectRef(ref);
-		const { buttonProps } = useButton(props, objRef);
-
-		const { className } = props;
-
-		return (
-			<button {...buttonProps} className={className} ref={objRef}>
-				{children}
-			</button>
-		);
-	}
-);
+export type BaseButtonProps = AriaButtonProps;
+export type ButtonVariant = RecipeVariantProps<typeof button>;
+export type ButtonProps = ButtonVariant &
+	BaseButtonProps & {
+		className?: string;
+	};

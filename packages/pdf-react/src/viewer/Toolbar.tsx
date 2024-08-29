@@ -14,7 +14,7 @@ import { Flex, Stack, styled } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
 import { Number } from '@theasset/ui/form/number';
 import { Text } from '@theasset/ui/text';
-import { Tooltip } from '@theasset/ui/tooltip';
+import { Tooltip, TooltipTrigger } from '@theasset/ui/tooltip';
 
 const ViewerToolbarContainer = styled('div', {
 	base: {
@@ -78,31 +78,27 @@ export const Toolbar = ({ totalPages, page, setPage, children }: ToolbarProps) =
 	return (
 		<Flex justifyContent="center">
 			<ViewerToolbarContainer>
-				<Tooltip.Root delayDuration={1000}>
-					<Tooltip.Trigger>
-						<Button
-							size="icon"
-							variant="ghost"
-							onPress={goToFirstPage}
-							isDisabled={isGoToFirstPageDisabled}>
-							<DoubleArrowLeftIcon />
-						</Button>
-					</Tooltip.Trigger>
-					<Tooltip.Content>{viewer.toolbar.goFirstPage}</Tooltip.Content>
-				</Tooltip.Root>
+				<TooltipTrigger>
+					<Button
+						size="icon"
+						variant="ghost"
+						onPress={goToFirstPage}
+						isDisabled={isGoToFirstPageDisabled}>
+						<DoubleArrowLeftIcon />
+					</Button>
+					<Tooltip offset={50}>{viewer.toolbar.goFirstPage}</Tooltip>
+				</TooltipTrigger>
 
-				<Tooltip.Root delayDuration={1000}>
-					<Tooltip.Trigger>
-						<Button
-							size="icon"
-							variant="ghost"
-							onPress={goToPreviousPage}
-							isDisabled={isGoToFirstPageDisabled}>
-							<ChevronLeftIcon />
-						</Button>
-					</Tooltip.Trigger>
-					<Tooltip.Content>{viewer.toolbar.goFirstPage}</Tooltip.Content>
-				</Tooltip.Root>
+				<TooltipTrigger>
+					<Button
+						size="icon"
+						variant="ghost"
+						onPress={goToPreviousPage}
+						isDisabled={isGoToFirstPageDisabled}>
+						<ChevronLeftIcon />
+					</Button>
+					<Tooltip offset={50}>{viewer.toolbar.goPreviousPage}</Tooltip>
+				</TooltipTrigger>
 
 				<Stack direction="row" alignItems="center">
 					<Number
@@ -120,31 +116,27 @@ export const Toolbar = ({ totalPages, page, setPage, children }: ToolbarProps) =
 					</Text>
 				</Stack>
 
-				<Tooltip.Root delayDuration={1000}>
-					<Tooltip.Trigger>
-						<Button
-							size="icon"
-							variant="ghost"
-							onPress={goToNextPage}
-							isDisabled={isGoToLastPageDisabled}>
-							<ChevronRightIcon />
-						</Button>
-					</Tooltip.Trigger>
-					<Tooltip.Content>{viewer.toolbar.goNextPAge}</Tooltip.Content>
-				</Tooltip.Root>
+				<TooltipTrigger>
+					<Button
+						size="icon"
+						variant="ghost"
+						onPress={goToNextPage}
+						isDisabled={isGoToLastPageDisabled}>
+						<ChevronRightIcon />
+					</Button>
+					<Tooltip offset={50}>{viewer.toolbar.goNextPAge}</Tooltip>
+				</TooltipTrigger>
 
-				<Tooltip.Root delayDuration={1000}>
-					<Tooltip.Trigger>
-						<Button
-							size="icon"
-							variant="ghost"
-							onPress={goToLastPage}
-							isDisabled={isGoToLastPageDisabled}>
-							<DoubleArrowRightIcon />
-						</Button>
-					</Tooltip.Trigger>
-					<Tooltip.Content>{viewer.toolbar.goLastPage}</Tooltip.Content>
-				</Tooltip.Root>
+				<TooltipTrigger>
+					<Button
+						size="icon"
+						variant="ghost"
+						onPress={goToLastPage}
+						isDisabled={isGoToLastPageDisabled}>
+						<DoubleArrowRightIcon />
+					</Button>
+					<Tooltip>{viewer.toolbar.goLastPage}</Tooltip>
+				</TooltipTrigger>
 
 				{children({ page, totalPages, setPage })}
 			</ViewerToolbarContainer>

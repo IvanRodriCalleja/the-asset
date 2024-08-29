@@ -23,6 +23,11 @@ const UploadSection = styled('section', {
 
 // TODO: Add ability to add more files
 // TODO: Viewer Toolbar responsive on mobile
+// TODO: Manage mal formed pdfs
+// TODO: Unify exports from packages
+// TODO: Avoid compound components
+// TODO: Rethink file upload approach
+// TODO: Remove lucide-react
 
 export const MergePdf = () => {
 	const { mergePdf } = useLocale();

@@ -177,7 +177,7 @@ export const Card = ({ state, ...props }: ToastProps) => {
 			{props.toast.content.action &&
 				// @ts-ignore
 				cloneElement(props.toast.content.action, { variant: props.toast.content.variant })}
-			{/* @ts-expect-error */}
+
 			<CloseToastButton {...closeButtonProps} variant={props.toast.content.variant}>
 				<Cross2Icon />
 			</CloseToastButton>

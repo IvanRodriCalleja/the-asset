@@ -11,7 +11,10 @@ const Action = styled(Button, {
 	}
 });
 
-export const MobileAction = ({ children, ...props }: PropsWithChildren<ButtonProps>) => (
+export const MobileAction = ({
+	children,
+	...props
+}: PropsWithChildren<Omit<ButtonProps, 'variant'>>) => (
 	<Action variant="transparent" {...props}>
 		{children}
 	</Action>

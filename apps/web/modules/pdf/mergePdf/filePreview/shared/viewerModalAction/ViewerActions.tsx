@@ -5,7 +5,7 @@ import { ReloadIcon, TrashIcon } from '@radix-ui/react-icons';
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks';
 import { Button } from '@theasset/ui/button';
-import { Tooltip } from '@theasset/ui/tooltip';
+import { Tooltip, TooltipTrigger } from '@theasset/ui/tooltip';
 
 import { useMergePdfActions } from '../useMergePdfActions';
 
@@ -42,32 +42,26 @@ export const ViewerActions = ({
 	const { mergePdf } = useLocale();
 	return (
 		<>
-			<Tooltip.Root delayDuration={1000}>
-				<Tooltip.Trigger>
-					<Button size="icon" variant="ghost" onPress={() => onRotatePage('left', page)}>
-						<ReloadIcon style={{ transform: 'scaleX(-1)' }} />
-					</Button>
-				</Tooltip.Trigger>
-				<Tooltip.Content>{mergePdf.viewer.rotatePageLeft}</Tooltip.Content>
-			</Tooltip.Root>
+			<TooltipTrigger>
+				<Button size="icon" variant="ghost" onPress={() => onRotatePage('left', page)}>
+					<ReloadIcon style={{ transform: 'scaleX(-1)' }} />
+				</Button>
+				<Tooltip>{mergePdf.viewer.rotatePageLeft}</Tooltip>
+			</TooltipTrigger>
 
-			<Tooltip.Root delayDuration={1000}>
-				<Tooltip.Trigger>
-					<Button size="icon" variant="ghost" onPress={() => onRotatePage('right', page)}>
-						<ReloadIcon />
-					</Button>
-				</Tooltip.Trigger>
-				<Tooltip.Content>{mergePdf.viewer.rotatePageRight}</Tooltip.Content>
-			</Tooltip.Root>
+			<TooltipTrigger>
+				<Button size="icon" variant="ghost" onPress={() => onRotatePage('right', page)}>
+					<ReloadIcon />
+				</Button>
+				<Tooltip>{mergePdf.viewer.rotatePageRight}</Tooltip>
+			</TooltipTrigger>
 
-			<Tooltip.Root delayDuration={1000}>
-				<Tooltip.Trigger>
-					<Button size="icon" variant="ghost" onPress={() => onRemove(page)}>
-						<TrashIcon />
-					</Button>
-				</Tooltip.Trigger>
-				<Tooltip.Content>{mergePdf.viewer.removePage}</Tooltip.Content>
-			</Tooltip.Root>
+			<TooltipTrigger>
+				<Button size="icon" variant="ghost" onPress={() => onRemove(page)}>
+					<TrashIcon />
+				</Button>
+				<Tooltip>{mergePdf.viewer.removePage}</Tooltip>
+			</TooltipTrigger>
 		</>
 	);
 };

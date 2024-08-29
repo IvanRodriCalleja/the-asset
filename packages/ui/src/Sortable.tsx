@@ -3,6 +3,7 @@
 import {
 	CSSProperties,
 	ComponentPropsWithRef,
+	PropsWithChildren,
 	ReactNode,
 	Ref,
 	createContext,
@@ -47,7 +48,7 @@ import { cva, cx } from '@theasset/style-system/css';
 import { styled } from '@theasset/style-system/jsx';
 import { composeRefs } from '@theasset/utilities-react/compose-refs';
 
-import { ButtonProps, buttonRecipe } from './Button';
+import { ButtonVariant, button } from './Button';
 
 const orientationConfig = {
 	vertical: {
@@ -320,30 +321,32 @@ const SortableItem = forwardRef<HTMLDivElement, SortableItemProps>(
 );
 SortableItem.displayName = 'SortableItem';
 
-interface SortableDragHandleProps extends ButtonProps {
+type SortableDragHandleProps = ButtonVariant & {
 	withHandle?: boolean;
-}
+	className?: string;
+};
 
-const DragButton = styled('button', buttonRecipe);
+const DragButton = styled('button', button);
 
-const SortableDragHandle = forwardRef<HTMLButtonElement, SortableDragHandleProps>(
-	({ className, ...props }, ref) => {
-		const { attributes, listeners, isDragging } = useSortableItem();
+const SortableDragHandle = forwardRef<
+	HTMLButtonElement,
+	PropsWithChildren<SortableDragHandleProps>
+>(({ className, ...props }, ref) => {
+	const { attributes, listeners, isDragging } = useSortableItem();
 
-		const grabClassName = cursorGrab({ dragging: isDragging, grab: true });
+	const grabClassName = cursorGrab({ dragging: isDragging, grab: true });
 
-		return (
-			<DragButton
-				ref={composeRefs(ref)}
-				data-state={isDragging ? 'dragging' : undefined}
-				className={cx(grabClassName, className)}
-				{...attributes}
-				{...listeners}
-				{...props}
-			/>
-		);
-	}
-);
+	return (
+		<DragButton
+			ref={composeRefs(ref)}
+			data-state={isDragging ? 'dragging' : undefined}
+			className={cx(grabClassName, className)}
+			{...attributes}
+			{...listeners}
+			{...props}
+		/>
+	);
+});
 SortableDragHandle.displayName = 'SortableDragHandle';
 
 export const Sortable = { Root, SortableDragHandle, SortableItem, SortableOverlay };
