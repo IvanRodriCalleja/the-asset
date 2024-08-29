@@ -10,8 +10,6 @@ import { decrypt } from '@theasset/pdf/decrypt';
 import { Form } from '@theasset/ui/form';
 import { RHFFieldPassword } from '@theasset/ui/form/fields/field-password';
 
-// TODO: Literals
-
 type UnlockPdf = {
 	password: string;
 };

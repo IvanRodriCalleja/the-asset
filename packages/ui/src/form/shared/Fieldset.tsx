@@ -16,7 +16,6 @@ const Legend = styled('legend', {
 	}
 });
 
-//TODO: Put (optional) in literals
 export const Fieldset = ({ legend, optional, children }: PropsWithChildren<FieldsetProps>) => {
 	const locales = useLocale();
 

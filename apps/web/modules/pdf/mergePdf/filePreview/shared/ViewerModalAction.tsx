@@ -21,7 +21,15 @@ export const ViewerModalAction = ({ children, file, setFiles }: ViewerModalActio
 			className={css({ boxShadow: 'none !important', border: 'none !important' })}>
 			<Modal.Close />
 			<Viewer file={file}>
-				{({ page }) => <ViewerActions page={page} file={file} setFiles={setFiles} />}
+				{({ page, totalPages, setPage }) => (
+					<ViewerActions
+						page={page}
+						file={file}
+						totalPages={totalPages}
+						setPage={setPage}
+						setFiles={setFiles}
+					/>
+				)}
 			</Viewer>
 		</Modal.Content>
 	</Modal.Root>

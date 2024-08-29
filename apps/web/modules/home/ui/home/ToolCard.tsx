@@ -71,7 +71,7 @@ const ToolBorder = styled('i', {
 			transform: 'translate(-50%, -50%)',
 			borderRadius: '100%',
 			zIndex: '-2',
-			animationName: 'spin',
+			animationName: 'spinTranslate',
 			animationIterationCount: 'infinite',
 			animationDuration: '5s',
 			animationTimingFunction: 'linear'

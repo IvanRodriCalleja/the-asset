@@ -5,12 +5,14 @@ import { css } from '@theasset/style-system/css';
 import { Box } from '@theasset/style-system/jsx';
 import { Thumbnail } from '@theasset/ui/thumbnail';
 
-import { usePdf } from './infra/usePdf';
+import { usePages } from './infra/usePages';
 import { useThumbnail } from './infra/useThumbnail';
 import { Toolbar } from './viewer/Toolbar';
 
 type ChildrenProps = {
 	page: number;
+	totalPages: number;
+	setPage: (page: number) => void;
 };
 
 type ViewerProps = {
@@ -28,7 +30,7 @@ export const Viewer = ({ file, children }: ViewerProps) => {
 		});
 	};
 
-	const pdf = usePdf(file);
+	const totalPages = usePages(file);
 	const { src, width, height } = useThumbnail({ file, page });
 
 	const isVertical = width < height;
@@ -54,7 +56,7 @@ export const Viewer = ({ file, children }: ViewerProps) => {
 				/>
 			</Box>
 			<Box position="absolute" bottom={{ base: 0, md: '1rem' }} left={0} right={0}>
-				<Toolbar numPages={pdf.numPages} page={page} setPage={setPage}>
+				<Toolbar totalPages={totalPages} page={page} setPage={setPage}>
 					{children}
 				</Toolbar>
 			</Box>

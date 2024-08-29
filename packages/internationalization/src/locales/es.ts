@@ -26,6 +26,11 @@ const es: Locales = {
 				'Este PDF está protegido con contraseña, porfavor introduce la contraseña para desbloquear.',
 			startAction: 'Desbloquear PDF',
 			unlock: 'Desbloquear'
+		},
+		viewer: {
+			rotatePageLeft: 'Girar página a la izquierda',
+			rotatePageRight: 'Girar página a la derecha',
+			removePage: 'Eliminar página'
 		}
 	},
 	mergePdfResult: {
@@ -50,6 +55,17 @@ const es: Locales = {
 			validations: {
 				required: 'Campo obligatorio',
 				invalidPassword: 'Contraseña incorrecta'
+			}
+		}
+	},
+	components: {
+		viewer: {
+			toolbar: {
+				goFirstPage: 'Ir a la primera página',
+				goPreviousPage: 'Ir a la página anterior',
+				goNextPAge: 'Ir a la página siguiente',
+				goLastPage: 'Ir a la última página',
+				currentPage: 'Página actual'
 			}
 		}
 	}

@@ -126,7 +126,12 @@ export const buttonRecipe = cva({
 			lg: {
 				h: '11',
 				rounded: 'md',
-				px: '8'
+				px: '8',
+
+				'& svg': {
+					w: '4',
+					h: '4'
+				}
 			},
 			xl: {
 				h: '12',

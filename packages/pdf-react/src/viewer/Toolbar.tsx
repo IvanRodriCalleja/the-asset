@@ -8,6 +8,7 @@ import {
 } from '@radix-ui/react-icons';
 import { KeyboardEvent } from '@react-types/shared';
 
+import { useLocale } from '@theasset/internationalization/hooks';
 import { css } from '@theasset/style-system/css';
 import { Flex, Stack, styled } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
@@ -29,23 +30,26 @@ const ViewerToolbarContainer = styled('div', {
 
 type ChildrenProps = {
 	page: number;
+	totalPages: number;
+	setPage: (page: number) => void;
 };
 
 type ToolbarProps = {
-	numPages: number;
+	totalPages: number;
 	page: number;
 	setPage: (page: number) => void;
 	children: (props: ChildrenProps) => JSX.Element;
 };
 
-// TODO: Add literals
-
-export const Toolbar = ({ numPages, page, setPage, children }: ToolbarProps) => {
+export const Toolbar = ({ totalPages, page, setPage, children }: ToolbarProps) => {
+	const {
+		components: { viewer }
+	} = useLocale();
 	const [editablePage, setEditablePage] = useState(page);
 
 	const onEdit = (value: number) => setEditablePage(value);
 	const onBlur = () => {
-		if (editablePage >= 1 && editablePage <= numPages) {
+		if (editablePage >= 1 && editablePage <= totalPages) {
 			setPage(editablePage);
 		} else {
 			setEditablePage(page);
@@ -63,13 +67,13 @@ export const Toolbar = ({ numPages, page, setPage, children }: ToolbarProps) => 
 	}, [page]);
 
 	const goToFirstPage = () => setPage(1);
-	const goToLastPage = () => setPage(numPages);
+	const goToLastPage = () => setPage(totalPages);
 
 	const goToPreviousPage = () => setPage(page - 1);
 	const goToNextPage = () => setPage(page + 1);
 
 	const isGoToFirstPageDisabled = page === 1;
-	const isGoToLastPageDisabled = page === numPages;
+	const isGoToLastPageDisabled = page === totalPages;
 
 	return (
 		<Flex justifyContent="center">
@@ -84,7 +88,7 @@ export const Toolbar = ({ numPages, page, setPage, children }: ToolbarProps) => 
 							<DoubleArrowLeftIcon />
 						</Button>
 					</Tooltip.Trigger>
-					<Tooltip.Content>Go to first page</Tooltip.Content>
+					<Tooltip.Content>{viewer.toolbar.goFirstPage}</Tooltip.Content>
 				</Tooltip.Root>
 
 				<Tooltip.Root delayDuration={1000}>
@@ -97,13 +101,13 @@ export const Toolbar = ({ numPages, page, setPage, children }: ToolbarProps) => 
 							<ChevronLeftIcon />
 						</Button>
 					</Tooltip.Trigger>
-					<Tooltip.Content>Go to previous page</Tooltip.Content>
+					<Tooltip.Content>{viewer.toolbar.goFirstPage}</Tooltip.Content>
 				</Tooltip.Root>
 
 				<Stack direction="row" alignItems="center">
 					<Number
 						size="lg"
-						aria-label="TODO: Change"
+						aria-label={viewer.toolbar.currentPage}
 						hasControls={false}
 						value={editablePage}
 						onChange={onEdit}
@@ -112,7 +116,7 @@ export const Toolbar = ({ numPages, page, setPage, children }: ToolbarProps) => 
 					/>
 					/
 					<Text size="sm" className={css({ paddingInline: 2 })}>
-						{numPages}
+						{totalPages}
 					</Text>
 				</Stack>
 
@@ -126,7 +130,7 @@ export const Toolbar = ({ numPages, page, setPage, children }: ToolbarProps) => 
 							<ChevronRightIcon />
 						</Button>
 					</Tooltip.Trigger>
-					<Tooltip.Content>Go to next page</Tooltip.Content>
+					<Tooltip.Content>{viewer.toolbar.goNextPAge}</Tooltip.Content>
 				</Tooltip.Root>
 
 				<Tooltip.Root delayDuration={1000}>
@@ -139,10 +143,10 @@ export const Toolbar = ({ numPages, page, setPage, children }: ToolbarProps) => 
 							<DoubleArrowRightIcon />
 						</Button>
 					</Tooltip.Trigger>
-					<Tooltip.Content>Go to last page</Tooltip.Content>
+					<Tooltip.Content>{viewer.toolbar.goLastPage}</Tooltip.Content>
 				</Tooltip.Root>
 
-				{children({ page })}
+				{children({ page, totalPages, setPage })}
 			</ViewerToolbarContainer>
 		</Flex>
 	);

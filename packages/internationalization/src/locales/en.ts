@@ -22,6 +22,11 @@ const en = {
 			description: 'This PDF is password protected. Please enter the password to unlock it.',
 			startAction: 'Unlock PDF',
 			unlock: 'Unlock'
+		},
+		viewer: {
+			rotatePageLeft: 'Rotate page left',
+			rotatePageRight: 'Rotate page right',
+			removePage: 'Remove page'
 		}
 	},
 	mergePdfResult: {
@@ -47,6 +52,17 @@ const en = {
 			validations: {
 				required: 'This field is required',
 				invalidPassword: 'Invalid password'
+			}
+		}
+	},
+	components: {
+		viewer: {
+			toolbar: {
+				goFirstPage: 'Go to first page',
+				goPreviousPage: 'Go to previous page',
+				goNextPAge: 'Go to next page',
+				goLastPage: 'Go to last page',
+				currentPage: 'Current page'
 			}
 		}
 	}
