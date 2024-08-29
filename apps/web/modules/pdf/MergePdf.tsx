@@ -3,7 +3,7 @@
 import { useLocale } from '@theasset/internationalization/hooks';
 import { Box, styled } from '@theasset/style-system/jsx';
 import { FilePicker } from '@theasset/ui/file-picker';
-import { HighlightMaker } from '@theasset/ui/highlight-maker';
+import { HighlightColor, HighlightMaker } from '@theasset/ui/highlight-maker';
 
 import { MainSection } from 'modules/shared/ui/MainSection';
 import { SectionGradient } from 'modules/shared/ui/SectionGradient';
@@ -21,7 +21,8 @@ const UploadSection = styled('section', {
 	}
 });
 
-//TODO: HIGHLIGHT MARKER AS ENUM
+// TODO: Add ability to add more files
+// TODO: Viewer Toolbar responsive on mobile
 
 export const MergePdf = () => {
 	const { mergePdf } = useLocale();
@@ -61,7 +62,7 @@ export const MergePdf = () => {
 						description={
 							<>
 								{mergePdf.description}{' '}
-								<HighlightMaker color="rgba(166 122 244 / 40%)">
+								<HighlightMaker color={HighlightColor.Purple}>
 									{mergePdf.descriptionImportant}
 								</HighlightMaker>
 							</>

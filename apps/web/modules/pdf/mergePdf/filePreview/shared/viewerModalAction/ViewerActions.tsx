@@ -60,7 +60,6 @@ export const ViewerActions = ({
 				<Tooltip.Content>{mergePdf.viewer.rotatePageRight}</Tooltip.Content>
 			</Tooltip.Root>
 
-			{/* TODO: If last page is removed, move to previous page*/}
 			<Tooltip.Root delayDuration={1000}>
 				<Tooltip.Trigger>
 					<Button size="icon" variant="ghost" onPress={() => onRemove(page)}>

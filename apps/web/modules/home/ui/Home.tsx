@@ -2,7 +2,7 @@ import Merge from 'assets/tools/merge.svg';
 
 import { useLocale } from '@theasset/internationalization/hooks';
 import { Grid } from '@theasset/style-system/jsx';
-import { HighlightMaker } from '@theasset/ui/highlight-maker';
+import { HighlightColor, HighlightMaker } from '@theasset/ui/highlight-maker';
 
 import { MainSection } from 'modules/shared/ui/MainSection';
 import { Section } from 'modules/shared/ui/Section';
@@ -26,7 +26,9 @@ export const Home = () => {
 				description={
 					<>
 						{home.description}{' '}
-						<HighlightMaker color={'#ffaada'}>{home.descriptionImportant}</HighlightMaker>
+						<HighlightMaker color={HighlightColor.Green}>
+							{home.descriptionImportant}
+						</HighlightMaker>
 					</>
 				}
 			/>

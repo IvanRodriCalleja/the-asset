@@ -29,8 +29,13 @@ export const HighlightMakerComponent = styled('mark', {
 	}
 });
 
-type HighlightMakerProps = {
-	color: string;
+export enum HighlightColor {
+	Green = 'rgb(76 175 80 / 40%)',
+	Purple = 'rgba(166 122 244 / 40%)'
+}
+
+export type HighlightMakerProps = {
+	color: HighlightColor;
 };
 
 export const HighlightMaker = ({ children, color }: PropsWithChildren<HighlightMakerProps>) => (
