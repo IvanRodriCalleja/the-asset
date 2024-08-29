@@ -76,7 +76,6 @@ export const button = cva({
 			},
 			transparent: {
 				bg: 'transparent',
-				borderRadius: 'none',
 
 				_focusVisible: {
 					outline: '2px solid transparent',

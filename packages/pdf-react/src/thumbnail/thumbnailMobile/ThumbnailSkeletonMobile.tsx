@@ -1,4 +1,4 @@
-import { GripVertical } from 'lucide-react';
+import { DragHandleDots2Icon } from '@radix-ui/react-icons';
 
 import { Box, Flex, Stack } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
@@ -22,7 +22,7 @@ export const ThumbnailSkeletonMobile = () => (
 
 			<Flex alignItems="center">
 				<Button variant="transparent" size="icon" isDisabled>
-					<GripVertical />
+					<DragHandleDots2Icon />
 				</Button>
 			</Flex>
 		</Stack>

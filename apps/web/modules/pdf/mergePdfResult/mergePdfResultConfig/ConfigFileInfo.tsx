@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction, Suspense } from 'react';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
+import { css } from '@theasset/style-system/css';
 import { Stack, styled } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
 import { Popover, PopoverPanel, PopoverTrigger } from '@theasset/ui/popover';
@@ -33,7 +34,7 @@ export const ConfigFileInfo = ({ file, name, setName }: ConfigFileInfoProps) => 
 		<Stack gap={1}>
 			<Stack direction="row" gap={0}>
 				<PopoverTrigger>
-					<Button variant="transparent" size="none">
+					<Button variant="transparent" size="none" className={css({ borderRadius: 0 })}>
 						<FileName size="md" weight="bold">
 							{notExtension}
 						</FileName>

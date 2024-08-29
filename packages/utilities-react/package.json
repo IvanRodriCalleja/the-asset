@@ -28,8 +28,6 @@
     "@dnd-kit/modifiers": "^7.0.0",
     "@dnd-kit/sortable": "^8.0.0",
     "@dnd-kit/utilities": "^3.2.2",
-    "@radix-ui/react-slot": "^1.1.0",
-    "@radix-ui/react-tooltip": "^1.1.2",
     "@react-types/shared": "^3.23.1",
     "@theasset/cache": "*",
     "react": "19.0.0-rc-f994737d14-20240522",

@@ -27,7 +27,6 @@ const UploadSection = styled('section', {
 // TODO: Unify exports from packages
 // TODO: Avoid compound components
 // TODO: Rethink file upload approach
-// TODO: Remove lucide-react
 
 export const MergePdf = () => {
 	const { mergePdf } = useLocale();

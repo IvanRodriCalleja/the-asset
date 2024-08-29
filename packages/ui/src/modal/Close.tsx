@@ -1,4 +1,4 @@
-import { X } from 'lucide-react';
+import { Cross2Icon } from '@radix-ui/react-icons';
 
 import { styled } from '@theasset/style-system/jsx';
 
@@ -19,7 +19,7 @@ export const Close = () => {
 
 	return (
 		<CloseButton size="icon" variant="secondary" onPress={state.close}>
-			<X />
+			<Cross2Icon />
 		</CloseButton>
 	);
 };
