@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import { LocaleParam } from '@theasset/internationalization/domain';
 import { useLocale } from '@theasset/internationalization/hooks';
@@ -34,8 +35,10 @@ const RootLayout = async ({ children, params: { lang } }: PropsWithChildren<Loca
 				<body>
 					{children}
 					<Toast.GlobalRegion />
+					<SpeedInsights />
 				</body>
 			</I18nProvider>
+
 			<Analytics />
 		</html>
 	);
