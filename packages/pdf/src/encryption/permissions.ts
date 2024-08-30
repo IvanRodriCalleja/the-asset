@@ -3,7 +3,7 @@ import {
 	hasPermission,
 	isEncrypted as isPdfEncrypted,
 	noEdit
-} from 'coherentpdf/dist/coherentpdf.browser.js';
+} from 'coherentpdf/dist/coherentpdf.browser.min.js';
 
 export const isEncrypted = (pdf: PdfDocument) => isPdfEncrypted(pdf);
 export const isEditable = (pdf: PdfDocument) => !hasPermission(pdf, noEdit);

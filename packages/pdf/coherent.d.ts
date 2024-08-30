@@ -1,5 +1,5 @@
 // Definiciones de funciones
-declare module 'coherentpdf/dist/coherentpdf.browser.js' {
+declare module 'coherentpdf/dist/coherentpdf.browser.min.js' {
 	type PdfDocument = number;
 	type PageRange = number[];
 	type Permission = number;

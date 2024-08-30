@@ -1,4 +1,9 @@
-import { decryptPdf, fromMemory, pages, toMemory } from 'coherentpdf/dist/coherentpdf.browser.js';
+import {
+	decryptPdf,
+	fromMemory,
+	pages,
+	toMemory
+} from 'coherentpdf/dist/coherentpdf.browser.min.js';
 
 export class DecryptError extends Error {
 	constructor() {
