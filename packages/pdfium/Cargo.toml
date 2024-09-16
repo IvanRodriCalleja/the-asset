@@ -1,0 +1,23 @@
+[package]
+authors = ["LongYinan <lynweklm@gmail.com>"]
+edition = "2021"
+name    = "node-rs-bcrypt"
+version = "0.1.0"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+base64       = { version = "0.22" }
+bcrypt       = "0.15"
+blowfish     = { version = "0.9", features = ["bcrypt"] }
+getrandom    = "0.2"
+global_alloc = { path = "../../crates/alloc" }
+napi         = { version = "2", default-features = false, features = ["napi3"] }
+napi-derive  = { version = "2" }
+
+[dev-dependencies]
+quickcheck = "1.0"
+
+[build-dependencies]
+napi-build = "2"

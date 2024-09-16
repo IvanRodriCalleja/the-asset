@@ -48,7 +48,8 @@ const nextConfig = {
 
 		// Modify the file loader rule to ignore *.svg, since we have it handled now.
 		fileLoaderRule.exclude = /\.svg$/i;
-
+		config.experiments = { asyncWebAssembly: true };
+		
 		return config;
 	}
 };

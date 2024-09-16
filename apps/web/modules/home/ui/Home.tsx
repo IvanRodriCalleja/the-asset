@@ -1,7 +1,9 @@
 import Merge from 'assets/tools/merge.svg';
 
 import { useLocale } from '@theasset/internationalization/hooks';
+//import { sum } from '@theasset/pdfium';
 import { Grid } from '@theasset/style-system/jsx';
+import { Button } from '@theasset/ui/button';
 import { HighlightColor, HighlightMaker } from '@theasset/ui/highlight-maker';
 
 import { MainSection } from 'modules/shared/ui/MainSection';
@@ -16,6 +18,11 @@ export const Home = () => {
 	const { home } = useLocale();
 
 	const tools = useTools();
+
+	/*const onSum = () => {
+		const result = sum(1, 2);
+		console.log('Sum result:', result);
+	};*/
 
 	return (
 		<Section>

@@ -1,0 +1,12 @@
+[workspace]
+members = [
+  "./crates/alloc",
+  "./packages/pdfium",
+]
+resolver = "2"
+
+[profile.release]
+codegen-units   = 1
+lto             = true
+overflow-checks = false
+strip           = 'symbols' 
