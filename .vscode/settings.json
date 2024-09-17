@@ -25,35 +25,41 @@
 	"[typescriptreact]":  {
 		"editor.formatOnSave":  false,
   },
-  "editor.codeActionsOnSave": {
-	"source.fixAll.eslint": "explicit"
-},
-	"go.testTimeout": "3000s",
-	"explorer.fileNesting.enabled": true,
-	"explorer.fileNesting.patterns": {
-		"*.jsx": "$(capture).js, $(capture).spec.jsx",
-		"*.tsx": "$(capture).ts, $(capture).spec.tsx, $(capture).stories.tsx",
-    "*.ts": "$(capture).ts, $(capture).spec.ts, $(capture).spec.tsx",
-		"package.json": "yarn.lock, .editorconfig, .prettierrc, .prettierignore, .eslintrc, .eslintignore"
-	},
-  "jestrunner.jestCommand": ". javascript/config/test/jest-runner.sh",
-  "jestrunner.changeDirectoryToWorkspaceRoot": true,
-  "cSpell.words": [
-    "agentero",
-    "appquoteid",
-    "Clearcover",
-    "ezlynx",
-    "googlemaps",
-    "gtag",
-    "protobuf",
-    "Stillwater",
-    "svgr",
-    "trivago"
-  ],
-  "panda.hovers.tokens.css-preview.enabled": true,
-  "typescript.preferences.autoImportFileExcludePatterns": [
+    "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+    "go.testTimeout": "3000s",
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.patterns": {
+      "*.jsx": "$(capture).js, $(capture).spec.jsx",
+      "*.tsx": "$(capture).ts, $(capture).spec.tsx, $(capture).stories.tsx",
+      "*.ts": "$(capture).ts, $(capture).spec.ts, $(capture).spec.tsx",
+      "package.json": "yarn.lock, .editorconfig, .prettierrc, .prettierignore, .eslintrc, .eslintignore"
+    },
+    "jestrunner.jestCommand": ". javascript/config/test/jest-runner.sh",
+    "jestrunner.changeDirectoryToWorkspaceRoot": true,
+    "cSpell.words": [
+      "agentero",
+      "appquoteid",
+      "Clearcover",
+      "ezlynx",
+      "googlemaps",
+      "gtag",
+      "pdfium",
+      "protobuf",
+      "Stillwater",
+      "svgr",
+      "trivago"
+    ],
+    "panda.hovers.tokens.css-preview.enabled": true,
+    "typescript.preferences.autoImportFileExcludePatterns": [
 
-],
-"typescript.tsdk": "node_modules/typescript/lib",
-"jest.rootPath": "./javascript/smoke-test"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "jest.rootPath": "./javascript/smoke-test",
+  "rust-analyzer.cargo.target": "wasm32-unknown-unknown",
+  "[rust]": {
+      "editor.defaultFormatter": "rust-lang.rust-analyzer",
+      "editor.formatOnSave": true
+  }
 }

@@ -1,1 +1,0 @@
-export { getThumbnail } from './getThumbnail';

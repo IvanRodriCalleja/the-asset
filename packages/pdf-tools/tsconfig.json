@@ -1,0 +1,12 @@
+{
+  "extends": "@theasset/typescript-config/react-library.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "dist",
+    "noEmit": true,
+    "module": "ES2022",
+    "moduleResolution": "Bundler"
+  },
+  "include": ["src", "**.d.ts", "pdf-tools.ts", "web", "node"],
+  "exclude": ["node_modules", "dist"]
+}

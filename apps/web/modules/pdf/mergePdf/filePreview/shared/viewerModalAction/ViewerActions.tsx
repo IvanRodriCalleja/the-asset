@@ -4,6 +4,7 @@ import { ReloadIcon, TrashIcon } from '@radix-ui/react-icons';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks';
+import { Direction } from '@theasset/pdf-tools/types';
 import { Button } from '@theasset/ui/button';
 import { Tooltip, TooltipTrigger } from '@theasset/ui/tooltip';
 
@@ -16,6 +17,8 @@ type ViewerActionsProps = {
 	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
 	setPage: (page: number) => void;
 };
+
+//TODO: Fix actions to increase or decrease width when letter size changes
 
 export const ViewerActions = ({
 	page,
@@ -43,14 +46,14 @@ export const ViewerActions = ({
 	return (
 		<>
 			<TooltipTrigger>
-				<Button size="icon" variant="ghost" onPress={() => onRotatePage('left', page)}>
+				<Button size="icon" variant="ghost" onPress={() => onRotatePage(Direction.Left, page - 1)}>
 					<ReloadIcon style={{ transform: 'scaleX(-1)' }} />
 				</Button>
 				<Tooltip>{mergePdf.viewer.rotatePageLeft}</Tooltip>
 			</TooltipTrigger>
 
 			<TooltipTrigger>
-				<Button size="icon" variant="ghost" onPress={() => onRotatePage('right', page)}>
+				<Button size="icon" variant="ghost" onPress={() => onRotatePage(Direction.Right, page - 1)}>
 					<ReloadIcon />
 				</Button>
 				<Tooltip>{mergePdf.viewer.rotatePageRight}</Tooltip>

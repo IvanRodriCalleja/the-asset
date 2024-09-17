@@ -1,0 +1,28 @@
+{
+  "name": "@theasset/pdf-tools",
+  "type": "module",
+  "main": "./node/index.ts",
+  "browser": "./web/index.ts",
+  "exports": {
+    ".": {
+      "node": "./node/index.ts",
+      "default": "./web/index.ts"
+    },
+    "./types": {
+      "node": "./pdf-tools.ts",
+      "default": "./pdf-tools.ts"
+    }
+  },
+  "version": "0.1.0",
+  "scripts": {
+    "build:web": "wasm-pack build --release --target web --out-dir ./build/web && yarn clean:output",
+    "build:node": "wasm-pack build --release --target web --out-dir ./build/node && yarn clean:output",
+    "clean:output": "node ./scripts/clean-output.cjs"
+  },
+  "devDependencies": {
+    "@types/node": "^22.5.5"
+  },
+  "dependencies": {
+    "coherentpdf": "^2.5.5"
+  }
+}

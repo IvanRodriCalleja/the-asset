@@ -2,8 +2,10 @@
   "extends": "@theasset/typescript-config/react-library.json",
   "compilerOptions": {
     "outDir": "dist",
-    "noEmit": true
+    "noEmit": true,
+    "module": "ES2022",
+    "moduleResolution": "Bundler"
   },
-  "include": ["src", "../pdf/coherent.d.ts"],
+  "include": ["src", "../pdf-tools/coherent.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

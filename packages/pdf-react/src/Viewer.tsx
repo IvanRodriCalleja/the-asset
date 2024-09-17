@@ -31,7 +31,7 @@ export const Viewer = ({ file, children }: ViewerProps) => {
 	};
 
 	const totalPages = usePages(file);
-	const { src, width, height } = useThumbnail({ file, page });
+	const { src, width, height } = useThumbnail({ file, page: page - 1 });
 
 	const isVertical = width < height;
 	const aspectRatio = width / height;

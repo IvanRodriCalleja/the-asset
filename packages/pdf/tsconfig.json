@@ -1,9 +1,0 @@
-{
-  "extends": "@theasset/typescript-config/react-library.json",
-  "compilerOptions": {
-    "outDir": "dist",
-    "noEmit": true
-  },
-  "include": ["src", "**.d.ts"],
-  "exclude": ["node_modules", "dist"]
-}

@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { Stack } from '@theasset/style-system/jsx';
 
-import { usePdf } from './infra/usePdf';
+import { usePages } from './infra/usePages';
 import { ScrollViewerPageViewPort } from './scrollViewer/ScrollViewerPageViewPort';
 
 type ScrollViewerProps = {
@@ -11,7 +11,7 @@ type ScrollViewerProps = {
 };
 
 export const ScrollViewer = ({ file }: ScrollViewerProps) => {
-	const pdf = usePdf(file);
+	const totalPages = usePages(file);
 
 	const rootRef = useRef<HTMLDivElement>(null);
 
@@ -23,8 +23,8 @@ export const ScrollViewer = ({ file }: ScrollViewerProps) => {
 			alignItems="center"
 			overflow="auto"
 			padding={16}>
-			{[...new Array(pdf.numPages)].map((_, index) => (
-				<ScrollViewerPageViewPort key={index} file={file} page={index + 1} rootRef={rootRef} />
+			{[...new Array(totalPages)].map((_, index) => (
+				<ScrollViewerPageViewPort key={index} file={file} page={index} rootRef={rootRef} />
 			))}
 		</Stack>
 	);
