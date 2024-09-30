@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { MagnifyingGlassIcon, ReloadIcon, TrashIcon } from '@radix-ui/react-icons';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
+import { Direction } from '@theasset/pdf-tools/types';
 import { Thumbnail } from '@theasset/ui/thumbnail';
 
 import { ViewerModalAction } from '../shared/ViewerModalAction';
@@ -29,13 +30,13 @@ const Actions = ({ file, setFiles }: MergePdfActionsDesktopProp) => {
 			)}
 
 			{!file.isEncrypted && (
-				<Thumbnail.ActionButton onPress={() => onRotateFile('left')}>
+				<Thumbnail.ActionButton onPress={() => onRotateFile(Direction.Left)}>
 					<ReloadIcon style={{ transform: 'scaleX(-1)' }} />
 				</Thumbnail.ActionButton>
 			)}
 
 			{!file.isEncrypted && (
-				<Thumbnail.ActionButton onPress={() => onRotateFile('right')}>
+				<Thumbnail.ActionButton onPress={() => onRotateFile(Direction.Right)}>
 					<ReloadIcon />
 				</Thumbnail.ActionButton>
 			)}

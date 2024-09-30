@@ -6,7 +6,7 @@ import z from 'zod';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks';
-import { decrypt } from '@theasset/pdf/decrypt';
+import { decryptPdf } from '@theasset/pdf-tools';
 import { Form } from '@theasset/ui/form';
 import { RHFFieldPassword } from '@theasset/ui/form/fields/field-password';
 
@@ -36,7 +36,7 @@ export const UnlockPdfForm = ({ file, onUnlockPdf }: UnlockPdfFormProps) => {
 
 	const onSubmit = async ({ password }: UnlockPdf) => {
 		try {
-			const decryptedFile = await decrypt(file.buffer, password);
+			const decryptedFile = await decryptPdf({ buffer: file.buffer, password });
 
 			return onUnlockPdf(decryptedFile);
 		} catch (error) {

@@ -20,7 +20,6 @@ export const Home = () => {
 	return (
 		<Section>
 			<SectionGradient />
-
 			<MainSection
 				title={home.title}
 				description={

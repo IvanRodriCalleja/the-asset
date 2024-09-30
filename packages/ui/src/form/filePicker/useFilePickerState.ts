@@ -2,9 +2,7 @@ import { useState } from 'react';
 
 import { TheAssetFile, hashArrayBuffer } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks';
-import { seedPdf } from '@theasset/pdf-react/infra/usePdf';
-import { decrypt } from '@theasset/pdf/decrypt';
-import { getDocument } from '@theasset/pdf/document';
+import { isPdfEncrypted, tryDecryptPdf } from '@theasset/pdf-tools';
 
 import { toaster } from '../../Toast';
 
@@ -31,27 +29,24 @@ export const useFilePickerState = () => {
 					fileReader.readAsArrayBuffer(file);
 				});
 
-				let decryptedPdf: ArrayBuffer = buffer;
-				let isEncrypted = false;
+				let isEncrypted = await isPdfEncrypted(buffer);
+				let fileBuffer = buffer;
 
-				try {
-					decryptedPdf = decrypt(buffer);
-				} catch (error) {
-					isEncrypted = true;
+				if (isEncrypted) {
+					const { buffer: decryptedBuffer, isEncrypted: isFileEncrypted } = await tryDecryptPdf({
+						buffer,
+						password: ''
+					});
+					isEncrypted = isFileEncrypted;
+					fileBuffer = new Uint8Array(decryptedBuffer);
 				}
 
-				const hash = await hashArrayBuffer(decryptedPdf);
-
-				if (!isEncrypted) {
-					const pdf = await getDocument(new Uint8Array(decryptedPdf)); // NOTE: this is used to validate PDF content if wrong format, it throws an error
-
-					seedPdf(pdf, hash);
-				}
+				const hash = await hashArrayBuffer(buffer);
 
 				const fileItem: TheAssetFile = {
 					id,
 					hash,
-					buffer: decryptedPdf,
+					buffer: fileBuffer,
 					name,
 					isEncrypted
 				};

@@ -3,8 +3,10 @@
   "compilerOptions": {
     "rootDir": ".",
     "outDir": "dist",
-    "noEmit": true
+    "noEmit": true,
+    "module": "ES2022",
+    "moduleResolution": "Bundler"
   },
-  "include": ["src", "**.d.ts", "../pdf/coherent.d.ts"],
+  "include": ["src", "**.d.ts", "../pdf-tools/coherent.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

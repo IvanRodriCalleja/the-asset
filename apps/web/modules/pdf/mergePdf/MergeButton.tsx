@@ -8,7 +8,7 @@ import { cacheStore } from '@theasset/cache/store';
 import { TheAssetFile, hashArrayBuffer } from '@theasset/file/domain/the-asset-file';
 import { Loading } from '@theasset/icons/loading';
 import { useLocale } from '@theasset/internationalization/hooks';
-import { mergePdfs } from '@theasset/pdf/merge';
+import { mergePdfs } from '@theasset/pdf-tools';
 import { Stack } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
 import { replaceParams } from '@theasset/ui/utils/replaceParams';
@@ -30,7 +30,7 @@ export const MergeButton = ({ files }: MergeButtonProps) => {
 	const onMerge = () => {
 		startTransition(async () => {
 			const decryptedFiles = files.filter(file => !file.isEncrypted);
-			const mergedPdf = await mergePdfs({ files: decryptedFiles });
+			const mergedPdf = await mergePdfs({ buffers: decryptedFiles.map(file => file.buffer) });
 
 			const id = new Date().getTime().toString();
 			const hash = await hashArrayBuffer(mergedPdf);

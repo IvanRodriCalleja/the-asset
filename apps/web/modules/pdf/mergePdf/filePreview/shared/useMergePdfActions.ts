@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction, useTransition } from 'react';
 
 import { TheAssetFile, hashArrayBuffer } from '@theasset/file/domain/the-asset-file';
-import { rotatePdfFile, rotatePdfPage } from '@theasset/pdf/merge';
-import { removePageFromPDF } from '@theasset/pdf/shared';
+import { removePdfPage, rotatePdf, rotatePdfPage } from '@theasset/pdf-tools';
+import { Direction } from '@theasset/pdf-tools/types';
 
 type UseMergePdfActions = {
 	file: TheAssetFile;
@@ -20,9 +20,9 @@ export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
 		});
 	};
 
-	const onRemovePage = async (page: number) => {
+	const onRemovePage = (page: number) => {
 		startTransition(async () => {
-			const newPdf = await removePageFromPDF({ buffer: file.buffer, page });
+			const newPdf = await removePdfPage({ buffer: file.buffer, index: page - 1 });
 			const hash = await hashArrayBuffer(newPdf);
 
 			setFiles(files => {
@@ -40,11 +40,11 @@ export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
 		});
 	};
 
-	const onRotateFile = async (direction: 'left' | 'right') => {
+	const onRotateFile = (direction: Direction) => {
 		startTransition(async () => {
-			const newPdf = await rotatePdfFile({
+			const newPdf = await rotatePdf({
 				buffer: file.buffer,
-				rotation: direction === 'left' ? -90 : 90
+				direction
 			});
 			const hash = await hashArrayBuffer(newPdf); // TODO: Check why this doesn't return same hash when rotating the same file
 
@@ -63,12 +63,12 @@ export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
 		});
 	};
 
-	const onRotatePage = async (direction: 'left' | 'right', page: number) => {
+	const onRotatePage = async (direction: Direction, page: number) => {
 		startTransition(async () => {
 			const newPdf = await rotatePdfPage({
 				buffer: file.buffer,
-				rotation: direction === 'left' ? -90 : 90,
-				page
+				page,
+				direction
 			});
 			const hash = await hashArrayBuffer(newPdf); // TODO: Check why this doesn't return same hash when rotating the same file
 

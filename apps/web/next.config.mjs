@@ -1,12 +1,12 @@
 import { withSentryConfig } from '@sentry/nextjs';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
 	transpilePackages: ['@theasset/internationalization'],
 	experimental: {
-		reactCompiler: true,
-		
+		reactCompiler: true
 	},
-	webpack(config) {
+	webpack(config, { isServer }) {
 		// Grab the existing rule that handles SVG imports
 		const fileLoaderRule = config.module.rules.find(rule => rule.test?.test?.('.svg'));
 
@@ -48,6 +48,15 @@ const nextConfig = {
 
 		// Modify the file loader rule to ignore *.svg, since we have it handled now.
 		fileLoaderRule.exclude = /\.svg$/i;
+		config.experiments = { ...config.experiments, asyncWebAssembly: true };
+
+		if (isServer) {
+			// Para asegurarse de que el archivo .wasm se incluye en el build
+			config.module.rules.push({
+				test: /\.wasm$/,
+				type: 'asset/resource'
+			});
+		}
 
 		return config;
 	}
