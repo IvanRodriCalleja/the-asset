@@ -1,7 +1,7 @@
 import { Suspense, useState } from 'react';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
-import { ScrollViewer } from '@theasset/pdf-react/scroll-viewer';
+import { ScrollViewer } from '@theasset/pdf-react/ui/scroll-viewer';
 import { Flex } from '@theasset/style-system/jsx';
 
 import { InnerScrollSection } from 'modules/shared/ui/InnerScrollSection';

@@ -6,9 +6,9 @@ import localFont from 'next/font/local';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
-import { LocaleParam } from '@theasset/internationalization/domain';
-import { useLocale } from '@theasset/internationalization/hooks';
-import { I18nProvider } from '@theasset/internationalization/ui';
+import { LocaleParam } from '@theasset/internationalization/domain/locale-param';
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
+import { I18nProvider } from '@theasset/internationalization/ui/i18n-provider';
 import '@theasset/style-system/global.css';
 import { ToastGlobalRegion } from '@theasset/ui/toast';
 

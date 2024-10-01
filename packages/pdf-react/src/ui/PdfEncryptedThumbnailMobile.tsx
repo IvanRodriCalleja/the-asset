@@ -3,15 +3,15 @@ import { Dispatch, ReactNode, SetStateAction } from 'react';
 import { DragHandleDots2Icon } from '@radix-ui/react-icons';
 
 import { TheAssetFile, hashArrayBuffer } from '@theasset/file/domain/the-asset-file';
-import { useLocale } from '@theasset/internationalization/hooks';
-import { getSingularOrPlural } from '@theasset/internationalization/infra';
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
+import { getSingularOrPlural } from '@theasset/internationalization/infra/get-singular-or-plural';
 import { Box, Flex, Stack, styled } from '@theasset/style-system/jsx';
 import { Badge } from '@theasset/ui/badge';
 import { SortableDragHandle } from '@theasset/ui/sortable';
 import { Text } from '@theasset/ui/text';
 import { ThumbnailRoot } from '@theasset/ui/thumbnail';
 
-import { usePages } from '../infra/usePages';
+import { usePages } from '../hooks/usePages';
 import { UnlockPdfModal } from './shared/UnlockPdfModal';
 
 const FileName = styled('span', {

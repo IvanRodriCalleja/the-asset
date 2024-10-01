@@ -1,7 +1,7 @@
 import { ChevronDownIcon, DownloadIcon, ReloadIcon } from '@radix-ui/react-icons';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
-import { useLocale } from '@theasset/internationalization/hooks';
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { Stack, styled } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
 import { TheLink } from '@theasset/ui/the-link';

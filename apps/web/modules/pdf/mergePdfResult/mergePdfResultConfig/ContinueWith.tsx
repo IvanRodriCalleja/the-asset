@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { ChevronRightIcon } from '@radix-ui/react-icons';
 
-import { useLocale } from '@theasset/internationalization/hooks';
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { Flex, Stack } from '@theasset/style-system/jsx';
 import { Text } from '@theasset/ui/text';
 import { TheLink } from '@theasset/ui/the-link';

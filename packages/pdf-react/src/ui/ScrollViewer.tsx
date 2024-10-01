@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { Stack } from '@theasset/style-system/jsx';
 
-import { usePages } from './infra/usePages';
+import { usePages } from '../hooks/usePages';
 import { ScrollViewerPageViewPort } from './scrollViewer/ScrollViewerPageViewPort';
 
 type ScrollViewerProps = {

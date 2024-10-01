@@ -7,7 +7,7 @@ import Merge from 'assets/tools/merge.svg';
 import { cacheStore } from '@theasset/cache/store';
 import { TheAssetFile, hashArrayBuffer } from '@theasset/file/domain/the-asset-file';
 import { Loading } from '@theasset/icons/loading';
-import { useLocale } from '@theasset/internationalization/hooks';
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { mergePdfs } from '@theasset/pdf-tools';
 import { Stack } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';

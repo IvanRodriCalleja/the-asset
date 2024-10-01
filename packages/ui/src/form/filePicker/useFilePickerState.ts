@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { TheAssetFile, hashArrayBuffer } from '@theasset/file/domain/the-asset-file';
-import { useLocale } from '@theasset/internationalization/hooks';
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { isPdfEncrypted, tryDecryptPdf } from '@theasset/pdf-tools';
 
 import { toaster } from '../../Toast';

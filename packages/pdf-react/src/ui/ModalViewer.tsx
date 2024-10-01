@@ -5,8 +5,8 @@ import { css } from '@theasset/style-system/css';
 import { Box } from '@theasset/style-system/jsx';
 import { ThumbnailImage } from '@theasset/ui/thumbnail';
 
-import { usePages } from './infra/usePages';
-import { useThumbnail } from './infra/useThumbnail';
+import { usePages } from '../hooks/usePages';
+import { useThumbnail } from '../hooks/useThumbnail';
 import { Toolbar } from './viewer/Toolbar';
 
 type ChildrenProps = {
@@ -15,12 +15,12 @@ type ChildrenProps = {
 	setPage: (page: number) => void;
 };
 
-type ViewerProps = {
+type ModalViewerProps = {
 	file: TheAssetFile;
 	children: (props: ChildrenProps) => JSX.Element;
 };
 
-export const Viewer = ({ file, children }: ViewerProps) => {
+export const ModalViewer = ({ file, children }: ModalViewerProps) => {
 	const [page, setPageA] = useState(1);
 	const startTransition = useTransition()[1];
 

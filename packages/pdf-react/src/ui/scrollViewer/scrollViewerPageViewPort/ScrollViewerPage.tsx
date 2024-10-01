@@ -1,8 +1,8 @@
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
-import { useLocale } from '@theasset/internationalization/hooks';
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { ThumbnailImage } from '@theasset/ui/thumbnail';
 
-import { useThumbnail } from '../../infra/useThumbnail';
+import { useThumbnail } from '../../../hooks/useThumbnail';
 
 type ScrollViewerPageProps = {
 	page: number;

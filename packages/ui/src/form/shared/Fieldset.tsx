@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 
-import { useLocale } from '@theasset/internationalization/hooks';
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { styled } from '@theasset/style-system/jsx';
 
 import { Badge } from '../../Badge';

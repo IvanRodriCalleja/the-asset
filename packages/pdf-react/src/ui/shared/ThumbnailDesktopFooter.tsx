@@ -1,11 +1,11 @@
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
-import { useLocale } from '@theasset/internationalization/hooks';
-import { getSingularOrPlural } from '@theasset/internationalization/infra';
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
+import { getSingularOrPlural } from '@theasset/internationalization/infra/get-singular-or-plural';
 import { Box } from '@theasset/style-system/jsx';
 import { Badge } from '@theasset/ui/badge';
 import { ThumbnailFooter } from '@theasset/ui/thumbnail';
 
-import { usePages } from '../../infra/usePages';
+import { usePages } from '../../hooks/usePages';
 import { FileName } from './FileName';
 
 type ThumbnailDesktopFooterProps = {

@@ -5,11 +5,14 @@
   "type": "module",
   "exports": {
     "./config": "./src/config.ts",
-    "./domain": "./src/domain/index.ts",
-    "./hooks": "./src/hooks/index.ts",
-    "./server": "./src/server/index.ts",
-    "./ui": "./src/ui/index.ts",
-    "./infra": "./src/infra/index.ts"
+    "./domain/language": "./src/domain/Language.ts",
+    "./domain/locale-param": "./src/domain/LocaleParam.ts",
+    "./domain/locales": "./src/domain/Locales.ts",
+    "./hooks/use-language": "./src/hooks/useLanguage.ts",
+    "./hooks/use-locale": "./src/hooks/useLocale.ts",
+    "./server/middleware": "./src/server/i18nMiddleware.ts",
+    "./ui/i18n-provider": "./src/ui/I18nProvider.tsx",
+    "./infra/get-singular-or-plural": "./src/infra/getSingularOrPlural.ts"
   },
   "scripts": {
     "lint": "eslint src --ext .ts,.tsx --quiet --cache",

@@ -1,6 +1,6 @@
 import Merge from 'assets/tools/merge.svg';
 
-import { useLocale } from '@theasset/internationalization/hooks';
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { Grid } from '@theasset/style-system/jsx';
 import { HighlightColor, HighlightMaker } from '@theasset/ui/highlight-maker';
 

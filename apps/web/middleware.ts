@@ -1,6 +1,7 @@
-import { i18nConfig } from '@theasset/internationalization/config';
-import { i18nMiddleware } from '@theasset/internationalization/server';
 import { NextRequest } from 'next/server';
+
+import { i18nConfig } from '@theasset/internationalization/config';
+import { i18nMiddleware } from '@theasset/internationalization/server/middleware';
 
 const comeraiMiddleware = (request: NextRequest) => i18nMiddleware(request, i18nConfig);
 

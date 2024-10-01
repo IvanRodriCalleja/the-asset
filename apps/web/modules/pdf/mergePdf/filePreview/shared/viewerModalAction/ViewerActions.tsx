@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { ReloadIcon, TrashIcon } from '@radix-ui/react-icons';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
-import { useLocale } from '@theasset/internationalization/hooks';
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { Direction } from '@theasset/pdf-tools/types';
 import { Button } from '@theasset/ui/button';
 import { Tooltip, TooltipTrigger } from '@theasset/ui/tooltip';

@@ -2,7 +2,7 @@ import { use } from 'react';
 
 import { Locales } from '../domain/Locales';
 import { getCurrentLanguage } from '../server/localeHeader';
-import { I18nContext } from '../ui/LocalesContext';
+import { I18nContext } from '../ui/I18nProvider';
 
 export const useLocale = () => {
 	if (typeof window === 'undefined') {

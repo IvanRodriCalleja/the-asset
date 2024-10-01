@@ -3,8 +3,8 @@ import { Dispatch, ReactNode, SetStateAction } from 'react';
 import { DragHandleDots2Icon } from '@radix-ui/react-icons';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
-import { useLocale } from '@theasset/internationalization/hooks';
-import { getSingularOrPlural } from '@theasset/internationalization/infra';
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
+import { getSingularOrPlural } from '@theasset/internationalization/infra/get-singular-or-plural';
 import { Box, Flex, Stack, styled } from '@theasset/style-system/jsx';
 import { Badge } from '@theasset/ui/badge';
 import { SortableDragHandle } from '@theasset/ui/sortable';
@@ -16,9 +16,9 @@ import {
 	useThumbnailSuspense
 } from '@theasset/ui/thumbnail';
 
-import { usePages } from '../infra/usePages';
-import { useThumbnail } from '../infra/useThumbnail';
-import { ThumbnailSkeletonMobile } from './thumbnailMobile/ThumbnailSkeletonMobile';
+import { usePages } from '../hooks/usePages';
+import { useThumbnail } from '../hooks/useThumbnail';
+import { ThumbnailSkeletonMobile } from './pdfThumbnailMobile/ThumbnailSkeletonMobile';
 
 type PdfThumbnailMobileProp = {
 	file: TheAssetFile;

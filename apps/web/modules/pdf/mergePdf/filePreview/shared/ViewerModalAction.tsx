@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
-import { Viewer } from '@theasset/pdf-react/viewer';
+import { ModalViewer } from '@theasset/pdf-react/ui/modal-viewer';
 import { css } from '@theasset/style-system/css';
 import { ModalClose, ModalContent, ModalRoot, ModalTrigger } from '@theasset/ui/modal';
 
@@ -20,7 +20,7 @@ export const ViewerModalAction = ({ children, file, setFiles }: ViewerModalActio
 			size="none"
 			className={css({ boxShadow: 'none !important', border: 'none !important' })}>
 			<ModalClose />
-			<Viewer file={file}>
+			<ModalViewer file={file}>
 				{({ page, totalPages, setPage }) => (
 					<ViewerActions
 						page={page}
@@ -30,7 +30,7 @@ export const ViewerModalAction = ({ children, file, setFiles }: ViewerModalActio
 						setFiles={setFiles}
 					/>
 				)}
-			</Viewer>
+			</ModalViewer>
 		</ModalContent>
 	</ModalRoot>
 );

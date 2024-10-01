@@ -1,8 +1,8 @@
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { getFileSize } from '@theasset/file/infra/get-file-size';
-import { useLocale } from '@theasset/internationalization/hooks';
-import { getSingularOrPlural } from '@theasset/internationalization/infra';
-import { usePages } from '@theasset/pdf-react/infra/usePages';
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
+import { getSingularOrPlural } from '@theasset/internationalization/infra/get-singular-or-plural';
+import { usePages } from '@theasset/pdf-react/hooks/use-pages';
 import { Text } from '@theasset/ui/text';
 
 type FileMetadataProps = {

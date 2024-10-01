@@ -4,11 +4,14 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./thumbnail": "./src/thumbnail/index.ts",
-    "./viewer": "./src/Viewer.tsx",
-    "./scroll-viewer": "./src/ScrollViewer.tsx",
-    "./infra/usePages": "./src/infra/usePages.ts",
-    "./infra/useThumbnail": "./src/infra/useThumbnail.ts"
+    "./ui/modal-viewer": "./src/ui/ModalViewer.tsx",
+    "./hooks/use-pages": "./src/hooks/usePages.ts",
+    "./hooks/use-thumbnail": "./src/hooks/useThumbnail.ts",
+    "./ui/scroll-viewer": "./src/ui/ScrollViewer.tsx",
+    "./ui/pdf-encrypted-thumbnail-desktop": "./src/ui/PdfEncryptedThumbnailDesktop.tsx",
+    "./ui/pdf-encrypted-thumbnail-mobile": "./src/ui/PdfEncryptedThumbnailMobile.tsx",
+    "./ui/pdf-thumbnail-desktop": "./src/ui/PdfThumbnailDesktop.tsx",
+    "./ui/pdf-thumbnail-mobile": "./src/ui/PdfThumbnailMobile.tsx"
   },
   "scripts": {
     "lint": "eslint src --ext .ts,.tsx --quiet --cache",

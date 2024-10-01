@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import z from 'zod';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
-import { useLocale } from '@theasset/internationalization/hooks';
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { decryptPdf } from '@theasset/pdf-tools';
 import { Form } from '@theasset/ui/form';
 import { RHFFieldPassword } from '@theasset/ui/form/fields/field-password';

@@ -1,6 +1,6 @@
 'use client';
 
-import { useLocale } from '@theasset/internationalization/hooks';
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { Box, styled } from '@theasset/style-system/jsx';
 import { FilePicker } from '@theasset/ui/file-picker';
 import { HighlightColor, HighlightMaker } from '@theasset/ui/highlight-maker';
@@ -26,6 +26,7 @@ const UploadSection = styled('section', {
 // TODO: Manage mal formed pdfs
 // TODO: Unify exports from packages
 // TODO: Rethink file upload approach
+// TODO: Check if I18NContext needed
 
 export const MergePdf = () => {
 	const { mergePdf } = useLocale();

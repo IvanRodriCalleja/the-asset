@@ -1,6 +1,6 @@
 import { CheckCircledIcon } from '@radix-ui/react-icons';
 
-import { useLocale } from '@theasset/internationalization/hooks';
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { Stack, styled } from '@theasset/style-system/jsx';
 import { Text } from '@theasset/ui/text';
 

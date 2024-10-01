@@ -1,6 +1,6 @@
 import { useParams } from 'next/navigation';
 
-import { Language } from '@theasset/internationalization/domain';
+import { Language } from '@theasset/internationalization/domain/language';
 
 import { replaceParams } from './replaceParams';
 

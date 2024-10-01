@@ -1,1 +1,0 @@
-export { getSingularOrPlural } from './getSingularOrPlural';

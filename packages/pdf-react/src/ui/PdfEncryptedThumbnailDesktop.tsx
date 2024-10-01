@@ -1,7 +1,7 @@
 import { Dispatch, ReactNode, SetStateAction } from 'react';
 
 import { TheAssetFile, hashArrayBuffer } from '@theasset/file/domain/the-asset-file';
-import { useLocale } from '@theasset/internationalization/hooks';
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { styled } from '@theasset/style-system/jsx';
 import { Text } from '@theasset/ui/text';
 import { ThumbnailImageContent, ThumbnailRoot } from '@theasset/ui/thumbnail';

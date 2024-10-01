@@ -1,6 +1,6 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
-import { useLocale } from '@theasset/internationalization/hooks';
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { Stack } from '@theasset/style-system/jsx';
 import { Input } from '@theasset/ui/form/input';
 import { Label } from '@theasset/ui/label';

@@ -1,7 +1,7 @@
 import { LockOpen2Icon } from '@radix-ui/react-icons';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
-import { useLocale } from '@theasset/internationalization/hooks';
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { Button } from '@theasset/ui/button';
 import {
 	ModalBody,

@@ -8,7 +8,7 @@ import {
 } from '@radix-ui/react-icons';
 import { KeyboardEvent } from '@react-types/shared';
 
-import { useLocale } from '@theasset/internationalization/hooks';
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { css } from '@theasset/style-system/css';
 import { Flex, Stack, styled } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';

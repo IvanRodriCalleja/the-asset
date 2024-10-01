@@ -9,9 +9,9 @@ import {
 	useThumbnailSuspense
 } from '@theasset/ui/thumbnail';
 
-import { useThumbnail } from '../infra/useThumbnail';
+import { useThumbnail } from '../hooks/useThumbnail';
+import { ThumbnailSkeletonDesktop } from './pdfThumbnailDesktop/ThumbnailSkeletonDesktop';
 import { ThumbnailDesktopFooter } from './shared/ThumbnailDesktopFooter';
-import { ThumbnailSkeletonDesktop } from './thumbnailDesktop/ThumbnailSkeletonDesktop';
 
 type ThumbnailProps = {
 	file: TheAssetFile;

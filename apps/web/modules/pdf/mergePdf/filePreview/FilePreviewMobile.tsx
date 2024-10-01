@@ -1,4 +1,5 @@
-import { PdfEncryptedThumbnailMobile, PdfThumbnailMobile } from '@theasset/pdf-react/thumbnail';
+import { PdfEncryptedThumbnailMobile } from '@theasset/pdf-react/ui/pdf-encrypted-thumbnail-mobile';
+import { PdfThumbnailMobile } from '@theasset/pdf-react/ui/pdf-thumbnail-mobile';
 import { Stack } from '@theasset/style-system/jsx';
 import { SortableItem, SortableRoot } from '@theasset/ui/sortable';
 
