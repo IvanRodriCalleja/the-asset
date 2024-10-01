@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { resolve } = require('node:path');
 const project = resolve(process.cwd(), 'tsconfig.json');
 
@@ -28,7 +29,7 @@ module.exports = {
 		RequestInit: true
 	},
 	rules: {
-		'react-compiler/react-compiler': "error",
+		'react-compiler/react-compiler': 'error',
 		'no-console': 0,
 		'no-debugger': 0,
 		'typescript/no-type-alias': 0,
@@ -100,6 +101,7 @@ module.exports = {
 	ignorePatterns: [
 		// Ignore dotfiles
 		'.*.js',
+		'.*.cjs',
 		'node_modules/'
 	],
 	overrides: [{ files: ['*.js?(x)', '*.ts?(x)'] }]

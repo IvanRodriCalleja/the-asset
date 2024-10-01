@@ -2,7 +2,9 @@
   "extends": "@theasset/typescript-config/react-library.json",
   "compilerOptions": {
     "outDir": "dist",
-    "types": ["node"]
+    "types": ["node"],
+    "module": "ES2022",
+    "moduleResolution": "Bundler"
   },
   "include": ["src", "panda.config.ts"],
   "exclude": ["node_modules", "dist"]

@@ -2,6 +2,7 @@
   "name": "@theasset/file",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "exports": {
     "./domain/the-asset-file": "./src/domain/TheAssetFile.ts",
     "./infra/get-file-size": "./src/infra/getFileSize.ts"

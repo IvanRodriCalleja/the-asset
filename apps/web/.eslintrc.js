@@ -1,7 +1,7 @@
 /** @type {import("eslint").Linter.Config} */
 module.exports = {
 	root: true,
-	extends: ['@theasset/eslint-config/.eslintrc.js', 'next/core-web-vitals'],
+	extends: ['@theasset/eslint-config/.eslintrc.cjs', 'next/core-web-vitals'],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		project: true
