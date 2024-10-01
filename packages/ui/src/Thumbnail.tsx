@@ -1,15 +1,16 @@
 import { Stack, styled } from '@theasset/style-system/jsx';
 
-import { ActionButton } from './thumbnail/ActionButton';
-import { Actions } from './thumbnail/Actions';
-import { Footer } from './thumbnail/Footer';
-import { Image } from './thumbnail/Image';
-import { ImageContent } from './thumbnail/ImageContent';
-import { MobileAction } from './thumbnail/MobileAction';
-import { MobileActions } from './thumbnail/MobileActions';
-import { Suspense, useThumbnailSuspense } from './thumbnail/Suspense';
+export { Actions as ThumbnailActions } from './thumbnail/Actions';
+export { Footer as ThumbnailFooter } from './thumbnail/Footer';
+export { Image as ThumbnailImage } from './thumbnail/Image';
+export { ImageContent as ThumbnailImageContent } from './thumbnail/ImageContent';
+export { MobileAction as ThumbnailMobileAction } from './thumbnail/MobileAction';
+export { MobileActions as ThumbnailMobileActions } from './thumbnail/MobileActions';
+export { Suspense as ThumbnailSuspense, useThumbnailSuspense } from './thumbnail/Suspense';
 
-const Root = styled(Stack, {
+export { ActionButton as ThumbnailActionButton } from './thumbnail/ActionButton';
+
+export const ThumbnailRoot = styled(Stack, {
 	base: {
 		position: 'relative',
 		padding: 4,
@@ -53,17 +54,3 @@ const Root = styled(Stack, {
 		status: 'default'
 	}
 });
-
-export const Thumbnail = {
-	Root,
-	Image,
-	ImageContent,
-	Actions,
-	ActionButton,
-	Footer,
-	MobileAction,
-	MobileActions,
-	Suspense
-};
-
-export { useThumbnailSuspense };

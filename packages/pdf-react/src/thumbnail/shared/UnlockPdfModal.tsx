@@ -3,7 +3,15 @@ import { LockOpen2Icon } from '@radix-ui/react-icons';
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks';
 import { Button } from '@theasset/ui/button';
-import { Modal } from '@theasset/ui/modal';
+import {
+	ModalBody,
+	ModalContent,
+	ModalFooter,
+	ModalHeader,
+	ModalRoot,
+	ModalTitle,
+	ModalTrigger
+} from '@theasset/ui/modal';
 
 import { UnlockPdfForm } from './unlockPdfModal/UnlockPdfForm';
 
@@ -16,33 +24,33 @@ export const UnlockPdfModal = ({ file, onUnlockPdf }: UnlockPdfModalProps) => {
 	const { mergePdf, shared } = useLocale();
 
 	return (
-		<Modal.Root variant="alert">
+		<ModalRoot variant="alert">
 			{({ close }) => (
 				<>
-					<Modal.Trigger>
+					<ModalTrigger>
 						<Button size="xs" variant="destructive">
 							<LockOpen2Icon />
 							{mergePdf.unlockPdf.startAction}
 						</Button>
-					</Modal.Trigger>
-					<Modal.Content size="alert">
-						<Modal.Header>
-							<Modal.Title>{mergePdf.unlockPdf.title}</Modal.Title>
-						</Modal.Header>
-						<Modal.Body>
+					</ModalTrigger>
+					<ModalContent size="alert">
+						<ModalHeader>
+							<ModalTitle>{mergePdf.unlockPdf.title}</ModalTitle>
+						</ModalHeader>
+						<ModalBody>
 							<UnlockPdfForm file={file} onUnlockPdf={onUnlockPdf} />
-						</Modal.Body>
-						<Modal.Footer>
+						</ModalBody>
+						<ModalFooter>
 							<Button variant="outline" type="button" onPress={close}>
 								{shared.cancel}
 							</Button>
 							<Button form="unlock-pdf" type="submit">
 								{mergePdf.unlockPdf.unlock}
 							</Button>
-						</Modal.Footer>
-					</Modal.Content>
+						</ModalFooter>
+					</ModalContent>
 				</>
 			)}
-		</Modal.Root>
+		</ModalRoot>
 	);
 };

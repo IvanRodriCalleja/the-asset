@@ -7,9 +7,9 @@ import { useLocale } from '@theasset/internationalization/hooks';
 import { getSingularOrPlural } from '@theasset/internationalization/infra';
 import { Box, Flex, Stack, styled } from '@theasset/style-system/jsx';
 import { Badge } from '@theasset/ui/badge';
-import { Sortable } from '@theasset/ui/sortable';
+import { SortableDragHandle } from '@theasset/ui/sortable';
 import { Text } from '@theasset/ui/text';
-import { Thumbnail } from '@theasset/ui/thumbnail';
+import { ThumbnailRoot } from '@theasset/ui/thumbnail';
 
 import { usePages } from '../infra/usePages';
 import { UnlockPdfModal } from './shared/UnlockPdfModal';
@@ -75,7 +75,7 @@ export const PdfEncryptedThumbnailMobile = ({
 	};
 
 	return (
-		<Thumbnail.Root width="100%" paddingBottom={0} {...props} status="warning">
+		<ThumbnailRoot width="100%" paddingBottom={0} {...props} status="warning">
 			<Stack direction="row" alignItems="center" overflow="hidden">
 				<Box>
 					<Badge>
@@ -95,13 +95,13 @@ export const PdfEncryptedThumbnailMobile = ({
 				</Box>
 
 				<Flex alignItems="center" minWidth="40px" width="40px">
-					<Sortable.SortableDragHandle variant="transparent" size="icon">
+					<SortableDragHandle variant="transparent" size="icon">
 						<DragHandleDots2Icon />
-					</Sortable.SortableDragHandle>
+					</SortableDragHandle>
 				</Flex>
 			</Stack>
 
 			{actions && actions({ file, setFiles })}
-		</Thumbnail.Root>
+		</ThumbnailRoot>
 	);
 };

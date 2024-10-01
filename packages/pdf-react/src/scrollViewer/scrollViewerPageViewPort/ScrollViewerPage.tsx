@@ -1,6 +1,6 @@
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks';
-import { Thumbnail } from '@theasset/ui/thumbnail';
+import { ThumbnailImage } from '@theasset/ui/thumbnail';
 
 import { useThumbnail } from '../../infra/useThumbnail';
 
@@ -13,5 +13,5 @@ export const ScrollViewerPage = ({ page, file }: ScrollViewerPageProps) => {
 	const { shared } = useLocale();
 	const { src } = useThumbnail({ file, page });
 
-	return <Thumbnail.Image src={src} alt={`${shared.page} ${page}`} />;
+	return <ThumbnailImage src={src} alt={`${shared.page} ${page}`} />;
 };

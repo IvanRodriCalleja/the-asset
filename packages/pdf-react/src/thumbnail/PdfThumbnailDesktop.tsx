@@ -1,7 +1,13 @@
 import { Dispatch, ReactNode, SetStateAction } from 'react';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
-import { Thumbnail, useThumbnailSuspense } from '@theasset/ui/thumbnail';
+import {
+	ThumbnailImage,
+	ThumbnailImageContent,
+	ThumbnailRoot,
+	ThumbnailSuspense,
+	useThumbnailSuspense
+} from '@theasset/ui/thumbnail';
 
 import { useThumbnail } from '../infra/useThumbnail';
 import { ThumbnailDesktopFooter } from './shared/ThumbnailDesktopFooter';
@@ -17,9 +23,9 @@ type ThumbnailProps = {
 
 export const PdfThumbnailDesktop = (props: ThumbnailProps) => {
 	return (
-		<Thumbnail.Suspense fallback={<ThumbnailSkeletonDesktop />}>
+		<ThumbnailSuspense fallback={<ThumbnailSkeletonDesktop />}>
 			<PdfThumbnail {...props} />
-		</Thumbnail.Suspense>
+		</ThumbnailSuspense>
 	);
 };
 
@@ -39,14 +45,14 @@ const PdfThumbnail = ({ file, setFiles, actions, ...props }: PdfThumbnailProps) 
 	const { onLoad } = useThumbnailSuspense();
 
 	return (
-		<Thumbnail.Root width={180} {...props}>
+		<ThumbnailRoot width={180} {...props}>
 			{actions && actions({ file, setFiles })}
 
-			<Thumbnail.ImageContent>
-				<Thumbnail.Image src={src} alt={file.name} onLoad={onLoad} shadow />
-			</Thumbnail.ImageContent>
+			<ThumbnailImageContent>
+				<ThumbnailImage src={src} alt={file.name} onLoad={onLoad} shadow />
+			</ThumbnailImageContent>
 
 			<ThumbnailDesktopFooter file={file} />
-		</Thumbnail.Root>
+		</ThumbnailRoot>
 	);
 };

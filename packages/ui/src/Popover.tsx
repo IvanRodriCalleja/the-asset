@@ -1,13 +1,14 @@
-import { Popover as AriaPopover, Dialog, DialogTrigger, OverlayArrow } from 'react-aria-components';
+import { PropsWithChildren } from 'react';
+
+import { Dialog, DialogTrigger, OverlayArrow, Popover, PopoverProps } from 'react-aria-components';
 
 import { styled } from '@theasset/style-system/jsx';
-
-export const PopoverPanel = styled(Dialog, { base: { outline: 'none' } });
 
 export const PopoverArrow = styled(OverlayArrow, {});
 export const PopoverTrigger = DialogTrigger;
 
-export const Popover = styled(AriaPopover, {
+const PopoverDialog = styled(Dialog, { base: { outline: 'none' } });
+const PopoverRoot = styled(Popover, {
 	base: {
 		zIndex: 50,
 		rounded: 'md',
@@ -47,3 +48,9 @@ export const Popover = styled(AriaPopover, {
 		}
 	}
 });
+
+export const PopoverPanel = ({ children, ...props }: PropsWithChildren<PopoverProps>) => (
+	<PopoverRoot {...props}>
+		<PopoverDialog>{children}</PopoverDialog>
+	</PopoverRoot>
+);

@@ -1,6 +1,6 @@
 import { styled } from '@theasset/style-system/jsx';
 
-const Root = styled('div', {
+export const CardRoot = styled('div', {
 	base: {
 		rounded: 'lg',
 		border: 'base',
@@ -22,7 +22,7 @@ const Root = styled('div', {
 	}
 });
 
-const CardHeader = styled('div', {
+export const CardHeader = styled('div', {
 	base: {
 		display: 'flex',
 		flexDirection: 'column',
@@ -38,7 +38,7 @@ const CardHeader = styled('div', {
 	}
 });
 
-const CardTitle = styled('h3', {
+export const CardTitle = styled('h3', {
 	base: {
 		textStyle: '2xl',
 		fontWeight: 'semibold',
@@ -47,14 +47,14 @@ const CardTitle = styled('h3', {
 	}
 });
 
-const CardDescription = styled('p', {
+export const CardDescription = styled('p', {
 	base: {
 		textStyle: 'sm',
 		color: 'muted.foreground'
 	}
 });
 
-const CardContent = styled('div', {
+export const CardContent = styled('div', {
 	base: {
 		p: '6',
 		pt: '0'
@@ -68,7 +68,7 @@ const CardContent = styled('div', {
 	}
 });
 
-const CardFooter = styled('div', {
+export const CardFooter = styled('div', {
 	base: {
 		display: 'flex',
 		alignItems: 'center',
@@ -83,12 +83,3 @@ const CardFooter = styled('div', {
 		}
 	}
 });
-
-export const Card = {
-	Root,
-	Header: CardHeader,
-	Title: CardTitle,
-	Description: CardDescription,
-	Content: CardContent,
-	Footer: CardFooter
-};

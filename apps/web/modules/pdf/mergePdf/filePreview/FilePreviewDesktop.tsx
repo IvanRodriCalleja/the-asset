@@ -1,12 +1,12 @@
 import { PdfEncryptedThumbnailDesktop, PdfThumbnailDesktop } from '@theasset/pdf-react/thumbnail';
 import { Stack } from '@theasset/style-system/jsx';
-import { Sortable } from '@theasset/ui/sortable';
+import { SortableItem, SortableRoot } from '@theasset/ui/sortable';
 
 import { FilePreviewProps } from '../FilePreview';
 import { MergePdfActionsDesktop } from './filePreviewDesktop/MergePdfActionsDesktop';
 
 export const FilePreviewDesktop = ({ files, setFiles }: FilePreviewProps) => (
-	<Sortable.Root orientation="mixed" value={files} onValueChange={setFiles}>
+	<SortableRoot orientation="mixed" value={files} onValueChange={setFiles}>
 		<Stack
 			direction="row"
 			marginInline="auto"
@@ -16,7 +16,7 @@ export const FilePreviewDesktop = ({ files, setFiles }: FilePreviewProps) => (
 			paddingBlock={16}
 			paddingInline={16}>
 			{files.map(file => (
-				<Sortable.SortableItem key={file.id} value={file.id} asTrigger asChild>
+				<SortableItem key={file.id} value={file.id} asTrigger asChild>
 					{file.isEncrypted ? (
 						<PdfEncryptedThumbnailDesktop
 							file={file}
@@ -26,8 +26,8 @@ export const FilePreviewDesktop = ({ files, setFiles }: FilePreviewProps) => (
 					) : (
 						<PdfThumbnailDesktop file={file} setFiles={setFiles} actions={MergePdfActionsDesktop} />
 					)}
-				</Sortable.SortableItem>
+				</SortableItem>
 			))}
 		</Stack>
-	</Sortable.Root>
+	</SortableRoot>
 );

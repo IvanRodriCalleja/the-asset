@@ -7,8 +7,14 @@ import { useLocale } from '@theasset/internationalization/hooks';
 import { getSingularOrPlural } from '@theasset/internationalization/infra';
 import { Box, Flex, Stack, styled } from '@theasset/style-system/jsx';
 import { Badge } from '@theasset/ui/badge';
-import { Sortable } from '@theasset/ui/sortable';
-import { Thumbnail, useThumbnailSuspense } from '@theasset/ui/thumbnail';
+import { SortableDragHandle } from '@theasset/ui/sortable';
+import {
+	ThumbnailImage,
+	ThumbnailImageContent,
+	ThumbnailRoot,
+	ThumbnailSuspense,
+	useThumbnailSuspense
+} from '@theasset/ui/thumbnail';
 
 import { usePages } from '../infra/usePages';
 import { useThumbnail } from '../infra/useThumbnail';
@@ -21,9 +27,9 @@ type PdfThumbnailMobileProp = {
 };
 
 export const PdfThumbnailMobile = (props: PdfThumbnailMobileProp) => (
-	<Thumbnail.Suspense fallback={<ThumbnailSkeletonMobile />}>
+	<ThumbnailSuspense fallback={<ThumbnailSkeletonMobile />}>
 		<PdfThumbnail {...props} />
-	</Thumbnail.Suspense>
+	</ThumbnailSuspense>
 );
 
 type ActionProps = {
@@ -53,12 +59,12 @@ const PdfThumbnail = ({ file, setFiles, actions, ...props }: PdfThumbnailProps) 
 	const { onLoad } = useThumbnailSuspense();
 
 	return (
-		<Thumbnail.Root width="100%" paddingBottom={0} {...props}>
+		<ThumbnailRoot width="100%" paddingBottom={0} {...props}>
 			<Stack direction="row">
 				<Box width="56px" minWidth="56px">
-					<Thumbnail.ImageContent>
-						<Thumbnail.Image src={src} alt={file.name} onLoad={onLoad} shadow />
-					</Thumbnail.ImageContent>
+					<ThumbnailImageContent>
+						<ThumbnailImage src={src} alt={file.name} onLoad={onLoad} shadow />
+					</ThumbnailImageContent>
 				</Box>
 				<Stack flex={1} justifyContent="center" overflow="hidden">
 					<FileName>{file.name}</FileName>
@@ -70,13 +76,13 @@ const PdfThumbnail = ({ file, setFiles, actions, ...props }: PdfThumbnailProps) 
 				</Stack>
 
 				<Flex alignItems="center" minWidth="40px" width="40px">
-					<Sortable.SortableDragHandle variant="transparent" size="icon">
+					<SortableDragHandle variant="transparent" size="icon">
 						<DragHandleDots2Icon />
-					</Sortable.SortableDragHandle>
+					</SortableDragHandle>
 				</Flex>
 			</Stack>
 
 			{actions && actions({ file, setFiles })}
-		</Thumbnail.Root>
+		</ThumbnailRoot>
 	);
 };

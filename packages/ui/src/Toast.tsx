@@ -1,14 +1,4 @@
-import { Action } from './toast/Action';
-import { Card } from './toast/Card';
-import { GlobalRegion, toastQueue } from './toast/GlobalRegion';
-import { Region } from './toast/Region';
-
-export { GlobalRegion } from './toast/GlobalRegion';
-export const toaster = toastQueue;
-
-export const Toast = {
-	Action,
-	Card,
-	GlobalRegion,
-	Region
-};
+export { Action as ToastAction } from './toast/Action';
+export { Card as ToastCard } from './toast/Card';
+export { GlobalRegion as ToastGlobalRegion, toastQueue as toaster } from './toast/GlobalRegion';
+export { Region as ToastRegion } from './toast/Region';

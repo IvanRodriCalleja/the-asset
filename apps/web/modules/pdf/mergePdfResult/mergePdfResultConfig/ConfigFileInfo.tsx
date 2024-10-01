@@ -4,7 +4,7 @@ import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { css } from '@theasset/style-system/css';
 import { Stack, styled } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
-import { Popover, PopoverPanel, PopoverTrigger } from '@theasset/ui/popover';
+import { PopoverPanel, PopoverTrigger } from '@theasset/ui/popover';
 import { Text } from '@theasset/ui/text';
 
 import { EditFileName } from './configFileInfo/EditFileName';
@@ -40,13 +40,11 @@ export const ConfigFileInfo = ({ file, name, setName }: ConfigFileInfoProps) => 
 						</FileName>
 					</Button>
 
-					<Popover placement="bottom left">
-						<PopoverPanel>
-							<Text size="sm" color="textClear">
-								<EditFileName name={notExtension} extension={extension} setName={setName} />
-							</Text>
-						</PopoverPanel>
-					</Popover>
+					<PopoverPanel placement="bottom left">
+						<Text size="sm" color="textClear">
+							<EditFileName name={notExtension} extension={extension} setName={setName} />
+						</Text>
+					</PopoverPanel>
 				</PopoverTrigger>
 
 				<Text size="md" color="textClear">

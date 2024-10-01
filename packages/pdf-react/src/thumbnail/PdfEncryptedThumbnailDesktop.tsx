@@ -4,7 +4,7 @@ import { TheAssetFile, hashArrayBuffer } from '@theasset/file/domain/the-asset-f
 import { useLocale } from '@theasset/internationalization/hooks';
 import { styled } from '@theasset/style-system/jsx';
 import { Text } from '@theasset/ui/text';
-import { Thumbnail } from '@theasset/ui/thumbnail';
+import { ThumbnailImageContent, ThumbnailRoot } from '@theasset/ui/thumbnail';
 
 import { ThumbnailDesktopFooter } from './shared/ThumbnailDesktopFooter';
 import { UnlockPdfModal } from './shared/UnlockPdfModal';
@@ -62,18 +62,18 @@ export const PdfEncryptedThumbnailDesktop = ({
 	};
 
 	return (
-		<Thumbnail.Root width={180} {...props} status="warning">
+		<ThumbnailRoot width={180} {...props} status="warning">
 			{actions && actions({ file, setFiles })}
-			<Thumbnail.ImageContent>
+			<ThumbnailImageContent>
 				<BadgeEncrypted>
 					<Text size="xs" color="textClear" family="mono">
 						{mergePdf.unlockPdf.description}
 					</Text>
 					<UnlockPdfModal file={file} onUnlockPdf={onUnlockPdf} />
 				</BadgeEncrypted>
-			</Thumbnail.ImageContent>
+			</ThumbnailImageContent>
 
 			<ThumbnailDesktopFooter file={file} />
-		</Thumbnail.Root>
+		</ThumbnailRoot>
 	);
 };

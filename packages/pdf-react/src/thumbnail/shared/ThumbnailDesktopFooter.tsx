@@ -3,7 +3,7 @@ import { useLocale } from '@theasset/internationalization/hooks';
 import { getSingularOrPlural } from '@theasset/internationalization/infra';
 import { Box } from '@theasset/style-system/jsx';
 import { Badge } from '@theasset/ui/badge';
-import { Thumbnail } from '@theasset/ui/thumbnail';
+import { ThumbnailFooter } from '@theasset/ui/thumbnail';
 
 import { usePages } from '../../infra/usePages';
 import { FileName } from './FileName';
@@ -17,13 +17,13 @@ export const ThumbnailDesktopFooter = ({ file }: ThumbnailDesktopFooterProps) =>
 	const pages = usePages(file);
 
 	return (
-		<Thumbnail.Footer>
+		<ThumbnailFooter>
 			<FileName>{file.name}</FileName>
 			<Box display="flex" justifyContent="center">
 				<Badge size="sm" capitalize>
 					{pages} {getSingularOrPlural(shared.page, pages)}
 				</Badge>
 			</Box>
-		</Thumbnail.Footer>
+		</ThumbnailFooter>
 	);
 };

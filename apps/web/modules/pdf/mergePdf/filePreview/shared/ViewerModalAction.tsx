@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { Viewer } from '@theasset/pdf-react/viewer';
 import { css } from '@theasset/style-system/css';
-import { Modal } from '@theasset/ui/modal';
+import { ModalClose, ModalContent, ModalRoot, ModalTrigger } from '@theasset/ui/modal';
 
 import { ViewerActions } from './viewerModalAction/ViewerActions';
 
@@ -14,12 +14,12 @@ type ViewerModalActionProps = {
 };
 
 export const ViewerModalAction = ({ children, file, setFiles }: ViewerModalActionProps) => (
-	<Modal.Root>
-		<Modal.Trigger>{children}</Modal.Trigger>
-		<Modal.Content
+	<ModalRoot>
+		<ModalTrigger>{children}</ModalTrigger>
+		<ModalContent
 			size="none"
 			className={css({ boxShadow: 'none !important', border: 'none !important' })}>
-			<Modal.Close />
+			<ModalClose />
 			<Viewer file={file}>
 				{({ page, totalPages, setPage }) => (
 					<ViewerActions
@@ -31,6 +31,6 @@ export const ViewerModalAction = ({ children, file, setFiles }: ViewerModalActio
 					/>
 				)}
 			</Viewer>
-		</Modal.Content>
-	</Modal.Root>
+		</ModalContent>
+	</ModalRoot>
 );

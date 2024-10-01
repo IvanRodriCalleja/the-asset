@@ -3,15 +3,19 @@ import { DragHandleDots2Icon } from '@radix-ui/react-icons';
 import { Box, Flex, Stack } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
 import { Skeleton } from '@theasset/ui/skeleton';
-import { Thumbnail } from '@theasset/ui/thumbnail';
+import {
+	ThumbnailImageContent,
+	ThumbnailMobileActions,
+	ThumbnailRoot
+} from '@theasset/ui/thumbnail';
 
 export const ThumbnailSkeletonMobile = () => (
-	<Thumbnail.Root width="100%" paddingBottom={0}>
+	<ThumbnailRoot width="100%" paddingBottom={0}>
 		<Stack direction="row">
 			<Box width="48px">
-				<Thumbnail.ImageContent>
+				<ThumbnailImageContent>
 					<Skeleton width="100%" height="100%" />
-				</Thumbnail.ImageContent>
+				</ThumbnailImageContent>
 			</Box>
 			<Stack flex={1} justifyContent="center">
 				<Skeleton width="90%" height="12px" marginTop={1} />
@@ -27,7 +31,7 @@ export const ThumbnailSkeletonMobile = () => (
 			</Flex>
 		</Stack>
 
-		<Thumbnail.MobileActions>
+		<ThumbnailMobileActions>
 			<Box display="flex" flex={2} height="40px" alignItems="center" justifyContent="center">
 				<Skeleton height="32px" width="calc(100% - 32px)" />
 			</Box>
@@ -37,6 +41,6 @@ export const ThumbnailSkeletonMobile = () => (
 			<Box display="flex" flex={2} height="40px" alignItems="center" justifyContent="center">
 				<Skeleton height="32px" width="calc(100% - 32px)" />
 			</Box>
-		</Thumbnail.MobileActions>
-	</Thumbnail.Root>
+		</ThumbnailMobileActions>
+	</ThumbnailRoot>
 );

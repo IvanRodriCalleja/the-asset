@@ -3,7 +3,7 @@ import { useState, useTransition } from 'react';
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { css } from '@theasset/style-system/css';
 import { Box } from '@theasset/style-system/jsx';
-import { Thumbnail } from '@theasset/ui/thumbnail';
+import { ThumbnailImage } from '@theasset/ui/thumbnail';
 
 import { usePages } from './infra/usePages';
 import { useThumbnail } from './infra/useThumbnail';
@@ -47,7 +47,7 @@ export const Viewer = ({ file, children }: ViewerProps) => {
 				height={isVertical ? '100%' : 'fit-content'}
 				maxHeight="calc(100vh - 56px - 3rem)"
 				style={{ aspectRatio: `${aspectRatio} / 1` }}>
-				<Thumbnail.Image
+				<ThumbnailImage
 					src={src}
 					alt={file.name}
 					className={css(

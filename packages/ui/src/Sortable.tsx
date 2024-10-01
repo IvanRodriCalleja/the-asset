@@ -134,7 +134,7 @@ interface SortableProps<TData extends { id: UniqueIdentifier }> extends DndConte
 	overlay?: ReactNode | null;
 }
 
-const Root = <TData extends { id: UniqueIdentifier }>({
+export const SortableRoot = <TData extends { id: UniqueIdentifier }>({
 	value,
 	onValueChange,
 	collisionDetection = closestCorners,
@@ -184,7 +184,7 @@ const Root = <TData extends { id: UniqueIdentifier }>({
 	);
 };
 
-const dropAnimationOpts: DropAnimation = {
+export const dropAnimationOpts: DropAnimation = {
 	sideEffects: defaultDropAnimationSideEffects({
 		styles: {
 			active: {
@@ -198,7 +198,7 @@ interface SortableOverlayProps extends ComponentPropsWithRef<typeof DragOverlay>
 	activeId?: UniqueIdentifier | null;
 }
 
-const SortableOverlay = forwardRef<HTMLDivElement, SortableOverlayProps>(
+export const SortableOverlay = forwardRef<HTMLDivElement, SortableOverlayProps>(
 	({ activeId, dropAnimation = dropAnimationOpts, children, ...props }, ref) => {
 		return (
 			<DragOverlay dropAnimation={dropAnimation} {...props}>
@@ -219,7 +219,7 @@ interface SortableItemContextProps {
 	isDragging?: boolean;
 }
 
-const SortableItemContext = createContext<SortableItemContextProps>({
+export const SortableItemContext = createContext<SortableItemContextProps>({
 	attributes: {},
 	listeners: undefined,
 	isDragging: false
@@ -281,7 +281,7 @@ const cursorGrab = cva({
 	}
 });
 
-const SortableItem = forwardRef<HTMLDivElement, SortableItemProps>(
+export const SortableItem = forwardRef<HTMLDivElement, SortableItemProps>(
 	({ value, asTrigger, asChild, className, ...props }, ref) => {
 		const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
 			id: value
@@ -328,7 +328,7 @@ type SortableDragHandleProps = ButtonVariant & {
 
 const DragButton = styled('button', button);
 
-const SortableDragHandle = forwardRef<
+export const SortableDragHandle = forwardRef<
 	HTMLButtonElement,
 	PropsWithChildren<SortableDragHandleProps>
 >(({ className, ...props }, ref) => {
@@ -348,5 +348,3 @@ const SortableDragHandle = forwardRef<
 	);
 });
 SortableDragHandle.displayName = 'SortableDragHandle';
-
-export const Sortable = { Root, SortableDragHandle, SortableItem, SortableOverlay };

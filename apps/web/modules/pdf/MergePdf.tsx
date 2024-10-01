@@ -25,7 +25,6 @@ const UploadSection = styled('section', {
 // TODO: Viewer Toolbar responsive on mobile
 // TODO: Manage mal formed pdfs
 // TODO: Unify exports from packages
-// TODO: Avoid compound components
 // TODO: Rethink file upload approach
 
 export const MergePdf = () => {

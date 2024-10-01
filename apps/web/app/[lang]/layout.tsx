@@ -10,7 +10,7 @@ import { LocaleParam } from '@theasset/internationalization/domain';
 import { useLocale } from '@theasset/internationalization/hooks';
 import { I18nProvider } from '@theasset/internationalization/ui';
 import '@theasset/style-system/global.css';
-import { Toast } from '@theasset/ui/toast';
+import { ToastGlobalRegion } from '@theasset/ui/toast';
 
 const GeistSans = localFont({
 	src: '../fonts/GeistVF.woff',
@@ -34,7 +34,7 @@ const RootLayout = async ({ children, params: { lang } }: PropsWithChildren<Loca
 			<I18nProvider locales={locales} currentLanguage={lang}>
 				<body>
 					{children}
-					<Toast.GlobalRegion />
+					<ToastGlobalRegion />
 					<SpeedInsights />
 				</body>
 			</I18nProvider>

@@ -9,14 +9,15 @@ import {
 import { AriaButtonProps } from '@react-types/button';
 import { DOMProps, FocusableElement } from '@react-types/shared';
 
-import { Body } from './modal/Body';
-import { Close } from './modal/Close';
-import { Content } from './modal/Content';
-import { Description } from './modal/Description';
-import { Footer } from './modal/Footer';
-import { Header } from './modal/Header';
-import { Title } from './modal/Title';
-import { Trigger } from './modal/Trigger';
+export { Close as ModalClose } from './modal/Close';
+export { Content as ModalContent } from './modal/Content';
+export { Description as ModalDescription } from './modal/Description';
+export { Footer as ModalFooter } from './modal/Footer';
+export { Header as ModalHeader } from './modal/Header';
+export { Title as ModalTitle } from './modal/Title';
+export { Trigger as ModalTrigger } from './modal/Trigger';
+
+export { Body as ModalBody } from './modal/Body';
 
 type ModalRootChildrenProps = {
 	close: () => void;
@@ -57,7 +58,7 @@ const ModalContext = createContext<ModalContextValue>({
 
 export const useAgModal = () => useContext(ModalContext);
 
-export const Root = ({ children, variant = 'dialog', ...props }: ModalProps) => {
+export const ModalRoot = ({ children, variant = 'dialog', ...props }: ModalProps) => {
 	const modalRef = useRef<HTMLDivElement>(null);
 	const state = useOverlayTriggerState(props);
 	const { triggerProps, overlayProps } = useOverlayTrigger({ type: 'dialog' }, state);
@@ -78,16 +79,4 @@ export const Root = ({ children, variant = 'dialog', ...props }: ModalProps) => 
 			{typeof children === 'function' ? children(childrenProps) : children}
 		</ModalContext.Provider>
 	);
-};
-
-export const Modal = {
-	Root,
-	Trigger,
-	Body,
-	Footer,
-	Content,
-	Close,
-	Header,
-	Title,
-	Description
 };

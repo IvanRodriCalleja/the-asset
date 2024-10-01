@@ -2,7 +2,7 @@ import { SeparatorProps, useSeparator } from '@react-aria/separator';
 
 import { styled } from '@theasset/style-system/jsx';
 
-export const SeparatorComponent = styled('div', {
+const SeparatorComponent = styled('div', {
 	base: {
 		flexShrink: 0,
 		bg: 'border'
