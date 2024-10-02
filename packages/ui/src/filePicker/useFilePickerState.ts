@@ -4,7 +4,7 @@ import { TheAssetFile, hashArrayBuffer } from '@theasset/file/domain/the-asset-f
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { isPdfEncrypted, tryDecryptPdf } from '@theasset/pdf-tools';
 
-import { toaster } from '../../Toast';
+import { toaster } from '../Toast';
 
 export const useFilePickerState = () => {
 	const [files, setFiles] = useState<TheAssetFile[]>([]);

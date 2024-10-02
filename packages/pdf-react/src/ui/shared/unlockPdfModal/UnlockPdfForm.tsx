@@ -7,8 +7,8 @@ import z from 'zod';
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { decryptPdf } from '@theasset/pdf-tools';
+import { RHFFieldPassword } from '@theasset/ui/fields/password';
 import { Form } from '@theasset/ui/form';
-import { RHFFieldPassword } from '@theasset/ui/form/fields/field-password';
 
 type UnlockPdf = {
 	password: string;

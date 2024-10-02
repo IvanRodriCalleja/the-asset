@@ -6,8 +6,8 @@ import NextLink, { LinkProps as NextLinkProps } from 'next/link';
 
 import { styled } from '@theasset/style-system/jsx';
 
-import { useDynamicSegments } from '../utils/useDynamicSegments';
-import { type ButtonVariant, button } from './Button';
+import { useDynamicSegments } from '../../utils/useDynamicSegments';
+import { type ButtonVariant, button } from '../Button';
 
 const TheAssetLink = styled(NextLink, button);
 
@@ -18,7 +18,7 @@ export type LinkProps = NextLinkProps &
 		size?: NonNullable<ButtonVariant>['size'];
 	};
 
-export const TheLink = forwardRef<HTMLAnchorElement, PropsWithChildren<LinkProps>>(
+export const Link = forwardRef<HTMLAnchorElement, PropsWithChildren<LinkProps>>(
 	({ variant = 'link', ...props }, ref) => {
 		const href = useDynamicSegments(props.href.toString());
 
@@ -30,4 +30,4 @@ export const TheLink = forwardRef<HTMLAnchorElement, PropsWithChildren<LinkProps
 	}
 );
 
-TheLink.displayName = 'Link';
+Link.displayName = 'Link';

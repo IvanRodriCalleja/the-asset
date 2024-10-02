@@ -3,8 +3,8 @@ import { PropsWithChildren } from 'react';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { Stack } from '@theasset/style-system/jsx';
 
-import { Badge } from '../../Badge';
-import { Label } from '../../Label';
+import { Badge } from '../Badge';
+import { Label } from '../Label';
 import { FieldError, FieldErrorProps } from './field/FieldError';
 
 export type FieldProps = FieldErrorProps & {

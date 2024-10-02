@@ -4,8 +4,8 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./compose-refs": "./src/compose-refs.ts",
-    "./useMediaQuery": "./src/useMediaQuery.ts"
+    "./compose-refs": "./src/composeRefs.ts",
+    "./use-media-query": "./src/useMediaQuery.ts"
   },
   "scripts": {
     "lint": "eslint src --ext .ts,.tsx --quiet --cache",

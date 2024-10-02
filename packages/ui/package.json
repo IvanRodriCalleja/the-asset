@@ -7,12 +7,8 @@
     "./badge": "./src/Badge.tsx",
     "./button": "./src/Button.tsx",
     "./card": "./src/Card.tsx",
-    "./file-picker": "./src/form/FilePicker.tsx",
-    "./form": "./src/form/Form.tsx",
-    "./form/input": "./src/form/inputs/Input.ts",
-    "./form/number": "./src/form/inputs/Number.tsx",
-    "./form/fields/field-input": "./src/form/fields/FieldInput.tsx",
-    "./form/fields/field-password": "./src/form/fields/FieldPassword.tsx",
+    "./file-picker": "./src/FilePicker.tsx",
+
     "./highlight-maker": "./src/HighlightMaker.tsx",
     "./label": "./src/Label.tsx",
     "./modal": "./src/Modal.tsx",
@@ -23,11 +19,19 @@
     "./toast": "./src/Toast.tsx",
     "./tooltip": "./src/Tooltip.tsx",
     "./thumbnail": "./src/Thumbnail.tsx",
-    "./the-link": "./src/TheLink.tsx",
-    "./pdf/thumbnail": "./src/pdf/Thumbnail.tsx",
     "./popover": "./src/Popover.tsx",
     "./utils/replaceParams": "./utils/replaceParams.ts",
-    "./utils/use-intersection-observer": "./src/utils/useIntersectionObserver.ts"
+    "./utils/use-intersection-observer": "./src/utils/useIntersectionObserver.ts",
+
+
+    "./form": "./src/Form.tsx",
+    "./inputs/number": "./src/inputs/Number.tsx",
+    "./inputs/password": "./src/inputs/Password.tsx",
+    "./inputs/text": "./src/inputs/Text.tsx",
+    "./fields/text": "./src/fields/FieldText.tsx",
+    "./fields/password": "./src/fields/FieldPassword.tsx",
+
+    "./next/link": "./src/next/Link.tsx"
   },
   "scripts": {
     "lint": "eslint src --ext .ts,.tsx --quiet --cache",

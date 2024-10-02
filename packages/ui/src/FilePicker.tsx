@@ -9,7 +9,7 @@ import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { css } from '@theasset/style-system/css';
 import { Box, Stack, styled } from '@theasset/style-system/jsx';
 
-import { Button } from '../Button';
+import { Button } from './Button';
 import { useFilePickerState } from './filePicker/useFilePickerState';
 
 const DropZoneArea = styled('div', {

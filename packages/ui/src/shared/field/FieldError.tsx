@@ -1,6 +1,6 @@
 import { css } from '@theasset/style-system/css';
 
-import { Text } from '../../../Text';
+import { Text } from '../../Text';
 
 export type FieldErrorProps = {
 	name: string;

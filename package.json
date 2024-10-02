@@ -4,8 +4,8 @@
   "scripts": {
     "build": "turbo build",
     "dev": "turbo dev",
-    "lint": "turbo lint --force",
-    "tsc": "turbo tsc --force"
+    "lint": "turbo lint",
+    "tsc": "turbo tsc"
   },
   "devDependencies": {
     "turbo": "^2.0.6",

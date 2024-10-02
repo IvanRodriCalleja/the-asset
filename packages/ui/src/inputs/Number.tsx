@@ -10,7 +10,7 @@ import { AriaButtonProps } from '@react-types/button';
 
 import { RecipeVariantProps, sva } from '@theasset/style-system/css';
 
-import { Button } from '../../Button';
+import { Button } from '../Button';
 import { Input } from './Input';
 
 const numberInput = sva({

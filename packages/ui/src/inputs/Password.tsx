@@ -4,7 +4,7 @@ import { EyeNoneIcon, EyeOpenIcon } from '@radix-ui/react-icons';
 
 import { Box, HStack, styled } from '@theasset/style-system/jsx';
 
-import { Button } from '../../Button';
+import { Button } from '../Button';
 import { Input, InputProps } from './Input';
 
 export type PasswordProps = InputProps;

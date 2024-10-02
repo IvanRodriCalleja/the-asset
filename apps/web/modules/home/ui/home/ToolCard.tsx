@@ -1,6 +1,6 @@
 import { css } from '@theasset/style-system/css';
 import { styled } from '@theasset/style-system/jsx';
-import { TheLink } from '@theasset/ui/the-link';
+import { Link } from '@theasset/ui/next/link';
 
 import { Tool } from 'modules/home/domain/Tool';
 
@@ -180,7 +180,7 @@ export const ToolCard = ({
 	tool: { icon: Icon, name, href, color, description }
 }: ToolCardProps) => (
 	<ToolCardContainer>
-		<TheLink className={toolCardLink} href={href} variant="none">
+		<Link className={toolCardLink} href={href} variant="none">
 			<ToolBorder aria-hidden="true" />
 			<ToolInnerCard>
 				<ToolCardHeader>
@@ -194,6 +194,6 @@ export const ToolCard = ({
 					<ToolCardDescription>{description}</ToolCardDescription>
 				</ToolCardBody>
 			</ToolInnerCard>
-		</TheLink>
+		</Link>
 	</ToolCardContainer>
 );

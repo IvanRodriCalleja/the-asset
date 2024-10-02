@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { breakpoints } from '@theasset/style-system/breakpoints';
-import { useMediaQuery } from '@theasset/utilities-react/useMediaQuery';
+import { useMediaQuery } from '@theasset/utilities-react/use-media-query';
 
 import { FilePreviewDesktop } from './filePreview/FilePreviewDesktop';
 import { FilePreviewMobile } from './filePreview/FilePreviewMobile';

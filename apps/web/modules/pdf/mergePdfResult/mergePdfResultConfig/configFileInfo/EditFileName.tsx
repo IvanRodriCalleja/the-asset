@@ -2,7 +2,7 @@ import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { Stack } from '@theasset/style-system/jsx';
-import { Input } from '@theasset/ui/form/input';
+import { Text } from '@theasset/ui/inputs/text';
 import { Label } from '@theasset/ui/label';
 
 type EditFileNameProps = {
@@ -19,7 +19,7 @@ export const EditFileName = ({ name, extension, setName }: EditFileNameProps) =>
 	return (
 		<Stack>
 			<Label htmlFor="name">{mergePdfResult.fileNameLabel}</Label>
-			<Input name="name" value={name} onChange={onChange} />
+			<Text name="name" value={name} onChange={onChange} />
 		</Stack>
 	);
 };

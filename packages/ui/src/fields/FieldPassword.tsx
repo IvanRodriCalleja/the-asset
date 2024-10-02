@@ -1,6 +1,7 @@
 'use client';
 'use no memo';
 
+// TODO: Review RHF
 import { useId } from 'react';
 
 import { Path, useFormContext } from 'react-hook-form';
@@ -23,10 +24,12 @@ export const FieldPassword = ({ error, name, label, optional, ...props }: FieldP
 	);
 };
 
-type RHFFieldTextProps<T> = Omit<FieldPasswordProps, 'name'> & {
+type RHFFieldPasswordProps<T> = Omit<FieldPasswordProps, 'name'> & {
 	name: Path<T>;
 };
-export const RHFFieldPassword = <T extends NonNullable<unknown>>(props: RHFFieldTextProps<T>) => {
+export const RHFFieldPassword = <T extends NonNullable<unknown>>(
+	props: RHFFieldPasswordProps<T>
+) => {
 	const {
 		register,
 		formState: { errors }

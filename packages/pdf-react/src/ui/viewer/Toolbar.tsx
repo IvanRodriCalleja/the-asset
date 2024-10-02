@@ -12,7 +12,7 @@ import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { css } from '@theasset/style-system/css';
 import { Flex, Stack, styled } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
-import { Number } from '@theasset/ui/form/number';
+import { Number } from '@theasset/ui/inputs/number';
 import { Text } from '@theasset/ui/text';
 import { Tooltip, TooltipTrigger } from '@theasset/ui/tooltip';
 
