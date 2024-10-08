@@ -4,4 +4,9 @@ export type GetThumbnailResult = {
 	height: number;
 };
 
+export type PdfResult = {
+	buffer: Uint8Array;
+	hash: string;
+};
+
 export { Direction } from './build/web/pdf_tools';

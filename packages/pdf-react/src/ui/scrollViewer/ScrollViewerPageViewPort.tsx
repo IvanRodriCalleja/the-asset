@@ -28,7 +28,7 @@ export const ScrollViewerPageViewPort = ({
 	);
 
 	return (
-		<Box ref={ref} boxShadow="lg" maxWidth="580px" width="100%">
+		<Box ref={ref} boxShadow="lg" maxWidth="580px" width="100%" data-testid="scroll-viewer-page">
 			<Suspense fallback={<ScrollViewerSkeleton />}>
 				{isInViewPort ? <ScrollViewerPage page={page} file={file} /> : <ScrollViewerSkeleton />}
 			</Suspense>

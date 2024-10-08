@@ -1,8 +1,10 @@
 use pdfium_render::prelude::*;
 use wasm_bindgen::prelude::*;
 
+use crate::{hash::get_hash, pdf_result::PdfResult};
+
 #[wasm_bindgen]
-pub fn remove_pdf_page(buffer: Vec<u8>, index: PdfPageIndex) -> Vec<u8> {
+pub fn remove_pdf_page(buffer: Vec<u8>, index: PdfPageIndex) -> PdfResult {
   let pdfium = Pdfium::default();
   let document = pdfium.load_pdf_from_byte_vec(buffer, None).unwrap();
 
@@ -14,5 +16,8 @@ pub fn remove_pdf_page(buffer: Vec<u8>, index: PdfPageIndex) -> Vec<u8> {
   let page = document.pages().get(index).unwrap();
   page.delete().unwrap();
 
-  document.save_to_bytes().unwrap()
+  PdfResult::new(
+    document.save_to_bytes().unwrap(),
+    get_hash(&document).unwrap(),
+  )
 }

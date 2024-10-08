@@ -1,11 +1,16 @@
 /* tslint:disable */
 /* eslint-disable */
 export const memory: WebAssembly.Memory;
-export function merge_pdfs(a: number, b: number, c: number): void;
+export function get_pdf_hash(a: number, b: number, c: number): void;
+export function merge_pdfs(a: number, b: number): number;
 export function get_total_pages(a: number, b: number): number;
-export function remove_pdf_page(a: number, b: number, c: number, d: number): void;
-export function rotate_pdf_page(a: number, b: number, c: number, d: number, e: number): void;
-export function rotate_pdf(a: number, b: number, c: number, d: number): void;
+export function __wbg_pdfresult_free(a: number, b: number): void;
+export function pdfresult_new(a: number, b: number, c: number, d: number): number;
+export function pdfresult_buffer(a: number, b: number): void;
+export function pdfresult_hash(a: number, b: number): void;
+export function remove_pdf_page(a: number, b: number, c: number): number;
+export function rotate_pdf_page(a: number, b: number, c: number, d: number): number;
+export function rotate_pdf(a: number, b: number, c: number): number;
 export function __wbg_getthumbnailresult_free(a: number, b: number): void;
 export function getthumbnailresult_new(a: number, b: number, c: number, d: number): number;
 export function getthumbnailresult_src(a: number, b: number): void;

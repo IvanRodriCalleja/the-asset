@@ -16,5 +16,6 @@ wasm-bindgen-futures = "^0"
 web-sys = { version = "^0", features = ["ImageData"] }
 base64 = "0.21"
 image = { version = "0.25.2", default-features = false }
+serde_json = "1.0.128"
 
 

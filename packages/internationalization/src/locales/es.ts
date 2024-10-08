@@ -8,6 +8,9 @@ const es: Locales = {
 		descriptionImportant: 'todo de manera segura sin que tus archivos salgan de tu dispositivo'
 	},
 	mergePdf: {
+		metadata: {
+			title: 'Une PDF Online - Combina ficheros PDF de manera privada totalmente gratis'
+		},
 		title: 'Unir PDF',
 		description: 'Combina múltiples PDFs de forma instantánea y segura,',
 		descriptionImportant: 'todo sin enviar datos fuera de tu navegador.',

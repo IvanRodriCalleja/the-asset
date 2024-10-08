@@ -1,5 +1,5 @@
 import { Direction } from '../build/web/pdf_tools';
-import { GetThumbnailResult } from '../pdf-tools';
+import { GetThumbnailResult, PdfResult } from '../pdf-tools';
 import { WorkerMessage } from './interface';
 
 const worker = new Worker(new URL('./worker.ts', import.meta.url));
@@ -65,7 +65,7 @@ export const rotatePdfPage = ({ buffer, page, direction }: RotatePdfPage) => {
 
 	worker.postMessage(message);
 
-	return new Promise<Uint8Array>((resolve, reject) => {
+	return new Promise<PdfResult>((resolve, reject) => {
 		pendingPromises.set(id, { resolve, reject });
 	});
 };
@@ -86,7 +86,7 @@ export const rotatePdf = ({ buffer, direction }: RotatePdf) => {
 
 	worker.postMessage(message);
 
-	return new Promise<Uint8Array>((resolve, reject) => {
+	return new Promise<PdfResult>((resolve, reject) => {
 		pendingPromises.set(id, { resolve, reject });
 	});
 };
@@ -107,7 +107,7 @@ export const removePdfPage = ({ buffer, index }: RemovePdfPage) => {
 
 	worker.postMessage(message);
 
-	return new Promise<Uint8Array>((resolve, reject) => {
+	return new Promise<PdfResult>((resolve, reject) => {
 		pendingPromises.set(id, { resolve, reject });
 	});
 };
@@ -126,7 +126,7 @@ export const mergePdfs = ({ buffers }: MergePdfs) => {
 
 	worker.postMessage(message);
 
-	return new Promise<Uint8Array>((resolve, reject) => {
+	return new Promise<PdfResult>((resolve, reject) => {
 		pendingPromises.set(id, { resolve, reject });
 	});
 };

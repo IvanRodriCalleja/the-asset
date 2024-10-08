@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import Merge from 'assets/tools/merge.svg';
 
 import { cacheStore } from '@theasset/cache/store';
-import { TheAssetFile, hashArrayBuffer } from '@theasset/file/domain/the-asset-file';
+import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { Loading } from '@theasset/icons/loading';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { mergePdfs } from '@theasset/pdf-tools';
@@ -30,21 +30,22 @@ export const MergeButton = ({ files }: MergeButtonProps) => {
 	const onMerge = () => {
 		startTransition(async () => {
 			const decryptedFiles = files.filter(file => !file.isEncrypted);
-			const mergedPdf = await mergePdfs({ buffers: decryptedFiles.map(file => file.buffer) });
+			const { buffer, hash } = await mergePdfs({
+				buffers: decryptedFiles.map(file => file.buffer)
+			});
 
 			const id = new Date().getTime().toString();
-			const hash = await hashArrayBuffer(mergedPdf);
 
 			const resultFile: TheAssetFile = {
 				id,
 				hash,
-				buffer: mergedPdf,
+				buffer,
 				name: decryptedFiles[0]!.name,
 				isEncrypted: false
 			};
-			cacheStore.addResult(id, resultFile);
+			cacheStore.addResult(hash, resultFile);
 
-			push(replaceParams(mergePdfIdPath, { id, ...params }));
+			push(replaceParams(mergePdfIdPath, { id: hash, ...params }));
 		});
 	};
 

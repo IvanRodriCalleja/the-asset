@@ -56,13 +56,14 @@ export const FilePicker = ({
 	const { getRootProps, getInputProps, open, isDragAccept, isDragReject } = useDropzone({
 		accept,
 		noClick: true,
+		useFsAccessApi: false, // TODO: Check only for testing
 		onDropAccepted: onChange
 	});
 
 	const hasFiles = files.length > 0;
 
 	return (
-		<DropZoneArea {...getRootProps()}>
+		<DropZoneArea data-testid="file-drop" {...getRootProps()}>
 			{(isDragAccept || isDragReject) && <DragOverlay />}
 			<Stack>
 				{!hasFiles && children}

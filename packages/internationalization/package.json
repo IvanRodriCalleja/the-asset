@@ -11,6 +11,7 @@
     "./hooks/use-language": "./src/hooks/useLanguage.ts",
     "./hooks/use-locale": "./src/hooks/useLocale.ts",
     "./server/middleware": "./src/server/i18nMiddleware.ts",
+    "./server/get-locale": "./src/server/getLocale.ts",
     "./ui/i18n-provider": "./src/ui/I18nProvider.tsx",
     "./infra/get-singular-or-plural": "./src/infra/getSingularOrPlural.ts"
   },

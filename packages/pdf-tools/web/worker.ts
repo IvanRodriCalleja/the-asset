@@ -1,5 +1,5 @@
 //TODO: Use BufferArray and convert here the Unit8Array
-import { GetThumbnailResult } from 'pdf-tools';
+import { GetThumbnailResult, PdfResult } from 'pdf-tools';
 
 import {
 	GetPagesMessage,
@@ -82,23 +82,43 @@ const getPages = async ({ buffer }: GetPagesMessage) => {
 const rotatePdfPage = async ({ buffer, page, direction }: RotatePdfPageMessage) => {
 	const pdf = await rotate_pdf_page(buffer, page, direction);
 
-	return pdf;
+	const result: PdfResult = {
+		buffer: pdf.buffer,
+		hash: pdf.hash
+	};
+
+	return result;
 };
 
 const rotatePdf = async ({ buffer, direction }: RotatePdfMessage) => {
 	const pdf = await rotate_pdf(buffer, direction);
 
-	return pdf;
+	const result: PdfResult = {
+		buffer: pdf.buffer,
+		hash: pdf.hash
+	};
+
+	return result;
 };
 
 const removePdfPage = async ({ buffer, index }: RemovePdfPageMessage) => {
 	const pdf = await remove_pdf_page(buffer, index);
 
-	return pdf;
+	const result: PdfResult = {
+		buffer: pdf.buffer,
+		hash: pdf.hash
+	};
+
+	return result;
 };
 
 const mergePdfs = async ({ buffers }: MergePdfsMessage) => {
 	const pdf = await merge_pdfs(buffers);
 
-	return pdf;
+	const result: PdfResult = {
+		buffer: pdf.buffer,
+		hash: pdf.hash
+	};
+
+	return result;
 };

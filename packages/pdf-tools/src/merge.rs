@@ -2,12 +2,14 @@ use js_sys::Uint8Array;
 use pdfium_render::prelude::*;
 use wasm_bindgen::prelude::*;
 
+use crate::{hash::get_hash, pdf_result::PdfResult};
+
 /// Fusión de múltiples PDFs en uno solo.
 ///
 /// `buffers` es un vector de `Uint8Array`, donde cada elemento es un PDF en formato binario.
 /// Devuelve un único PDF fusionado como un `Uint8Array`.
 #[wasm_bindgen]
-pub fn merge_pdfs(buffers: Vec<Uint8Array>) -> Vec<u8> {
+pub fn merge_pdfs(buffers: Vec<Uint8Array>) -> PdfResult {
   let pdfium = Pdfium::default();
 
   // Crear un nuevo documento PDF vacío como destino
@@ -28,5 +30,8 @@ pub fn merge_pdfs(buffers: Vec<Uint8Array>) -> Vec<u8> {
       .unwrap();
   }
 
-  destination_document.save_to_bytes().unwrap()
+  PdfResult::new(
+    destination_document.save_to_bytes().unwrap(),
+    get_hash(&destination_document).unwrap(),
+  )
 }

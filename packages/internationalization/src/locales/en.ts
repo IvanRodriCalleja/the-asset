@@ -5,6 +5,9 @@ const en = {
 		descriptionImportant: 'all securely without your files ever leaving your device.'
 	},
 	mergePdf: {
+		metadata: {
+			title: 'Merge PDF Online - Combine PDF Files Privately for Free'
+		},
 		title: 'Merge PDF',
 		description: 'Merge multiple PDFs instantly and securely,',
 		descriptionImportant: 'all without sending data outside your browser.',
@@ -27,6 +30,12 @@ const en = {
 			rotatePageLeft: 'Rotate page left',
 			rotatePageRight: 'Rotate page right',
 			removePage: 'Remove page'
+		},
+		thumbnailActions: {
+			magnify: 'Magnify',
+			rotatePdfRight: 'Rotate PDF right',
+			rotatePdfLeft: 'Rotate PDF left',
+			removePdf: 'Remove PDF'
 		}
 	},
 	mergePdfResult: {
@@ -36,6 +45,7 @@ const en = {
 		fileNameLabel: 'File name',
 		mergeNewPdf: 'Merge a new PDF'
 	},
+
 	shared: {
 		continueWith: 'Continue with:',
 		download: 'Download',

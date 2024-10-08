@@ -16,6 +16,7 @@ type MergeResultProps = {
 };
 
 const MergePdfResultPage = ({ params }: MergeResultProps) => {
+	debugger;
 	const file = cacheStore.getResult<TheAssetFile>(params.id);
 
 	if (!file) {

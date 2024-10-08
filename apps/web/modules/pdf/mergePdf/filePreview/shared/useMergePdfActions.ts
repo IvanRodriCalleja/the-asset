@@ -22,8 +22,7 @@ export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
 
 	const onRemovePage = (page: number) => {
 		startTransition(async () => {
-			const newPdf = await removePdfPage({ buffer: file.buffer, index: page - 1 });
-			const hash = await hashArrayBuffer(newPdf);
+			const { buffer, hash } = await removePdfPage({ buffer: file.buffer, index: page - 1 });
 
 			setFiles(files => {
 				const fileIndex = files.findIndex(({ id }) => id === file.id);
@@ -32,7 +31,7 @@ export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
 				newFiles[fileIndex] = {
 					...file,
 					hash,
-					buffer: newPdf
+					buffer
 				};
 
 				return newFiles;
@@ -42,11 +41,10 @@ export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
 
 	const onRotateFile = (direction: Direction) => {
 		startTransition(async () => {
-			const newPdf = await rotatePdf({
+			const { buffer, hash } = await rotatePdf({
 				buffer: file.buffer,
 				direction
 			});
-			const hash = await hashArrayBuffer(newPdf); // TODO: Check why this doesn't return same hash when rotating the same file
 
 			setFiles(files => {
 				const fileIndex = files.findIndex(({ id }) => id === file.id);
@@ -55,7 +53,7 @@ export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
 				newFiles[fileIndex] = {
 					...file,
 					hash,
-					buffer: newPdf
+					buffer
 				};
 
 				return newFiles;
@@ -65,12 +63,11 @@ export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
 
 	const onRotatePage = async (direction: Direction, page: number) => {
 		startTransition(async () => {
-			const newPdf = await rotatePdfPage({
+			const { buffer, hash } = await rotatePdfPage({
 				buffer: file.buffer,
 				page,
 				direction
 			});
-			const hash = await hashArrayBuffer(newPdf); // TODO: Check why this doesn't return same hash when rotating the same file
 
 			setFiles(files => {
 				const fileIndex = files.findIndex(({ id }) => id === file.id);
@@ -79,7 +76,7 @@ export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
 				newFiles[fileIndex] = {
 					...file,
 					hash,
-					buffer: newPdf
+					buffer
 				};
 
 				return newFiles;

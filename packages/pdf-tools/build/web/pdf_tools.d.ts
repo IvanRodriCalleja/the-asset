@@ -1,14 +1,19 @@
 /* tslint:disable */
 /* eslint-disable */
 /**
+* @param {Uint8Array} buffer
+* @returns {string}
+*/
+export function get_pdf_hash(buffer: Uint8Array): string;
+/**
 * Fusión de múltiples PDFs en uno solo.
 *
 * `buffers` es un vector de `Uint8Array`, donde cada elemento es un PDF en formato binario.
 * Devuelve un único PDF fusionado como un `Uint8Array`.
 * @param {(Uint8Array)[]} buffers
-* @returns {Uint8Array}
+* @returns {PdfResult}
 */
-export function merge_pdfs(buffers: (Uint8Array)[]): Uint8Array;
+export function merge_pdfs(buffers: (Uint8Array)[]): PdfResult;
 /**
 * @param {Uint8Array} buffer
 * @returns {number}
@@ -17,22 +22,22 @@ export function get_total_pages(buffer: Uint8Array): number;
 /**
 * @param {Uint8Array} buffer
 * @param {number} index
-* @returns {Uint8Array}
+* @returns {PdfResult}
 */
-export function remove_pdf_page(buffer: Uint8Array, index: number): Uint8Array;
+export function remove_pdf_page(buffer: Uint8Array, index: number): PdfResult;
 /**
 * @param {Uint8Array} buffer
 * @param {number} index
 * @param {Direction} direction
-* @returns {Uint8Array}
+* @returns {PdfResult}
 */
-export function rotate_pdf_page(buffer: Uint8Array, index: number, direction: Direction): Uint8Array;
+export function rotate_pdf_page(buffer: Uint8Array, index: number, direction: Direction): PdfResult;
 /**
 * @param {Uint8Array} buffer
 * @param {Direction} direction
-* @returns {Uint8Array}
+* @returns {PdfResult}
 */
-export function rotate_pdf(buffer: Uint8Array, direction: Direction): Uint8Array;
+export function rotate_pdf(buffer: Uint8Array, direction: Direction): PdfResult;
 /**
 * @param {Uint8Array} buffer
 * @param {number} index
@@ -119,16 +124,37 @@ export class GetThumbnailResult {
 */
   readonly width: number;
 }
+/**
+*/
+export class PdfResult {
+  free(): void;
+/**
+* @param {Uint8Array} buffer
+* @param {string} hash
+*/
+  constructor(buffer: Uint8Array, hash: string);
+/**
+*/
+  readonly buffer: Uint8Array;
+/**
+*/
+  readonly hash: string;
+}
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
-  readonly merge_pdfs: (a: number, b: number, c: number) => void;
+  readonly get_pdf_hash: (a: number, b: number, c: number) => void;
+  readonly merge_pdfs: (a: number, b: number) => number;
   readonly get_total_pages: (a: number, b: number) => number;
-  readonly remove_pdf_page: (a: number, b: number, c: number, d: number) => void;
-  readonly rotate_pdf_page: (a: number, b: number, c: number, d: number, e: number) => void;
-  readonly rotate_pdf: (a: number, b: number, c: number, d: number) => void;
+  readonly __wbg_pdfresult_free: (a: number, b: number) => void;
+  readonly pdfresult_new: (a: number, b: number, c: number, d: number) => number;
+  readonly pdfresult_buffer: (a: number, b: number) => void;
+  readonly pdfresult_hash: (a: number, b: number) => void;
+  readonly remove_pdf_page: (a: number, b: number, c: number) => number;
+  readonly rotate_pdf_page: (a: number, b: number, c: number, d: number) => number;
+  readonly rotate_pdf: (a: number, b: number, c: number) => number;
   readonly __wbg_getthumbnailresult_free: (a: number, b: number) => void;
   readonly getthumbnailresult_new: (a: number, b: number, c: number, d: number) => number;
   readonly getthumbnailresult_src: (a: number, b: number) => void;

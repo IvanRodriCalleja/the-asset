@@ -1,6 +1,8 @@
 use pdfium_render::prelude::*;
 use wasm_bindgen::prelude::*;
 
+use crate::{hash::get_hash, pdf_result::PdfResult};
+
 #[wasm_bindgen]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum Direction {
@@ -9,7 +11,7 @@ pub enum Direction {
 }
 
 #[wasm_bindgen]
-pub fn rotate_pdf_page(buffer: Vec<u8>, index: PdfPageIndex, direction: Direction) -> Vec<u8> {
+pub fn rotate_pdf_page(buffer: Vec<u8>, index: PdfPageIndex, direction: Direction) -> PdfResult {
   let pdfium = Pdfium::default();
   let document = pdfium.load_pdf_from_byte_vec(buffer, None).unwrap();
 
@@ -20,11 +22,14 @@ pub fn rotate_pdf_page(buffer: Vec<u8>, index: PdfPageIndex, direction: Directio
 
   page.set_rotation(new_rotation);
 
-  document.save_to_bytes().unwrap()
+  PdfResult::new(
+    document.save_to_bytes().unwrap(),
+    get_hash(&document).unwrap(),
+  )
 }
 
 #[wasm_bindgen]
-pub fn rotate_pdf(buffer: Vec<u8>, direction: Direction) -> Vec<u8> {
+pub fn rotate_pdf(buffer: Vec<u8>, direction: Direction) -> PdfResult {
   let pdfium = Pdfium::default();
   let document = pdfium.load_pdf_from_byte_vec(buffer, None).unwrap();
 
@@ -35,7 +40,10 @@ pub fn rotate_pdf(buffer: Vec<u8>, direction: Direction) -> Vec<u8> {
     page.set_rotation(new_rotation);
   }
 
-  document.save_to_bytes().unwrap()
+  PdfResult::new(
+    document.save_to_bytes().unwrap(),
+    get_hash(&document).unwrap(),
+  )
 }
 
 fn calculate_new_rotation(
