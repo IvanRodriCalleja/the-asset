@@ -68,14 +68,14 @@ export default defineConfig({
 		//   name: 'Google Chrome',
 		//   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
 		// },
-	]
-	/*webServer: [
+	],
+	webServer: [
 		{
 			command: 'yarn --cwd "../../apps/web" start',
-			url: 'http://localhost:3001/api/status', //TODO: Configure url
+			url: 'http://localhost:3001/api/status',
 			reuseExistingServer: false
 		}
-	]*/
+	]
 	/* Run your local dev server before starting the tests */
 	// webServer: {
 	//   command: 'npm run start',
