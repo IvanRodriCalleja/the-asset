@@ -83,7 +83,8 @@ export const Toolbar = ({ totalPages, page, setPage, children }: ToolbarProps) =
 						size="icon"
 						variant="ghost"
 						onPress={goToFirstPage}
-						isDisabled={isGoToFirstPageDisabled}>
+						isDisabled={isGoToFirstPageDisabled}
+						aria-label={viewer.toolbar.goFirstPage}>
 						<DoubleArrowLeftIcon />
 					</Button>
 					<Tooltip offset={50}>{viewer.toolbar.goFirstPage}</Tooltip>
@@ -94,7 +95,8 @@ export const Toolbar = ({ totalPages, page, setPage, children }: ToolbarProps) =
 						size="icon"
 						variant="ghost"
 						onPress={goToPreviousPage}
-						isDisabled={isGoToFirstPageDisabled}>
+						isDisabled={isGoToFirstPageDisabled}
+						aria-label={viewer.toolbar.goPreviousPage}>
 						<ChevronLeftIcon />
 					</Button>
 					<Tooltip offset={50}>{viewer.toolbar.goPreviousPage}</Tooltip>
@@ -121,7 +123,8 @@ export const Toolbar = ({ totalPages, page, setPage, children }: ToolbarProps) =
 						size="icon"
 						variant="ghost"
 						onPress={goToNextPage}
-						isDisabled={isGoToLastPageDisabled}>
+						isDisabled={isGoToLastPageDisabled}
+						aria-label={viewer.toolbar.goNextPAge}>
 						<ChevronRightIcon />
 					</Button>
 					<Tooltip offset={50}>{viewer.toolbar.goNextPAge}</Tooltip>
@@ -132,7 +135,8 @@ export const Toolbar = ({ totalPages, page, setPage, children }: ToolbarProps) =
 						size="icon"
 						variant="ghost"
 						onPress={goToLastPage}
-						isDisabled={isGoToLastPageDisabled}>
+						isDisabled={isGoToLastPageDisabled}
+						aria-label={viewer.toolbar.goLastPage}>
 						<DoubleArrowRightIcon />
 					</Button>
 					<Tooltip>{viewer.toolbar.goLastPage}</Tooltip>

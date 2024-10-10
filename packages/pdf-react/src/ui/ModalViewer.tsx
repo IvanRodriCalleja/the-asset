@@ -49,7 +49,7 @@ export const ModalViewer = ({ file, children }: ModalViewerProps) => {
 				style={{ aspectRatio: `${aspectRatio} / 1` }}>
 				<ThumbnailImage
 					src={src}
-					alt={file.name}
+					alt={`${file.name} - ${page}`}
 					className={css(
 						isVertical ? { width: 'auto', height: '100%' } : { width: '100%', height: 'auto' }
 					)}

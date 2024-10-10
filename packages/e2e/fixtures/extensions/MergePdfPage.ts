@@ -3,6 +3,8 @@ import { readFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { ViewerPage } from './shared/ViewerPage';
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -12,9 +14,11 @@ type BuildMergePdfPage = {
 
 export class MergePdfPage {
 	private page: Page;
+	public viewer: ViewerPage;
 
 	constructor({ page }: BuildMergePdfPage) {
 		this.page = page;
+		this.viewer = new ViewerPage({ page });
 	}
 
 	uploadFiles = async (page: Page, files: string[]) => {
@@ -40,6 +44,12 @@ export class MergePdfPage {
 			.elementHandle() as unknown as ElementHandle<HTMLElement>;
 
 	getScrollViewerPages = () => this.page.getByTestId('scroll-viewer-page');
+
+	getPdfPagedBadge = (pages: number, index = 0) =>
+		this.page
+			.getByTestId('pdf-thumbnail')
+			.nth(index)
+			.getByText(`${pages} ${pages > 1 ? 'pages' : 'page'}`);
 
 	mouseMoveBy = async (
 		page: Page,

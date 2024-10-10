@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, startTransition } from 'react';
 
 import { ReloadIcon, TrashIcon } from '@radix-ui/react-icons';
 
@@ -30,37 +30,51 @@ export const ViewerActions = ({
 	const { onRotatePage, onRemovePage, onRemoveFile } = useMergePdfActions({ file, setFiles });
 
 	const onRemove = (page: number) => {
-		if (totalPages === 1) {
-			onRemoveFile();
-			return;
-		}
+		startTransition(() => {
+			if (totalPages === 1) {
+				onRemoveFile();
+				return;
+			}
 
-		if (page === totalPages) {
-			setPage(page - 1);
-		}
+			if (page === totalPages) {
+				setPage(page - 1);
+			}
 
-		onRemovePage(page);
+			onRemovePage(page);
+		});
 	};
 
 	const { mergePdf } = useLocale();
 	return (
 		<>
 			<TooltipTrigger>
-				<Button size="icon" variant="ghost" onPress={() => onRotatePage(Direction.Left, page - 1)}>
+				<Button
+					size="icon"
+					variant="ghost"
+					onPress={() => onRotatePage(Direction.Left, page - 1)}
+					aria-label={mergePdf.viewer.rotatePageLeft}>
 					<ReloadIcon style={{ transform: 'scaleX(-1)' }} />
 				</Button>
 				<Tooltip>{mergePdf.viewer.rotatePageLeft}</Tooltip>
 			</TooltipTrigger>
 
 			<TooltipTrigger>
-				<Button size="icon" variant="ghost" onPress={() => onRotatePage(Direction.Right, page - 1)}>
+				<Button
+					size="icon"
+					variant="ghost"
+					onPress={() => onRotatePage(Direction.Right, page - 1)}
+					aria-label={mergePdf.viewer.rotatePageRight}>
 					<ReloadIcon />
 				</Button>
 				<Tooltip>{mergePdf.viewer.rotatePageRight}</Tooltip>
 			</TooltipTrigger>
 
 			<TooltipTrigger>
-				<Button size="icon" variant="ghost" onPress={() => onRemove(page)}>
+				<Button
+					size="icon"
+					variant="ghost"
+					onPress={() => onRemove(page)}
+					aria-label={mergePdf.viewer.removePage}>
 					<TrashIcon />
 				</Button>
 				<Tooltip>{mergePdf.viewer.removePage}</Tooltip>

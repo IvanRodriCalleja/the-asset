@@ -1,5 +1,6 @@
 import { Cross2Icon } from '@radix-ui/react-icons';
 
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { styled } from '@theasset/style-system/jsx';
 
 import { Button } from '../Button';
@@ -16,9 +17,14 @@ const CloseButton = styled(Button, {
 
 export const Close = () => {
 	const { state } = useAgModal();
+	const { components } = useLocale();
 
 	return (
-		<CloseButton size="icon" variant="secondary" onPress={state.close}>
+		<CloseButton
+			size="icon"
+			variant="secondary"
+			onPress={state.close}
+			aria-label={components.modal.close}>
 			<Cross2Icon />
 		</CloseButton>
 	);

@@ -20,22 +20,20 @@ export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
 		});
 	};
 
-	const onRemovePage = (page: number) => {
-		startTransition(async () => {
-			const { buffer, hash } = await removePdfPage({ buffer: file.buffer, index: page - 1 });
+	const onRemovePage = async (page: number) => {
+		const { buffer, hash } = await removePdfPage({ buffer: file.buffer, index: page - 1 });
 
-			setFiles(files => {
-				const fileIndex = files.findIndex(({ id }) => id === file.id);
+		setFiles(files => {
+			const fileIndex = files.findIndex(({ id }) => id === file.id);
 
-				const newFiles = [...files];
-				newFiles[fileIndex] = {
-					...file,
-					hash,
-					buffer
-				};
+			const newFiles = [...files];
+			newFiles[fileIndex] = {
+				...file,
+				hash,
+				buffer
+			};
 
-				return newFiles;
-			});
+			return newFiles;
 		});
 	};
 

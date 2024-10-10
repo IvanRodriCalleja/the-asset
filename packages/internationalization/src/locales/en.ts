@@ -74,6 +74,9 @@ const en = {
 				goLastPage: 'Go to last page',
 				currentPage: 'Current page'
 			}
+		},
+		modal: {
+			close: 'Close modal'
 		}
 	}
 };

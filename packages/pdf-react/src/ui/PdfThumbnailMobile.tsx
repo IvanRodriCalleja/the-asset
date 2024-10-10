@@ -59,7 +59,7 @@ const PdfThumbnail = ({ file, setFiles, actions, ...props }: PdfThumbnailProps) 
 	const { onLoad } = useThumbnailSuspense();
 
 	return (
-		<ThumbnailRoot width="100%" paddingBottom={0} {...props}>
+		<ThumbnailRoot width="100%" paddingBottom={0} {...props} data-testid="pdf-thumbnail">
 			<Stack direction="row">
 				<Box width="56px" minWidth="56px">
 					<ThumbnailImageContent>

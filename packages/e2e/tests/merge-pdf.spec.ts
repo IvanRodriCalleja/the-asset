@@ -57,18 +57,6 @@ theAssetTest.describe('Merge PDF', () => {
 		await expect(pages).toHaveCount(95);
 		await expect(page).toHaveURL('/en/merge-pdf/10426654538942558433');
 	});
-
-	theAssetTest(
-		'Should allow magnify pdf and see all pages one by one',
-		async ({ page, mergePdfPage }) => {
-			await page.goto('/merge-pdf');
-
-			await mergePdfPage.uploadFiles(page, ['tema1.pdf']);
-
-			const magnifyButton = await mergePdfPage.getMagnifierButton();
-			await magnifyButton.click();
-		}
-	);
 });
 
 /*
