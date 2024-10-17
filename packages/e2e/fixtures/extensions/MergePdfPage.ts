@@ -1,4 +1,4 @@
-import { ElementHandle, Page } from '@playwright/test';
+import { ElementHandle, Page, expect } from '@playwright/test';
 import { readFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -21,8 +21,8 @@ export class MergePdfPage {
 		this.viewer = new ViewerPage({ page });
 	}
 
-	uploadFiles = async (page: Page, files: string[]) => {
-		const fileChooserPromise = page.waitForEvent('filechooser');
+	uploadFiles = async (files: string[]) => {
+		const fileChooserPromise = this.page.waitForEvent('filechooser');
 		const uploadButton = this.getUploadButton();
 		await uploadButton.click();
 		const fileChooser = await fileChooserPromise;
@@ -36,6 +36,25 @@ export class MergePdfPage {
 	getMergePdfsButton = () => this.page.getByText('Merge PDFs');
 
 	getMagnifierButton = (index = 0) => this.page.getByLabel(/magnify/i).nth(index);
+	getRotateLeftButton = (index = 0) => this.page.getByLabel(/rotate PDF left/i).nth(index);
+	getRotateRightButton = (index = 0) => this.page.getByLabel(/rotate PDF right/i).nth(index);
+	getRemovePdfButton = (index = 0) => this.page.getByLabel(/remove PDF/i).nth(index);
+
+	getPdfItems = () => this.page.getByTestId('pdf-thumbnail');
+
+	getPdfNameOrder = async (fakeAssertCount: number) => {
+		const pdfNames = await this.page.getByTestId('pdf-name');
+
+		await expect(pdfNames).toHaveCount(fakeAssertCount);
+
+		const count = await await pdfNames.count();
+
+		const pdfNamesPromises = [...new Array(count)].map(
+			async (_, index) => (await pdfNames.nth(index).textContent()) as string
+		);
+
+		return Promise.all(pdfNamesPromises);
+	};
 
 	getSortableElementAt = (index: number) =>
 		this.page
@@ -52,7 +71,6 @@ export class MergePdfPage {
 			.getByText(`${pages} ${pages > 1 ? 'pages' : 'page'}`);
 
 	mouseMoveBy = async (
-		page: Page,
 		element: ElementHandle<HTMLElement> | null,
 		x: number,
 		y: number,
@@ -71,28 +89,28 @@ export class MergePdfPage {
 		const startY = Math.floor(initialY + height / 2);
 
 		// Simular 'mousedown' en la posición inicial
-		await page.mouse.move(startX, startY);
-		await page.mouse.down();
+		await this.page.mouse.move(startX, startY);
+		await this.page.mouse.down();
 
 		// Esperar el tiempo especificado si se proporciona
 		if (options?.delay) {
-			await page.waitForTimeout(options.delay);
+			await this.page.waitForTimeout(options.delay);
 		}
 
 		// Simular 'mousemove' al punto intermedio
-		await page.mouse.move(startX + x / 2, startY + y / 2);
+		await this.page.mouse.move(startX + x / 2, startY + y / 2);
 
 		// Simular 'mousemove' al punto final
-		await page.mouse.move(startX + x, startY + y);
+		await this.page.mouse.move(startX + x, startY + y);
 
 		// Esperar 100ms
-		await page.waitForTimeout(100);
+		await this.page.waitForTimeout(100);
 
 		// Simular 'mouseup'
-		await page.mouse.up();
+		await this.page.mouse.up();
 
 		// Esperar 250ms adicionales
-		await page.waitForTimeout(250);
+		await this.page.waitForTimeout(250);
 
 		// Obtener la posición final del elemento
 		const finalBoundingBox = await element.boundingBox();

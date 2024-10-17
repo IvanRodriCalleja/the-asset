@@ -56,6 +56,12 @@ export class ViewerPage {
 		await button.click();
 	};
 
+	goToPage = async (page: number) => {
+		const input = this.getCurrentPage();
+		await input.fill(String(page));
+		await input.press('Enter');
+	};
+
 	removePage = async () => {
 		const button = this.getRemoveButton();
 		await button.click();

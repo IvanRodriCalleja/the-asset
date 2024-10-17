@@ -18,7 +18,7 @@ export const ThumbnailDesktopFooter = ({ file }: ThumbnailDesktopFooterProps) =>
 
 	return (
 		<ThumbnailFooter>
-			<FileName>{file.name}</FileName>
+			<FileName data-testid="pdf-name">{file.name}</FileName>
 			<Box display="flex" justifyContent="center">
 				<Badge size="sm" capitalize>
 					{pages} {getSingularOrPlural(shared.page, pages)}

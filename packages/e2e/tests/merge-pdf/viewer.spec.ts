@@ -3,86 +3,109 @@ import { expect } from '@playwright/test';
 import { theAssetTest } from '../../fixtures/theAssetFixture';
 
 theAssetTest.describe('Merge PDF -> Viewer', () => {
-	theAssetTest(
-		'Should allow magnify pdf and see all pages one by one',
-		async ({ page, mergePdfPage }) => {
+	theAssetTest.describe.configure({ mode: 'serial' });
+
+	theAssetTest.describe('Page navigation', () => {
+		theAssetTest(
+			'Should allow magnify pdf and see all pages one by one',
+			async ({ page, mergePdfPage }) => {
+				await page.goto('/merge-pdf');
+
+				await mergePdfPage.uploadFiles(['tema1.pdf']);
+
+				const magnifyButton = await mergePdfPage.getMagnifierButton();
+				await magnifyButton.click();
+
+				await expect(mergePdfPage.viewer.getGoToFirstPageButton()).toBeDisabled();
+				await expect(mergePdfPage.viewer.getGoToPreviousPageButton()).toBeDisabled();
+
+				await expect(mergePdfPage.viewer.getTotalPages('25')).toBeVisible();
+				await expect(mergePdfPage.viewer.getCurrentPage()).toHaveValue('1');
+
+				await expect(mergePdfPage.viewer.getGoToNextPageButton()).not.toBeDisabled();
+				await expect(mergePdfPage.viewer.getGoToLastPageButton()).not.toBeDisabled();
+
+				await expect(page).toHaveScreenshot();
+				await mergePdfPage.viewer.goToNextPage();
+
+				await expect(mergePdfPage.viewer.getGoToFirstPageButton()).not.toBeDisabled();
+				await expect(mergePdfPage.viewer.getGoToPreviousPageButton()).not.toBeDisabled();
+
+				await expect(mergePdfPage.viewer.getTotalPages('25')).toBeVisible();
+				await expect(mergePdfPage.viewer.getCurrentPage()).toHaveValue('2');
+
+				await expect(mergePdfPage.viewer.getGoToNextPageButton()).not.toBeDisabled();
+				await expect(mergePdfPage.viewer.getGoToLastPageButton()).not.toBeDisabled();
+
+				await expect(page).toHaveScreenshot();
+				await mergePdfPage.viewer.goToLastPage();
+
+				await expect(mergePdfPage.viewer.getGoToFirstPageButton()).not.toBeDisabled();
+				await expect(mergePdfPage.viewer.getGoToPreviousPageButton()).not.toBeDisabled();
+
+				await expect(mergePdfPage.viewer.getTotalPages('25')).toBeVisible();
+				await expect(mergePdfPage.viewer.getCurrentPage()).toHaveValue('25');
+
+				await expect(mergePdfPage.viewer.getGoToNextPageButton()).toBeDisabled();
+				await expect(mergePdfPage.viewer.getGoToLastPageButton()).toBeDisabled();
+
+				await expect(page).toHaveScreenshot();
+				await mergePdfPage.viewer.goToPreviousPage();
+
+				await expect(mergePdfPage.viewer.getGoToFirstPageButton()).not.toBeDisabled();
+				await expect(mergePdfPage.viewer.getGoToPreviousPageButton()).not.toBeDisabled();
+
+				await expect(mergePdfPage.viewer.getTotalPages('25')).toBeVisible();
+				await expect(mergePdfPage.viewer.getCurrentPage()).toHaveValue('24');
+
+				await expect(mergePdfPage.viewer.getGoToNextPageButton()).not.toBeDisabled();
+				await expect(mergePdfPage.viewer.getGoToLastPageButton()).not.toBeDisabled();
+
+				await expect(page).toHaveScreenshot();
+				await mergePdfPage.viewer.goToFirstPage();
+
+				await expect(mergePdfPage.viewer.getGoToFirstPageButton()).toBeDisabled();
+				await expect(mergePdfPage.viewer.getGoToPreviousPageButton()).toBeDisabled();
+
+				await expect(mergePdfPage.viewer.getTotalPages('25')).toBeVisible();
+				await expect(mergePdfPage.viewer.getCurrentPage()).toHaveValue('1');
+
+				await expect(mergePdfPage.viewer.getGoToNextPageButton()).not.toBeDisabled();
+				await expect(mergePdfPage.viewer.getGoToLastPageButton()).not.toBeDisabled();
+
+				await expect(page).toHaveScreenshot();
+
+				await mergePdfPage.viewer.closeModal();
+
+				await expect(page).toHaveScreenshot();
+			}
+		);
+
+		theAssetTest('Should allow setting page number', async ({ page, mergePdfPage }) => {
 			await page.goto('/merge-pdf');
 
-			await mergePdfPage.uploadFiles(page, ['tema1.pdf']);
+			await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf', 'tema5.pdf', 'tema6.pdf']);
 
 			const magnifyButton = await mergePdfPage.getMagnifierButton();
 			await magnifyButton.click();
 
-			await expect(mergePdfPage.viewer.getGoToFirstPageButton()).toBeDisabled();
-			await expect(mergePdfPage.viewer.getGoToPreviousPageButton()).toBeDisabled();
+			await mergePdfPage.viewer.goToPage(10);
 
-			await expect(mergePdfPage.viewer.getTotalPages('25')).toBeVisible();
-			await expect(mergePdfPage.viewer.getCurrentPage()).toHaveValue('1');
-
-			await expect(mergePdfPage.viewer.getGoToNextPageButton()).not.toBeDisabled();
-			await expect(mergePdfPage.viewer.getGoToLastPageButton()).not.toBeDisabled();
-
-			await expect(page).toHaveScreenshot();
-			await mergePdfPage.viewer.goToNextPage();
-
-			await expect(mergePdfPage.viewer.getGoToFirstPageButton()).not.toBeDisabled();
-			await expect(mergePdfPage.viewer.getGoToPreviousPageButton()).not.toBeDisabled();
-
-			await expect(mergePdfPage.viewer.getTotalPages('25')).toBeVisible();
-			await expect(mergePdfPage.viewer.getCurrentPage()).toHaveValue('2');
-
-			await expect(mergePdfPage.viewer.getGoToNextPageButton()).not.toBeDisabled();
-			await expect(mergePdfPage.viewer.getGoToLastPageButton()).not.toBeDisabled();
-
-			await expect(page).toHaveScreenshot();
-			await mergePdfPage.viewer.goToLastPage();
-
-			await expect(mergePdfPage.viewer.getGoToFirstPageButton()).not.toBeDisabled();
-			await expect(mergePdfPage.viewer.getGoToPreviousPageButton()).not.toBeDisabled();
-
-			await expect(mergePdfPage.viewer.getTotalPages('25')).toBeVisible();
-			await expect(mergePdfPage.viewer.getCurrentPage()).toHaveValue('25');
-
-			await expect(mergePdfPage.viewer.getGoToNextPageButton()).toBeDisabled();
-			await expect(mergePdfPage.viewer.getGoToLastPageButton()).toBeDisabled();
-
-			await expect(page).toHaveScreenshot();
-			await mergePdfPage.viewer.goToPreviousPage();
-
-			await expect(mergePdfPage.viewer.getGoToFirstPageButton()).not.toBeDisabled();
-			await expect(mergePdfPage.viewer.getGoToPreviousPageButton()).not.toBeDisabled();
-
-			await expect(mergePdfPage.viewer.getTotalPages('25')).toBeVisible();
-			await expect(mergePdfPage.viewer.getCurrentPage()).toHaveValue('24');
-
-			await expect(mergePdfPage.viewer.getGoToNextPageButton()).not.toBeDisabled();
-			await expect(mergePdfPage.viewer.getGoToLastPageButton()).not.toBeDisabled();
-
-			await expect(page).toHaveScreenshot();
-			await mergePdfPage.viewer.goToFirstPage();
-
-			await expect(mergePdfPage.viewer.getGoToFirstPageButton()).toBeDisabled();
-			await expect(mergePdfPage.viewer.getGoToPreviousPageButton()).toBeDisabled();
-
-			await expect(mergePdfPage.viewer.getTotalPages('25')).toBeVisible();
-			await expect(mergePdfPage.viewer.getCurrentPage()).toHaveValue('1');
-
-			await expect(mergePdfPage.viewer.getGoToNextPageButton()).not.toBeDisabled();
-			await expect(mergePdfPage.viewer.getGoToLastPageButton()).not.toBeDisabled();
+			await expect(mergePdfPage.viewer.getCurrentPage()).toHaveValue('10');
 
 			await expect(page).toHaveScreenshot();
 
-			await mergePdfPage.viewer.closeModal();
+			await mergePdfPage.viewer.goToPage(345);
 
-			await expect(page).toHaveScreenshot();
-		}
-	);
+			await expect(mergePdfPage.viewer.getCurrentPage()).toHaveValue('10');
+		});
+	});
 
 	theAssetTest.describe('Remove pdf page', () => {
 		theAssetTest('Should remove pdf page', async ({ page, mergePdfPage }) => {
 			await page.goto('/merge-pdf');
 
-			await mergePdfPage.uploadFiles(page, ['tema7.pdf']);
+			await mergePdfPage.uploadFiles(['tema7.pdf']);
 
 			const magnifyButton = await mergePdfPage.getMagnifierButton();
 			await magnifyButton.click();
@@ -122,7 +145,7 @@ theAssetTest.describe('Merge PDF -> Viewer', () => {
 			async ({ page, mergePdfPage }) => {
 				await page.goto('/merge-pdf');
 
-				await mergePdfPage.uploadFiles(page, ['tema7.pdf']);
+				await mergePdfPage.uploadFiles(['tema7.pdf']);
 
 				const magnifyButton = await mergePdfPage.getMagnifierButton();
 				await magnifyButton.click();
@@ -148,7 +171,7 @@ theAssetTest.describe('Merge PDF -> Viewer', () => {
 			async ({ page, mergePdfPage }) => {
 				await page.goto('/merge-pdf');
 
-				await mergePdfPage.uploadFiles(page, ['tema7.pdf']);
+				await mergePdfPage.uploadFiles(['tema7.pdf']);
 
 				const magnifyButton = await mergePdfPage.getMagnifierButton();
 				await magnifyButton.click();
@@ -206,7 +229,7 @@ theAssetTest.describe('Merge PDF -> Viewer', () => {
 			async ({ page, mergePdfPage, utilsPage }) => {
 				await page.goto('/merge-pdf');
 
-				await mergePdfPage.uploadFiles(page, ['tema7.pdf', 'tema8.pdf']);
+				await mergePdfPage.uploadFiles(['tema7.pdf', 'tema8.pdf']);
 
 				await expect(mergePdfPage.getPdfPagedBadge(14)).toBeInViewport();
 				await expect(mergePdfPage.getPdfPagedBadge(28, 1)).toBeInViewport();
@@ -242,7 +265,7 @@ theAssetTest.describe('Merge PDF -> Viewer', () => {
 		theAssetTest('Should rotate pdf page multiple times', async ({ page, mergePdfPage }) => {
 			await page.goto('/merge-pdf');
 
-			await mergePdfPage.uploadFiles(page, ['tema7.pdf']);
+			await mergePdfPage.uploadFiles(['tema7.pdf']);
 
 			const magnifyButton = await mergePdfPage.getMagnifierButton();
 			await magnifyButton.click();
@@ -267,7 +290,7 @@ theAssetTest.describe('Merge PDF -> Viewer', () => {
 			async ({ page, mergePdfPage }) => {
 				await page.goto('/merge-pdf');
 
-				await mergePdfPage.uploadFiles(page, ['tema7.pdf', 'tema8.pdf']);
+				await mergePdfPage.uploadFiles(['tema7.pdf', 'tema8.pdf']);
 
 				const magnifyButton = await mergePdfPage.getMagnifierButton();
 				await magnifyButton.click();
@@ -301,7 +324,7 @@ theAssetTest.describe('Merge PDF -> Viewer', () => {
 		theAssetTest('Should rotate pdf page multiple times', async ({ page, mergePdfPage }) => {
 			await page.goto('/merge-pdf');
 
-			await mergePdfPage.uploadFiles(page, ['tema7.pdf']);
+			await mergePdfPage.uploadFiles(['tema7.pdf']);
 
 			const magnifyButton = await mergePdfPage.getMagnifierButton();
 			await magnifyButton.click();
@@ -324,7 +347,7 @@ theAssetTest.describe('Merge PDF -> Viewer', () => {
 		theAssetTest('Should rotate pdf page to the left and merge', async ({ page, mergePdfPage }) => {
 			await page.goto('/merge-pdf');
 
-			await mergePdfPage.uploadFiles(page, ['tema7.pdf', 'tema9.pdf']);
+			await mergePdfPage.uploadFiles(['tema7.pdf', 'tema9.pdf']);
 
 			const magnifyButton = await mergePdfPage.getMagnifierButton();
 			await magnifyButton.click();

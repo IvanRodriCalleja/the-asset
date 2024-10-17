@@ -67,7 +67,7 @@ const PdfThumbnail = ({ file, setFiles, actions, ...props }: PdfThumbnailProps) 
 					</ThumbnailImageContent>
 				</Box>
 				<Stack flex={1} justifyContent="center" overflow="hidden">
-					<FileName>{file.name}</FileName>
+					<FileName data-testid="pdf-name">{file.name}</FileName>
 					<Box>
 						<Badge>
 							{pages} {getSingularOrPlural(shared.page, pages)}
