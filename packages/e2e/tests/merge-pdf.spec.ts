@@ -70,7 +70,7 @@ theAssetTest.describe('Merge PDF', () => {
 			await mergePdfPage.goToMergeTool();
 			await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf']);
 
-			await mergePdfPage.rotatePdfLeft();
+			await mergePdfPage.rotatePdfLeft(270);
 
 			await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 
@@ -86,7 +86,12 @@ theAssetTest.describe('Merge PDF', () => {
 
 			await expect(page).toHaveURL('/en/merge-pdf/14644883602472423972');
 			await mergePdfPage.waitResultPageToLoad(1);
+			const firstPageRotation = await mergePdfPage.getResultPageRotation(1);
+			await expect(firstPageRotation).toBe('270');
+
 			await mergePdfPage.waitResultPageToLoad(2);
+			const secondPageRotation = await mergePdfPage.getResultPageRotation(2);
+			await expect(secondPageRotation).toBe('270');
 
 			await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 		});
@@ -97,7 +102,7 @@ theAssetTest.describe('Merge PDF', () => {
 			await mergePdfPage.goToMergeTool();
 			await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf']);
 
-			await mergePdfPage.rotatePdfRight();
+			await mergePdfPage.rotatePdfRight(90);
 
 			await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 
@@ -113,7 +118,12 @@ theAssetTest.describe('Merge PDF', () => {
 
 			await expect(page).toHaveURL('/en/merge-pdf/1364348172398970979');
 			await mergePdfPage.waitResultPageToLoad(1);
+			const firstPageRotation = await mergePdfPage.getResultPageRotation(1);
+			await expect(firstPageRotation).toBe('90');
+
 			await mergePdfPage.waitResultPageToLoad(2);
+			const secondPageRotation = await mergePdfPage.getResultPageRotation(2);
+			await expect(secondPageRotation).toBe('90');
 
 			await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 		});

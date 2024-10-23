@@ -9,6 +9,7 @@
     "@types/node": "^22.7.4"
   },
   "scripts": {
-    "test": "playwright test --trace on"
+    "test": "playwright test",
+    "tsc": "tsc"
   }
 }

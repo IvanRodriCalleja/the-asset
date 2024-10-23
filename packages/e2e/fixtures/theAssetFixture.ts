@@ -13,8 +13,8 @@ export const theAssetTest = base.extend<TheAssetTest>({
 		const agentPage = new MergePdfPage({ page });
 		await use(agentPage);
 	},
-	utilsPage: async ({ page }, use) => {
-		const utils = new UtilsPage({ page });
+	utilsPage: async ({}, use) => {
+		const utils = new UtilsPage();
 		await use(utils);
 	}
 });

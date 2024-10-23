@@ -21,7 +21,7 @@ export class MergePdfPage {
 	constructor({ page }: BuildMergePdfPage) {
 		this.page = page;
 		this.viewer = new ViewerPage({ page });
-		this.utils = new UtilsPage({ page });
+		this.utils = new UtilsPage();
 	}
 
 	goToMergeTool = async () => {
@@ -186,18 +186,22 @@ export class MergePdfPage {
 		await mergeButton.click();
 	};
 
-	rotatePdfRight = async (index = 0) => {
+	rotatePdfRight = async (expectedRotation: number, index = 0) => {
 		const rotateRightButton = this.getRotateRightButton(index);
 		await rotateRightButton.click();
 
-		await this.utils.waitForAction('rotate-pdf-end');
+		await this.page.waitForSelector(
+			`[data-testid="pdf-thumbnail"]:nth-of-type(${index + 1}) img[data-rotation="${expectedRotation}"]`
+		);
 	};
 
-	rotatePdfLeft = async (index = 0) => {
+	rotatePdfLeft = async (expectedRotation: number, index = 0) => {
 		const rotateLeftButton = this.getRotateLeftButton(index);
 		await rotateLeftButton.click();
 
-		await this.utils.waitForAction('rotate-pdf-end');
+		await this.page.waitForSelector(
+			`[data-testid="pdf-thumbnail"]:nth-of-type(${index + 1}) img[data-rotation="${expectedRotation}"]`
+		);
 	};
 
 	magnifyPdf = async (pdfName: string, currentPage: number, index = 0) => {
@@ -212,7 +216,7 @@ export class MergePdfPage {
 
 	getResultPageRotation = async (page: number) => {
 		const pdfPage = await this.page.getByRole('img', {
-			name: `${page === 1 ? 'page' : 'pages'}`
+			name: `${page === 1 ? 'page' : 'pages'} ${page}`
 		});
 		return pdfPage.getAttribute('data-rotation');
 	};
