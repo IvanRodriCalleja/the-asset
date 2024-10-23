@@ -26,14 +26,18 @@ export class ViewerPage {
 	getRotateRightButton = () => this.page.getByRole('alertdialog').getByLabel('Rotate page right');
 	getRotateLeftButton = () => this.page.getByRole('alertdialog').getByLabel('Rotate page left');
 
-	rotatePageRight = async () => {
+	rotatePageRight = async (expectedRotation: number) => {
 		const button = this.getRotateRightButton();
 		await button.click();
+
+		await this.page.waitForSelector(`[role=alertdialog] img[data-rotation="${expectedRotation}"]`);
 	};
 
-	rotatePageLeft = async () => {
+	rotatePageLeft = async (expectedRotation: number) => {
 		const button = this.getRotateLeftButton();
 		await button.click();
+
+		await this.page.waitForSelector(`[role=alertdialog] img[data-rotation="${expectedRotation}"]`);
 	};
 
 	goToFirstPage = async () => {

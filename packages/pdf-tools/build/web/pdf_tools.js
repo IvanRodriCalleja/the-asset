@@ -356,9 +356,6 @@ export function write_block_from_callback_wasm(param, buf, size) {
 }
 
 /**
-*/
-export const Direction = Object.freeze({ Left:0,"0":"Left",Right:1,"1":"Right", });
-/**
 * Chroma subsampling format
 */
 export const ChromaSampling = Object.freeze({
@@ -378,6 +375,9 @@ Cs444:2,"2":"Cs444",
 * Monochrome.
 */
 Cs400:3,"3":"Cs400", });
+/**
+*/
+export const Direction = Object.freeze({ Left:0,"0":"Left",Right:1,"1":"Right", });
 
 const GetThumbnailResultFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
@@ -409,11 +409,12 @@ export class GetThumbnailResult {
     * @param {string} src
     * @param {number} width
     * @param {number} height
+    * @param {number} rotation
     */
-    constructor(src, width, height) {
+    constructor(src, width, height, rotation) {
         const ptr0 = passStringToWasm0(src, wasm.__wbindgen_export_0, wasm.__wbindgen_export_1);
         const len0 = WASM_VECTOR_LEN;
-        const ret = wasm.getthumbnailresult_new(ptr0, len0, width, height);
+        const ret = wasm.getthumbnailresult_new(ptr0, len0, width, height, rotation);
         this.__wbg_ptr = ret >>> 0;
         GetThumbnailResultFinalization.register(this, this.__wbg_ptr, this);
         return this;
@@ -446,6 +447,13 @@ get width() {
 */
 get height() {
     const ret = wasm.getthumbnailresult_height(this.__wbg_ptr);
+    return ret;
+}
+/**
+* @returns {number}
+*/
+get rotation() {
+    const ret = wasm.getthumbnailresult_rotation(this.__wbg_ptr);
     return ret;
 }
 }

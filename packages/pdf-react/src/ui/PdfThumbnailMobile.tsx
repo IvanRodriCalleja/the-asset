@@ -54,7 +54,7 @@ const PdfThumbnail = ({ file, setFiles, actions, ...props }: PdfThumbnailProps) 
 	const { shared } = useLocale();
 	const pages = usePages(file);
 
-	const { src } = useThumbnail({ file });
+	const { src, rotation } = useThumbnail({ file });
 
 	const { onLoad } = useThumbnailSuspense();
 
@@ -63,7 +63,13 @@ const PdfThumbnail = ({ file, setFiles, actions, ...props }: PdfThumbnailProps) 
 			<Stack direction="row">
 				<Box width="56px" minWidth="56px">
 					<ThumbnailImageContent>
-						<ThumbnailImage src={src} alt={file.name} onLoad={onLoad} shadow />
+						<ThumbnailImage
+							src={src}
+							data-rotation={rotation}
+							alt={file.name}
+							onLoad={onLoad}
+							shadow
+						/>
 					</ThumbnailImageContent>
 				</Box>
 				<Stack flex={1} justifyContent="center" overflow="hidden">

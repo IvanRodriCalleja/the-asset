@@ -209,4 +209,11 @@ export class MergePdfPage {
 
 	waitResultPageToLoad = (page: number) =>
 		this.page.waitForSelector(`img[alt="${page === 1 ? 'page' : 'pages'} ${page}"]`);
+
+	getResultPageRotation = async (page: number) => {
+		const pdfPage = await this.page.getByRole('img', {
+			name: `${page === 1 ? 'page' : 'pages'}`
+		});
+		return pdfPage.getAttribute('data-rotation');
+	};
 }

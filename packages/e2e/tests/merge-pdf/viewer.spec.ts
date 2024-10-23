@@ -277,18 +277,17 @@ theAssetTest.describe('Merge PDF -> Viewer', () => {
 
 			await mergePdfPage.uploadFiles(['tema7.pdf']);
 
-			const magnifyButton = await mergePdfPage.getMagnifierButton();
-			await magnifyButton.click();
+			await mergePdfPage.magnifyPdf('tema7.pdf', 1);
 
-			await mergePdfPage.viewer.rotatePageRight();
+			await mergePdfPage.viewer.rotatePageRight(90);
 
 			await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 
 			await mergePdfPage.viewer.closeModal();
 			await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 
-			await magnifyButton.click();
-			await mergePdfPage.viewer.rotatePageRight();
+			await mergePdfPage.magnifyPdf('tema7.pdf', 1);
+			await mergePdfPage.viewer.rotatePageRight(180);
 			await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 
 			await mergePdfPage.viewer.closeModal();
@@ -302,28 +301,33 @@ theAssetTest.describe('Merge PDF -> Viewer', () => {
 
 				await mergePdfPage.uploadFiles(['tema7.pdf', 'tema8.pdf']);
 
-				const magnifyButton = await mergePdfPage.getMagnifierButton();
-				await magnifyButton.click();
-
-				await mergePdfPage.viewer.rotatePageRight();
+				await mergePdfPage.magnifyPdf('tema7.pdf', 1);
+				await mergePdfPage.viewer.rotatePageRight(90);
 				await mergePdfPage.viewer.closeModal();
 
 				await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 
-				await mergePdfPage.getMagnifierButton(1).click();
+				await mergePdfPage.magnifyPdf('tema8.pdf', 1, 1);
 
-				await mergePdfPage.viewer.rotatePageRight();
+				await mergePdfPage.viewer.rotatePageRight(90);
 				await mergePdfPage.viewer.closeModal();
 
 				await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 
-				const mergeButton = await mergePdfPage.getMergePdfsButton();
-				await mergeButton.click();
+				await mergePdfPage.mergePdfs();
 
 				await expect(page).toHaveURL('/en/merge-pdf/656211254552979471');
 
 				const pages = await mergePdfPage.getScrollViewerPages();
 				await expect(pages).toHaveCount(42);
+
+				await mergePdfPage.waitResultPageToLoad(1);
+				const firstPageRotation = await mergePdfPage.getResultPageRotation(1);
+				await expect(firstPageRotation).toBe('90');
+
+				await mergePdfPage.waitResultPageToLoad(2);
+				const secondPageRotation = await mergePdfPage.getResultPageRotation(2);
+				await expect(secondPageRotation).toBe('0');
 
 				await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 			}
@@ -336,18 +340,17 @@ theAssetTest.describe('Merge PDF -> Viewer', () => {
 
 			await mergePdfPage.uploadFiles(['tema7.pdf']);
 
-			const magnifyButton = await mergePdfPage.getMagnifierButton();
-			await magnifyButton.click();
+			await mergePdfPage.magnifyPdf('tema7.pdf', 1);
 
-			await mergePdfPage.viewer.rotatePageLeft();
+			await mergePdfPage.viewer.rotatePageLeft(270);
 
 			await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 
 			await mergePdfPage.viewer.closeModal();
 			await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 
-			await magnifyButton.click();
-			await mergePdfPage.viewer.rotatePageLeft();
+			await mergePdfPage.magnifyPdf('tema7.pdf', 1);
+			await mergePdfPage.viewer.rotatePageLeft(180);
 			await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 
 			await mergePdfPage.viewer.closeModal();
@@ -359,28 +362,34 @@ theAssetTest.describe('Merge PDF -> Viewer', () => {
 
 			await mergePdfPage.uploadFiles(['tema7.pdf', 'tema9.pdf']);
 
-			const magnifyButton = await mergePdfPage.getMagnifierButton();
-			await magnifyButton.click();
+			await mergePdfPage.magnifyPdf('tema7.pdf', 1);
 
-			await mergePdfPage.viewer.rotatePageLeft();
+			await mergePdfPage.viewer.rotatePageLeft(270);
 			await mergePdfPage.viewer.closeModal();
 
 			await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 
-			await mergePdfPage.getMagnifierButton(1).click();
+			await mergePdfPage.magnifyPdf('tema9.pdf', 1, 1);
 
-			await mergePdfPage.viewer.rotatePageLeft();
+			await mergePdfPage.viewer.rotatePageLeft(270);
 			await mergePdfPage.viewer.closeModal();
 
 			await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 
-			const mergeButton = await mergePdfPage.getMergePdfsButton();
-			await mergeButton.click();
+			await mergePdfPage.mergePdfs();
 
 			await expect(page).toHaveURL('/en/merge-pdf/14333617513308750762');
 
 			const pages = await mergePdfPage.getScrollViewerPages();
 			await expect(pages).toHaveCount(51);
+
+			await mergePdfPage.waitResultPageToLoad(1);
+			const firstPageRotation = await mergePdfPage.getResultPageRotation(1);
+			await expect(firstPageRotation).toBe('270');
+
+			await mergePdfPage.waitResultPageToLoad(2);
+			const secondPageRotation = await mergePdfPage.getResultPageRotation(2);
+			await expect(secondPageRotation).toBe('0');
 
 			await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 		});

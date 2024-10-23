@@ -9,13 +9,19 @@ pub struct GetThumbnailResult {
   src: String,
   width: i32,
   height: i32,
+  rotation: i32,
 }
 
 #[wasm_bindgen]
 impl GetThumbnailResult {
   #[wasm_bindgen(constructor)]
-  pub fn new(src: String, width: i32, height: i32) -> GetThumbnailResult {
-    GetThumbnailResult { src, width, height }
+  pub fn new(src: String, width: i32, height: i32, rotation: i32) -> GetThumbnailResult {
+    GetThumbnailResult {
+      src,
+      width,
+      height,
+      rotation,
+    }
   }
 
   #[wasm_bindgen(getter)]
@@ -31,6 +37,11 @@ impl GetThumbnailResult {
   #[wasm_bindgen(getter)]
   pub fn height(&self) -> i32 {
     self.height
+  }
+
+  #[wasm_bindgen(getter)]
+  pub fn rotation(&self) -> i32 {
+    self.rotation
   }
 }
 
@@ -53,5 +64,18 @@ pub fn get_thumbnail(buffer: Vec<u8>, index: PdfPageIndex) -> GetThumbnailResult
   let src = general_purpose::STANDARD.encode(buffer.get_ref());
   let base64_src = format!("data:image/png;base64, {}", src);
 
-  GetThumbnailResult::new(base64_src, image.width(), image.height())
+  let rotation = get_current_rotation(&page);
+
+  GetThumbnailResult::new(base64_src, image.width(), image.height(), rotation)
+}
+
+pub fn get_current_rotation(page: &PdfPage) -> i32 {
+  let current_rotation = page.rotation().unwrap_or(PdfPageRenderRotation::None);
+
+  match current_rotation {
+    PdfPageRenderRotation::None => 0,
+    PdfPageRenderRotation::Degrees90 => 90,
+    PdfPageRenderRotation::Degrees180 => 180,
+    PdfPageRenderRotation::Degrees270 => 270,
+  }
 }

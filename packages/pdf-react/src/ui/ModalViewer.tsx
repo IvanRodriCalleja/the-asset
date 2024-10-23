@@ -31,7 +31,7 @@ export const ModalViewer = ({ file, children }: ModalViewerProps) => {
 	};
 
 	const totalPages = usePages(file);
-	const { src, width, height } = useThumbnail({ file, page: page - 1 });
+	const { src, width, height, rotation } = useThumbnail({ file, page: page - 1 });
 
 	const isVertical = width < height;
 	const aspectRatio = width / height;
@@ -50,6 +50,7 @@ export const ModalViewer = ({ file, children }: ModalViewerProps) => {
 				<ThumbnailImage
 					src={src}
 					alt={`${file.name} - ${page}`}
+					data-rotation={rotation}
 					className={css(
 						isVertical ? { width: 'auto', height: '100%' } : { width: '100%', height: 'auto' }
 					)}

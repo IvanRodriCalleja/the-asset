@@ -12,13 +12,14 @@ type ScrollViewerPageProps = {
 
 export const ScrollViewerPage = ({ page, file }: ScrollViewerPageProps) => {
 	const { shared } = useLocale();
-	const { src } = useThumbnail({ file, page });
+	const { src, rotation } = useThumbnail({ file, page });
 	const currentPage = page + 1;
 
 	return (
 		<ThumbnailImage
 			src={src}
 			alt={`${getSingularOrPlural(shared.page, currentPage)} ${currentPage}`}
+			data-rotation={rotation}
 		/>
 	);
 };

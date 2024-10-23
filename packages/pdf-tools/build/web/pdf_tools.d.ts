@@ -78,12 +78,6 @@ export function read_block_from_callback_wasm(param: number, position: number, p
 */
 export function write_block_from_callback_wasm(param: number, buf: number, size: number): number;
 /**
-*/
-export enum Direction {
-  Left = 0,
-  Right = 1,
-}
-/**
 * Chroma subsampling format
 */
 export enum ChromaSampling {
@@ -106,17 +100,27 @@ export enum ChromaSampling {
 }
 /**
 */
+export enum Direction {
+  Left = 0,
+  Right = 1,
+}
+/**
+*/
 export class GetThumbnailResult {
   free(): void;
 /**
 * @param {string} src
 * @param {number} width
 * @param {number} height
+* @param {number} rotation
 */
-  constructor(src: string, width: number, height: number);
+  constructor(src: string, width: number, height: number, rotation: number);
 /**
 */
   readonly height: number;
+/**
+*/
+  readonly rotation: number;
 /**
 */
   readonly src: string;
@@ -156,10 +160,11 @@ export interface InitOutput {
   readonly rotate_pdf_page: (a: number, b: number, c: number, d: number) => number;
   readonly rotate_pdf: (a: number, b: number, c: number) => number;
   readonly __wbg_getthumbnailresult_free: (a: number, b: number) => void;
-  readonly getthumbnailresult_new: (a: number, b: number, c: number, d: number) => number;
+  readonly getthumbnailresult_new: (a: number, b: number, c: number, d: number, e: number) => number;
   readonly getthumbnailresult_src: (a: number, b: number) => void;
   readonly getthumbnailresult_width: (a: number) => number;
   readonly getthumbnailresult_height: (a: number) => number;
+  readonly getthumbnailresult_rotation: (a: number) => number;
   readonly get_thumbnail: (a: number, b: number, c: number) => number;
   readonly initialize_pdfium_render: (a: number, b: number, c: number) => number;
   readonly read_block_from_callback_wasm: (a: number, b: number, c: number, d: number) => number;

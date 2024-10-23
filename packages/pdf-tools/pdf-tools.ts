@@ -2,6 +2,7 @@ export type GetThumbnailResult = {
 	src: string;
 	width: number;
 	height: number;
+	rotation: number;
 };
 
 export type PdfResult = {

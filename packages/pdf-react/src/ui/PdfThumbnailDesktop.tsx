@@ -41,7 +41,7 @@ type PdfThumbnailProps = {
 };
 
 const PdfThumbnail = ({ file, setFiles, actions, ...props }: PdfThumbnailProps) => {
-	const { src } = useThumbnail({ file });
+	const { src, rotation } = useThumbnail({ file });
 	const { onLoad } = useThumbnailSuspense();
 
 	return (
@@ -49,7 +49,7 @@ const PdfThumbnail = ({ file, setFiles, actions, ...props }: PdfThumbnailProps) 
 			{actions && actions({ file, setFiles })}
 
 			<ThumbnailImageContent>
-				<ThumbnailImage src={src} alt={file.name} onLoad={onLoad} shadow />
+				<ThumbnailImage src={src} alt={file.name} data-rotation={rotation} onLoad={onLoad} shadow />
 			</ThumbnailImageContent>
 
 			<ThumbnailDesktopFooter file={file} />

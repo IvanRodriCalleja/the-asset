@@ -67,7 +67,8 @@ const getThumbnail = async ({ buffer, page }: GetThumbnailMessage) => {
 	const result: GetThumbnailResult = {
 		src: thumbnail.src,
 		width: thumbnail.width,
-		height: thumbnail.height
+		height: thumbnail.height,
+		rotation: thumbnail.rotation
 	};
 
 	return result;
