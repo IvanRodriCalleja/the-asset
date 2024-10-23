@@ -12,12 +12,14 @@ type UseMergePdfActions = {
 export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
 	const [isPending, startTransition] = useTransition();
 
-	const onRemoveFile = () => {
-		startTransition(() => {
+	const onRemoveFile = async () => {
+		await startTransition(() => {
 			setFiles(currentFiles => {
 				return currentFiles.filter(({ id }) => file.id !== id);
 			});
 		});
+
+		window.postMessage('remove-pdf-end');
 	};
 
 	const onRemovePage = async (page: number) => {
@@ -37,8 +39,8 @@ export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
 		});
 	};
 
-	const onRotateFile = (direction: Direction) => {
-		startTransition(async () => {
+	const onRotateFile = async (direction: Direction) => {
+		await startTransition(async () => {
 			const { buffer, hash } = await rotatePdf({
 				buffer: file.buffer,
 				direction
@@ -56,6 +58,8 @@ export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
 
 				return newFiles;
 			});
+
+			window.postMessage('rotate-pdf-end');
 		});
 	};
 

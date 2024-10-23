@@ -3,6 +3,7 @@ import { readFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { UtilsPage } from './UtilsPage';
 import { ViewerPage } from './shared/ViewerPage';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -15,11 +16,31 @@ type BuildMergePdfPage = {
 export class MergePdfPage {
 	private page: Page;
 	public viewer: ViewerPage;
+	public utils: UtilsPage;
 
 	constructor({ page }: BuildMergePdfPage) {
 		this.page = page;
 		this.viewer = new ViewerPage({ page });
+		this.utils = new UtilsPage({ page });
 	}
+
+	goToMergeTool = async () => {
+		await this.page.goto('/merge-pdf');
+		await this.waitForWasmFiles();
+	};
+
+	waitForWasmFiles = async () => {
+		const pdfiumWasmRegex = /pdfium.[a-f0-9]{8,}\.wasm$/;
+		await this.page.waitForResponse(
+			response => pdfiumWasmRegex.test(response.url()) && response.status() === 200
+		);
+
+		const pdfToolsWasmRegex = /pdf_tools_bg.[a-f0-9]{8,}\.wasm$/;
+
+		await this.page.waitForResponse(
+			response => pdfToolsWasmRegex.test(response.url()) && response.status() === 200
+		);
+	};
 
 	uploadFiles = async (files: string[]) => {
 		const fileChooserPromise = this.page.waitForEvent('filechooser');
@@ -159,4 +180,33 @@ export class MergePdfPage {
 
 		await this.page.dispatchEvent(selector, 'drop', { dataTransfer });
 	};
+
+	mergePdfs = async () => {
+		const mergeButton = this.getMergePdfsButton();
+		await mergeButton.click();
+	};
+
+	rotatePdfRight = async (index = 0) => {
+		const rotateRightButton = this.getRotateRightButton(index);
+		await rotateRightButton.click();
+
+		await this.utils.waitForAction('rotate-pdf-end');
+	};
+
+	rotatePdfLeft = async (index = 0) => {
+		const rotateLeftButton = this.getRotateLeftButton(index);
+		await rotateLeftButton.click();
+
+		await this.utils.waitForAction('rotate-pdf-end');
+	};
+
+	magnifyPdf = async (pdfName: string, currentPage: number, index = 0) => {
+		const magnifyButton = this.getMagnifierButton(index);
+		await magnifyButton.click();
+
+		await this.viewer.waitForViewer(pdfName, currentPage);
+	};
+
+	waitResultPageToLoad = (page: number) =>
+		this.page.waitForSelector(`img[alt="${page === 1 ? 'page' : 'pages'} ${page}"]`);
 }

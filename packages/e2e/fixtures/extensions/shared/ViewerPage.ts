@@ -56,10 +56,12 @@ export class ViewerPage {
 		await button.click();
 	};
 
-	goToPage = async (page: number) => {
+	goToPage = async (page: number, pdfName: string, rollbackPage?: number) => {
 		const input = this.getCurrentPage();
 		await input.fill(String(page));
 		await input.press('Enter');
+
+		await this.waitForViewer(pdfName, rollbackPage || page);
 	};
 
 	removePage = async () => {
@@ -70,5 +72,12 @@ export class ViewerPage {
 	closeModal = async () => {
 		const button = this.page.getByRole('alertdialog').getByLabel('Close modal');
 		await button.click();
+
+		// NOTE: Wait for the modal to close
 	};
+
+	waitForViewer = async (pdfName: string, currentPage: number) =>
+		await this.page
+			.getByRole('alertdialog')
+			.getByRole('img', { name: `${pdfName} - ${currentPage}` });
 }

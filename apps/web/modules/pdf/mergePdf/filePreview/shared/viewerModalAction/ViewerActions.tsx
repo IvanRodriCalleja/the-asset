@@ -29,8 +29,8 @@ export const ViewerActions = ({
 }: ViewerActionsProps) => {
 	const { onRotatePage, onRemovePage, onRemoveFile } = useMergePdfActions({ file, setFiles });
 
-	const onRemove = (page: number) => {
-		startTransition(() => {
+	const onRemove = async (page: number) => {
+		await startTransition(() => {
 			if (totalPages === 1) {
 				onRemoveFile();
 				return;
@@ -42,6 +42,8 @@ export const ViewerActions = ({
 
 			onRemovePage(page);
 		});
+
+		window.postMessage('remove-pdf-page-end');
 	};
 
 	const { mergePdf } = useLocale();

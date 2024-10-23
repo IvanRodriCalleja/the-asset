@@ -3,8 +3,8 @@ import { expect } from '@playwright/test';
 import { theAssetTest } from '../fixtures/theAssetFixture';
 
 theAssetTest.describe('Merge PDF', () => {
-	theAssetTest('Has title', async ({ page }) => {
-		await page.goto('/merge-pdf');
+	theAssetTest('Has title', async ({ page, mergePdfPage }) => {
+		await mergePdfPage.goToMergeTool();
 
 		await expect(page).toHaveTitle(/Merge PDF Online - Combine PDF Files Privately for Free/);
 	});
@@ -13,7 +13,7 @@ theAssetTest.describe('Merge PDF', () => {
 		theAssetTest(
 			'Should merge multiple PDFs with upload button',
 			async ({ page, mergePdfPage }) => {
-				await page.goto('/merge-pdf');
+				await mergePdfPage.goToMergeTool();
 				await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf', 'tema5.pdf', 'tema6.pdf']);
 
 				const mergeButton = await mergePdfPage.getMergePdfsButton();
@@ -31,7 +31,7 @@ theAssetTest.describe('Merge PDF', () => {
 
 	theAssetTest.describe('Drag & drop files', () => {
 		theAssetTest('Should merge multiple PDFs with drag & drop', async ({ page, mergePdfPage }) => {
-			await page.goto('/merge-pdf');
+			await mergePdfPage.goToMergeTool();
 
 			await mergePdfPage.dragAndDropFile('[data-testid="file-drop"]', [
 				'tema3.pdf',
@@ -50,7 +50,7 @@ theAssetTest.describe('Merge PDF', () => {
 		});
 
 		theAssetTest('Should allow drag & drop PDFs multiple times', async ({ page, mergePdfPage }) => {
-			await page.goto('/merge-pdf');
+			await mergePdfPage.goToMergeTool();
 
 			await mergePdfPage.dragAndDropFile('[data-testid="file-drop"]', ['tema3.pdf', 'tema4.pdf']);
 			await mergePdfPage.dragAndDropFile('[data-testid="file-drop"]', ['tema5.pdf', 'tema6.pdf']);
@@ -67,26 +67,26 @@ theAssetTest.describe('Merge PDF', () => {
 
 	theAssetTest.describe('Thumbnail rotate left', () => {
 		theAssetTest('Should rotate left the full pdf', async ({ mergePdfPage, page }) => {
-			await page.goto('/merge-pdf');
+			await mergePdfPage.goToMergeTool();
 			await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf']);
 
-			const rotateLeftButton = await mergePdfPage.getRotateLeftButton();
-			await rotateLeftButton.click();
+			await mergePdfPage.rotatePdfLeft();
 
 			await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 
-			const mergeButton = await mergePdfPage.getMagnifierButton();
-			await mergeButton.click();
+			await mergePdfPage.magnifyPdf('tema3.pdf', 1);
 
-			await mergePdfPage.viewer.goToPage(20);
+			await mergePdfPage.viewer.goToPage(20, 'tema3.pdf');
 
 			await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 
 			await mergePdfPage.viewer.closeModal();
 
-			await mergePdfPage.getMergePdfsButton().click();
+			await mergePdfPage.mergePdfs();
 
 			await expect(page).toHaveURL('/en/merge-pdf/14644883602472423972');
+			await mergePdfPage.waitResultPageToLoad(1);
+			await mergePdfPage.waitResultPageToLoad(2);
 
 			await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 		});
@@ -94,26 +94,26 @@ theAssetTest.describe('Merge PDF', () => {
 
 	theAssetTest.describe('Thumbnail rotate right', () => {
 		theAssetTest('Should rotate right the full pdf', async ({ mergePdfPage, page }) => {
-			await page.goto('/merge-pdf');
+			await mergePdfPage.goToMergeTool();
 			await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf']);
 
-			const rotateLeftButton = await mergePdfPage.getRotateRightButton();
-			await rotateLeftButton.click();
+			await mergePdfPage.rotatePdfRight();
 
 			await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 
-			const mergeButton = await mergePdfPage.getMagnifierButton();
-			await mergeButton.click();
+			await mergePdfPage.magnifyPdf('tema3.pdf', 1);
 
-			await mergePdfPage.viewer.goToPage(20);
+			await mergePdfPage.viewer.goToPage(20, 'tema3.pdf');
 
 			await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 
 			await mergePdfPage.viewer.closeModal();
 
-			await mergePdfPage.getMergePdfsButton().click();
+			await mergePdfPage.mergePdfs();
 
 			await expect(page).toHaveURL('/en/merge-pdf/1364348172398970979');
+			await mergePdfPage.waitResultPageToLoad(1);
+			await mergePdfPage.waitResultPageToLoad(2);
 
 			await expect(page).toHaveScreenshot({ maxDiffPixels: 100 });
 		});
@@ -121,7 +121,7 @@ theAssetTest.describe('Merge PDF', () => {
 
 	theAssetTest.describe('Thumbnail remove pdf', () => {
 		theAssetTest('Should remove uploaded pdf', async ({ mergePdfPage, page }) => {
-			await page.goto('/merge-pdf');
+			await mergePdfPage.goToMergeTool();
 			await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf', 'tema5.pdf', 'tema6.pdf']);
 
 			await expect(mergePdfPage.getPdfItems()).toHaveCount(4);
@@ -146,7 +146,7 @@ theAssetTest.describe('Merge PDF', () => {
 		// TODO: Skip on mobile
 
 		theAssetTest('Should drag & drop pdfs to change order', async ({ mergePdfPage, page }) => {
-			await page.goto('/merge-pdf');
+			await mergePdfPage.goToMergeTool();
 			await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf', 'tema5.pdf', 'tema6.pdf']);
 
 			await expect(await mergePdfPage.getPdfNameOrder(4)).toEqual([
