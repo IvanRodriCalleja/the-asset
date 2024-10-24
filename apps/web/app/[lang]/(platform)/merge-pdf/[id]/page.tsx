@@ -1,5 +1,7 @@
 'use client';
 
+import { use } from 'react';
+
 import { redirect } from 'next/navigation';
 
 import { cacheStore } from '@theasset/cache/store';
@@ -10,17 +12,17 @@ import { MergePdfResult } from 'modules/pdf/MergePdfResult';
 import { mergePdfPath } from 'routes';
 
 type MergeResultProps = {
-	params: {
+	params: Promise<{
 		id: string;
-	};
+	}>;
 };
 
 const MergePdfResultPage = ({ params }: MergeResultProps) => {
-	debugger;
-	const file = cacheStore.getResult<TheAssetFile>(params.id);
+	const parameters = use(params);
+	const file = cacheStore.getResult<TheAssetFile>(parameters.id);
 
 	if (!file) {
-		redirect(replaceParams(mergePdfPath, params));
+		redirect(replaceParams(mergePdfPath, parameters));
 	}
 
 	return <MergePdfResult file={file} />;

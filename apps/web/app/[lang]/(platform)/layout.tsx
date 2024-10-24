@@ -1,5 +1,6 @@
 import { PropsWithChildren } from 'react';
 
+import { LocaleParam } from '@theasset/internationalization/domain/locale-param';
 import { styled } from '@theasset/style-system/jsx';
 
 import { Header } from 'modules/layout/ui/Header';
@@ -17,7 +18,7 @@ const Main = styled('main', {
 	}
 });
 
-const PlatformLayout = ({ children }: PropsWithChildren) => (
+const PlatformLayout = ({ children }: PropsWithChildren<LocaleParam>) => (
 	<>
 		<Header />
 		<Main>{children}</Main>

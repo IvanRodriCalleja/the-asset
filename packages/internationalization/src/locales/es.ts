@@ -34,6 +34,12 @@ const es: Locales = {
 			rotatePageLeft: 'Girar página a la izquierda',
 			rotatePageRight: 'Girar página a la derecha',
 			removePage: 'Eliminar página'
+		},
+		thumbnailActions: {
+			magnify: 'Ampliar',
+			rotatePdfRight: 'Rotar PDF a la derecha',
+			rotatePdfLeft: 'Rotar PDF a la izquierda',
+			removePdf: 'Eliminar PDF'
 		}
 	},
 	mergePdfResult: {
@@ -70,6 +76,9 @@ const es: Locales = {
 				goLastPage: 'Ir a la última página',
 				currentPage: 'Página actual'
 			}
+		},
+		modal: {
+			close: 'Cerrar modal'
 		}
 	}
 };

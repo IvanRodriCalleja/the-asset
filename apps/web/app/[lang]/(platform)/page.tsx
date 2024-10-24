@@ -1,5 +1,5 @@
+import { withLocale } from '@theasset/internationalization/server/withLocale';
+
 import { Home } from 'modules/home/ui/Home';
 
-const Page = () => <Home />;
-
-export default Page;
+export default withLocale(Home);

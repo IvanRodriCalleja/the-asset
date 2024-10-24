@@ -1,14 +1,17 @@
 import { use } from 'react';
 
 import { getLocale } from '../server/getLocale';
-import { getCurrentLanguage } from '../server/localeHeader';
+import { getServerLang } from '../server/serverLang';
 import { I18nContext } from '../ui/I18nProvider';
 
 export const useLocale = () => {
 	if (typeof window === 'undefined') {
-		const language = getCurrentLanguage();
+		const lang = getServerLang();
 
-		return getLocale(language);
+		if (lang) {
+			return getLocale(lang);
+		}
+		// IF no lang means we are in a use client component so we can't read cache, we use context
 	}
 
 	return use(I18nContext).locales;

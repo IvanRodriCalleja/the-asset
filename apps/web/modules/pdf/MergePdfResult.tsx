@@ -1,3 +1,5 @@
+'use client';
+
 import { Suspense, useState } from 'react';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
