@@ -37,6 +37,7 @@ const DragOverlay = styled('div', {
 type FilePickerPreviewProps = {
 	files: TheAssetFile[];
 	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
+	open: () => void;
 };
 
 type FilePickerProps = {
@@ -74,7 +75,7 @@ export const FilePicker = ({
 						</Button>
 					</Box>
 				)}
-				{files.length > 0 && preview({ files, setFiles })}
+				{files.length > 0 && preview({ files, setFiles, open })}
 			</Stack>
 			<input {...getInputProps()} />
 		</DropZoneArea>

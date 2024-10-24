@@ -50,7 +50,7 @@ export const MergeButton = ({ files }: MergeButtonProps) => {
 	};
 
 	return (
-		<Stack width="100%" maxWidth={{ base: 'full', md: '500px' }}>
+		<Stack flex={1} maxWidth={{ base: 'full', md: '300px' }}>
 			<Button size="lg" onPress={onMerge} isDisabled={isLoading || !isAnyFileDecrypted}>
 				{isLoading ? <Loading /> : <Merge />} {mergePdf.mergePdfAction}
 			</Button>

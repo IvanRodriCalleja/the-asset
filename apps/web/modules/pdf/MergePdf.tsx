@@ -8,6 +8,7 @@ import { HighlightColor, HighlightMaker } from '@theasset/ui/highlight-maker';
 import { MainSection } from 'modules/shared/ui/MainSection';
 import { SectionGradient } from 'modules/shared/ui/SectionGradient';
 
+import { AddMorePdfsButton } from './mergePdf/AddMorePdfsButton';
 import { FilePreview } from './mergePdf/FilePreview';
 import { MergeButton } from './mergePdf/MergeButton';
 
@@ -21,7 +22,6 @@ const UploadSection = styled('section', {
 	}
 });
 
-// TODO: Add ability to add more files
 // TODO: Viewer Toolbar responsive on mobile
 // TODO: Manage mal formed pdfs
 // TODO: Rethink file upload approach
@@ -46,6 +46,8 @@ export const MergePdf = () => {
 								<Box
 									display="flex"
 									justifyContent="center"
+									flexDirection={{ base: 'column', md: 'row' }}
+									gap={4}
 									position="fixed"
 									bottom={0}
 									padding={4}
@@ -54,6 +56,7 @@ export const MergePdf = () => {
 									borderTopColor="border"
 									width="100%"
 									background="white">
+									<AddMorePdfsButton open={props.open} />
 									<MergeButton files={props.files} />
 								</Box>
 							</>
@@ -69,7 +72,7 @@ export const MergePdf = () => {
 								</HighlightMaker>
 							</>
 						}
-					/>{' '}
+					/>
 				</FilePicker>
 			</UploadSection>
 		</>

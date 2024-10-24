@@ -15,6 +15,7 @@ const es: Locales = {
 		description: 'Combina múltiples PDFs de forma instantánea y segura,',
 		descriptionImportant: 'todo sin enviar datos fuera de tu navegador.',
 		uploadPdf: 'Subir PDF',
+		addMoreFiles: 'Añadir más ficheros',
 		mergePdfAction: 'Unir PDFs',
 		card: {
 			description: 'Combina múltiples PDFs en el orden que desees y gíralos fácilmente.'

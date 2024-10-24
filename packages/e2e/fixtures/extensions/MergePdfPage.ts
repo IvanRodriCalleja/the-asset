@@ -53,7 +53,19 @@ export class MergePdfPage {
 		await fileChooser.setFiles(pdfFiles);
 	};
 
+	uploadMoreFiles = async (files: string[]) => {
+		const fileChooserPromise = this.page.waitForEvent('filechooser');
+		const uploadMoreFileButton = this.getUploadMoreFilesButton();
+		await uploadMoreFileButton.click();
+		const fileChooser = await fileChooserPromise;
+
+		const pdfFiles = files.map(file => path.join(__dirname, '../../files/pdf', file));
+
+		await fileChooser.setFiles(pdfFiles);
+	};
+
 	getUploadButton = () => this.page.getByText('Upload PDF');
+	getUploadMoreFilesButton = () => this.page.getByText('Add more files');
 	getMergePdfsButton = () => this.page.getByText('Merge PDFs');
 
 	getMagnifierButton = (index = 0) => this.page.getByLabel(/magnify/i).nth(index);

@@ -12,6 +12,7 @@ const en = {
 		description: 'Merge multiple PDFs instantly and securely,',
 		descriptionImportant: 'all without sending data outside your browser.',
 		uploadPdf: 'Upload PDF',
+		addMoreFiles: 'Add more files',
 		mergePdfAction: 'Merge PDFs',
 		card: {
 			description: 'Combine multiple PDFs in the order you want and rotate them easily.'

@@ -26,7 +26,33 @@ theAssetTest.describe('Merge PDF', () => {
 			}
 		);
 
-		//TODO: Add test for "Add more files" button
+		theAssetTest('Should allow upload multiple times', async ({ mergePdfPage, page }) => {
+			await mergePdfPage.goToMergeTool();
+			await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf', 'tema5.pdf', 'tema6.pdf']);
+
+			await mergePdfPage.uploadMoreFiles(['tema7.pdf', 'tema8.pdf']);
+
+			await mergePdfPage.mergePdfs();
+
+			const pages = await mergePdfPage.getScrollViewerPages();
+
+			await expect(pages).toHaveCount(137);
+			await expect(page).toHaveURL('/en/merge-pdf/9729074470635887432');
+		});
+
+		theAssetTest('Should allow upload same file multiple times', async ({ mergePdfPage, page }) => {
+			await mergePdfPage.goToMergeTool();
+			await mergePdfPage.uploadFiles(['tema3.pdf']);
+
+			await mergePdfPage.uploadMoreFiles(['tema3.pdf']);
+
+			await mergePdfPage.mergePdfs();
+
+			const pages = await mergePdfPage.getScrollViewerPages();
+
+			await expect(pages).toHaveCount(66);
+			await expect(page).toHaveURL('/en/merge-pdf/1994985091682495636');
+		});
 	});
 
 	theAssetTest.describe('Drag & drop files', () => {
