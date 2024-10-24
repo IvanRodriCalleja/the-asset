@@ -22,7 +22,6 @@ const UploadSection = styled('section', {
 	}
 });
 
-// TODO: Viewer Toolbar responsive on mobile
 // TODO: Manage mal formed pdfs
 // TODO: Rethink file upload approach
 

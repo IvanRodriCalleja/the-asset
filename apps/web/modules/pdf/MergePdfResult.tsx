@@ -17,8 +17,6 @@ type MergePdfResultProps = {
 	file: TheAssetFile;
 };
 
-// TODO: Add go back button
-
 export const MergePdfResult = ({ file }: MergePdfResultProps) => {
 	const [isOpen, setIsOpen] = useState(true);
 

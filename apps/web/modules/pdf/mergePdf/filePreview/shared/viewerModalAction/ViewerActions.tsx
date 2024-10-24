@@ -18,8 +18,6 @@ type ViewerActionsProps = {
 	setPage: (page: number) => void;
 };
 
-//TODO: Fix actions to increase or decrease width when letter size changes
-
 export const ViewerActions = ({
 	page,
 	file,

@@ -76,7 +76,7 @@ export const Toolbar = ({ totalPages, page, setPage, children }: ToolbarProps) =
 	const isGoToLastPageDisabled = page === totalPages;
 
 	return (
-		<Flex justifyContent="center">
+		<Flex justifyContent="center" overflow="auto">
 			<ViewerToolbarContainer>
 				<TooltipTrigger>
 					<Button
@@ -113,7 +113,7 @@ export const Toolbar = ({ totalPages, page, setPage, children }: ToolbarProps) =
 						onKeyUp={onKeyUp}
 					/>
 					/
-					<Text size="sm" className={css({ paddingInline: 2 })}>
+					<Text size="sm" className={css({ paddingInline: 2, width: '3ch' })}>
 						{totalPages}
 					</Text>
 				</Stack>
