@@ -1,6 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export const memory: WebAssembly.Memory;
+export function compress_pdf(a: number, b: number): number;
 export function get_pdf_hash(a: number, b: number, c: number): void;
 export function merge_pdfs(a: number, b: number): number;
 export function get_total_pages(a: number, b: number): number;

@@ -1,3 +1,4 @@
+mod compress;
 mod hash;
 mod merge;
 mod page;

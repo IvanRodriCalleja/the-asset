@@ -197,3 +197,22 @@ export const isPdfEncrypted = async ({ buffer }: IsPdfEncrypted) => {
 
 	return isEncrypted(pdf);
 };
+
+type CompressPdf = {
+	buffer: ArrayBuffer;
+};
+
+export const compress = ({ buffer }: CompressPdf) => {
+	const id = generateMessageId();
+	const message: WorkerMessage = {
+		type: 'compressPdf',
+		id,
+		buffer: new Uint8Array(buffer)
+	};
+
+	worker.postMessage(message);
+
+	return new Promise<PdfResult>((resolve, reject) => {
+		pendingPromises.set(id, { resolve, reject });
+	});
+};

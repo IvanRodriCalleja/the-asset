@@ -13,8 +13,9 @@ pdfium-render = "0.8.25"
 js-sys = "^0"
 log = "^0"
 wasm-bindgen-futures = "^0"
-web-sys = { version = "^0", features = ["ImageData"] }
+web-sys = { version = "^0", features = ["console"] }
 base64 = "0.21"
-image = { version = "0.25.2", default-features = false }
+image = "0.25.2"
 serde_json = "1.0.128"
+console_error_panic_hook = "0.1.7"
 

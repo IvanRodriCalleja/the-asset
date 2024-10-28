@@ -2,6 +2,11 @@
 /* eslint-disable */
 /**
 * @param {Uint8Array} buffer
+* @returns {PdfResult}
+*/
+export function compress_pdf(buffer: Uint8Array): PdfResult;
+/**
+* @param {Uint8Array} buffer
 * @returns {string}
 */
 export function get_pdf_hash(buffer: Uint8Array): string;
@@ -78,6 +83,12 @@ export function read_block_from_callback_wasm(param: number, position: number, p
 */
 export function write_block_from_callback_wasm(param: number, buf: number, size: number): number;
 /**
+*/
+export enum Direction {
+  Left = 0,
+  Right = 1,
+}
+/**
 * Chroma subsampling format
 */
 export enum ChromaSampling {
@@ -97,12 +108,6 @@ export enum ChromaSampling {
 * Monochrome.
 */
   Cs400 = 3,
-}
-/**
-*/
-export enum Direction {
-  Left = 0,
-  Right = 1,
 }
 /**
 */
@@ -149,6 +154,7 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
+  readonly compress_pdf: (a: number, b: number) => number;
   readonly get_pdf_hash: (a: number, b: number, c: number) => void;
   readonly merge_pdfs: (a: number, b: number) => number;
   readonly get_total_pages: (a: number, b: number) => number;

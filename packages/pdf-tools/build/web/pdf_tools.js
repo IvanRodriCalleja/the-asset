@@ -187,6 +187,16 @@ function passArray8ToWasm0(arg, malloc) {
     WASM_VECTOR_LEN = arg.length;
     return ptr;
 }
+/**
+* @param {Uint8Array} buffer
+* @returns {PdfResult}
+*/
+export function compress_pdf(buffer) {
+    const ptr0 = passArray8ToWasm0(buffer, wasm.__wbindgen_export_0);
+    const len0 = WASM_VECTOR_LEN;
+    const ret = wasm.compress_pdf(ptr0, len0);
+    return PdfResult.__wrap(ret);
+}
 
 function getCachedStringFromWasm0(ptr, len) {
     if (ptr === 0) {
@@ -356,6 +366,9 @@ export function write_block_from_callback_wasm(param, buf, size) {
 }
 
 /**
+*/
+export const Direction = Object.freeze({ Left:0,"0":"Left",Right:1,"1":"Right", });
+/**
 * Chroma subsampling format
 */
 export const ChromaSampling = Object.freeze({
@@ -375,9 +388,6 @@ Cs444:2,"2":"Cs444",
 * Monochrome.
 */
 Cs400:3,"3":"Cs400", });
-/**
-*/
-export const Direction = Object.freeze({ Left:0,"0":"Left",Right:1,"1":"Right", });
 
 const GetThumbnailResultFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }

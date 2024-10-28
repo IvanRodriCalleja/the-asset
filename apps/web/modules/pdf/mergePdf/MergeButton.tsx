@@ -8,11 +8,12 @@ import { cacheStore } from '@theasset/cache/store';
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { Loading } from '@theasset/icons/loading';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
-import { mergePdfs } from '@theasset/pdf-tools';
+import { compress } from '@theasset/pdf-tools';
 import { Stack } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
 import { replaceParams } from '@theasset/ui/utils/replaceParams';
 
+import { downloadFile } from 'modules/shared/infra/downloadFile';
 import { mergePdfIdPath } from 'routes';
 
 type MergeButtonProps = {
@@ -27,10 +28,19 @@ export const MergeButton = ({ files }: MergeButtonProps) => {
 
 	const isAnyFileDecrypted = files.some(file => !file.isEncrypted);
 
-	const onMerge = async () => {
-		await startTransition(async () => {
+	const onMerge = () => {
+		startTransition(async () => {
 			const decryptedFiles = files.filter(file => !file.isEncrypted);
-			const { buffer, hash } = await mergePdfs({
+
+			const { buffer, hash } = await compress({
+				buffer: decryptedFiles[0]?.buffer!
+			});
+
+			console.log({ buffer, hash });
+
+			downloadFile(buffer, 'test-compress.pdf', 'application/pdf');
+
+			/*const { buffer, hash } = await mergePdfs({
 				buffers: decryptedFiles.map(file => file.buffer)
 			});
 
@@ -45,7 +55,7 @@ export const MergeButton = ({ files }: MergeButtonProps) => {
 			};
 			cacheStore.addResult(hash, resultFile);
 
-			push(replaceParams(mergePdfIdPath, { id: hash, ...params }));
+			push(replaceParams(mergePdfIdPath, { id: hash, ...params }));*/
 		});
 	};
 

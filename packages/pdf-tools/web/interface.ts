@@ -41,13 +41,20 @@ export type MergePdfsMessage = {
 	buffers: Array<Uint8Array>;
 };
 
+export type CompressPdfMessage = {
+	type: 'compressPdf';
+	id: number;
+	buffer: Uint8Array;
+};
+
 export type WorkerMessage =
 	| GetThumbnailMessage
 	| GetPagesMessage
 	| RotatePdfPageMessage
 	| RotatePdfMessage
 	| RemovePdfPageMessage
-	| MergePdfsMessage;
+	| MergePdfsMessage
+	| CompressPdfMessage;
 
 export type WorkerResponse<T = unknown> = {
 	id: number;
