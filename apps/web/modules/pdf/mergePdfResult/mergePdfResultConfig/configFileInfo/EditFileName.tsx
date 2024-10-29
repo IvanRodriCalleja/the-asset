@@ -18,8 +18,8 @@ export const EditFileName = ({ name, extension, setName }: EditFileNameProps) =>
 
 	return (
 		<Stack>
-			<Label htmlFor="name">{mergePdfResult.fileNameLabel}</Label>
-			<Text name="name" value={name} onChange={onChange} />
+			<Label htmlFor="file-name">{mergePdfResult.fileNameLabel}</Label>
+			<Text id="file-name" name="file-name" value={name} onChange={onChange} />
 		</Stack>
 	);
 };

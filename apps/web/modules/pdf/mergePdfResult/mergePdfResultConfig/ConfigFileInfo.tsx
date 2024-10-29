@@ -35,7 +35,7 @@ export const ConfigFileInfo = ({ file, name, setName }: ConfigFileInfoProps) => 
 			<Stack direction="row" gap={0}>
 				<PopoverTrigger>
 					<Button variant="transparent" size="none" className={css({ borderRadius: 0 })}>
-						<FileName size="md" weight="bold">
+						<FileName size="md" weight="bold" data-testid="result-file-name">
 							{notExtension}
 						</FileName>
 					</Button>

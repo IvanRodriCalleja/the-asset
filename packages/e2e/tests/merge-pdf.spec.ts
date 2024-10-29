@@ -9,210 +9,301 @@ theAssetTest.describe('Merge PDF', () => {
 		await expect(page).toHaveTitle(/Merge PDF Online - Combine PDF Files Privately for Free/);
 	});
 
-	theAssetTest.describe('Upload button', () => {
-		theAssetTest(
-			'Should merge multiple PDFs with upload button',
-			async ({ page, mergePdfPage }) => {
+	theAssetTest.describe('Desktop', () => {
+		theAssetTest.skip(env => env.isMobile);
+
+		theAssetTest.describe('Upload button', () => {
+			theAssetTest(
+				'Should merge multiple PDFs with upload button',
+				async ({ page, mergePdfPage }) => {
+					await mergePdfPage.goToMergeTool();
+					await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf', 'tema5.pdf', 'tema6.pdf']);
+
+					const mergeButton = await mergePdfPage.getMergePdfsButton();
+					await mergeButton.click();
+
+					const pages = await mergePdfPage.getScrollViewerPages();
+
+					await expect(pages).toHaveCount(95);
+					await expect(page).toHaveURL('/en/merge-pdf/10426654538942558433');
+				}
+			);
+
+			theAssetTest('Should allow upload multiple times', async ({ mergePdfPage, page }) => {
 				await mergePdfPage.goToMergeTool();
 				await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf', 'tema5.pdf', 'tema6.pdf']);
 
-				const mergeButton = await mergePdfPage.getMergePdfsButton();
-				await mergeButton.click();
+				await mergePdfPage.uploadMoreFiles(['tema7.pdf', 'tema8.pdf']);
+
+				await mergePdfPage.mergePdfs();
 
 				const pages = await mergePdfPage.getScrollViewerPages();
 
-				await expect(pages).toHaveCount(95);
-				await expect(page).toHaveURL('/en/merge-pdf/10426654538942558433');
-			}
-		);
+				await expect(pages).toHaveCount(137);
+				await expect(page).toHaveURL('/en/merge-pdf/9729074470635887432');
+			});
 
-		theAssetTest('Should allow upload multiple times', async ({ mergePdfPage, page }) => {
-			await mergePdfPage.goToMergeTool();
-			await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf', 'tema5.pdf', 'tema6.pdf']);
+			theAssetTest(
+				'Should allow upload same file multiple times',
+				async ({ mergePdfPage, page }) => {
+					await mergePdfPage.goToMergeTool();
+					await mergePdfPage.uploadFiles(['tema3.pdf']);
 
-			await mergePdfPage.uploadMoreFiles(['tema7.pdf', 'tema8.pdf']);
+					await mergePdfPage.uploadMoreFiles(['tema3.pdf']);
 
-			await mergePdfPage.mergePdfs();
+					await mergePdfPage.mergePdfs();
 
-			const pages = await mergePdfPage.getScrollViewerPages();
+					const pages = await mergePdfPage.getScrollViewerPages();
 
-			await expect(pages).toHaveCount(137);
-			await expect(page).toHaveURL('/en/merge-pdf/9729074470635887432');
+					await expect(pages).toHaveCount(66);
+					await expect(page).toHaveURL('/en/merge-pdf/1994985091682495636');
+				}
+			);
 		});
 
-		theAssetTest('Should allow upload same file multiple times', async ({ mergePdfPage, page }) => {
-			await mergePdfPage.goToMergeTool();
-			await mergePdfPage.uploadFiles(['tema3.pdf']);
+		theAssetTest.describe('Drag & drop files', () => {
+			theAssetTest(
+				'Should merge multiple PDFs with drag & drop',
+				async ({ page, mergePdfPage }) => {
+					await mergePdfPage.goToMergeTool();
 
-			await mergePdfPage.uploadMoreFiles(['tema3.pdf']);
+					await mergePdfPage.dragAndDropFile('[data-testid="file-drop"]', [
+						'tema3.pdf',
+						'tema4.pdf',
+						'tema5.pdf',
+						'tema6.pdf'
+					]);
 
-			await mergePdfPage.mergePdfs();
+					const mergeButton = await mergePdfPage.getMergePdfsButton();
+					await mergeButton.click();
 
-			const pages = await mergePdfPage.getScrollViewerPages();
+					const pages = await mergePdfPage.getScrollViewerPages();
 
-			await expect(pages).toHaveCount(66);
-			await expect(page).toHaveURL('/en/merge-pdf/1994985091682495636');
+					await expect(pages).toHaveCount(95);
+					await expect(page).toHaveURL('/en/merge-pdf/10426654538942558433');
+				}
+			);
+
+			theAssetTest(
+				'Should allow drag & drop PDFs multiple times',
+				async ({ page, mergePdfPage }) => {
+					await mergePdfPage.goToMergeTool();
+
+					await mergePdfPage.dragAndDropFile('[data-testid="file-drop"]', [
+						'tema3.pdf',
+						'tema4.pdf'
+					]);
+					await mergePdfPage.dragAndDropFile('[data-testid="file-drop"]', [
+						'tema5.pdf',
+						'tema6.pdf'
+					]);
+
+					const mergeButton = await mergePdfPage.getMergePdfsButton();
+					await mergeButton.click();
+
+					const pages = await mergePdfPage.getScrollViewerPages();
+
+					await expect(pages).toHaveCount(95);
+					await expect(page).toHaveURL('/en/merge-pdf/10426654538942558433');
+				}
+			);
 		});
-	});
 
-	theAssetTest.describe('Drag & drop files', () => {
-		theAssetTest('Should merge multiple PDFs with drag & drop', async ({ page, mergePdfPage }) => {
-			await mergePdfPage.goToMergeTool();
+		theAssetTest.describe('Thumbnail rotate left', () => {
+			theAssetTest('Should rotate left the full pdf', async ({ mergePdfPage, page }) => {
+				await mergePdfPage.goToMergeTool();
+				await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf']);
 
-			await mergePdfPage.dragAndDropFile('[data-testid="file-drop"]', [
-				'tema3.pdf',
-				'tema4.pdf',
-				'tema5.pdf',
-				'tema6.pdf'
-			]);
+				await mergePdfPage.rotatePdfLeft(270);
 
-			const mergeButton = await mergePdfPage.getMergePdfsButton();
-			await mergeButton.click();
+				await expect(page).toHaveScreenshot();
 
-			const pages = await mergePdfPage.getScrollViewerPages();
+				await mergePdfPage.magnifyPdf('tema3.pdf', 1);
 
-			await expect(pages).toHaveCount(95);
-			await expect(page).toHaveURL('/en/merge-pdf/10426654538942558433');
+				await mergePdfPage.viewer.goToPage(20, 'tema3.pdf');
+
+				await expect(page).toHaveScreenshot();
+
+				await mergePdfPage.viewer.closeModal();
+
+				await mergePdfPage.mergePdfs();
+
+				await expect(page).toHaveURL('/en/merge-pdf/14644883602472423972');
+				await mergePdfPage.waitResultPageToLoad(1);
+				const firstPageRotation = await mergePdfPage.getResultPageRotation(1);
+				await expect(firstPageRotation).toBe('270');
+
+				await mergePdfPage.waitResultPageToLoad(2);
+				const secondPageRotation = await mergePdfPage.getResultPageRotation(2);
+				await expect(secondPageRotation).toBe('270');
+
+				await expect(page).toHaveScreenshot();
+			});
 		});
 
-		theAssetTest('Should allow drag & drop PDFs multiple times', async ({ page, mergePdfPage }) => {
-			await mergePdfPage.goToMergeTool();
+		theAssetTest.describe('Thumbnail rotate right', () => {
+			theAssetTest('Should rotate right the full pdf', async ({ mergePdfPage, page }) => {
+				await mergePdfPage.goToMergeTool();
+				await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf']);
 
-			await mergePdfPage.dragAndDropFile('[data-testid="file-drop"]', ['tema3.pdf', 'tema4.pdf']);
-			await mergePdfPage.dragAndDropFile('[data-testid="file-drop"]', ['tema5.pdf', 'tema6.pdf']);
+				await mergePdfPage.rotatePdfRight(90);
 
-			const mergeButton = await mergePdfPage.getMergePdfsButton();
-			await mergeButton.click();
+				await expect(page).toHaveScreenshot();
 
-			const pages = await mergePdfPage.getScrollViewerPages();
+				await mergePdfPage.magnifyPdf('tema3.pdf', 1);
 
-			await expect(pages).toHaveCount(95);
-			await expect(page).toHaveURL('/en/merge-pdf/10426654538942558433');
+				await mergePdfPage.viewer.goToPage(20, 'tema3.pdf');
+
+				await expect(page).toHaveScreenshot();
+
+				await mergePdfPage.viewer.closeModal();
+
+				await mergePdfPage.mergePdfs();
+
+				await expect(page).toHaveURL('/en/merge-pdf/1364348172398970979');
+				await mergePdfPage.waitResultPageToLoad(1);
+				const firstPageRotation = await mergePdfPage.getResultPageRotation(1);
+				await expect(firstPageRotation).toBe('90');
+
+				await mergePdfPage.waitResultPageToLoad(2);
+				const secondPageRotation = await mergePdfPage.getResultPageRotation(2);
+				await expect(secondPageRotation).toBe('90');
+
+				await expect(page).toHaveScreenshot();
+			});
 		});
-	});
 
-	theAssetTest.describe('Thumbnail rotate left', () => {
-		theAssetTest('Should rotate left the full pdf', async ({ mergePdfPage, page }) => {
-			await mergePdfPage.goToMergeTool();
-			await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf']);
+		theAssetTest.describe('Thumbnail remove pdf', () => {
+			theAssetTest('Should remove uploaded pdf', async ({ mergePdfPage, page }) => {
+				await mergePdfPage.goToMergeTool();
+				await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf', 'tema5.pdf', 'tema6.pdf']);
 
-			await mergePdfPage.rotatePdfLeft(270);
+				await expect(mergePdfPage.getPdfItems()).toHaveCount(4);
 
-			await expect(page).toHaveScreenshot();
+				await mergePdfPage.getRemovePdfButton().click();
 
-			await mergePdfPage.magnifyPdf('tema3.pdf', 1);
+				await expect(mergePdfPage.getPdfItems()).toHaveCount(3);
 
-			await mergePdfPage.viewer.goToPage(20, 'tema3.pdf');
+				await mergePdfPage.getRemovePdfButton(1).click();
 
-			await expect(page).toHaveScreenshot();
+				await expect(mergePdfPage.getPdfItems()).toHaveCount(2);
 
-			await mergePdfPage.viewer.closeModal();
+				await expect(page).toHaveScreenshot();
 
-			await mergePdfPage.mergePdfs();
+				await mergePdfPage.getMergePdfsButton().click();
 
-			await expect(page).toHaveURL('/en/merge-pdf/14644883602472423972');
-			await mergePdfPage.waitResultPageToLoad(1);
-			const firstPageRotation = await mergePdfPage.getResultPageRotation(1);
-			await expect(firstPageRotation).toBe('270');
-
-			await mergePdfPage.waitResultPageToLoad(2);
-			const secondPageRotation = await mergePdfPage.getResultPageRotation(2);
-			await expect(secondPageRotation).toBe('270');
-
-			await expect(page).toHaveScreenshot();
+				await expect(page).toHaveURL('/en/merge-pdf/11755661196596781456');
+			});
 		});
-	});
 
-	theAssetTest.describe('Thumbnail rotate right', () => {
-		theAssetTest('Should rotate right the full pdf', async ({ mergePdfPage, page }) => {
-			await mergePdfPage.goToMergeTool();
-			await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf']);
+		theAssetTest.describe('Thumbnail drag & drop (Desktop)', () => {
+			theAssetTest('Should drag & drop pdfs to change order', async ({ mergePdfPage, page }) => {
+				await mergePdfPage.goToMergeTool();
+				await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf', 'tema5.pdf', 'tema6.pdf']);
 
-			await mergePdfPage.rotatePdfRight(90);
+				await expect(await mergePdfPage.getPdfNameOrder(4)).toEqual([
+					'tema3.pdf',
+					'tema4.pdf',
+					'tema5.pdf',
+					'tema6.pdf'
+				]);
 
-			await expect(page).toHaveScreenshot();
+				await mergePdfPage.mouseMoveBy(await mergePdfPage.getSortableElementAt(0), 100, 0);
 
-			await mergePdfPage.magnifyPdf('tema3.pdf', 1);
+				await expect(await mergePdfPage.getPdfNameOrder(4)).toEqual([
+					'tema4.pdf',
+					'tema3.pdf',
+					'tema5.pdf',
+					'tema6.pdf'
+				]);
 
-			await mergePdfPage.viewer.goToPage(20, 'tema3.pdf');
+				await mergePdfPage.mouseMoveBy(await mergePdfPage.getSortableElementAt(3), -400, 0);
 
-			await expect(page).toHaveScreenshot();
+				await expect(await mergePdfPage.getPdfNameOrder(4)).toEqual([
+					'tema4.pdf',
+					'tema6.pdf',
+					'tema3.pdf',
+					'tema5.pdf'
+				]);
 
-			await mergePdfPage.viewer.closeModal();
+				await mergePdfPage.getMergePdfsButton().click();
 
-			await mergePdfPage.mergePdfs();
-
-			await expect(page).toHaveURL('/en/merge-pdf/1364348172398970979');
-			await mergePdfPage.waitResultPageToLoad(1);
-			const firstPageRotation = await mergePdfPage.getResultPageRotation(1);
-			await expect(firstPageRotation).toBe('90');
-
-			await mergePdfPage.waitResultPageToLoad(2);
-			const secondPageRotation = await mergePdfPage.getResultPageRotation(2);
-			await expect(secondPageRotation).toBe('90');
-
-			await expect(page).toHaveScreenshot();
+				await expect(page).toHaveURL('/en/merge-pdf/4138935953279872066');
+			});
 		});
-	});
 
-	theAssetTest.describe('Thumbnail remove pdf', () => {
-		theAssetTest('Should remove uploaded pdf', async ({ mergePdfPage, page }) => {
-			await mergePdfPage.goToMergeTool();
-			await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf', 'tema5.pdf', 'tema6.pdf']);
-
-			await expect(mergePdfPage.getPdfItems()).toHaveCount(4);
-
-			await mergePdfPage.getRemovePdfButton().click();
-
-			await expect(mergePdfPage.getPdfItems()).toHaveCount(3);
-
-			await mergePdfPage.getRemovePdfButton(1).click();
-
-			await expect(mergePdfPage.getPdfItems()).toHaveCount(2);
-
-			await expect(page).toHaveScreenshot();
-
-			await mergePdfPage.getMergePdfsButton().click();
-
-			await expect(page).toHaveURL('/en/merge-pdf/11755661196596781456');
+		theAssetTest.describe('Encrypted files', () => {
+			// TODO: Add test
 		});
-	});
 
-	theAssetTest.describe('Thumbnail drag & drop (Desktop)', () => {
-		// TODO: Skip on mobile
+		theAssetTest.describe('Semi encrypted files', () => {
+			// TODO: Add test
+		});
 
-		theAssetTest('Should drag & drop pdfs to change order', async ({ mergePdfPage, page }) => {
-			await mergePdfPage.goToMergeTool();
-			await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf', 'tema5.pdf', 'tema6.pdf']);
+		theAssetTest.describe('Pdf name can be edited', () => {
+			theAssetTest('Should have default name from fist file', async ({ mergePdfPage }) => {
+				await mergePdfPage.goToMergeTool();
+				await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf', 'tema5.pdf', 'tema6.pdf']);
 
-			await expect(await mergePdfPage.getPdfNameOrder(4)).toEqual([
-				'tema3.pdf',
-				'tema4.pdf',
-				'tema5.pdf',
-				'tema6.pdf'
-			]);
+				await expect(await mergePdfPage.getPdfNameOrder(4)).toEqual([
+					'tema3.pdf',
+					'tema4.pdf',
+					'tema5.pdf',
+					'tema6.pdf'
+				]);
 
-			await mergePdfPage.mouseMoveBy(await mergePdfPage.getSortableElementAt(0), 100, 0);
+				await mergePdfPage.mergePdfs();
 
-			await expect(await mergePdfPage.getPdfNameOrder(4)).toEqual([
-				'tema4.pdf',
-				'tema3.pdf',
-				'tema5.pdf',
-				'tema6.pdf'
-			]);
+				const fileName = await mergePdfPage.getResultFileName();
+				await expect(fileName).toHaveText('tema3');
 
-			await mergePdfPage.mouseMoveBy(await mergePdfPage.getSortableElementAt(3), -400, 0);
+				const download = await mergePdfPage.downloadResult();
+				expect(download.suggestedFilename()).toBe('tema3.pdf');
+			});
 
-			await expect(await mergePdfPage.getPdfNameOrder(4)).toEqual([
-				'tema4.pdf',
-				'tema6.pdf',
-				'tema3.pdf',
-				'tema5.pdf'
-			]);
+			theAssetTest('Should change name', async ({ mergePdfPage }) => {
+				await mergePdfPage.goToMergeTool();
+				await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf', 'tema5.pdf', 'tema6.pdf']);
 
-			await mergePdfPage.getMergePdfsButton().click();
+				await mergePdfPage.mergePdfs();
 
-			await expect(page).toHaveURL('/en/merge-pdf/4138935953279872066');
+				await mergePdfPage.editFileName('test-name');
+
+				const fileName = await mergePdfPage.getResultFileName();
+				await expect(fileName).toHaveText('test-name');
+
+				const download = await mergePdfPage.downloadResult();
+				expect(download.suggestedFilename()).toBe('test-name.pdf');
+			});
+		});
+
+		theAssetTest.describe('Pdf result pages count', () => {
+			theAssetTest('Should have correct number of pages and size', async ({ mergePdfPage }) => {
+				await mergePdfPage.goToMergeTool();
+				await mergePdfPage.uploadFiles(['tema3.pdf', 'tema4.pdf', 'tema5.pdf', 'tema6.pdf']);
+
+				await mergePdfPage.mergePdfs();
+
+				const metadata = await mergePdfPage.getResultMetadata();
+
+				await expect(metadata).toHaveText('4.15 MB - 95 pages');
+			});
+		});
+
+		theAssetTest.describe('Pdf is downloaded', () => {
+			theAssetTest('Should download pdf', async ({ mergePdfPage }) => {
+				await mergePdfPage.goToMergeTool();
+				await mergePdfPage.uploadFiles(['tema2.pdf', 'tema4.pdf', 'tema6.pdf', 'tema8.pdf']);
+
+				await mergePdfPage.mergePdfs();
+
+				const download = await mergePdfPage.downloadResult();
+				expect(download.suggestedFilename()).toBe('tema2.pdf');
+			});
+		});
+
+		theAssetTest.describe('You can take pdf to other tool', () => {
+			// TODO: Add test
 		});
 	});
 });

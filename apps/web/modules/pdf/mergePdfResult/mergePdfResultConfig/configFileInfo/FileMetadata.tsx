@@ -16,7 +16,7 @@ export const FileMetadata = ({ file }: FileMetadataProps) => {
 	const size = getFileSize(file.buffer);
 
 	return (
-		<Text size="xs" color="textClear" family="mono">
+		<Text size="xs" color="textClear" family="mono" data-testid="result-metadata">
 			{size} - {pages} {getSingularOrPlural(shared.page, pages)}
 		</Text>
 	);

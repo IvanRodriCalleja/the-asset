@@ -232,4 +232,27 @@ export class MergePdfPage {
 		});
 		return pdfPage.getAttribute('data-rotation');
 	};
+
+	getResultFileName = () => this.page.getByTestId('result-file-name');
+	editFileName = async (newName: string) => {
+		await this.getResultFileName().click();
+		const fileNameInput = await this.page.getByLabel('File name');
+
+		await fileNameInput.fill(newName);
+
+		await this.page.locator('body').click();
+	};
+
+	downloadResult = async () => {
+		const downloadPromise = this.page.waitForEvent('download');
+
+		const downloadButton = await this.page.getByRole('button', { name: 'Download' });
+		await downloadButton.click();
+
+		const download = await downloadPromise;
+
+		return download;
+	};
+
+	getResultMetadata = () => this.page.getByTestId('result-metadata');
 }
