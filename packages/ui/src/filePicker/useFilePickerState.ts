@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { TheAssetFile, hashArrayBuffer } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
-import { isPdfEncrypted, tryDecryptPdf } from '@theasset/pdf-tools';
+import { decryptPdf, isPdfEncrypted, tryDecryptPdf } from '@theasset/pdf-tools';
 
 import { toaster } from '../Toast';
 
@@ -29,7 +29,7 @@ export const useFilePickerState = () => {
 					fileReader.readAsArrayBuffer(file);
 				});
 
-				let isEncrypted = await isPdfEncrypted(buffer);
+				/*let isEncrypted = await isPdfEncrypted(buffer);
 				let fileBuffer = buffer;
 
 				if (isEncrypted) {
@@ -39,16 +39,21 @@ export const useFilePickerState = () => {
 					});
 					isEncrypted = isFileEncrypted;
 					fileBuffer = new Uint8Array(decryptedBuffer);
-				}
+				}*/
 
-				const hash = await hashArrayBuffer(buffer);
+				const { buffer: decryptedBuffer, hash } = await decryptPdf({
+					buffer,
+					password: 'kanbanery'
+				});
+
+				//const hash = await hashArrayBuffer(buffer);
 
 				const fileItem: TheAssetFile = {
 					id,
 					hash,
-					buffer: fileBuffer,
+					buffer: decryptedBuffer,
 					name,
-					isEncrypted
+					isEncrypted: false
 				};
 
 				return fileItem;

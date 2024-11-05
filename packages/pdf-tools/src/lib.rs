@@ -1,3 +1,4 @@
+mod decrypt;
 mod hash;
 mod merge;
 mod page;

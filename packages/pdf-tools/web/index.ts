@@ -131,38 +131,6 @@ export const mergePdfs = ({ buffers }: MergePdfs) => {
 	});
 };
 
-type DecryptPdf = {
-	buffer: ArrayBuffer;
-	password: string;
-};
-
-export class DecryptError extends Error {
-	constructor() {
-		super('File encrypted with password');
-	}
-}
-
-export const decryptPdf = async ({ buffer, password }: DecryptPdf) => {
-	const { decryptPdf, fromMemory, toMemory, setFast } = await import(
-		'coherentpdf/dist/coherentpdf.browser.min.js'
-	);
-
-	setFast();
-
-	try {
-		const arr = new Uint8Array(buffer);
-
-		const pdf = fromMemory(arr, password);
-
-		decryptPdf(pdf, password);
-
-		const mem = toMemory(pdf, false, false);
-		return mem;
-	} catch (error) {
-		throw new DecryptError();
-	}
-};
-
 export const tryDecryptPdf = async ({ buffer, password }: DecryptPdf) => {
 	const { decryptPdf, fromMemory, toMemory, setFast } = await import(
 		'coherentpdf/dist/coherentpdf.browser.min.js'
@@ -196,4 +164,25 @@ export const isPdfEncrypted = async ({ buffer }: IsPdfEncrypted) => {
 	const pdf = fromMemory(arr, '');
 
 	return isEncrypted(pdf);
+};
+
+type DecryptPdf = {
+	buffer: ArrayBuffer;
+	password: string;
+};
+
+export const decryptPdf = async ({ buffer, password }: DecryptPdf) => {
+	const id = generateMessageId();
+	const message: WorkerMessage = {
+		type: 'decryptPdf',
+		id,
+		buffer: new Uint8Array(buffer),
+		password
+	};
+
+	worker.postMessage(message);
+
+	return new Promise<PdfResult>((resolve, reject) => {
+		pendingPromises.set(id, { resolve, reject });
+	});
 };

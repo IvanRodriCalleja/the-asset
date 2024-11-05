@@ -2,6 +2,7 @@
 import { GetThumbnailResult, PdfResult } from 'pdf-tools';
 
 import {
+	DecryptPdfsMessage,
 	GetPagesMessage,
 	GetThumbnailMessage,
 	MergePdfsMessage,
@@ -12,6 +13,7 @@ import {
 	WorkerResponse
 } from './interface';
 import {
+	decrypt_pdf,
 	get_thumbnail,
 	get_total_pages,
 	loadTools,
@@ -51,6 +53,10 @@ self.onmessage = async (event: MessageEvent<WorkerMessage>) => {
 
 		case 'mergePdfs':
 			result = await mergePdfs(message);
+			break;
+
+		case 'decryptPdf':
+			result = await decryptPdfs(message);
 			break;
 
 		default:
@@ -115,6 +121,17 @@ const removePdfPage = async ({ buffer, index }: RemovePdfPageMessage) => {
 
 const mergePdfs = async ({ buffers }: MergePdfsMessage) => {
 	const pdf = await merge_pdfs(buffers);
+
+	const result: PdfResult = {
+		buffer: pdf.buffer,
+		hash: pdf.hash
+	};
+
+	return result;
+};
+
+const decryptPdfs = async ({ buffer, password }: DecryptPdfsMessage) => {
+	const pdf = await decrypt_pdf(buffer, password);
 
 	const result: PdfResult = {
 		buffer: pdf.buffer,

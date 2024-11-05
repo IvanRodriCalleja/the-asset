@@ -187,6 +187,19 @@ function passArray8ToWasm0(arg, malloc) {
     WASM_VECTOR_LEN = arg.length;
     return ptr;
 }
+/**
+* @param {Uint8Array} buffer
+* @param {string} password
+* @returns {PdfResult}
+*/
+export function decrypt_pdf(buffer, password) {
+    const ptr0 = passArray8ToWasm0(buffer, wasm.__wbindgen_export_0);
+    const len0 = WASM_VECTOR_LEN;
+    const ptr1 = passStringToWasm0(password, wasm.__wbindgen_export_0, wasm.__wbindgen_export_1);
+    const len1 = WASM_VECTOR_LEN;
+    const ret = wasm.decrypt_pdf(ptr0, len0, ptr1, len1);
+    return PdfResult.__wrap(ret);
+}
 
 function getCachedStringFromWasm0(ptr, len) {
     if (ptr === 0) {

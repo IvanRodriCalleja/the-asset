@@ -2,6 +2,12 @@
 /* eslint-disable */
 /**
 * @param {Uint8Array} buffer
+* @param {string} password
+* @returns {PdfResult}
+*/
+export function decrypt_pdf(buffer: Uint8Array, password: string): PdfResult;
+/**
+* @param {Uint8Array} buffer
 * @returns {string}
 */
 export function get_pdf_hash(buffer: Uint8Array): string;
@@ -149,6 +155,7 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
+  readonly decrypt_pdf: (a: number, b: number, c: number, d: number) => number;
   readonly get_pdf_hash: (a: number, b: number, c: number) => void;
   readonly merge_pdfs: (a: number, b: number) => number;
   readonly get_total_pages: (a: number, b: number) => number;

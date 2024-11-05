@@ -41,13 +41,21 @@ export type MergePdfsMessage = {
 	buffers: Array<Uint8Array>;
 };
 
+export type DecryptPdfsMessage = {
+	type: 'decryptPdf';
+	id: number;
+	buffer: Uint8Array;
+	password: string;
+};
+
 export type WorkerMessage =
 	| GetThumbnailMessage
 	| GetPagesMessage
 	| RotatePdfPageMessage
 	| RotatePdfMessage
 	| RemovePdfPageMessage
-	| MergePdfsMessage;
+	| MergePdfsMessage
+	| DecryptPdfsMessage;
 
 export type WorkerResponse<T = unknown> = {
 	id: number;
