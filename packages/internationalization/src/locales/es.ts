@@ -64,7 +64,9 @@ const es: Locales = {
 			},
 			validations: {
 				required: 'Campo obligatorio',
-				invalidPassword: 'Contraseña incorrecta'
+				invalidPassword: 'Contraseña incorrecta',
+				decryptionError:
+					'El pdf no pudo ser desencriptado, puede que esté corrupto o el  tipo de encriptación no esté soportado'
 			}
 		}
 	},

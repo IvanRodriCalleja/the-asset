@@ -3,6 +3,7 @@ import { styled } from '@theasset/style-system/jsx';
 export const Footer = styled('div', {
 	base: {
 		display: 'flex',
+		gap: 2,
 		flexDirection: 'column-reverse',
 
 		sm: {

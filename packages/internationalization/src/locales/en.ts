@@ -62,7 +62,8 @@ const en = {
 			},
 			validations: {
 				required: 'This field is required',
-				invalidPassword: 'Invalid password'
+				invalidPassword: 'Invalid password',
+				decryptionError: "Pdf can't be decrypted maybe is corrupted or encryption is not supported"
 			}
 		}
 	},

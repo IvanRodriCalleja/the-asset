@@ -187,6 +187,30 @@ function passArray8ToWasm0(arg, malloc) {
     WASM_VECTOR_LEN = arg.length;
     return ptr;
 }
+/**
+* @param {Uint8Array} buffer
+* @param {string} password
+* @returns {PdfResult}
+*/
+export function decrypt_pdf(buffer, password) {
+    try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+        const ptr0 = passArray8ToWasm0(buffer, wasm.__wbindgen_export_0);
+        const len0 = WASM_VECTOR_LEN;
+        const ptr1 = passStringToWasm0(password, wasm.__wbindgen_export_0, wasm.__wbindgen_export_1);
+        const len1 = WASM_VECTOR_LEN;
+        wasm.decrypt_pdf(retptr, ptr0, len0, ptr1, len1);
+        var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+        var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+        var r2 = getDataViewMemory0().getInt32(retptr + 4 * 2, true);
+        if (r2) {
+            throw takeObject(r1);
+        }
+        return PdfResult.__wrap(r0);
+    } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+    }
+}
 
 function getCachedStringFromWasm0(ptr, len) {
     if (ptr === 0) {
@@ -297,10 +321,21 @@ export function rotate_pdf(buffer, direction) {
 * @returns {GetThumbnailResult}
 */
 export function get_thumbnail(buffer, index) {
-    const ptr0 = passArray8ToWasm0(buffer, wasm.__wbindgen_export_0);
-    const len0 = WASM_VECTOR_LEN;
-    const ret = wasm.get_thumbnail(ptr0, len0, index);
-    return GetThumbnailResult.__wrap(ret);
+    try {
+        const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+        const ptr0 = passArray8ToWasm0(buffer, wasm.__wbindgen_export_0);
+        const len0 = WASM_VECTOR_LEN;
+        wasm.get_thumbnail(retptr, ptr0, len0, index);
+        var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+        var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+        var r2 = getDataViewMemory0().getInt32(retptr + 4 * 2, true);
+        if (r2) {
+            throw takeObject(r1);
+        }
+        return GetThumbnailResult.__wrap(r0);
+    } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+    }
 }
 
 function handleError(f, args) {
@@ -378,6 +413,9 @@ Cs400:3,"3":"Cs400", });
 /**
 */
 export const Direction = Object.freeze({ Left:0,"0":"Left",Right:1,"1":"Right", });
+/**
+*/
+export const PdfToolsErrorCodes = Object.freeze({ Unknown:0,"0":"Unknown",PasswordError:1,"1":"PasswordError",LoadError:2,"2":"LoadError",WrongPassword:3,"3":"WrongPassword",DecryptionError:4,"4":"DecryptionError", });
 
 const GetThumbnailResultFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
@@ -532,6 +570,50 @@ export class PdfResult {
 }
 }
 
+const PdfToolsErrorFinalization = (typeof FinalizationRegistry === 'undefined')
+    ? { register: () => {}, unregister: () => {} }
+    : new FinalizationRegistry(ptr => wasm.__wbg_pdftoolserror_free(ptr >>> 0, 1));
+/**
+*/
+export class PdfToolsError {
+
+    static __wrap(ptr) {
+        ptr = ptr >>> 0;
+        const obj = Object.create(PdfToolsError.prototype);
+        obj.__wbg_ptr = ptr;
+        PdfToolsErrorFinalization.register(obj, obj.__wbg_ptr, obj);
+        return obj;
+    }
+
+    __destroy_into_raw() {
+        const ptr = this.__wbg_ptr;
+        this.__wbg_ptr = 0;
+        PdfToolsErrorFinalization.unregister(this);
+        return ptr;
+    }
+
+    free() {
+        const ptr = this.__destroy_into_raw();
+        wasm.__wbg_pdftoolserror_free(ptr, 0);
+    }
+    /**
+    * @param {PdfToolsErrorCodes} code
+    */
+    constructor(code) {
+        const ret = wasm.pdftoolserror_new(code);
+        this.__wbg_ptr = ret >>> 0;
+        PdfToolsErrorFinalization.register(this, this.__wbg_ptr, this);
+        return this;
+    }
+    /**
+    * @returns {PdfToolsErrorCodes}
+    */
+    get code() {
+        const ret = wasm.pdftoolserror_code(this.__wbg_ptr);
+        return ret;
+    }
+}
+
 async function __wbg_load(module, imports) {
     if (typeof Response === 'function' && module instanceof Response) {
         if (typeof WebAssembly.instantiateStreaming === 'function') {
@@ -568,6 +650,10 @@ function __wbg_get_imports() {
     imports.wbg = {};
     imports.wbg.__wbindgen_object_drop_ref = function(arg0) {
         takeObject(arg0);
+    };
+    imports.wbg.__wbg_pdftoolserror_new = function(arg0) {
+        const ret = PdfToolsError.__wrap(arg0);
+        return addHeapObject(ret);
     };
     imports.wbg.__wbg_length_8339fcf5d8ecd12e = function(arg0) {
         const ret = getObject(arg0).length;

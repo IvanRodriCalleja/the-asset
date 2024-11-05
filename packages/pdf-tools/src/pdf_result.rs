@@ -1,5 +1,7 @@
 use wasm_bindgen::prelude::*;
 
+use crate::hash::get_pdf_hash;
+
 #[wasm_bindgen]
 pub struct PdfResult {
   buffer: Vec<u8>,

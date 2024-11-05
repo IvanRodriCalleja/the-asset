@@ -24,6 +24,7 @@ const UploadSection = styled('section', {
 
 // TODO: Manage mal formed pdfs
 // TODO: Rethink file upload approach
+// TODO: Unify mobile and desktop components
 
 export const MergePdf = () => {
 	const { mergePdf } = useLocale();
