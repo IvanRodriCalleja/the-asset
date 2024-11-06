@@ -11,28 +11,28 @@ jobs:
         node-version: [22.4.1]
     if: github.event.deployment_status.state == 'success' && contains(github.event.deployment_status.environment, 'Production')
     steps:
-      - uses: 🛠️ actions/checkout@v4
-      - name: 🔧 Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
+    - uses: 🛠️ actions/checkout@v4
+    - name: 🔧 Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
           
-      - name: 📦 Restore yarn cache
-        uses: actions/cache@v4
-        id: yarn-cache
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+    - name: 📦 Restore yarn cache
+      uses: actions/cache@v4
+      id: yarn-cache
+      with:
+        path: '**/node_modules'
+        key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
             
-      - name: 📥 Install dependencies
-        if: steps.yarn-cache.outputs.cache-hit != 'true'
-        run: yarn install --frozen-lockfile           
+    - name: 📥 Install dependencies
+      if: steps.yarn-cache.outputs.cache-hit != 'true'
+      run: yarn install --frozen-lockfile           
   
-      - name: 🎭 Install Playwright
-        run: pnpm playwright install --with-deps
+    - name: 🎭 Install Playwright
+      run: pnpm playwright install --with-deps
   
-      - name: ✅ Run Smoke Tests
-        working-directory: ./packages/e2e
-        run: yarn test
-        env:
-          PLAYWRIGHT_TEST_BASE_URL: ${{ github.event.deployment_status.target_url }}
+    - name: ✅ Run Smoke Tests
+      working-directory: ./packages/e2e
+      run: yarn test
+      env:
+        PLAYWRIGHT_TEST_BASE_URL: ${{ github.event.deployment_status.target_url }}
