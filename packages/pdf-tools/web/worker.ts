@@ -1,7 +1,7 @@
 //TODO: Use BufferArray and convert here the Unit8Array
-import { GetThumbnailResult, PdfResult } from 'pdf-tools';
-
+import { GetThumbnailResult, PdfResult, PdfToolsErrorCodes } from '../pdf-tools';
 import {
+	DecryptPdfsMessage,
 	GetPagesMessage,
 	GetThumbnailMessage,
 	MergePdfsMessage,
@@ -12,6 +12,8 @@ import {
 	WorkerResponse
 } from './interface';
 import {
+	PdfToolsError as PdfError,
+	decrypt_pdf,
 	get_thumbnail,
 	get_total_pages,
 	loadTools,
@@ -28,37 +30,51 @@ self.onmessage = async (event: MessageEvent<WorkerMessage>) => {
 
 	let result;
 
-	switch (message.type) {
-		case 'getThumbnail':
-			result = await getThumbnail(message);
-			break;
+	try {
+		switch (message.type) {
+			case 'getThumbnail':
+				result = await getThumbnail(message);
+				break;
 
-		case 'getPages':
-			result = await getPages(message);
-			break;
+			case 'getPages':
+				result = await getPages(message);
+				break;
 
-		case 'rotatePdfPage':
-			result = await rotatePdfPage(message);
-			break;
+			case 'rotatePdfPage':
+				result = await rotatePdfPage(message);
+				break;
 
-		case 'rotatePdf':
-			result = await rotatePdf(message);
-			break;
+			case 'rotatePdf':
+				result = await rotatePdf(message);
+				break;
 
-		case 'removePdfPage':
-			result = await removePdfPage(message);
-			break;
+			case 'removePdfPage':
+				result = await removePdfPage(message);
+				break;
 
-		case 'mergePdfs':
-			result = await mergePdfs(message);
-			break;
+			case 'mergePdfs':
+				result = await mergePdfs(message);
+				break;
 
-		default:
-			throw new Error(`Unknown message type: ${message}`);
+			case 'decryptPdf':
+				result = await decryptPdfs(message);
+				break;
+
+			default:
+				throw new Error(`Unknown message type: ${message}`);
+		}
+
+		const response: WorkerResponse = { id: message.id, data: result };
+		self.postMessage(response);
+	} catch (error) {
+		const pdfError = error as PdfError;
+
+		const errorResponse: WorkerResponse = {
+			id: message.id,
+			errorCode: pdfError.code as unknown as PdfToolsErrorCodes
+		};
+		self.postMessage(errorResponse);
 	}
-
-	const response: WorkerResponse = { id: message.id, data: result };
-	self.postMessage(response);
 };
 
 const getThumbnail = async ({ buffer, page }: GetThumbnailMessage) => {
@@ -115,6 +131,17 @@ const removePdfPage = async ({ buffer, index }: RemovePdfPageMessage) => {
 
 const mergePdfs = async ({ buffers }: MergePdfsMessage) => {
 	const pdf = await merge_pdfs(buffers);
+
+	const result: PdfResult = {
+		buffer: pdf.buffer,
+		hash: pdf.hash
+	};
+
+	return result;
+};
+
+const decryptPdfs = async ({ buffer, password }: DecryptPdfsMessage) => {
+	const pdf = await decrypt_pdf(buffer, password);
 
 	const result: PdfResult = {
 		buffer: pdf.buffer,

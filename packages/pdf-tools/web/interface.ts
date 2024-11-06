@@ -1,4 +1,4 @@
-import { Direction } from '../build/web/pdf_tools';
+import { Direction, PdfToolsErrorCodes } from '../build/web/pdf_tools';
 
 export type GetThumbnailMessage = {
 	type: 'getThumbnail';
@@ -41,18 +41,31 @@ export type MergePdfsMessage = {
 	buffers: Array<Uint8Array>;
 };
 
+export type DecryptPdfsMessage = {
+	type: 'decryptPdf';
+	id: number;
+	buffer: Uint8Array;
+	password: string;
+};
+
 export type WorkerMessage =
 	| GetThumbnailMessage
 	| GetPagesMessage
 	| RotatePdfPageMessage
 	| RotatePdfMessage
 	| RemovePdfPageMessage
-	| MergePdfsMessage;
+	| MergePdfsMessage
+	| DecryptPdfsMessage;
 
-export type WorkerResponse<T = unknown> = {
-	id: number;
-	data: T;
-};
+export type WorkerResponse<T = unknown> =
+	| {
+			id: number;
+			data: T;
+	  }
+	| {
+			id: number;
+			errorCode: PdfToolsErrorCodes;
+	  };
 
 export type WorkerError = {
 	id: number;

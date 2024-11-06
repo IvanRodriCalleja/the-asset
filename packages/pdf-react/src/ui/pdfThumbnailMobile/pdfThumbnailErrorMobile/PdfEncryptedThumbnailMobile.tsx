@@ -1,8 +1,8 @@
-import { Dispatch, ReactNode, SetStateAction } from 'react';
+import { Dispatch, ReactNode, SetStateAction, useEffect, useTransition } from 'react';
 
 import { DragHandleDots2Icon } from '@radix-ui/react-icons';
 
-import { TheAssetFile, hashArrayBuffer } from '@theasset/file/domain/the-asset-file';
+import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { getSingularOrPlural } from '@theasset/internationalization/infra/get-singular-or-plural';
 import { Box, Flex, Stack, styled } from '@theasset/style-system/jsx';
@@ -11,8 +11,8 @@ import { SortableDragHandle } from '@theasset/ui/sortable';
 import { Text } from '@theasset/ui/text';
 import { ThumbnailRoot } from '@theasset/ui/thumbnail';
 
-import { usePages } from '../hooks/usePages';
-import { UnlockPdfModal } from './shared/UnlockPdfModal';
+import { usePages } from '../../../hooks/usePages';
+import { UnlockPdfModal } from '../../shared/UnlockPdfModal';
 
 const FileName = styled('span', {
 	base: {
@@ -40,6 +40,7 @@ type PdfEncryptedThumbnailMobileProps = {
 	file: TheAssetFile;
 	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
 	actions?: (props: ActionProps) => ReactNode;
+	resetErrorBoundary: (...args: unknown[]) => void;
 };
 
 type ActionProps = {
@@ -51,27 +52,44 @@ export const PdfEncryptedThumbnailMobile = ({
 	file,
 	setFiles,
 	actions,
+	resetErrorBoundary,
 	...props
 }: PdfEncryptedThumbnailMobileProps) => {
+	const [isPending, startTransition] = useTransition();
 	const { shared, mergePdf } = useLocale();
 	const pages = usePages(file);
 
-	const onUnlockPdf = async (decryptedFile: ArrayBuffer) => {
-		const hash = await hashArrayBuffer(decryptedFile);
-
+	useEffect(() => {
 		setFiles(files => {
 			const fileIndex = files.findIndex(({ id }) => id === file.id);
 
 			const newFiles = [...files];
 			newFiles[fileIndex] = {
 				...file,
-				hash,
-				buffer: decryptedFile,
-				isEncrypted: false
+				isEncrypted: true
 			};
 
 			return newFiles;
 		});
+	}, []);
+
+	const onUnlockPdf = async ({ buffer, hash }: { buffer: Uint8Array; hash: string }) => {
+		await startTransition(() =>
+			setFiles(files => {
+				const fileIndex = files.findIndex(({ id }) => id === file.id);
+
+				const newFiles = [...files];
+				newFiles[fileIndex] = {
+					...file,
+					hash,
+					buffer,
+					isEncrypted: false
+				};
+
+				return newFiles;
+			})
+		);
+		resetErrorBoundary();
 	};
 
 	return (
@@ -90,7 +108,7 @@ export const PdfEncryptedThumbnailMobile = ({
 						<Text size="xs" color="textClear" family="mono">
 							{mergePdf.unlockPdf.description}
 						</Text>
-						<UnlockPdfModal file={file} onUnlockPdf={onUnlockPdf} />
+						<UnlockPdfModal file={file} onUnlockPdf={onUnlockPdf} isPending={isPending} />
 					</BadgeEncrypted>
 				</Box>
 

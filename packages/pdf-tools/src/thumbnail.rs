@@ -1,3 +1,4 @@
+use crate::models::pdf_tools_error::{PdfToolsError, PdfToolsErrorCodes};
 use base64::{engine::general_purpose, Engine as _};
 use image::ImageFormat;
 use pdfium_render::prelude::*;
@@ -46,9 +47,15 @@ impl GetThumbnailResult {
 }
 
 #[wasm_bindgen]
-pub fn get_thumbnail(buffer: Vec<u8>, index: PdfPageIndex) -> GetThumbnailResult {
+pub fn get_thumbnail(buffer: Vec<u8>, index: PdfPageIndex) -> Result<GetThumbnailResult, JsValue> {
   let pdfium = Pdfium::default();
-  let document = pdfium.load_pdf_from_byte_vec(buffer, None).unwrap();
+  let document = match pdfium.load_pdf_from_byte_vec(buffer, None) {
+    Ok(doc) => doc,
+    Err(PdfiumError::PdfiumLibraryInternalError(PdfiumInternalError::PasswordError)) => {
+      return Err(PdfToolsError::new(PdfToolsErrorCodes::PasswordError).into())
+    }
+    Err(e) => return Err(PdfToolsError::new(PdfToolsErrorCodes::LoadError).into()),
+  };
   let page = document.pages().get(index).unwrap();
 
   let image = page
@@ -66,7 +73,12 @@ pub fn get_thumbnail(buffer: Vec<u8>, index: PdfPageIndex) -> GetThumbnailResult
 
   let rotation = get_current_rotation(&page);
 
-  GetThumbnailResult::new(base64_src, image.width(), image.height(), rotation)
+  Ok(GetThumbnailResult::new(
+    base64_src,
+    image.width(),
+    image.height(),
+    rotation,
+  ))
 }
 
 pub fn get_current_rotation(page: &PdfPage) -> i32 {

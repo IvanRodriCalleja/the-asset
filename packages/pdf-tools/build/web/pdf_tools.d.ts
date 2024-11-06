@@ -2,6 +2,12 @@
 /* eslint-disable */
 /**
 * @param {Uint8Array} buffer
+* @param {string} password
+* @returns {PdfResult}
+*/
+export function decrypt_pdf(buffer: Uint8Array, password: string): PdfResult;
+/**
+* @param {Uint8Array} buffer
 * @returns {string}
 */
 export function get_pdf_hash(buffer: Uint8Array): string;
@@ -106,6 +112,15 @@ export enum Direction {
 }
 /**
 */
+export enum PdfToolsErrorCodes {
+  Unknown = 0,
+  PasswordError = 1,
+  LoadError = 2,
+  WrongPassword = 3,
+  DecryptionError = 4,
+}
+/**
+*/
 export class GetThumbnailResult {
   free(): void;
 /**
@@ -144,13 +159,29 @@ export class PdfResult {
 */
   readonly hash: string;
 }
+/**
+*/
+export class PdfToolsError {
+  free(): void;
+/**
+* @param {PdfToolsErrorCodes} code
+*/
+  constructor(code: PdfToolsErrorCodes);
+/**
+*/
+  readonly code: PdfToolsErrorCodes;
+}
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
+  readonly decrypt_pdf: (a: number, b: number, c: number, d: number, e: number) => void;
   readonly get_pdf_hash: (a: number, b: number, c: number) => void;
   readonly merge_pdfs: (a: number, b: number) => number;
+  readonly __wbg_pdftoolserror_free: (a: number, b: number) => void;
+  readonly pdftoolserror_new: (a: number) => number;
+  readonly pdftoolserror_code: (a: number) => number;
   readonly get_total_pages: (a: number, b: number) => number;
   readonly __wbg_pdfresult_free: (a: number, b: number) => void;
   readonly pdfresult_new: (a: number, b: number, c: number, d: number) => number;
@@ -165,7 +196,7 @@ export interface InitOutput {
   readonly getthumbnailresult_width: (a: number) => number;
   readonly getthumbnailresult_height: (a: number) => number;
   readonly getthumbnailresult_rotation: (a: number) => number;
-  readonly get_thumbnail: (a: number, b: number, c: number) => number;
+  readonly get_thumbnail: (a: number, b: number, c: number, d: number) => void;
   readonly initialize_pdfium_render: (a: number, b: number, c: number) => number;
   readonly read_block_from_callback_wasm: (a: number, b: number, c: number, d: number) => number;
   readonly write_block_from_callback_wasm: (a: number, b: number, c: number) => number;

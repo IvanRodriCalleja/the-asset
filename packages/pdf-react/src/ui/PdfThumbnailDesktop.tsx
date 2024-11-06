@@ -1,5 +1,7 @@
 import { Dispatch, ReactNode, SetStateAction } from 'react';
 
+import { ErrorBoundary } from 'react-error-boundary';
+
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import {
 	ThumbnailImage,
@@ -10,21 +12,25 @@ import {
 } from '@theasset/ui/thumbnail';
 
 import { useThumbnail } from '../hooks/useThumbnail';
+import { PdfThumbnailErrorDesktop } from './pdfThumbnailDesktop/PdfThumbnailErrorDesktop';
 import { ThumbnailSkeletonDesktop } from './pdfThumbnailDesktop/ThumbnailSkeletonDesktop';
 import { ThumbnailDesktopFooter } from './shared/ThumbnailDesktopFooter';
 
-type ThumbnailProps = {
+export type ThumbnailProps = {
 	file: TheAssetFile;
 	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
 	actions?: (props: ActionProps) => ReactNode;
 };
 
-// TODO: Add error boundary
-
 export const PdfThumbnailDesktop = (props: ThumbnailProps) => {
 	return (
 		<ThumbnailSuspense fallback={<ThumbnailSkeletonDesktop />}>
-			<PdfThumbnail {...props} />
+			<ErrorBoundary
+				fallbackRender={fallbackProps => (
+					<PdfThumbnailErrorDesktop {...fallbackProps} {...props} />
+				)}>
+				<PdfThumbnail {...props} />
+			</ErrorBoundary>
 		</ThumbnailSuspense>
 	);
 };

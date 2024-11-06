@@ -8,8 +8,6 @@
     "./hooks/use-pages": "./src/hooks/usePages.ts",
     "./hooks/use-thumbnail": "./src/hooks/useThumbnail.ts",
     "./ui/scroll-viewer": "./src/ui/ScrollViewer.tsx",
-    "./ui/pdf-encrypted-thumbnail-desktop": "./src/ui/PdfEncryptedThumbnailDesktop.tsx",
-    "./ui/pdf-encrypted-thumbnail-mobile": "./src/ui/PdfEncryptedThumbnailMobile.tsx",
     "./ui/pdf-thumbnail-desktop": "./src/ui/PdfThumbnailDesktop.tsx",
     "./ui/pdf-thumbnail-mobile": "./src/ui/PdfThumbnailMobile.tsx"
   },

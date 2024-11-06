@@ -1,5 +1,7 @@
+mod decrypt;
 mod hash;
 mod merge;
+mod models;
 mod page;
 mod pdf_result;
 mod remove;

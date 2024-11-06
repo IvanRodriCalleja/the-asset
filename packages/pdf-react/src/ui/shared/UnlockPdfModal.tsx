@@ -17,10 +17,11 @@ import { UnlockPdfForm } from './unlockPdfModal/UnlockPdfForm';
 
 type UnlockPdfModalProps = {
 	file: TheAssetFile;
-	onUnlockPdf: (decryptedFile: ArrayBuffer) => Promise<void>;
+	isPending: boolean;
+	onUnlockPdf: (decryptedFile: { buffer: Uint8Array; hash: string }) => Promise<void>;
 };
 
-export const UnlockPdfModal = ({ file, onUnlockPdf }: UnlockPdfModalProps) => {
+export const UnlockPdfModal = ({ file, isPending, onUnlockPdf }: UnlockPdfModalProps) => {
 	const { mergePdf, shared } = useLocale();
 
 	return (
@@ -41,10 +42,10 @@ export const UnlockPdfModal = ({ file, onUnlockPdf }: UnlockPdfModalProps) => {
 							<UnlockPdfForm file={file} onUnlockPdf={onUnlockPdf} />
 						</ModalBody>
 						<ModalFooter>
-							<Button variant="outline" type="button" onPress={close}>
+							<Button variant="outline" type="button" onPress={close} isDisabled={isPending}>
 								{shared.cancel}
 							</Button>
-							<Button form="unlock-pdf" type="submit">
+							<Button form="unlock-pdf" type="submit" isDisabled={isPending}>
 								{mergePdf.unlockPdf.unlock}
 							</Button>
 						</ModalFooter>

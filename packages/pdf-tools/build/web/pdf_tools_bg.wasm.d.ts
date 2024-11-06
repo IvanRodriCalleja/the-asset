@@ -1,8 +1,12 @@
 /* tslint:disable */
 /* eslint-disable */
 export const memory: WebAssembly.Memory;
+export function decrypt_pdf(a: number, b: number, c: number, d: number, e: number): void;
 export function get_pdf_hash(a: number, b: number, c: number): void;
 export function merge_pdfs(a: number, b: number): number;
+export function __wbg_pdftoolserror_free(a: number, b: number): void;
+export function pdftoolserror_new(a: number): number;
+export function pdftoolserror_code(a: number): number;
 export function get_total_pages(a: number, b: number): number;
 export function __wbg_pdfresult_free(a: number, b: number): void;
 export function pdfresult_new(a: number, b: number, c: number, d: number): number;
@@ -17,7 +21,7 @@ export function getthumbnailresult_src(a: number, b: number): void;
 export function getthumbnailresult_width(a: number): number;
 export function getthumbnailresult_height(a: number): number;
 export function getthumbnailresult_rotation(a: number): number;
-export function get_thumbnail(a: number, b: number, c: number): number;
+export function get_thumbnail(a: number, b: number, c: number, d: number): void;
 export function initialize_pdfium_render(a: number, b: number, c: number): number;
 export function read_block_from_callback_wasm(a: number, b: number, c: number, d: number): number;
 export function write_block_from_callback_wasm(a: number, b: number, c: number): number;

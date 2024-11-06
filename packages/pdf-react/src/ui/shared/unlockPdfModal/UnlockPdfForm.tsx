@@ -7,6 +7,7 @@ import z from 'zod';
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { decryptPdf } from '@theasset/pdf-tools';
+import { PdfToolsError, PdfToolsErrorCodes } from '@theasset/pdf-tools/types';
 import { RHFFieldPassword } from '@theasset/ui/fields/password';
 import { Form } from '@theasset/ui/form';
 
@@ -16,7 +17,7 @@ type UnlockPdf = {
 
 type UnlockPdfFormProps = {
 	file: TheAssetFile;
-	onUnlockPdf: (decryptedFile: ArrayBuffer) => Promise<void>;
+	onUnlockPdf: (decryptedFile: { buffer: Uint8Array; hash: string }) => Promise<void>;
 };
 
 export const UnlockPdfForm = ({ file, onUnlockPdf }: UnlockPdfFormProps) => {
@@ -40,9 +41,18 @@ export const UnlockPdfForm = ({ file, onUnlockPdf }: UnlockPdfFormProps) => {
 
 			return onUnlockPdf(decryptedFile);
 		} catch (error) {
+			const decryptError = error as PdfToolsError;
+
+			if (decryptError.code === PdfToolsErrorCodes.WrongPassword) {
+				return form.setError('password', {
+					type: 'manual',
+					message: shared.form.validations.invalidPassword
+				});
+			}
+
 			form.setError('password', {
 				type: 'manual',
-				message: shared.form.validations.invalidPassword
+				message: shared.form.validations.decryptionError
 			});
 		}
 	};
