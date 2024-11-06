@@ -1,4 +1,4 @@
-name: Playwright Tests (preview)
+name: Playwright E2E Tests
 
 on:
   deployment_status:
