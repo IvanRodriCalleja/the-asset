@@ -8,7 +8,7 @@ import * as Sentry from '@sentry/nextjs';
 
 export default function GlobalError({ error }: { error: Error & { digest?: string } }) {
 	useEffect(() => {
-		Sentry.captureException(error); // force run
+		Sentry.captureException(error);
 	}, [error]);
 
 	return (
