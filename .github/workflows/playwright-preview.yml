@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         node-version: [22.4.1]
-    if: github.event.deployment_status.state == 'success' && contains(github.event.deployment_status.environment, 'Production')
+    if: github.event.deployment_status.state == 'success'
     steps:
     - uses: 🛠️ actions/checkout@v4
     - name: 🔧 Use Node.js ${{ matrix.node-version }}
