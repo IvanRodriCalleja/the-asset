@@ -7,8 +7,8 @@ jobs:
     name: 🧪 E2E Tests against ${{github.event.deployment_status.environment}}
     runs-on: ubuntu-latest
     strategy:
-    matrix:
-      node-version: [22.4.1]
+      matrix:
+        node-version: [22.4.1]
     if: github.event.deployment_status.state == 'success' && contains(github.event.deployment_status.environment, 'Production')
     steps:
       - uses: 🛠️ actions/checkout@v4
