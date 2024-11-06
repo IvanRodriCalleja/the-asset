@@ -29,7 +29,7 @@ jobs:
       run: yarn install --frozen-lockfile           
   
     - name: 🎭 Install Playwright
-      run: pnpm playwright install --with-deps
+      run: yarn playwright install --with-deps
   
     - name: ✅ Run Smoke Tests
       working-directory: ./packages/e2e
