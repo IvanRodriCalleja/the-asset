@@ -40,7 +40,7 @@
   "scripts": {
     "lint": "eslint src --ext .ts,.tsx --quiet --cache",
     "tsc": "tsc",
-    "build": "yarn generate:panda",
+    "build": "panda codegen",
     "generate:panda": "panda codegen",
     "prepare": "yarn generate:panda",
     "postinstall": "yarn generate:panda"

@@ -3,8 +3,8 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "inputs": ["$TURBO_DEFAULT$", ".env*", "panda.config.ts"],
+      "outputs": [".next/**", "!.next/cache/**", "generated/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]
