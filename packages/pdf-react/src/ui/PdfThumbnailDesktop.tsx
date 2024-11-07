@@ -3,7 +3,12 @@ import { Dispatch, ReactNode, SetStateAction } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
+import { getSingularOrPlural } from '@theasset/internationalization/infra/get-singular-or-plural';
+import { Box } from '@theasset/style-system/jsx';
+import { Badge } from '@theasset/ui/badge';
 import {
+	ThumbnailFooter,
 	ThumbnailImage,
 	ThumbnailImageContent,
 	ThumbnailRoot,
@@ -11,10 +16,11 @@ import {
 	useThumbnailSuspense
 } from '@theasset/ui/thumbnail';
 
+import { usePages } from '../hooks/usePages';
 import { useThumbnail } from '../hooks/useThumbnail';
 import { PdfThumbnailErrorDesktop } from './pdfThumbnailDesktop/PdfThumbnailErrorDesktop';
 import { ThumbnailSkeletonDesktop } from './pdfThumbnailDesktop/ThumbnailSkeletonDesktop';
-import { ThumbnailDesktopFooter } from './shared/ThumbnailDesktopFooter';
+import { FileName } from './shared/FileName';
 
 export type ThumbnailProps = {
 	file: TheAssetFile;
@@ -49,6 +55,8 @@ type PdfThumbnailProps = {
 const PdfThumbnail = ({ file, setFiles, actions, ...props }: PdfThumbnailProps) => {
 	const { src, rotation } = useThumbnail({ file });
 	const { onLoad } = useThumbnailSuspense();
+	const { shared } = useLocale();
+	const pages = usePages(file);
 
 	return (
 		<ThumbnailRoot width={180} {...props} data-testid="pdf-thumbnail">
@@ -58,7 +66,14 @@ const PdfThumbnail = ({ file, setFiles, actions, ...props }: PdfThumbnailProps) 
 				<ThumbnailImage src={src} alt={file.name} data-rotation={rotation} onLoad={onLoad} shadow />
 			</ThumbnailImageContent>
 
-			<ThumbnailDesktopFooter file={file} />
+			<ThumbnailFooter>
+				<FileName data-testid="pdf-name">{file.name}</FileName>
+				<Box display="flex" justifyContent="center">
+					<Badge size="sm" capitalize>
+						{pages} {getSingularOrPlural(shared.page, pages)}
+					</Badge>
+				</Box>
+			</ThumbnailFooter>
 		</ThumbnailRoot>
 	);
 };

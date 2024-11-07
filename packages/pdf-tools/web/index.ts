@@ -45,13 +45,20 @@ export const getThumbnail = ({ buffer, page }: GetThumbnail) => {
 	});
 };
 
-export const getTotalPages = async (buffer: Uint8Array) => {
-	const { fromMemory, pages } = await import('coherentpdf/dist/coherentpdf.browser.min.js');
-	const arr = new Uint8Array(buffer);
+export const getTotalPages = (buffer: Uint8Array) => {
+	const id = generateMessageId();
 
-	const pdfDoc = fromMemory(arr, '');
+	const message: WorkerMessage = {
+		type: 'getPages',
+		id,
+		buffer
+	};
 
-	return pages(pdfDoc);
+	worker.postMessage(message);
+
+	return new Promise<number>((resolve, reject) => {
+		pendingPromises.set(id, { resolve, reject });
+	});
 };
 
 type RotatePdfPage = {

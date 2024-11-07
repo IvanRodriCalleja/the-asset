@@ -7,9 +7,9 @@ import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { PdfToolsError, PdfToolsErrorCodes } from '@theasset/pdf-tools/types';
 import { styled } from '@theasset/style-system/jsx';
 import { Text } from '@theasset/ui/text';
-import { ThumbnailImageContent, ThumbnailRoot } from '@theasset/ui/thumbnail';
+import { ThumbnailFooter, ThumbnailImageContent, ThumbnailRoot } from '@theasset/ui/thumbnail';
 
-import { ThumbnailDesktopFooter } from '../../shared/ThumbnailDesktopFooter';
+import { FileName } from '../../shared/FileName';
 import { UnlockPdfModal } from '../../shared/UnlockPdfModal';
 
 type ThumbnailEncryptedProps = FallbackProps & {
@@ -105,7 +105,9 @@ export const PdfEncryptedThumbnailDesktop = ({
 				)}
 			</ThumbnailImageContent>
 
-			<ThumbnailDesktopFooter file={file} />
+			<ThumbnailFooter>
+				<FileName data-testid="pdf-name">{file.name}</FileName>
+			</ThumbnailFooter>
 		</ThumbnailRoot>
 	);
 };
