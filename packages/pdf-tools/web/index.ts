@@ -6,7 +6,6 @@ const worker = new Worker(new URL('./worker.ts', import.meta.url));
 
 const pendingPromises = new Map();
 
-// Generador de IDs únicos
 let currentId = 0;
 const generateMessageId = () => ++currentId;
 
@@ -17,16 +16,19 @@ worker.onmessage = (event: MessageEvent<WorkerResponse>) => {
 	if ('errorCode' in event.data && reject) {
 		reject(new PdfToolsError(event.data.errorCode));
 	} else if (resolve && 'data' in event.data) {
-		// Si no hay error, procesa la respuesta normalmente
 		resolve(event.data.data);
 	} else {
 		throw new Error('No resolve or reject function found');
 	}
-	pendingPromises.delete(id); // Elimina la promesa ya resuelta o rechazada
+	pendingPromises.delete(id);
 };
 
-//TODO: Use object as args
-export const getThumbnail = (buffer: Uint8Array, page: number) => {
+type GetThumbnail = {
+	buffer: Uint8Array;
+	page: number;
+};
+
+export const getThumbnail = ({ buffer, page }: GetThumbnail) => {
 	const id = generateMessageId();
 
 	const message: WorkerMessage = {

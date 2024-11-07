@@ -1,4 +1,3 @@
-//TODO: Use BufferArray and convert here the Unit8Array
 import { GetThumbnailResult, PdfResult, PdfToolsErrorCodes } from '../pdf-tools';
 import {
 	DecryptPdfsMessage,

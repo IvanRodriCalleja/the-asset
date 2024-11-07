@@ -9,7 +9,7 @@ type UseThumbnailProps = {
 
 export const useThumbnail = ({ file, page = 0 }: UseThumbnailProps) => {
 	const thumbnail = useCache({ hash: file.hash, type: 'image', page }, () =>
-		getThumbnail(new Uint8Array(file.buffer), page)
+		getThumbnail({ buffer: new Uint8Array(file.buffer), page })
 	);
 
 	return thumbnail;
