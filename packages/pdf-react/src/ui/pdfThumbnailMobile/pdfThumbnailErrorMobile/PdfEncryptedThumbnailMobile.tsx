@@ -1,10 +1,12 @@
 import { Dispatch, ReactNode, SetStateAction, useEffect, useTransition } from 'react';
 
 import { DragHandleDots2Icon } from '@radix-ui/react-icons';
+import { FallbackProps } from 'react-error-boundary';
 
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { getSingularOrPlural } from '@theasset/internationalization/infra/get-singular-or-plural';
+import { PdfToolsError, PdfToolsErrorCodes } from '@theasset/pdf-tools/types';
 import { Box, Flex, Stack, styled } from '@theasset/style-system/jsx';
 import { Badge } from '@theasset/ui/badge';
 import { SortableDragHandle } from '@theasset/ui/sortable';
@@ -36,11 +38,10 @@ const BadgeEncrypted = styled('div', {
 	}
 });
 
-type PdfEncryptedThumbnailMobileProps = {
+type PdfEncryptedThumbnailMobileProps = FallbackProps & {
 	file: TheAssetFile;
 	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
 	actions?: (props: ActionProps) => ReactNode;
-	resetErrorBoundary: (...args: unknown[]) => void;
 };
 
 type ActionProps = {
@@ -50,6 +51,7 @@ type ActionProps = {
 
 export const PdfEncryptedThumbnailMobile = ({
 	file,
+	error,
 	setFiles,
 	actions,
 	resetErrorBoundary,
@@ -92,6 +94,9 @@ export const PdfEncryptedThumbnailMobile = ({
 		resetErrorBoundary();
 	};
 
+	const isPasswordError =
+		error instanceof PdfToolsError && error.code === PdfToolsErrorCodes.PasswordError;
+
 	return (
 		<ThumbnailRoot width="100%" paddingBottom={0} {...props} status="warning">
 			<Stack direction="row" alignItems="center" overflow="hidden">
@@ -104,12 +109,21 @@ export const PdfEncryptedThumbnailMobile = ({
 			</Stack>
 			<Stack direction="row">
 				<Box flex={1} minWidth="56px">
-					<BadgeEncrypted>
-						<Text size="xs" color="textClear" family="mono">
-							{mergePdf.unlockPdf.description}
-						</Text>
-						<UnlockPdfModal file={file} onUnlockPdf={onUnlockPdf} isPending={isPending} />
-					</BadgeEncrypted>
+					{isPasswordError ? (
+						<BadgeEncrypted>
+							<Text size="xs" color="textClear" family="mono">
+								{mergePdf.unlockPdf.description}
+							</Text>
+							<UnlockPdfModal file={file} onUnlockPdf={onUnlockPdf} isPending={isPending} />
+						</BadgeEncrypted>
+					) : (
+						<BadgeEncrypted>
+							<Text size="xs" color="textClear" family="mono">
+								{mergePdf.thumbnailError}
+							</Text>
+							<UnlockPdfModal file={file} onUnlockPdf={onUnlockPdf} isPending={isPending} />
+						</BadgeEncrypted>
+					)}
 				</Box>
 
 				<Flex alignItems="center" minWidth="40px" width="40px">

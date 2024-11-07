@@ -1,7 +1,10 @@
 import { Dispatch, ReactNode, SetStateAction, useEffect, useTransition } from 'react';
 
+import { FallbackProps } from 'react-error-boundary';
+
 import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
+import { PdfToolsError, PdfToolsErrorCodes } from '@theasset/pdf-tools/types';
 import { styled } from '@theasset/style-system/jsx';
 import { Text } from '@theasset/ui/text';
 import { ThumbnailImageContent, ThumbnailRoot } from '@theasset/ui/thumbnail';
@@ -9,11 +12,10 @@ import { ThumbnailImageContent, ThumbnailRoot } from '@theasset/ui/thumbnail';
 import { ThumbnailDesktopFooter } from '../../shared/ThumbnailDesktopFooter';
 import { UnlockPdfModal } from '../../shared/UnlockPdfModal';
 
-type ThumbnailEncryptedProps = {
+type ThumbnailEncryptedProps = FallbackProps & {
 	file: TheAssetFile;
 	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
 	actions?: (props: ActionProps) => ReactNode;
-	resetErrorBoundary: (...args: unknown[]) => void;
 };
 
 type ActionProps = {
@@ -38,6 +40,7 @@ const BadgeEncrypted = styled('div', {
 
 export const PdfEncryptedThumbnailDesktop = ({
 	file,
+	error,
 	setFiles,
 	actions,
 	resetErrorBoundary,
@@ -79,16 +82,27 @@ export const PdfEncryptedThumbnailDesktop = ({
 		resetErrorBoundary();
 	};
 
+	const isPasswordError =
+		error instanceof PdfToolsError && error.code === PdfToolsErrorCodes.PasswordError;
+
 	return (
 		<ThumbnailRoot width={180} {...props} status="warning">
 			{actions && actions({ file, setFiles })}
 			<ThumbnailImageContent>
-				<BadgeEncrypted>
-					<Text size="xs" color="textClear" family="mono">
-						{mergePdf.unlockPdf.description}
-					</Text>
-					<UnlockPdfModal file={file} onUnlockPdf={onUnlockPdf} isPending={isPending} />
-				</BadgeEncrypted>
+				{isPasswordError ? (
+					<BadgeEncrypted>
+						<Text size="xs" color="textClear" family="mono">
+							{mergePdf.unlockPdf.description}
+						</Text>
+						<UnlockPdfModal file={file} onUnlockPdf={onUnlockPdf} isPending={isPending} />
+					</BadgeEncrypted>
+				) : (
+					<BadgeEncrypted>
+						<Text size="xs" color="textClear" family="mono">
+							{mergePdf.thumbnailError}
+						</Text>
+					</BadgeEncrypted>
+				)}
 			</ThumbnailImageContent>
 
 			<ThumbnailDesktopFooter file={file} />

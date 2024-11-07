@@ -21,6 +21,7 @@ const en = {
 			title: 'Invalid PDF file(s)',
 			description: 'Invalid PDF content for files:'
 		},
+		thumbnailError: "We couldn't open this PDF. It may be corrupted or may not be supported.",
 		unlockPdf: {
 			title: 'Unlock PDF with password',
 			description: 'This PDF is password protected. Please enter the password to unlock it.',

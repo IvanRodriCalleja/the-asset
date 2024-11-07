@@ -24,6 +24,7 @@ const es: Locales = {
 			title: 'Ficheros PDF inválidos',
 			description: 'Contenido de los PDFs no válido para:'
 		},
+		thumbnailError: 'No pudimos abrir este PDF. Puede estar corrupto o no ser soportado.',
 		unlockPdf: {
 			title: 'Desbloquea PDF con contraseña',
 			description:
