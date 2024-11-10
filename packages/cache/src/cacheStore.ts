@@ -12,7 +12,7 @@ export type UseCacheKey = string | Record<string, string | number | boolean>;
 export class TheAssetStore {
 	store: Store = {};
 	listeners = new Map<UseCacheKey, Set<() => void>>();
-	timeouts = new Map<string, number>();
+	timeouts = new Map<string, NodeJS.Timeout>();
 
 	constructor() {}
 

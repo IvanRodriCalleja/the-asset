@@ -2,8 +2,7 @@
   "extends": "@theasset/typescript-config/react-library.json",
   "compilerOptions": {
     "outDir": "dist",
-    "noEmit": true,
-    "types": ["jest"]
+    "noEmit": true
   },
   "include": ["src", "jest.config.js", "jest.setup.js"],
   "exclude": ["node_modules", "dist"]
