@@ -11,14 +11,22 @@
     "tsc": "tsc"
   },
   "devDependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.0.1",
     "@theasset/eslint-config": "*",
     "@theasset/typescript-config": "*",
     "@types/eslint": "^8.56.5",
+    "@types/jest": "^29.5.14",
     "@types/react": "^18",
     "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "typescript": "^5.3.3"
   },
   "dependencies": {
+    "@swc/core": "^1.9.1",
+    "@swc/jest": "^0.2.37",
     "react": "19.0.0-rc-1631855f-20241023"
   }
 }

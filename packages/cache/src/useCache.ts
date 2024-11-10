@@ -1,12 +1,14 @@
 import { useSyncExternalStore } from 'react';
 
-import { type CacheEntry, UseCacheKey, cacheStore } from './cacheStore';
+import { UseCacheKey, cacheStore } from './cacheStore';
 
 export function useCache<T>(key: UseCacheKey, asyncFunction: () => Promise<T>): T {
 	const cacheKey = cacheStore.getKey(key);
 
-	const cache = useSyncExternalStore(cacheStore.subscribe, cacheStore.getSnapshot);
-	const state = cache[cacheKey] as CacheEntry<T> | undefined;
+	const state = useSyncExternalStore(
+		listener => cacheStore.subscribe(listener, cacheKey),
+		() => cacheStore.getSnapshot<T>(cacheKey)
+	);
 
 	if (state?.result !== undefined) {
 		return state.result;
