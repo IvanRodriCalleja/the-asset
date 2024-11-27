@@ -1,9 +1,12 @@
 mod decrypt;
+mod file_size;
 mod hash;
 mod merge;
+mod merge_tool;
 mod models;
 mod page;
 mod pdf_result;
 mod remove;
 mod rotate;
 mod thumbnail;
+mod traits;

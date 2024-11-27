@@ -4,12 +4,12 @@ use wasm_bindgen::prelude::*;
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};
 
-#[wasm_bindgen]
-pub fn get_pdf_hash(buffer: Vec<u8>) -> String {
-  let pdfium = Pdfium::default();
-  let document = pdfium.load_pdf_from_byte_vec(buffer, None).unwrap();
+pub fn get_pdf_hash(buffer: &Vec<u8>) -> String {
+  let mut hasher = DefaultHasher::new();
+  buffer.hash(&mut hasher);
+  let hash = hasher.finish();
 
-  get_hash(&document).unwrap()
+  hash.to_string()
 }
 
 pub fn get_hash(document: &PdfDocument) -> Result<String, Box<dyn std::error::Error>> {

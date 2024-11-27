@@ -1,6 +1,8 @@
 'use client';
 
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
+import { ThePdfActionsProvider } from '@theasset/pdf-react/context/the-pdf-actions-context';
+import { mergeManager } from '@theasset/pdf-tools';
 import { Box, styled } from '@theasset/style-system/jsx';
 import { FilePicker } from '@theasset/ui/file-picker';
 import { HighlightColor, HighlightMaker } from '@theasset/ui/highlight-maker';
@@ -38,7 +40,9 @@ export const MergePdf = () => {
 					buttonText={mergePdf.uploadPdf}
 					preview={props => {
 						return (
-							<>
+							<ThePdfActionsProvider
+								getThumbnail={mergeManager.getThumbnail}
+								getTotalPages={mergeManager.getTotalPages}>
 								<Box marginBottom="89px">
 									<FilePreview {...props} />
 								</Box>
@@ -58,7 +62,7 @@ export const MergePdf = () => {
 									<AddMorePdfsButton open={props.open} />
 									<MergeButton files={props.files} />
 								</Box>
-							</>
+							</ThePdfActionsProvider>
 						);
 					}}>
 					<MainSection

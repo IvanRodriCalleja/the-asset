@@ -1,7 +1,7 @@
 import { ChevronDownIcon, DownloadIcon, ReloadIcon } from '@radix-ui/react-icons';
 
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
+import { FileState, mergeManager } from '@theasset/pdf-tools';
 import { Stack, styled } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
 import { Link } from '@theasset/ui/next/link';
@@ -10,7 +10,7 @@ import { downloadFile } from 'modules/shared/infra/downloadFile';
 import { mergePdfPath } from 'routes';
 
 type MergePdfResultConfigActionsProps = {
-	file: TheAssetFile;
+	file: FileState;
 	fileName: string;
 	isOpen: boolean;
 	toggleOpen: () => void;
@@ -44,8 +44,9 @@ export const MergePdfResultConfigActions = ({
 }: MergePdfResultConfigActionsProps) => {
 	const { shared, mergePdfResult } = useLocale();
 
-	const onDownload = () => {
-		downloadFile(file.buffer, fileName, 'application/pdf');
+	const onDownload = async () => {
+		const buffer = await mergeManager.getFile(file.id);
+		downloadFile(buffer, fileName, 'application/pdf');
 	};
 
 	return (

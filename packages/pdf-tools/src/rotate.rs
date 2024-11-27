@@ -1,7 +1,15 @@
+use core::hash;
+use std::io::Cursor;
+
+use image::buffer;
+use lopdf::Document;
 use pdfium_render::prelude::*;
 use wasm_bindgen::prelude::*;
 
-use crate::{hash::get_hash, pdf_result::PdfResult};
+use crate::{
+  hash::{get_hash, get_pdf_hash},
+  pdf_result::PdfResult,
+};
 
 #[wasm_bindgen]
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -10,40 +18,74 @@ pub enum Direction {
   Right,
 }
 
-#[wasm_bindgen]
-pub fn rotate_pdf_page(buffer: Vec<u8>, index: PdfPageIndex, direction: Direction) -> PdfResult {
-  let pdfium = Pdfium::default();
-  let document = pdfium.load_pdf_from_byte_vec(buffer, None).unwrap();
+pub fn rotate_pdf_page(buffer: Vec<u8>, index: u32, direction: Direction) -> PdfResult {
+  let angle = match direction {
+    Direction::Right => 90,
+    Direction::Left => -90,
+  };
 
-  let mut page = document.pages().get(index).unwrap();
-  let current_rotation = page.rotation().unwrap_or(PdfPageRenderRotation::None);
+  let mut doc = Document::load_mem(&buffer).unwrap();
 
-  let new_rotation = calculate_new_rotation(current_rotation, direction);
+  use web_sys::console;
 
-  page.set_rotation(new_rotation);
+  console::log_1(&"Hello using web-sys".into());
 
-  PdfResult::new(
-    document.save_to_bytes().unwrap(),
-    get_hash(&document).unwrap(),
-  )
-}
+  if let Some(&page_id) = doc.get_pages().get(&index) {
+    console::log_1(&"Yaaaa".into());
+    // Obtiene el diccionario de la página
+    let page_dict = doc
+      .get_object_mut(page_id)
+      .and_then(|obj| obj.as_dict_mut())
+      .expect("¡Falta la página!");
 
-#[wasm_bindgen]
-pub fn rotate_pdf(buffer: Vec<u8>, direction: Direction) -> PdfResult {
-  let pdfium = Pdfium::default();
-  let document = pdfium.load_pdf_from_byte_vec(buffer, None).unwrap();
+    // Obtiene la rotación actual si existe; el valor predeterminado es 0
+    let current_rotation = page_dict
+      .get(b"Rotate")
+      .and_then(|obj| obj.as_i64())
+      .unwrap_or(0);
 
-  for mut page in document.pages().iter() {
-    let current_rotation = page.rotation().unwrap_or(PdfPageRenderRotation::None);
-    let new_rotation = calculate_new_rotation(current_rotation, direction);
-
-    page.set_rotation(new_rotation);
+    // Suma el ángulo y actualiza
+    page_dict.set("Rotate", (current_rotation + angle) % 360);
   }
 
-  PdfResult::new(
-    document.save_to_bytes().unwrap(),
-    get_hash(&document).unwrap(),
-  )
+  let mut buffer = Cursor::new(Vec::new());
+  doc.save_to(&mut buffer).unwrap();
+
+  let buffer = buffer.into_inner();
+
+  PdfResult::new(buffer.clone(), get_pdf_hash(&buffer))
+}
+
+pub fn rotate_pdf(buffer: Vec<u8>, direction: Direction) -> PdfResult {
+  let angle = match direction {
+    Direction::Right => 90,
+    Direction::Left => -90,
+  };
+
+  let mut doc = Document::load_mem(&buffer).unwrap();
+
+  for (_, page_id) in doc.get_pages() {
+    let page_dict = doc
+      .get_object_mut(page_id)
+      .and_then(|obj| obj.as_dict_mut())
+      .expect("Missing page!");
+
+    // Get the current rotation if any; the default is 0
+    let current_rotation = page_dict
+      .get(b"Rotate")
+      .and_then(|obj| obj.as_i64())
+      .unwrap_or(0);
+
+    // Add the angle and update
+    page_dict.set("Rotate", (current_rotation + angle) % 360);
+  }
+
+  let mut buffer = Cursor::new(Vec::new());
+  doc.save_to(&mut buffer).unwrap();
+
+  let buffer = buffer.into_inner();
+
+  PdfResult::new(buffer.clone(), get_pdf_hash(&buffer))
 }
 
 fn calculate_new_rotation(

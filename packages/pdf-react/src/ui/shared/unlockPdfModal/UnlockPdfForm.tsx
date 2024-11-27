@@ -4,9 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import z from 'zod';
 
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
-import { decryptPdf } from '@theasset/pdf-tools';
+import { FileState, UpdatedFileState, mergeManager } from '@theasset/pdf-tools';
 import { PdfToolsError, PdfToolsErrorCodes } from '@theasset/pdf-tools/types';
 import { RHFFieldPassword } from '@theasset/ui/fields/password';
 import { Form } from '@theasset/ui/form';
@@ -16,8 +15,8 @@ type UnlockPdf = {
 };
 
 type UnlockPdfFormProps = {
-	file: TheAssetFile;
-	onUnlockPdf: (decryptedFile: { buffer: Uint8Array; hash: string }) => Promise<void>;
+	file: FileState;
+	onUnlockPdf: (decryptedFile: UpdatedFileState) => Promise<void>;
 };
 
 export const UnlockPdfForm = ({ file, onUnlockPdf }: UnlockPdfFormProps) => {
@@ -37,7 +36,7 @@ export const UnlockPdfForm = ({ file, onUnlockPdf }: UnlockPdfFormProps) => {
 
 	const onSubmit = async ({ password }: UnlockPdf) => {
 		try {
-			const decryptedFile = await decryptPdf({ buffer: file.buffer, password });
+			const decryptedFile = await mergeManager.decryptPdf(file.id, password);
 
 			return onUnlockPdf(decryptedFile);
 		} catch (error) {

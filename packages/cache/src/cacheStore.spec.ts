@@ -109,7 +109,7 @@ describe('TheAssetStore', () => {
 		expect(cacheStore.store[key]).toBeDefined();
 		expect(cacheStore.getResult(key)).toBeDefined();
 
-		jest.advanceTimersByTime(5000);
+		jest.advanceTimersByTime(30000);
 
 		expect(cacheStore.store[key]).toBeUndefined();
 		expect(cacheStore.getResult(key)).toBeUndefined();

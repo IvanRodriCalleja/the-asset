@@ -4,8 +4,7 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./domain/the-asset-file": "./src/domain/TheAssetFile.ts",
-    "./infra/get-file-size": "./src/infra/getFileSize.ts"
+    "./domain/the-asset-file": "./src/domain/TheAssetFile.ts"
   },
   "scripts": {
     "lint": "eslint src --ext .ts,.tsx --quiet --cache",

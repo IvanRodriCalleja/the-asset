@@ -1,6 +1,6 @@
 import { useState, useTransition } from 'react';
 
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
+import { FileState } from '@theasset/pdf-tools';
 import { css } from '@theasset/style-system/css';
 import { Box } from '@theasset/style-system/jsx';
 import { ThumbnailImage } from '@theasset/ui/thumbnail';
@@ -16,7 +16,7 @@ type ChildrenProps = {
 };
 
 type ModalViewerProps = {
-	file: TheAssetFile;
+	file: FileState;
 	children: (props: ChildrenProps) => JSX.Element;
 };
 

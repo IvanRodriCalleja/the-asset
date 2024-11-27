@@ -2,9 +2,9 @@ import { Dispatch, ReactNode, SetStateAction } from 'react';
 
 import { ErrorBoundary } from 'react-error-boundary';
 
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { getSingularOrPlural } from '@theasset/internationalization/infra/get-singular-or-plural';
+import { FileState } from '@theasset/pdf-tools';
 import { Box } from '@theasset/style-system/jsx';
 import { Badge } from '@theasset/ui/badge';
 import {
@@ -23,8 +23,8 @@ import { ThumbnailSkeletonDesktop } from './pdfThumbnailDesktop/ThumbnailSkeleto
 import { FileName } from './shared/FileName';
 
 export type ThumbnailProps = {
-	file: TheAssetFile;
-	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
+	file: FileState;
+	setFiles: Dispatch<SetStateAction<FileState[]>>;
 	actions?: (props: ActionProps) => ReactNode;
 };
 
@@ -42,13 +42,13 @@ export const PdfThumbnailDesktop = (props: ThumbnailProps) => {
 };
 
 type ActionProps = {
-	file: TheAssetFile;
-	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
+	file: FileState;
+	setFiles: Dispatch<SetStateAction<FileState[]>>;
 };
 
 type PdfThumbnailProps = {
-	file: TheAssetFile;
-	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
+	file: FileState;
+	setFiles: Dispatch<SetStateAction<FileState[]>>;
 	actions?: (props: ActionProps) => ReactNode;
 };
 

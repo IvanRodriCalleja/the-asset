@@ -1,19 +1,18 @@
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
-import { getFileSize } from '@theasset/file/infra/get-file-size';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { getSingularOrPlural } from '@theasset/internationalization/infra/get-singular-or-plural';
 import { usePages } from '@theasset/pdf-react/hooks/use-pages';
+import { FileState, mergeManager } from '@theasset/pdf-tools';
 import { Text } from '@theasset/ui/text';
 
 type FileMetadataProps = {
-	file: TheAssetFile;
+	file: FileState;
 };
 
 export const FileMetadata = ({ file }: FileMetadataProps) => {
 	const { shared } = useLocale();
 	const pages = usePages(file);
 
-	const size = getFileSize(file.buffer);
+	const size = mergeManager.getFileSize(file.id);
 
 	return (
 		<Text size="xs" color="textClear" family="mono" data-testid="result-metadata">

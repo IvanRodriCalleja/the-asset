@@ -46,7 +46,6 @@ impl GetThumbnailResult {
   }
 }
 
-#[wasm_bindgen]
 pub fn get_thumbnail(buffer: Vec<u8>, index: PdfPageIndex) -> Result<GetThumbnailResult, JsValue> {
   let pdfium = Pdfium::default();
   let document = match pdfium.load_pdf_from_byte_vec(buffer, None) {

@@ -3,9 +3,9 @@ import { Dispatch, ReactNode, SetStateAction, useEffect, useTransition } from 'r
 import { DragHandleDots2Icon } from '@radix-ui/react-icons';
 import { FallbackProps } from 'react-error-boundary';
 
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { getSingularOrPlural } from '@theasset/internationalization/infra/get-singular-or-plural';
+import { FileState, UpdatedFileState } from '@theasset/pdf-tools';
 import { PdfToolsError, PdfToolsErrorCodes } from '@theasset/pdf-tools/types';
 import { Box, Flex, Stack, styled } from '@theasset/style-system/jsx';
 import { Badge } from '@theasset/ui/badge';
@@ -39,14 +39,14 @@ const BadgeEncrypted = styled('div', {
 });
 
 type PdfEncryptedThumbnailMobileProps = FallbackProps & {
-	file: TheAssetFile;
-	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
+	file: FileState;
+	setFiles: Dispatch<SetStateAction<FileState[]>>;
 	actions?: (props: ActionProps) => ReactNode;
 };
 
 type ActionProps = {
-	file: TheAssetFile;
-	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
+	file: FileState;
+	setFiles: Dispatch<SetStateAction<FileState[]>>;
 };
 
 export const PdfEncryptedThumbnailMobile = ({
@@ -75,7 +75,7 @@ export const PdfEncryptedThumbnailMobile = ({
 		});
 	}, []);
 
-	const onUnlockPdf = async ({ buffer, hash }: { buffer: Uint8Array; hash: string }) => {
+	const onUnlockPdf = async (fileState: UpdatedFileState) => {
 		await startTransition(() =>
 			setFiles(files => {
 				const fileIndex = files.findIndex(({ id }) => id === file.id);
@@ -83,9 +83,7 @@ export const PdfEncryptedThumbnailMobile = ({
 				const newFiles = [...files];
 				newFiles[fileIndex] = {
 					...file,
-					hash,
-					buffer,
-					isEncrypted: false
+					...fileState
 				};
 
 				return newFiles;
@@ -121,7 +119,6 @@ export const PdfEncryptedThumbnailMobile = ({
 							<Text size="xs" color="textClear" family="mono">
 								{mergePdf.thumbnailError}
 							</Text>
-							<UnlockPdfModal file={file} onUnlockPdf={onUnlockPdf} isPending={isPending} />
 						</BadgeEncrypted>
 					)}
 				</Box>

@@ -5,7 +5,7 @@ import { Dispatch, PropsWithChildren, ReactNode, SetStateAction } from 'react';
 import { UploadIcon } from '@radix-ui/react-icons';
 import { Accept, useDropzone } from 'react-dropzone';
 
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
+import { FileState } from '@theasset/pdf-tools';
 import { css } from '@theasset/style-system/css';
 import { Box, Stack, styled } from '@theasset/style-system/jsx';
 
@@ -35,8 +35,8 @@ const DragOverlay = styled('div', {
 });
 
 type FilePickerPreviewProps = {
-	files: TheAssetFile[];
-	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
+	files: FileState[];
+	setFiles: Dispatch<SetStateAction<FileState[]>>;
 	open: () => void;
 };
 

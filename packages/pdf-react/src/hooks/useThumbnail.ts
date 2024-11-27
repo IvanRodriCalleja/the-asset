@@ -1,15 +1,17 @@
 import { useCache } from '@theasset/cache/useCache';
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
-import { getThumbnail } from '@theasset/pdf-tools';
+import { type FileState } from '@theasset/pdf-tools';
+
+import { useThePdfActions } from '../context/ThePdfActionsContext';
 
 type UseThumbnailProps = {
-	file: TheAssetFile;
+	file: FileState;
 	page?: number;
 };
 
 export const useThumbnail = ({ file, page = 0 }: UseThumbnailProps) => {
+	const { getThumbnail } = useThePdfActions();
 	const thumbnail = useCache({ hash: file.hash, type: 'image', page }, () =>
-		getThumbnail({ buffer: new Uint8Array(file.buffer), page })
+		getThumbnail(file.id, page)
 	);
 
 	return thumbnail;

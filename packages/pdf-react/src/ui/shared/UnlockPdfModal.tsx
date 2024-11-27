@@ -1,7 +1,7 @@
 import { LockOpen2Icon } from '@radix-ui/react-icons';
 
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
+import { FileState, UpdatedFileState } from '@theasset/pdf-tools';
 import { Button } from '@theasset/ui/button';
 import {
 	ModalBody,
@@ -16,9 +16,9 @@ import {
 import { UnlockPdfForm } from './unlockPdfModal/UnlockPdfForm';
 
 type UnlockPdfModalProps = {
-	file: TheAssetFile;
+	file: FileState;
 	isPending: boolean;
-	onUnlockPdf: (decryptedFile: { buffer: Uint8Array; hash: string }) => Promise<void>;
+	onUnlockPdf: (decryptedFile: UpdatedFileState) => Promise<void>;
 };
 
 export const UnlockPdfModal = ({ file, isPending, onUnlockPdf }: UnlockPdfModalProps) => {

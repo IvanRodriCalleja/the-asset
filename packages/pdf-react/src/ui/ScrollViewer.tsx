@@ -1,13 +1,13 @@
 import { useRef } from 'react';
 
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
+import { FileState } from '@theasset/pdf-tools';
 import { Stack } from '@theasset/style-system/jsx';
 
 import { usePages } from '../hooks/usePages';
 import { ScrollViewerPageViewPort } from './scrollViewer/ScrollViewerPageViewPort';
 
 type ScrollViewerProps = {
-	file: TheAssetFile;
+	file: FileState;
 };
 
 export const ScrollViewer = ({ file }: ScrollViewerProps) => {

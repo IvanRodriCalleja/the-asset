@@ -26,4 +26,5 @@ pub enum PdfToolsErrorCodes {
   LoadError = 2,
   WrongPassword = 3,
   DecryptionError = 4,
+  MalformedPdf = 5,
 }

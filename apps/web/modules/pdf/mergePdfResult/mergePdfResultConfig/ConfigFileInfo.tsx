@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, Suspense } from 'react';
 
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
+import { FileState } from '@theasset/pdf-tools';
 import { css } from '@theasset/style-system/css';
 import { Stack, styled } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
@@ -21,7 +21,7 @@ const FileName = styled(Text, {
 });
 
 type ConfigFileInfoProps = {
-	file: TheAssetFile;
+	file: FileState;
 	name: string;
 	setName: Dispatch<SetStateAction<string>>;
 };

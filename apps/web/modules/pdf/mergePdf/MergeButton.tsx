@@ -5,10 +5,9 @@ import { useParams, useRouter } from 'next/navigation';
 import Merge from 'assets/tools/merge.svg';
 
 import { cacheStore } from '@theasset/cache/store';
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { Loading } from '@theasset/icons/loading';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
-import { mergePdfs } from '@theasset/pdf-tools';
+import { FileState, mergeManager } from '@theasset/pdf-tools';
 import { Stack } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
 import { replaceParams } from '@theasset/ui/utils/replaceParams';
@@ -16,7 +15,7 @@ import { replaceParams } from '@theasset/ui/utils/replaceParams';
 import { mergePdfIdPath } from 'routes';
 
 type MergeButtonProps = {
-	files: TheAssetFile[];
+	files: FileState[];
 };
 
 export const MergeButton = ({ files }: MergeButtonProps) => {
@@ -30,16 +29,11 @@ export const MergeButton = ({ files }: MergeButtonProps) => {
 	const onMerge = async () => {
 		await startTransition(async () => {
 			const decryptedFiles = files.filter(file => !file.isEncrypted);
-			const { buffer, hash } = await mergePdfs({
-				buffers: decryptedFiles.map(file => file.buffer)
-			});
+			const { hash } = await mergeManager.mergePdfs(decryptedFiles.map(file => file.id));
 
-			const id = new Date().getTime().toString();
-
-			const resultFile: TheAssetFile = {
-				id,
+			const resultFile: FileState = {
+				id: hash,
 				hash,
-				buffer,
 				name: decryptedFiles[0]!.name,
 				isEncrypted: false
 			};

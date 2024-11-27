@@ -1,11 +1,11 @@
 import { useCache } from '@theasset/cache/useCache';
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
-import { getTotalPages } from '@theasset/pdf-tools';
+import { FileState } from '@theasset/pdf-tools';
 
-export const usePages = (file: TheAssetFile): number => {
-	const pages = useCache({ hash: file.hash, type: 'pages' }, () =>
-		getTotalPages(new Uint8Array(file.buffer))
-	);
+import { useThePdfActions } from '../context/ThePdfActionsContext';
+
+export const usePages = (file: FileState): number => {
+	const { getTotalPages } = useThePdfActions();
+	const pages = useCache({ hash: file.hash, type: 'pages' }, () => getTotalPages(file.id));
 
 	return pages;
 };

@@ -2,8 +2,8 @@ import { Dispatch, SetStateAction, startTransition } from 'react';
 
 import { ReloadIcon, TrashIcon } from '@radix-ui/react-icons';
 
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
+import { FileState } from '@theasset/pdf-tools';
 import { Direction } from '@theasset/pdf-tools/types';
 import { Button } from '@theasset/ui/button';
 import { Tooltip, TooltipTrigger } from '@theasset/ui/tooltip';
@@ -13,8 +13,8 @@ import { useMergePdfActions } from '../useMergePdfActions';
 type ViewerActionsProps = {
 	page: number;
 	totalPages: number;
-	file: TheAssetFile;
-	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
+	file: FileState;
+	setFiles: Dispatch<SetStateAction<FileState[]>>;
 	setPage: (page: number) => void;
 };
 

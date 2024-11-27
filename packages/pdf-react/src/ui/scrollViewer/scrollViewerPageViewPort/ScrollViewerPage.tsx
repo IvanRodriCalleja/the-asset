@@ -1,13 +1,13 @@
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { getSingularOrPlural } from '@theasset/internationalization/infra/get-singular-or-plural';
+import { FileState } from '@theasset/pdf-tools';
 import { ThumbnailImage } from '@theasset/ui/thumbnail';
 
 import { useThumbnail } from '../../../hooks/useThumbnail';
 
 type ScrollViewerPageProps = {
 	page: number;
-	file: TheAssetFile;
+	file: FileState;
 };
 
 export const ScrollViewerPage = ({ page, file }: ScrollViewerPageProps) => {

@@ -26,5 +26,5 @@ pub fn decrypt_pdf(buffer: Vec<u8>, password: &str) -> Result<PdfResult, JsValue
 
   let buffer = buffer.into_inner();
 
-  Ok(PdfResult::new(buffer.clone(), get_pdf_hash(buffer)))
+  Ok(PdfResult::new(buffer.clone(), get_pdf_hash(&buffer)))
 }

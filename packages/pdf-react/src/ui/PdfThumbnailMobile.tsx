@@ -3,9 +3,9 @@ import { Dispatch, ReactNode, SetStateAction } from 'react';
 import { DragHandleDots2Icon } from '@radix-ui/react-icons';
 import { ErrorBoundary } from 'react-error-boundary';
 
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { getSingularOrPlural } from '@theasset/internationalization/infra/get-singular-or-plural';
+import { FileState } from '@theasset/pdf-tools';
 import { Box, Flex, Stack, styled } from '@theasset/style-system/jsx';
 import { Badge } from '@theasset/ui/badge';
 import { SortableDragHandle } from '@theasset/ui/sortable';
@@ -23,8 +23,8 @@ import { PdfThumbnailErrorMobile } from './pdfThumbnailMobile/PdfThumbnailErrorM
 import { ThumbnailSkeletonMobile } from './pdfThumbnailMobile/ThumbnailSkeletonMobile';
 
 type PdfThumbnailMobileProp = {
-	file: TheAssetFile;
-	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
+	file: FileState;
+	setFiles: Dispatch<SetStateAction<FileState[]>>;
 	actions?: (props: ActionProps) => ReactNode;
 };
 
@@ -38,13 +38,13 @@ export const PdfThumbnailMobile = (props: PdfThumbnailMobileProp) => (
 );
 
 type ActionProps = {
-	file: TheAssetFile;
-	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
+	file: FileState;
+	setFiles: Dispatch<SetStateAction<FileState[]>>;
 };
 
 type PdfThumbnailProps = {
-	file: TheAssetFile;
-	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
+	file: FileState;
+	setFiles: Dispatch<SetStateAction<FileState[]>>;
 	actions?: (props: ActionProps) => ReactNode;
 };
 

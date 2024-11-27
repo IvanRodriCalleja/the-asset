@@ -2,8 +2,9 @@
 
 import { Suspense, useState } from 'react';
 
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
+import { ThePdfActionsProvider } from '@theasset/pdf-react/context/the-pdf-actions-context';
 import { ScrollViewer } from '@theasset/pdf-react/ui/scroll-viewer';
+import { FileState, mergeManager } from '@theasset/pdf-tools';
 import { Flex } from '@theasset/style-system/jsx';
 
 import { InnerScrollSection } from 'modules/shared/ui/InnerScrollSection';
@@ -14,7 +15,7 @@ import { MergePdfResultSidebar } from './mergePdfResult/MergePdfResultSidebar';
 import { MergePdfResultSkeleton } from './mergePdfResult/MergePdfResultSkeleton';
 
 type MergePdfResultProps = {
-	file: TheAssetFile;
+	file: FileState;
 };
 
 export const MergePdfResult = ({ file }: MergePdfResultProps) => {
@@ -24,17 +25,21 @@ export const MergePdfResult = ({ file }: MergePdfResultProps) => {
 
 	return (
 		<InnerScrollSection>
-			<Flex direction="row" height="100%">
-				<MergePdfResultFileContainer>
-					<Suspense fallback={<MergePdfResultSkeleton />}>
-						<ScrollViewer file={file} />
-					</Suspense>
-				</MergePdfResultFileContainer>
+			<ThePdfActionsProvider
+				getThumbnail={mergeManager.getThumbnail}
+				getTotalPages={mergeManager.getTotalPages}>
+				<Flex direction="row" height="100%">
+					<MergePdfResultFileContainer>
+						<Suspense fallback={<MergePdfResultSkeleton />}>
+							<ScrollViewer file={file} />
+						</Suspense>
+					</MergePdfResultFileContainer>
 
-				<MergePdfResultSidebar isOpen={isOpen}>
-					<MergePdfResultConfig file={file} isOpen={isOpen} toggleOpen={toggleOpen} />
-				</MergePdfResultSidebar>
-			</Flex>
+					<MergePdfResultSidebar isOpen={isOpen}>
+						<MergePdfResultConfig file={file} isOpen={isOpen} toggleOpen={toggleOpen} />
+					</MergePdfResultSidebar>
+				</Flex>
+			</ThePdfActionsProvider>
 		</InnerScrollSection>
 	);
 };

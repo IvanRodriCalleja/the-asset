@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { CrumpledPaperIcon } from '@radix-ui/react-icons';
 
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
+import { FileState } from '@theasset/pdf-tools';
 import { Box, Stack } from '@theasset/style-system/jsx';
 import { Separator } from '@theasset/ui/separator';
 
@@ -12,7 +12,7 @@ import { ContinueTool, ContinueWith } from './mergePdfResultConfig/ContinueWith'
 import { MergePdfResultConfigActions } from './mergePdfResultConfig/MergePdfResultConfigActions';
 
 type MergePdfResultConfigProps = {
-	file: TheAssetFile;
+	file: FileState;
 	isOpen: boolean;
 	toggleOpen: () => void;
 };

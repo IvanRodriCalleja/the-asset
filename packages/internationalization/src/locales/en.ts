@@ -17,10 +17,6 @@ const en = {
 		card: {
 			description: 'Combine multiple PDFs in the order you want and rotate them easily.'
 		},
-		invalidPdfError: {
-			title: 'Invalid PDF file(s)',
-			description: 'Invalid PDF content for files:'
-		},
 		thumbnailError: "We couldn't open this PDF. It may be corrupted or may not be supported.",
 		unlockPdf: {
 			title: 'Unlock PDF with password',

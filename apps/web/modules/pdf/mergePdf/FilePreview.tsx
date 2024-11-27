@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from 'react';
 
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
+import { FileState } from '@theasset/pdf-tools';
 import { breakpoints } from '@theasset/style-system/breakpoints';
 import { useMediaQuery } from '@theasset/utilities-react/use-media-query';
 
@@ -8,8 +8,8 @@ import { FilePreviewDesktop } from './filePreview/FilePreviewDesktop';
 import { FilePreviewMobile } from './filePreview/FilePreviewMobile';
 
 export type FilePreviewProps = {
-	files: TheAssetFile[];
-	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
+	files: FileState[];
+	setFiles: Dispatch<SetStateAction<FileState[]>>;
 };
 
 export const FilePreview = (props: FilePreviewProps) => {

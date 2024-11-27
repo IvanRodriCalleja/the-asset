@@ -2,8 +2,8 @@ import { Dispatch, SetStateAction } from 'react';
 
 import { MagnifyingGlassIcon, ReloadIcon, TrashIcon } from '@radix-ui/react-icons';
 
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
+import { FileState } from '@theasset/pdf-tools';
 import { Direction } from '@theasset/pdf-tools/types';
 import { ThumbnailActionButton, ThumbnailActions } from '@theasset/ui/thumbnail';
 
@@ -11,8 +11,8 @@ import { ViewerModalAction } from '../shared/ViewerModalAction';
 import { useMergePdfActions } from '../shared/useMergePdfActions';
 
 type MergePdfActionsDesktopProp = {
-	file: TheAssetFile;
-	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
+	file: FileState;
+	setFiles: Dispatch<SetStateAction<FileState[]>>;
 };
 
 export const MergePdfActionsDesktop = (props: MergePdfActionsDesktopProp) => <Actions {...props} />;

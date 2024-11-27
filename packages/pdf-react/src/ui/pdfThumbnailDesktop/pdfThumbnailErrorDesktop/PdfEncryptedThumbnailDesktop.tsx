@@ -2,8 +2,8 @@ import { Dispatch, ReactNode, SetStateAction, useEffect, useTransition } from 'r
 
 import { FallbackProps } from 'react-error-boundary';
 
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
+import { FileState, UpdatedFileState } from '@theasset/pdf-tools';
 import { PdfToolsError, PdfToolsErrorCodes } from '@theasset/pdf-tools/types';
 import { styled } from '@theasset/style-system/jsx';
 import { Text } from '@theasset/ui/text';
@@ -13,14 +13,14 @@ import { FileName } from '../../shared/FileName';
 import { UnlockPdfModal } from '../../shared/UnlockPdfModal';
 
 type ThumbnailEncryptedProps = FallbackProps & {
-	file: TheAssetFile;
-	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
+	file: FileState;
+	setFiles: Dispatch<SetStateAction<FileState[]>>;
 	actions?: (props: ActionProps) => ReactNode;
 };
 
 type ActionProps = {
-	file: TheAssetFile;
-	setFiles: Dispatch<SetStateAction<TheAssetFile[]>>;
+	file: FileState;
+	setFiles: Dispatch<SetStateAction<FileState[]>>;
 };
 
 const BadgeEncrypted = styled('div', {
@@ -63,7 +63,7 @@ export const PdfEncryptedThumbnailDesktop = ({
 		});
 	}, []);
 
-	const onUnlockPdf = async ({ buffer, hash }: { buffer: Uint8Array; hash: string }) => {
+	const onUnlockPdf = async (fileState: UpdatedFileState) => {
 		await startTransition(() =>
 			setFiles(files => {
 				const fileIndex = files.findIndex(({ id }) => id === file.id);
@@ -71,9 +71,7 @@ export const PdfEncryptedThumbnailDesktop = ({
 				const newFiles = [...files];
 				newFiles[fileIndex] = {
 					...file,
-					hash,
-					buffer,
-					isEncrypted: false
+					...fileState
 				};
 
 				return newFiles;

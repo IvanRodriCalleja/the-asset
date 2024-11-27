@@ -12,6 +12,7 @@ export type UseCacheKey = string | Record<string, string | number | boolean>;
 export class TheAssetStore {
 	store: Store = {};
 	listeners = new Map<UseCacheKey, Set<() => void>>();
+	// eslint-disable-next-line no-undef
 	timeouts = new Map<string, NodeJS.Timeout>();
 
 	constructor() {}
@@ -53,7 +54,7 @@ export class TheAssetStore {
 					const timeoutId = setTimeout(() => {
 						this.removeEntry(cacheKey);
 						this.timeouts.delete(cacheKey);
-					}, 5000);
+					}, 30000); // TODO: Set in a variable or config
 
 					this.timeouts.set(cacheKey, timeoutId);
 				}

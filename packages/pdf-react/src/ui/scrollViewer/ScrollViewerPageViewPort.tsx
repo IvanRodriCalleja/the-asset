@@ -1,6 +1,6 @@
 import { RefObject, Suspense } from 'react';
 
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
+import { FileState } from '@theasset/pdf-tools';
 import { Box } from '@theasset/style-system/jsx';
 import { useIntersectionObserver } from '@theasset/ui/utils/use-intersection-observer';
 
@@ -9,7 +9,7 @@ import { ScrollViewerPage } from './scrollViewerPageViewPort/ScrollViewerPage';
 
 type ScrollViewerPageViewPortProps = {
 	page: number;
-	file: TheAssetFile;
+	file: FileState;
 	rootRef: RefObject<HTMLDivElement>;
 };
 

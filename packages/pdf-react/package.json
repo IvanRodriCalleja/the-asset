@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "exports": {
+    "./context/the-pdf-actions-context": "./src/context/ThePdfActionsContext.tsx",
     "./ui/modal-viewer": "./src/ui/ModalViewer.tsx",
     "./hooks/use-pages": "./src/hooks/usePages.ts",
     "./hooks/use-thumbnail": "./src/hooks/useThumbnail.ts",

@@ -5,7 +5,7 @@ import { use } from 'react';
 import { redirect } from 'next/navigation';
 
 import { cacheStore } from '@theasset/cache/store';
-import { TheAssetFile } from '@theasset/file/domain/the-asset-file';
+import { FileState } from '@theasset/pdf-tools';
 import { replaceParams } from '@theasset/ui/utils/replaceParams';
 
 import { MergePdfResult } from 'modules/pdf/MergePdfResult';
@@ -19,7 +19,7 @@ type MergeResultProps = {
 
 const MergePdfResultPage = ({ params }: MergeResultProps) => {
 	const parameters = use(params);
-	const file = cacheStore.getResult<TheAssetFile>(parameters.id);
+	const file = cacheStore.getResult<FileState>(parameters.id);
 
 	if (!file) {
 		redirect(replaceParams(mergePdfPath, parameters));
