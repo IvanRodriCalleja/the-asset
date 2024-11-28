@@ -13,9 +13,8 @@ export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
 
 	const onRemoveFile = () => {
 		startTransition(() => {
-			setFiles(currentFiles => {
-				return currentFiles.filter(({ id }) => file.id !== id);
-			});
+			setFiles(currentFiles => currentFiles.filter(({ id }) => file.id !== id));
+			mergeManager.removeFile(file.id);
 		});
 	};
 
@@ -26,7 +25,6 @@ export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
 			const fileIndex = files.findIndex(({ id }) => id === file.id);
 
 			const newFiles = [...files];
-			const file = newFiles[fileIndex]!;
 			newFiles[fileIndex] = {
 				...file,
 				...result
@@ -43,7 +41,6 @@ export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
 				const fileIndex = files.findIndex(({ id }) => id === file.id);
 
 				const newFiles = [...files];
-				const file = newFiles[fileIndex]!;
 				newFiles[fileIndex] = {
 					...file,
 					...result
@@ -62,7 +59,6 @@ export const useMergePdfActions = ({ file, setFiles }: UseMergePdfActions) => {
 				const fileIndex = files.findIndex(({ id }) => id === file.id);
 
 				const newFiles = [...files];
-				const file = newFiles[fileIndex]!;
 				newFiles[fileIndex] = {
 					...file,
 					...result

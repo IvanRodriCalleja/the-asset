@@ -57,16 +57,6 @@ export enum Direction {
   Right = 1,
 }
 /**
-*/
-export enum PdfToolsErrorCodes {
-  Unknown = 0,
-  PasswordError = 1,
-  LoadError = 2,
-  WrongPassword = 3,
-  DecryptionError = 4,
-  MalformedPdf = 5,
-}
-/**
 * Chroma subsampling format
 */
 export enum ChromaSampling {
@@ -86,6 +76,16 @@ export enum ChromaSampling {
 * Monochrome.
 */
   Cs400 = 3,
+}
+/**
+*/
+export enum PdfToolsErrorCodes {
+  Unknown = 0,
+  PasswordError = 1,
+  LoadError = 2,
+  WrongPassword = 3,
+  DecryptionError = 4,
+  MalformedPdf = 5,
 }
 /**
 */
@@ -164,6 +164,10 @@ export class MergeToolManager {
 * @returns {GetThumbnailResult}
 */
   get_thumbnail(id: string, page: number): GetThumbnailResult;
+/**
+* @param {string} id
+*/
+  remove_file(id: string): void;
 /**
 * @param {string} id
 * @returns {number}
@@ -252,6 +256,7 @@ export interface InitOutput {
   readonly mergetoolmanager_new: () => number;
   readonly mergetoolmanager_add_file: (a: number, b: number) => void;
   readonly mergetoolmanager_get_thumbnail: (a: number, b: number, c: number, d: number, e: number) => void;
+  readonly mergetoolmanager_remove_file: (a: number, b: number, c: number) => void;
   readonly mergetoolmanager_get_total_pages: (a: number, b: number, c: number) => number;
   readonly mergetoolmanager_rotate_pdf: (a: number, b: number, c: number, d: number) => number;
   readonly mergetoolmanager_rotate_pdf_page: (a: number, b: number, c: number, d: number, e: number) => number;

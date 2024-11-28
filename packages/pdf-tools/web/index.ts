@@ -75,6 +75,14 @@ class Manager {
 		}));
 	};
 
+	public removeFile = async (id: string): Promise<void> => {
+		if (this.addingPromises.has(id)) {
+			await this.addingPromises.get(id);
+		}
+
+		this.mergeToolManager.remove_file(id);
+	};
+
 	public getThumbnail = async (id: string, page: number): Promise<GetThumbnailResult> => {
 		if (this.addingPromises.has(id)) {
 			await this.addingPromises.get(id);

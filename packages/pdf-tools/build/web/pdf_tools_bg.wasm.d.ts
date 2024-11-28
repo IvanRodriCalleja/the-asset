@@ -10,6 +10,7 @@ export function __wbg_mergetoolmanager_free(a: number, b: number): void;
 export function mergetoolmanager_new(): number;
 export function mergetoolmanager_add_file(a: number, b: number): void;
 export function mergetoolmanager_get_thumbnail(a: number, b: number, c: number, d: number, e: number): void;
+export function mergetoolmanager_remove_file(a: number, b: number, c: number): void;
 export function mergetoolmanager_get_total_pages(a: number, b: number, c: number): number;
 export function mergetoolmanager_rotate_pdf(a: number, b: number, c: number, d: number): number;
 export function mergetoolmanager_rotate_pdf_page(a: number, b: number, c: number, d: number, e: number): number;

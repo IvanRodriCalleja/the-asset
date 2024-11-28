@@ -320,9 +320,6 @@ export function write_block_from_callback_wasm(param, buf, size) {
 */
 export const Direction = Object.freeze({ Left:0,"0":"Left",Right:1,"1":"Right", });
 /**
-*/
-export const PdfToolsErrorCodes = Object.freeze({ Unknown:0,"0":"Unknown",PasswordError:1,"1":"PasswordError",LoadError:2,"2":"LoadError",WrongPassword:3,"3":"WrongPassword",DecryptionError:4,"4":"DecryptionError",MalformedPdf:5,"5":"MalformedPdf", });
-/**
 * Chroma subsampling format
 */
 export const ChromaSampling = Object.freeze({
@@ -342,6 +339,9 @@ Cs444:2,"2":"Cs444",
 * Monochrome.
 */
 Cs400:3,"3":"Cs400", });
+/**
+*/
+export const PdfToolsErrorCodes = Object.freeze({ Unknown:0,"0":"Unknown",PasswordError:1,"1":"PasswordError",LoadError:2,"2":"LoadError",WrongPassword:3,"3":"WrongPassword",DecryptionError:4,"4":"DecryptionError",MalformedPdf:5,"5":"MalformedPdf", });
 
 const AddFileInputFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
@@ -636,6 +636,14 @@ export class MergeToolManager {
         } finally {
             wasm.__wbindgen_add_to_stack_pointer(16);
         }
+    }
+    /**
+    * @param {string} id
+    */
+    remove_file(id) {
+        const ptr0 = passStringToWasm0(id, wasm.__wbindgen_export_0, wasm.__wbindgen_export_1);
+        const len0 = WASM_VECTOR_LEN;
+        wasm.mergetoolmanager_remove_file(this.__wbg_ptr, ptr0, len0);
     }
     /**
     * @param {string} id

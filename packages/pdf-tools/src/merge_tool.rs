@@ -85,6 +85,10 @@ impl MergeToolManager {
     Ok(thumbnail)
   }
 
+  pub fn remove_file(&mut self, id: String) {
+    self.files.retain(|f| f.id != id);
+  }
+
   pub fn get_total_pages(&self, id: String) -> u16 {
     let file = self.files.iter().find(|f| f.id == id).unwrap();
 
