@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@sentry/nextjs": "8.35.0",
+    "@sentry/wasm": "^8.41.0",
     "@theasset/pdf-react": "*",
     "@theasset/ui": "*",
     "@vercel/analytics": "^1.3.1",

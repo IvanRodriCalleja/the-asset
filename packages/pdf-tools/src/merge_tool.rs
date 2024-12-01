@@ -146,11 +146,15 @@ impl MergeToolManager {
   }
 
   pub fn merge_files(&self, ids: Vec<String>) -> PdfResult {
-    let files = self
-      .files
+    let files: Vec<Vec<u8>> = ids
       .iter()
-      .filter(|f| ids.contains(&f.id))
-      .map(|f| f.buffer.clone())
+      .filter_map(|id| {
+        self
+          .files
+          .iter()
+          .find(|f| &f.id == id)
+          .map(|f| f.buffer.clone())
+      })
       .collect();
 
     let result = merge_pdfs(files);

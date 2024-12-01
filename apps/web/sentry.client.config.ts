@@ -1,8 +1,8 @@
 // This file configures the initialization of Sentry on the client.
 // The config you add here will be used whenever a users loads a page in their browser.
 // https://docs.sentry.io/platforms/javascript/guides/nextjs/
-
 import * as Sentry from '@sentry/nextjs';
+import { wasmIntegration } from '@sentry/wasm';
 
 Sentry.init({
 	dsn: 'https://7f269721b828358e3a297c4b29f0b5fa@o4507562466869253.ingest.de.sentry.io/4507562469556304',
@@ -25,7 +25,8 @@ Sentry.init({
 			// Additional Replay configuration goes in here, for example:
 			maskAllText: true,
 			blockAllMedia: true
-		})
+		}),
+		wasmIntegration()
 	],
 	enabled: process.env.NODE_ENV === 'production'
 });
