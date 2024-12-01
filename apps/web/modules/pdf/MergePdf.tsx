@@ -25,7 +25,6 @@ const UploadSection = styled('section', {
 });
 
 // TODO: Rethink file upload approach
-// TODO: Unify mobile and desktop components
 
 export const MergePdf = () => {
 	const { mergePdf } = useLocale();

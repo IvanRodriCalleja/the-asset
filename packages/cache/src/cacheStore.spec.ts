@@ -4,7 +4,7 @@ describe('TheAssetStore', () => {
 	let cacheStore: TheAssetStore;
 
 	beforeEach(() => {
-		cacheStore = new TheAssetStore();
+		cacheStore = new TheAssetStore({ timeout: 30000 });
 	});
 
 	test('addEntry should add an entry and notify listeners', () => {

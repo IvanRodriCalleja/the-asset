@@ -9,13 +9,21 @@ type Store = {
 };
 export type UseCacheKey = string | Record<string, string | number | boolean>;
 
+type TheAssetStoreConfig = {
+	timeout: number;
+};
+
 export class TheAssetStore {
+	config: TheAssetStoreConfig;
+
 	store: Store = {};
 	listeners = new Map<UseCacheKey, Set<() => void>>();
 	// eslint-disable-next-line no-undef
 	timeouts = new Map<string, NodeJS.Timeout>();
 
-	constructor() {}
+	constructor(config: TheAssetStoreConfig) {
+		this.config = config;
+	}
 
 	addEntry(key: UseCacheKey, value: CacheEntry<unknown>) {
 		const cacheKey = this.getKey(key);
@@ -54,7 +62,7 @@ export class TheAssetStore {
 					const timeoutId = setTimeout(() => {
 						this.removeEntry(cacheKey);
 						this.timeouts.delete(cacheKey);
-					}, 30000); // TODO: Set in a variable or config
+					}, this.config.timeout);
 
 					this.timeouts.set(cacheKey, timeoutId);
 				}
@@ -78,4 +86,4 @@ export class TheAssetStore {
 	}
 }
 
-export const cacheStore = new TheAssetStore();
+export const cacheStore = new TheAssetStore({ timeout: 30000 });
