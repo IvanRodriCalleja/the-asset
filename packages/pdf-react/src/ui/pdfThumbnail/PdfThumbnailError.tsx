@@ -1,27 +1,16 @@
-import { Dispatch, ReactNode, SetStateAction, useEffect, useTransition } from 'react';
+import { useEffect, useTransition } from 'react';
 
-import { DragHandleDots2Icon } from '@radix-ui/react-icons';
 import { FallbackProps } from 'react-error-boundary';
 
+import * as Thumbnail from '@theasset/ui/thumbnail';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
-import { getSingularOrPlural } from '@theasset/internationalization/infra/get-singular-or-plural';
-import { FileState, UpdatedFileState } from '@theasset/pdf-tools';
+import { UpdatedFileState } from '@theasset/pdf-tools';
 import { PdfToolsError, PdfToolsErrorCodes } from '@theasset/pdf-tools/types';
-import { Box, Flex, Stack, styled } from '@theasset/style-system/jsx';
-import { Badge } from '@theasset/ui/badge';
-import { SortableDragHandle } from '@theasset/ui/sortable';
+import { styled } from '@theasset/style-system/jsx';
 import { Text } from '@theasset/ui/text';
-import { ThumbnailRoot } from '@theasset/ui/thumbnail';
 
-import { usePages } from '../../../hooks/usePages';
-import { UnlockPdfModal } from '../../shared/UnlockPdfModal';
-
-const FileName = styled('span', {
-	base: {
-		truncate: true,
-		textStyle: 'xs'
-	}
-});
+import { PdfThumbnailProps } from '../PdfThumbnail';
+import { UnlockPdfModal } from './pdfThumbnailError/UnlockPdfModal';
 
 const BadgeEncrypted = styled('div', {
 	base: {
@@ -38,27 +27,18 @@ const BadgeEncrypted = styled('div', {
 	}
 });
 
-type PdfEncryptedThumbnailMobileProps = FallbackProps & {
-	file: FileState;
-	setFiles: Dispatch<SetStateAction<FileState[]>>;
-	actions?: (props: ActionProps) => ReactNode;
-};
+type PdfThumbnailErrorProps = FallbackProps & PdfThumbnailProps;
 
-type ActionProps = {
-	file: FileState;
-	setFiles: Dispatch<SetStateAction<FileState[]>>;
-};
-
-export const PdfEncryptedThumbnailMobile = ({
-	file,
+export const PdfThumbnailError = ({
 	error,
-	setFiles,
-	actions,
+	file,
 	resetErrorBoundary,
-	...props
-}: PdfEncryptedThumbnailMobileProps) => {
+	setFiles,
+	actions
+}: PdfThumbnailErrorProps) => {
 	const [isPending, startTransition] = useTransition();
-	const { shared, mergePdf } = useLocale();
+
+	const { mergePdf } = useLocale();
 
 	useEffect(() => {
 		setFiles(files => {
@@ -95,12 +75,9 @@ export const PdfEncryptedThumbnailMobile = ({
 		error instanceof PdfToolsError && error.code === PdfToolsErrorCodes.PasswordError;
 
 	return (
-		<ThumbnailRoot width="100%" paddingBottom={0} {...props} status="warning">
-			<Stack direction="row" alignItems="center" overflow="hidden">
-				<FileName>{file.name}</FileName>
-			</Stack>
-			<Stack direction="row">
-				<Box flex={1} minWidth="56px">
+		<Thumbnail.Root status="warning">
+			<Thumbnail.Body>
+				<Thumbnail.ImageArea status="warning">
 					{isPasswordError ? (
 						<BadgeEncrypted>
 							<Text size="xs" color="textClear" family="mono">
@@ -115,16 +92,16 @@ export const PdfEncryptedThumbnailMobile = ({
 							</Text>
 						</BadgeEncrypted>
 					)}
-				</Box>
+				</Thumbnail.ImageArea>
 
-				<Flex alignItems="center" minWidth="40px" width="40px">
-					<SortableDragHandle variant="transparent" size="icon">
-						<DragHandleDots2Icon />
-					</SortableDragHandle>
-				</Flex>
-			</Stack>
+				<Thumbnail.DragHandler />
+			</Thumbnail.Body>
 
-			{actions && actions({ file, setFiles })}
-		</ThumbnailRoot>
+			<Thumbnail.FileName>{file.name}</Thumbnail.FileName>
+
+			<Thumbnail.ActionsBox>
+				{actions && actions({ file, isError: true, setFiles })}
+			</Thumbnail.ActionsBox>
+		</Thumbnail.Root>
 	);
 };

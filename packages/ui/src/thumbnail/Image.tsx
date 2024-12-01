@@ -1,7 +1,48 @@
-import { ReactEventHandler } from 'react';
-
 import { styled } from '@theasset/style-system/jsx';
 import { StyledVariantProps } from '@theasset/style-system/types';
+
+import { useThumbnailSuspense } from './Suspense';
+
+export const ImageArea = styled('div', {
+	base: {
+		display: 'flex',
+		alignItems: 'center',
+		justifyContent: 'center'
+	},
+	variants: {
+		status: {
+			warning: {
+				flex: {
+					base: 1,
+					md: 'unset'
+				},
+				minHeight: {
+					base: '64px',
+					md: 'unset'
+				},
+				aspectRatio: {
+					base: 'unset',
+					md: '1 / 1.4142857'
+				}
+			},
+			default: {
+				width: {
+					base: '64px',
+					md: '100%'
+				},
+				minWidth: {
+					base: '64px',
+					md: '100%'
+				},
+
+				aspectRatio: '1 / 1.4142857'
+			}
+		}
+	},
+	defaultVariants: {
+		status: 'default'
+	}
+});
 
 const ThumbnailImage = styled('img', {
 	base: {
@@ -21,13 +62,18 @@ const ThumbnailImage = styled('img', {
 	}
 });
 
-type ImageVariants = StyledVariantProps<typeof ThumbnailImage>;
-
 type ImageProps = {
 	src: string;
 	alt: string;
 	className?: string;
-	onLoad?: ReactEventHandler<HTMLImageElement>;
-} & ImageVariants;
+} & StyledVariantProps<typeof ThumbnailImage>;
 
-export const Image = (props: ImageProps) => <ThumbnailImage {...props} />;
+export const Image = (props: ImageProps) => {
+	const { onLoad } = useThumbnailSuspense();
+
+	return (
+		<ImageArea>
+			<ThumbnailImage {...props} onLoad={onLoad} />
+		</ImageArea>
+	);
+};

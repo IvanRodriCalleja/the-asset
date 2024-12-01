@@ -48,7 +48,7 @@ import { cva, cx } from '@theasset/style-system/css';
 import { styled } from '@theasset/style-system/jsx';
 import { composeRefs } from '@theasset/utilities-react/compose-refs';
 
-import { ButtonVariant, button } from './Button';
+import { ButtonVariant, ButtonVariants, button } from './Button';
 
 const orientationConfig = {
 	vertical: {
@@ -321,9 +321,10 @@ export const SortableItem = forwardRef<HTMLDivElement, SortableItemProps>(
 );
 SortableItem.displayName = 'SortableItem';
 
-type SortableDragHandleProps = ButtonVariant & {
+type SortableDragHandleProps = ButtonVariants & {
 	withHandle?: boolean;
 	className?: string;
+	variant?: ButtonVariant;
 };
 
 const DragButton = styled('button', button);

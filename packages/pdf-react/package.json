@@ -9,8 +9,7 @@
     "./hooks/use-pages": "./src/hooks/usePages.ts",
     "./hooks/use-thumbnail": "./src/hooks/useThumbnail.ts",
     "./ui/scroll-viewer": "./src/ui/ScrollViewer.tsx",
-    "./ui/pdf-thumbnail-desktop": "./src/ui/PdfThumbnailDesktop.tsx",
-    "./ui/pdf-thumbnail-mobile": "./src/ui/PdfThumbnailMobile.tsx"
+    "./ui/pdf-thumbnail": "./src/ui/PdfThumbnail.tsx"
   },
   "scripts": {
     "lint": "eslint src --ext .ts,.tsx --quiet --cache",

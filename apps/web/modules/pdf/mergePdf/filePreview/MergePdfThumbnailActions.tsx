@@ -2,55 +2,57 @@ import { Dispatch, SetStateAction } from 'react';
 
 import { MagnifyingGlassIcon, ReloadIcon, TrashIcon } from '@radix-ui/react-icons';
 
+import * as Thumbnail from '@theasset/ui/thumbnail';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { FileState } from '@theasset/pdf-tools';
 import { Direction } from '@theasset/pdf-tools/types';
-import { ThumbnailMobileAction, ThumbnailMobileActions } from '@theasset/ui/thumbnail';
 
-import { ViewerModalAction } from '../shared/ViewerModalAction';
-import { useMergePdfActions } from '../shared/useMergePdfActions';
+import { ViewerModalAction } from './mergePdfThumbnailActions/ViewerModalAction';
+import { useMergePdfActions } from './mergePdfThumbnailActions/useMergePdfActions';
 
-type MergePdfActionsMobileProp = {
+type MergePdfActionsDesktopProp = {
 	file: FileState;
 	setFiles: Dispatch<SetStateAction<FileState[]>>;
 };
 
-export const MergePdfActionsMobile = (props: MergePdfActionsMobileProp) => <Actions {...props} />;
+export const MergePdfThumbnailActions = (props: MergePdfActionsDesktopProp) => (
+	<Actions {...props} />
+);
 
-const Actions = ({ file, setFiles }: MergePdfActionsMobileProp) => {
+const Actions = ({ file, setFiles }: MergePdfActionsDesktopProp) => {
 	const { mergePdf } = useLocale();
 	const { onRemoveFile, onRotateFile } = useMergePdfActions({ file, setFiles });
 
 	return (
-		<ThumbnailMobileActions>
+		<>
 			{!file.isEncrypted && (
 				<ViewerModalAction file={file} setFiles={setFiles}>
-					<ThumbnailMobileAction aria-label={mergePdf.thumbnailActions.magnify}>
+					<Thumbnail.Action aria-label={mergePdf.thumbnailActions.magnify}>
 						<MagnifyingGlassIcon />
-					</ThumbnailMobileAction>
+					</Thumbnail.Action>
 				</ViewerModalAction>
 			)}
 
 			{!file.isEncrypted && (
-				<ThumbnailMobileAction
+				<Thumbnail.Action
 					onPress={() => onRotateFile(Direction.Left)}
 					aria-label={mergePdf.thumbnailActions.rotatePdfLeft}>
 					<ReloadIcon style={{ transform: 'scaleX(-1)' }} />
-				</ThumbnailMobileAction>
+				</Thumbnail.Action>
 			)}
 
 			{!file.isEncrypted && (
-				<ThumbnailMobileAction
+				<Thumbnail.Action
 					onPress={() => onRotateFile(Direction.Right)}
 					aria-label={mergePdf.thumbnailActions.rotatePdfRight}>
 					<ReloadIcon />
-				</ThumbnailMobileAction>
+				</Thumbnail.Action>
 			)}
-			<ThumbnailMobileAction
+			<Thumbnail.Action
 				onPress={() => onRemoveFile()}
 				aria-label={mergePdf.thumbnailActions.removePdf}>
 				<TrashIcon />
-			</ThumbnailMobileAction>
-		</ThumbnailMobileActions>
+			</Thumbnail.Action>
+		</>
 	);
 };

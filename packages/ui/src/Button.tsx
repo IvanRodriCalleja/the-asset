@@ -4,7 +4,13 @@ import { PropsWithChildren } from 'react';
 
 import { Button as AriaButton, ButtonProps as AriaButtonProps } from 'react-aria-components';
 
-import { cva, cx } from '@theasset/style-system/css';
+import {
+	ResponsiveVariant,
+	crv,
+	cva,
+	cx,
+	splitResponsiveVariant
+} from '@theasset/style-system/css';
 import { RecipeVariantProps } from '@theasset/style-system/types';
 
 export const button = cva({
@@ -34,7 +40,7 @@ export const button = cva({
 		}
 	},
 	variants: {
-		variant: {
+		...crv('variant', {
 			primary: {
 				bg: 'primary',
 				color: 'primary.foreground',
@@ -97,7 +103,7 @@ export const button = cva({
 					textDecoration: 'underline'
 				}
 			}
-		},
+		}),
 		size: {
 			none: {
 				h: 'auto',
@@ -167,7 +173,8 @@ export const button = cva({
 });
 
 export const Button = ({ size, variant, className, ...props }: PropsWithChildren<ButtonProps>) => {
-	const buttonClassName = button({ size, variant });
+	const variants = splitResponsiveVariant('variant', variant);
+	const buttonClassName = button({ ...variants, size });
 
 	return <AriaButton {...props} className={cx(buttonClassName, className)} />;
 };
@@ -175,8 +182,16 @@ export const Button = ({ size, variant, className, ...props }: PropsWithChildren
 export const BaseButton = AriaButton;
 
 export type BaseButtonProps = AriaButtonProps;
-export type ButtonVariant = RecipeVariantProps<typeof button>;
-export type ButtonProps = ButtonVariant &
+
+export type ButtonVariant = NonNullable<RecipeVariantProps<typeof button>>['variant'];
+
+export type ButtonVariants =
+	| (Omit<NonNullable<RecipeVariantProps<typeof button>>, 'variant'> & {
+			variant?: ResponsiveVariant<ButtonVariant>;
+	  })
+	| undefined;
+
+export type ButtonProps = ButtonVariants &
 	BaseButtonProps & {
 		className?: string;
 	};

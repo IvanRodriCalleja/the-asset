@@ -21,7 +21,7 @@ const ViewerToolbarContainer = styled('div', {
 		display: 'flex',
 		justifyContent: 'center',
 		flexDirection: 'row',
-		gap: 1,
+		gap: 2,
 		bg: 'background',
 		padding: '8px',
 		borderRadius: 'lg'

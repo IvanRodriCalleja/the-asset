@@ -20,7 +20,7 @@ export const ScrollViewerPageViewPort = ({
 }: ScrollViewerPageViewPortProps) => {
 	const [ref, isInViewPort] = useIntersectionObserver(
 		{
-			rootMargin: '5000px 0px 5000px 0px',
+			rootMargin: '10000px 0px 10000px 0px',
 			threshold: 0
 		},
 		{ initialInView: page < 5 },

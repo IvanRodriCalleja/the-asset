@@ -46,10 +46,12 @@
     "postinstall": "yarn generate:panda"
   },
   "devDependencies": {
-
+    "@pandacss/dev": "^0.41.0",
     "@theasset/eslint-config": "*",
     "@theasset/typescript-config": "*",
-    "@pandacss/dev": "^0.41.0",
     "@types/node": "20.14.10"
+  },
+  "dependencies": {
+    "panda-plugin-crv": "^0.3.1"
   }
 }

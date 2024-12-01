@@ -2,9 +2,15 @@ import { Stack } from '@theasset/style-system/jsx';
 import { Skeleton } from '@theasset/ui/skeleton';
 
 export const MergePdfResultSkeleton = () => (
-	<Stack width="100%" maxWidth="580px" height="max-content">
+	<Stack alignItems="center" width="100%" height="max-content" padding={16}>
 		{[...new Array(10)].map((_, index) => (
-			<Skeleton key={index} width="100%" aspectRatio="1 / 1.4142857" boxShadow="lg" />
+			<Skeleton
+				key={index}
+				width="100%"
+				maxWidth="580px"
+				aspectRatio="1 / 1.4142857"
+				boxShadow="lg"
+			/>
 		))}
 	</Stack>
 );

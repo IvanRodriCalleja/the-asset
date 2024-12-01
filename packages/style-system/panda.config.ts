@@ -1,4 +1,5 @@
 import { defineConfig } from '@pandacss/dev';
+import { pluginResponsiveVariants } from 'panda-plugin-crv';
 import { resolve } from 'path';
 
 import theAssetPreset from './src';
@@ -9,6 +10,7 @@ const pdfReactPackage = resolve(__dirname, '../pdf-react');
 
 export default defineConfig({
 	preflight: true,
+	plugins: [pluginResponsiveVariants()],
 	presets: [theAssetPreset],
 	outExtension: 'js',
 	cwd: resolve(__dirname),

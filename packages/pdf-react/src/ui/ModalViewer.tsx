@@ -2,8 +2,7 @@ import { useState, useTransition } from 'react';
 
 import { FileState } from '@theasset/pdf-tools';
 import { css } from '@theasset/style-system/css';
-import { Box } from '@theasset/style-system/jsx';
-import { ThumbnailImage } from '@theasset/ui/thumbnail';
+import { Box, styled } from '@theasset/style-system/jsx';
 
 import { usePages } from '../hooks/usePages';
 import { useThumbnail } from '../hooks/useThumbnail';
@@ -19,6 +18,13 @@ type ModalViewerProps = {
 	file: FileState;
 	children: (props: ChildrenProps) => JSX.Element;
 };
+
+const PdfImage = styled('img', {
+	base: {
+		position: 'relative',
+		width: '100%'
+	}
+});
 
 export const ModalViewer = ({ file, children }: ModalViewerProps) => {
 	const [page, setPageA] = useState(1);
@@ -47,7 +53,7 @@ export const ModalViewer = ({ file, children }: ModalViewerProps) => {
 				height={isVertical ? '100%' : 'fit-content'}
 				maxHeight="calc(100vh - 56px - 3rem)"
 				style={{ aspectRatio: `${aspectRatio} / 1` }}>
-				<ThumbnailImage
+				<PdfImage
 					src={src}
 					alt={`${file.name} - ${page}`}
 					data-rotation={rotation}

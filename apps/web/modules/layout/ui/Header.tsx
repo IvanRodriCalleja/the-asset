@@ -16,7 +16,7 @@ const HeaderComponent = styled('header', {
 		borderBottomColor: 'rgba(10, 10, 10, 0.1)',
 		backgroundColor: 'rgba(250, 250, 250, 0.6)',
 		backdropFilter: 'blur(5px)',
-		zIndex: 2
+		zIndex: 3
 	}
 });
 

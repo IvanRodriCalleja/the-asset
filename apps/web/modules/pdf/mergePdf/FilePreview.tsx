@@ -1,11 +1,33 @@
 import { Dispatch, SetStateAction } from 'react';
 
+import { PdfThumbnail } from '@theasset/pdf-react/ui/pdf-thumbnail';
 import { FileState } from '@theasset/pdf-tools';
 import { breakpoints } from '@theasset/style-system/breakpoints';
+import { styled } from '@theasset/style-system/jsx';
+import { SortableItem, SortableRoot } from '@theasset/ui/sortable';
 import { useMediaQuery } from '@theasset/utilities-react/use-media-query';
 
-import { FilePreviewDesktop } from './filePreview/FilePreviewDesktop';
-import { FilePreviewMobile } from './filePreview/FilePreviewMobile';
+import { MergePdfThumbnailActions } from './filePreview/MergePdfThumbnailActions';
+
+const FilePreviewList = styled('div', {
+	base: {
+		display: 'flex',
+		flexDirection: {
+			base: 'column',
+			md: 'row'
+		},
+		marginInline: 'auto',
+		flexWrap: 'wrap',
+		justifyContent: 'center',
+		width: '100%',
+		maxWidth: '100%',
+		padding: {
+			base: 4,
+			md: 16
+		},
+		gap: 4
+	}
+});
 
 export type FilePreviewProps = {
 	files: FileState[];
@@ -15,5 +37,22 @@ export type FilePreviewProps = {
 export const FilePreview = (props: FilePreviewProps) => {
 	const isDesktop = useMediaQuery(`(min-width: ${breakpoints.md})`);
 
-	return isDesktop ? <FilePreviewDesktop {...props} /> : <FilePreviewMobile {...props} />;
+	const { files, setFiles } = props;
+
+	return (
+		<SortableRoot
+			orientation={isDesktop ? 'mixed' : 'vertical'}
+			value={files}
+			onValueChange={setFiles}>
+			<FilePreviewList>
+				{files.map(file => (
+					<SortableItem key={file.id} value={file.id} asTrigger={isDesktop} asChild>
+						<div>
+							<PdfThumbnail file={file} setFiles={setFiles} actions={MergePdfThumbnailActions} />
+						</div>
+					</SortableItem>
+				))}
+			</FilePreviewList>
+		</SortableRoot>
+	);
 };
