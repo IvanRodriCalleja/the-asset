@@ -59,7 +59,6 @@ export const PdfEncryptedThumbnailMobile = ({
 }: PdfEncryptedThumbnailMobileProps) => {
 	const [isPending, startTransition] = useTransition();
 	const { shared, mergePdf } = useLocale();
-	const pages = usePages(file);
 
 	useEffect(() => {
 		setFiles(files => {
@@ -98,11 +97,6 @@ export const PdfEncryptedThumbnailMobile = ({
 	return (
 		<ThumbnailRoot width="100%" paddingBottom={0} {...props} status="warning">
 			<Stack direction="row" alignItems="center" overflow="hidden">
-				<Box>
-					<Badge>
-						{pages} {getSingularOrPlural(shared.page, pages)}
-					</Badge>
-				</Box>
 				<FileName>{file.name}</FileName>
 			</Stack>
 			<Stack direction="row">
