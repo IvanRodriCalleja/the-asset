@@ -26,6 +26,7 @@ Sentry.init({
 			maskAllText: true,
 			blockAllMedia: true
 		}),
+		// @ts-ignore
 		wasmIntegration()
 	],
 	enabled: process.env.NODE_ENV === 'production'

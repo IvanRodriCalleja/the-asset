@@ -1,13 +1,15 @@
+import type { NextConfig } from 'next';
+
 import { withSentryConfig } from '@sentry/nextjs';
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
 	transpilePackages: ['@theasset/internationalization'],
 	experimental: {
 		reactCompiler: true
 	},
 	webpack(config, { isServer }) {
 		// Grab the existing rule that handles SVG imports
+		// @ts-ignore
 		const fileLoaderRule = config.module.rules.find(rule => rule.test?.test?.('.svg'));
 
 		config.module.rules.push(
