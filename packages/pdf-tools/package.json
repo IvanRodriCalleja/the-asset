@@ -17,7 +17,8 @@
   "scripts": {
     "build:web": "wasm-pack build --release --target web --out-dir ./build/web && yarn clean:output",
     "build:node": "wasm-pack build --release --target web --out-dir ./build/node && yarn clean:output",
-    "clean:output": "node ./scripts/clean-output.cjs"
+    "clean:output": "node ./scripts/clean-output.cjs",
+    "test": "jest -c jest.config.cjs"
   },
   "devDependencies": {
     "@types/node": "^22.5.5"

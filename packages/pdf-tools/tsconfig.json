@@ -7,6 +7,6 @@
     "module": "ES2022",
     "moduleResolution": "Bundler"
   },
-  "include": ["src", "**.d.ts", "pdf-tools.ts", "web", "node"],
+  "include": ["src", "**.d.ts", "pdf-tools.ts", "web", "node", "jest.config.cjs", "jest.setup.js"],
   "exclude": ["node_modules", "dist"]
 }
