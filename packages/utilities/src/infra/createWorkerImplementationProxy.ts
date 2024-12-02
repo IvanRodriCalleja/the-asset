@@ -19,12 +19,10 @@ type WorkerProxyMessage<T> = {
 };
 
 export const createWorkerImplementationProxy = <T extends object>(impl: T) => {
-	// Filtra solo los nombres de las propiedades que sean funciones
 	const fnNames = Object.getOwnPropertyNames(impl).filter(
 		name => typeof impl[name as keyof T] === 'function'
 	) as (keyof T)[];
 
-	// Configura el handler para mensajes
 	self.onmessage = async (event: MessageEvent<WorkerProxyMessage<T>>) => {
 		const { methodName, args, id } = event.data;
 

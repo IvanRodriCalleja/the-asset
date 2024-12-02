@@ -6,10 +6,10 @@ type WorkerResult = {
 
 type AsyncMethods<T> = {
 	[K in keyof T]: T[K] extends (...args: infer Args) => infer R
-		? R extends Promise<unknown> // Verifica si el retorno ya es un Promise
-			? T[K] // Mantén el método tal como está
-			: (...args: Args) => Promise<R> // De lo contrario, hazlo asíncrono
-		: T[K]; // Mantén los miembros que no son métodos sin modificar
+		? R extends Promise<unknown>
+			? T[K]
+			: (...args: Args) => Promise<R>
+		: T[K];
 };
 
 export const createWorkerMainImplementation = <T extends object>(worker: Worker) => {

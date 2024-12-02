@@ -1,4 +1,5 @@
-import { createWorkerMainImplementation } from './createWorkerMainImplementation';
+import { createWorkerMainImplementation } from '@theasset/utilities/infra';
+
 import type { PdfToolsImpl } from './worker';
 
 const worker = new Worker(new URL('./worker.ts', import.meta.url));

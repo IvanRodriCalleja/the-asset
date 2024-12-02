@@ -1,3 +1,5 @@
+import { PdfToolsErrorCodes } from './output/pdf_tools';
+
 export type FileState = {
 	id: string;
 	hash: string;
@@ -6,3 +8,27 @@ export type FileState = {
 };
 
 export type UpdatedFileState = Pick<FileState, 'hash' | 'id'> | Partial<FileState>;
+
+export type GetThumbnailResult = {
+	src: string;
+	width: number;
+	height: number;
+	rotation: number;
+};
+
+export type PdfResult = {
+	buffer: Uint8Array;
+	hash: string;
+};
+
+export { Direction } from './output/pdf_tools';
+export { PdfToolsErrorCodes };
+export class PdfToolsError extends Error {
+	public code: PdfToolsErrorCodes;
+
+	constructor(code: PdfToolsErrorCodes) {
+		super();
+		this.code = code;
+		this.name = 'PdfToolsError';
+	}
+}

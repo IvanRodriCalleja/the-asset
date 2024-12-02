@@ -1,12 +1,8 @@
-import { Direction, GetThumbnailResult, PdfToolsError } from '../pdf-tools';
-import { createWorkerImplementationProxy } from './createWorkerImplementationProxy';
-import {
-	AddFileInput,
-	MergeToolManager,
-	PdfToolsError as PdfError,
-	loadTools
-} from './loadPdfTools';
-import { FileState, UpdatedFileState } from './types';
+import { createWorkerImplementationProxy } from '@theasset/utilities/infra';
+
+import { loadTools } from './loadPdfTools';
+import { AddFileInput, MergeToolManager, PdfToolsError as PdfError } from './output/pdf_tools';
+import { Direction, FileState, GetThumbnailResult, PdfToolsError, UpdatedFileState } from './types';
 
 const loadPromise = loadTools();
 

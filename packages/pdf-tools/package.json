@@ -9,18 +9,21 @@
       "default": "./web/index.ts"
     },
     "./types": {
-      "node": "./pdf-tools.ts",
-      "default": "./pdf-tools.ts"
+      "node": "./web/types.ts",
+      "default": "./web/types.ts"
     }
   },
   "version": "0.1.0",
   "scripts": {
-    "build:web": "wasm-pack build --release --target web --out-dir ./build/web && yarn clean:output",
-    "build:node": "wasm-pack build --release --target web --out-dir ./build/node && yarn clean:output",
+    "build:web": "wasm-pack build --release --target web --out-dir ./web/output && yarn clean:output",
+    "build:node": "wasm-pack build --release --target web --out-dir ./node/output && yarn clean:output",
     "clean:output": "node ./scripts/clean-output.cjs",
     "test": "jest -c jest.config.cjs"
   },
   "devDependencies": {
     "@types/node": "^22.5.5"
+  },
+  "dependencies": {
+    "@theasset/utilities": "*"
   }
 }
