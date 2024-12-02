@@ -29,6 +29,15 @@ const FilePreviewList = styled('div', {
 	}
 });
 
+const DraggableItem = styled('div', {
+	base: {
+		width: {
+			base: '100%',
+			md: 'unset'
+		}
+	}
+});
+
 export type FilePreviewProps = {
 	files: FileState[];
 	setFiles: Dispatch<SetStateAction<FileState[]>>;
@@ -47,9 +56,9 @@ export const FilePreview = (props: FilePreviewProps) => {
 			<FilePreviewList>
 				{files.map(file => (
 					<SortableItem key={file.id} value={file.id} asTrigger={isDesktop} asChild>
-						<div>
+						<DraggableItem>
 							<PdfThumbnail file={file} setFiles={setFiles} actions={MergePdfThumbnailActions} />
-						</div>
+						</DraggableItem>
 					</SortableItem>
 				))}
 			</FilePreviewList>

@@ -155,9 +155,7 @@ class Manager {
 		};
 	};
 
-	// TODO: Make it return a promise
 	public mergePdfs = (ids: string[]) => {
-		//TODO: Filter if any pdf is encrypted
 		const result = this.mergeToolManager.merge_files(ids);
 		this.mergeToolManager = new MergeToolManager();
 
