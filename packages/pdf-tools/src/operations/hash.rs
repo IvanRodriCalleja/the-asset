@@ -1,5 +1,4 @@
 use pdfium_render::prelude::*;
-use wasm_bindgen::prelude::*;
 
 use std::collections::hash_map::DefaultHasher;
 use std::hash::{Hash, Hasher};

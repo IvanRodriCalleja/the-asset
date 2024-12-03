@@ -53,7 +53,7 @@ pub fn get_thumbnail(buffer: Vec<u8>, index: PdfPageIndex) -> Result<GetThumbnai
     Err(PdfiumError::PdfiumLibraryInternalError(PdfiumInternalError::PasswordError)) => {
       return Err(PdfToolsError::new(PdfToolsErrorCodes::PasswordError).into())
     }
-    Err(e) => return Err(PdfToolsError::new(PdfToolsErrorCodes::LoadError).into()),
+    Err(_) => return Err(PdfToolsError::new(PdfToolsErrorCodes::LoadError).into()),
   };
   let page = document.pages().get(index).unwrap();
 

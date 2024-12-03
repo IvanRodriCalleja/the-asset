@@ -3,11 +3,12 @@ use std::io::Cursor;
 use lopdf::{encryption::DecryptionError, Document, Error};
 use wasm_bindgen::prelude::*;
 
-use crate::{
-  hash::get_pdf_hash,
-  models::pdf_tools_error::{PdfToolsError, PdfToolsErrorCodes},
+use crate::models::{
   pdf_result::PdfResult,
+  pdf_tools_error::{PdfToolsError, PdfToolsErrorCodes},
 };
+
+use super::hash::get_pdf_hash;
 
 #[wasm_bindgen]
 pub fn decrypt_pdf(buffer: Vec<u8>, password: &str) -> Result<PdfResult, JsValue> {

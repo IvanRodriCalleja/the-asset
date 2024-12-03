@@ -1,6 +1,8 @@
 use pdfium_render::prelude::*;
 
-use crate::{hash::get_hash, pdf_result::PdfResult};
+use crate::models::pdf_result::PdfResult;
+
+use super::hash::get_hash;
 
 pub fn merge_pdfs(buffers: Vec<Vec<u8>>) -> PdfResult {
   let pdfium = Pdfium::default();

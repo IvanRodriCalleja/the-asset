@@ -1,7 +1,11 @@
 import { createWorkerImplementationProxy } from '@theasset/utilities/infra';
 
 import { loadTools } from './loadPdfTools';
-import { AddFileInput, MergeToolManager, PdfToolsError as PdfError } from './output/pdf_tools';
+import {
+	AddFileInput,
+	PdfToolsError as PdfError,
+	PdfTools as PdfToolsWasm
+} from './output/pdf_tools';
 import { Direction, FileState, GetThumbnailResult, PdfToolsError, UpdatedFileState } from './types';
 
 const loadPromise = loadTools();
@@ -9,13 +13,13 @@ const loadPromise = loadTools();
 class PdfTools {
 	private count = 1;
 	// @ts-expect-error
-	private mergeToolManager: MergeToolManager;
+	private mergeToolManager: PdfToolsWasm;
 
 	private addingPromises = new Map<string, Promise<void>>();
 
 	constructor() {
 		loadPromise.then(() => {
-			this.mergeToolManager = new MergeToolManager();
+			this.mergeToolManager = new PdfToolsWasm();
 		});
 	}
 
@@ -146,7 +150,7 @@ class PdfTools {
 
 	public mergePdfs = (ids: string[]) => {
 		const result = this.mergeToolManager.merge_files(ids);
-		this.mergeToolManager = new MergeToolManager();
+		this.mergeToolManager = new PdfToolsWasm();
 
 		this.mergeToolManager.add_file(new AddFileInput(result.hash, result.buffer, 'merged.pdf'));
 

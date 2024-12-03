@@ -30,6 +30,3 @@ impl AddFileInput {
     self.name.clone()
   }
 }
-pub trait AddFile {
-  fn add_file(&mut self, file: AddFileInput);
-}

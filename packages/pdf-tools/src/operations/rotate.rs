@@ -1,15 +1,9 @@
-use core::hash;
 use std::io::Cursor;
 
-use image::buffer;
 use lopdf::Document;
-use pdfium_render::prelude::*;
 use wasm_bindgen::prelude::*;
 
-use crate::{
-  hash::{get_hash, get_pdf_hash},
-  pdf_result::PdfResult,
-};
+use crate::{models::pdf_result::PdfResult, operations::hash::get_pdf_hash};
 
 #[wasm_bindgen]
 #[derive(Copy, Clone, Debug, PartialEq)]
@@ -86,24 +80,4 @@ pub fn rotate_pdf(buffer: Vec<u8>, direction: Direction) -> PdfResult {
   let buffer = buffer.into_inner();
 
   PdfResult::new(buffer.clone(), get_pdf_hash(&buffer))
-}
-
-fn calculate_new_rotation(
-  current_rotation: PdfPageRenderRotation,
-  direction: Direction,
-) -> PdfPageRenderRotation {
-  match direction {
-    Direction::Right => match current_rotation {
-      PdfPageRenderRotation::None => PdfPageRenderRotation::Degrees90,
-      PdfPageRenderRotation::Degrees90 => PdfPageRenderRotation::Degrees180,
-      PdfPageRenderRotation::Degrees180 => PdfPageRenderRotation::Degrees270,
-      PdfPageRenderRotation::Degrees270 => PdfPageRenderRotation::None,
-    },
-    Direction::Left => match current_rotation {
-      PdfPageRenderRotation::None => PdfPageRenderRotation::Degrees270,
-      PdfPageRenderRotation::Degrees90 => PdfPageRenderRotation::None,
-      PdfPageRenderRotation::Degrees180 => PdfPageRenderRotation::Degrees90,
-      PdfPageRenderRotation::Degrees270 => PdfPageRenderRotation::Degrees180,
-    },
-  }
 }

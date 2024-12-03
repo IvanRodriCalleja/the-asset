@@ -1,15 +1,14 @@
 use crate::{
-  decrypt::decrypt_pdf,
-  file_size::get_file_size,
-  hash::get_pdf_hash,
-  merge::merge_pdfs,
-  models::the_asset_file::TheAssetFile,
-  page::get_total_pages,
-  pdf_result::PdfResult,
-  remove::remove_pdf_page,
-  rotate::{rotate_pdf, rotate_pdf_page, Direction},
-  thumbnail::{get_thumbnail, GetThumbnailResult},
-  traits::add_file::AddFileInput,
+  models::{add_file::AddFileInput, pdf_result::PdfResult, the_asset_file::TheAssetFile},
+  operations::{
+    decrypt::decrypt_pdf,
+    file_size::get_file_size,
+    merge::merge_pdfs,
+    page::get_total_pages,
+    remove::remove_pdf_page,
+    rotate::{rotate_pdf, rotate_pdf_page, Direction},
+    thumbnail::{get_thumbnail, GetThumbnailResult},
+  },
 };
 use pdfium_render::prelude::PdfPageIndex;
 use pdfium_render::prelude::*;
@@ -40,15 +39,15 @@ impl FileOperationResult {
 }
 
 #[wasm_bindgen]
-pub struct MergeToolManager {
+pub struct PdfTools {
   files: Vec<TheAssetFile>,
 }
 
 #[wasm_bindgen]
-impl MergeToolManager {
+impl PdfTools {
   #[wasm_bindgen(constructor)]
-  pub fn new() -> MergeToolManager {
-    MergeToolManager { files: Vec::new() }
+  pub fn new() -> PdfTools {
+    PdfTools { files: Vec::new() }
   }
 
   pub fn add_file(&mut self, file: AddFileInput) {
@@ -64,8 +63,6 @@ impl MergeToolManager {
       id: file.id(),
       hash: file.id(),
       buffer: buffer,
-      name: file.name(),
-      is_encrypted: false,
     };
     self.files.push(file);
   }

@@ -1,7 +1,9 @@
 use pdfium_render::prelude::*;
-use wasm_bindgen::prelude::*;
+use wasm_bindgen::prelude::wasm_bindgen;
 
-use crate::{hash::get_hash, pdf_result::PdfResult};
+use crate::models::pdf_result::PdfResult;
+
+use super::hash::get_hash;
 
 #[wasm_bindgen]
 pub fn remove_pdf_page(buffer: Vec<u8>, index: PdfPageIndex) -> PdfResult {
