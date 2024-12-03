@@ -21,6 +21,7 @@ export { Body as ModalBody } from './modal/Body';
 
 type ModalRootChildrenProps = {
 	close: () => void;
+	open: () => void;
 };
 
 type ModalVariant = 'alert' | 'dialog';
@@ -70,7 +71,8 @@ export const ModalRoot = ({ children, variant = 'dialog', ...props }: ModalProps
 	);
 
 	const childrenProps: ModalRootChildrenProps = {
-		close: state.close
+		close: state.close,
+		open: state.open
 	};
 
 	return (

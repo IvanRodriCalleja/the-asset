@@ -21,6 +21,10 @@ export type PdfResult = {
 	hash: string;
 };
 
+export type ErrorCode = {
+	code: PdfToolsErrorCodes;
+};
+
 export { Direction } from './output/pdf_tools';
 export { PdfToolsErrorCodes };
 export class PdfToolsError extends Error {

@@ -41,6 +41,7 @@ export const UnlockPdfForm = ({ file, onUnlockPdf }: UnlockPdfFormProps) => {
 			return onUnlockPdf(decryptedFile);
 		} catch (error) {
 			const decryptError = error as PdfToolsError;
+			form.setFocus('password');
 
 			if (decryptError.code === PdfToolsErrorCodes.WrongPassword) {
 				return form.setError('password', {
@@ -57,7 +58,16 @@ export const UnlockPdfForm = ({ file, onUnlockPdf }: UnlockPdfFormProps) => {
 	};
 
 	return (
-		<Form form={form} id="unlock-pdf" aria-label="unlock-pdf" onSubmit={onSubmit}>
+		<Form
+			form={form}
+			id="unlock-pdf"
+			aria-label="unlock-pdf"
+			onSubmit={onSubmit}
+			onKeyDown={e => {
+				if (e.key === 'Enter') {
+					e.stopPropagation();
+				}
+			}}>
 			<RHFFieldPassword<UnlockPdf> name="password" label={shared.form.fields.password} />
 		</Form>
 	);

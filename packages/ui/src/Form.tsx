@@ -1,7 +1,7 @@
 'use client';
 'use no memo';
 
-import { PropsWithChildren } from 'react';
+import { DetailedHTMLProps, FormHTMLAttributes, PropsWithChildren } from 'react';
 
 import { FormProvider, UseFormReturn } from 'react-hook-form';
 
@@ -10,7 +10,7 @@ type FormProps<T extends NonNullable<unknown>, TContext = unknown> = {
 	id?: string;
 	'aria-label'?: string;
 	onSubmit: (values: T) => void | Promise<void>;
-};
+} & Omit<DetailedHTMLProps<FormHTMLAttributes<HTMLFormElement>, HTMLFormElement>, 'onSubmit'>;
 
 export const Form = <T extends NonNullable<unknown>>({
 	form,

@@ -12,19 +12,26 @@ type AsyncMethods<T> = {
 		: T[K];
 };
 
-export const createWorkerMainImplementation = <T extends object>(worker: Worker) => {
+export const createWorkerMainImplementation = <T extends object, E>(
+	worker: Worker,
+	onError: (error: E) => {}
+) => {
 	let messageId = 0;
-	const pendingResponses = new Map<number, (result: unknown) => void>();
+	const pendingResponses = new Map<
+		number,
+		{ resolve: (result: unknown) => void; reject: (error: unknown) => void }
+	>();
 
 	worker.onmessage = (event: MessageEvent<WorkerResult>) => {
 		const { id, result, error } = event.data;
-		const resolve = pendingResponses.get(id);
+		const response = pendingResponses.get(id);
 
-		if (resolve) {
+		if (response) {
+			const { resolve, reject } = response;
 			pendingResponses.delete(id);
 			if (error) {
-				console.error(`Error from worker method: ${error}`);
-				throw new Error(error);
+				reject(onError(error as E));
+				//console.error(`Error from worker method: ${error}`);
 			} else {
 				resolve(result);
 			}
@@ -34,9 +41,9 @@ export const createWorkerMainImplementation = <T extends object>(worker: Worker)
 	return new Proxy({} as AsyncMethods<T>, {
 		get(_, prop) {
 			return (...args: unknown[]) => {
-				return new Promise(resolve => {
+				return new Promise((resolve, reject) => {
 					const id = ++messageId;
-					pendingResponses.set(id, resolve);
+					pendingResponses.set(id, { resolve, reject });
 
 					worker.postMessage({ methodName: prop as string, args, id });
 				});

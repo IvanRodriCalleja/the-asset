@@ -6,7 +6,7 @@ import {
 	PdfToolsError as PdfError,
 	PdfTools as PdfToolsWasm
 } from './output/pdf_tools';
-import { Direction, FileState, GetThumbnailResult, PdfToolsError, UpdatedFileState } from './types';
+import { Direction, ErrorCode, FileState, GetThumbnailResult, UpdatedFileState } from './types';
 
 const loadPromise = loadTools();
 
@@ -93,7 +93,11 @@ class PdfTools {
 		} catch (error) {
 			const pdfError = error as PdfError;
 
-			throw new PdfToolsError(pdfError.code);
+			const errorCode: ErrorCode = {
+				code: pdfError.code
+			};
+
+			throw errorCode;
 		}
 	};
 
@@ -164,13 +168,23 @@ class PdfTools {
 			await this.addingPromises.get(id);
 		}
 
-		const result = this.mergeToolManager.decrypt_pdf(id, password);
+		try {
+			const result = this.mergeToolManager.decrypt_pdf(id, password);
 
-		return {
-			hash: result.hash,
-			id,
-			isEncrypted: false
-		};
+			return {
+				hash: result.hash,
+				id,
+				isEncrypted: false
+			};
+		} catch (error) {
+			const pdfError = error as PdfError;
+
+			const errorCode: ErrorCode = {
+				code: pdfError.code
+			};
+
+			throw errorCode;
+		}
 	};
 
 	public getFileSize = async (id: string): Promise<string> => {

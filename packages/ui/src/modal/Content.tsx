@@ -75,9 +75,6 @@ export const Content = ({
 }: PropsWithChildren<ContentProps>) => {
 	const { state, underlayProps, modalProps, modalRef, variant } = useAgModal();
 
-	//const entering = useEnterAnimation(modalRef);
-	//const exiting = useExitAnimation(modalRef, state.isOpen); // TODO: Exit animation doesn't work well
-
 	return (
 		<>
 			{state.isOpen && (
@@ -89,9 +86,7 @@ export const Content = ({
 								{...modalProps}
 								ref={modalRef}
 								className={className}
-								onMouseDown={e => e.stopPropagation()}
-								//data-state={entering ? 'open' : exiting ? 'closed' : undefined}
-							>
+								onMouseDown={e => e.stopPropagation()}>
 								{children}
 							</ModalContent>
 						</Dialog>
