@@ -20,12 +20,7 @@ pub fn rotate_pdf_page(buffer: Vec<u8>, index: u32, direction: Direction) -> Pdf
 
   let mut doc = Document::load_mem(&buffer).unwrap();
 
-  use web_sys::console;
-
-  console::log_1(&"Hello using web-sys".into());
-
   if let Some(&page_id) = doc.get_pages().get(&index) {
-    console::log_1(&"Yaaaa".into());
     // Obtiene el diccionario de la página
     let page_dict = doc
       .get_object_mut(page_id)

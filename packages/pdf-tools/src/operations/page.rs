@@ -1,10 +1,7 @@
-use pdfium_render::prelude::*;
-use wasm_bindgen::prelude::*;
+use lopdf::Document;
 
-#[wasm_bindgen]
-pub fn get_total_pages(buffer: Vec<u8>) -> u16 {
-  let pdfium = Pdfium::default();
-  let document = pdfium.load_pdf_from_byte_vec(buffer, None).unwrap();
+pub fn get_total_pages(buffer: &[u8]) -> usize {
+  let document = Document::load_mem(buffer).unwrap();
 
-  document.pages().len()
+  document.get_pages().len()
 }

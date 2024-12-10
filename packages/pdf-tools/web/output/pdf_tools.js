@@ -20,9 +20,7 @@ function takeObject(idx) {
     return ret;
 }
 
-const cachedTextDecoder = (typeof TextDecoder !== 'undefined' ? new TextDecoder('utf-8', { ignoreBOM: true, fatal: true }) : { decode: () => { throw Error('TextDecoder not available') } } );
-
-if (typeof TextDecoder !== 'undefined') { cachedTextDecoder.decode(); };
+let WASM_VECTOR_LEN = 0;
 
 let cachedUint8ArrayMemory0 = null;
 
@@ -32,22 +30,6 @@ function getUint8ArrayMemory0() {
     }
     return cachedUint8ArrayMemory0;
 }
-
-function getStringFromWasm0(ptr, len) {
-    ptr = ptr >>> 0;
-    return cachedTextDecoder.decode(getUint8ArrayMemory0().subarray(ptr, ptr + len));
-}
-
-function addHeapObject(obj) {
-    if (heap_next === heap.length) heap.push(heap.length + 1);
-    const idx = heap_next;
-    heap_next = heap[idx];
-
-    heap[idx] = obj;
-    return idx;
-}
-
-let WASM_VECTOR_LEN = 0;
 
 const cachedTextEncoder = (typeof TextEncoder !== 'undefined' ? new TextEncoder('utf-8') : { encode: () => { throw Error('TextEncoder not available') } } );
 
@@ -114,6 +96,24 @@ function getDataViewMemory0() {
         cachedDataViewMemory0 = new DataView(wasm.memory.buffer);
     }
     return cachedDataViewMemory0;
+}
+
+const cachedTextDecoder = (typeof TextDecoder !== 'undefined' ? new TextDecoder('utf-8', { ignoreBOM: true, fatal: true }) : { decode: () => { throw Error('TextDecoder not available') } } );
+
+if (typeof TextDecoder !== 'undefined') { cachedTextDecoder.decode(); };
+
+function getStringFromWasm0(ptr, len) {
+    ptr = ptr >>> 0;
+    return cachedTextDecoder.decode(getUint8ArrayMemory0().subarray(ptr, ptr + len));
+}
+
+function addHeapObject(obj) {
+    if (heap_next === heap.length) heap.push(heap.length + 1);
+    const idx = heap_next;
+    heap_next = heap[idx];
+
+    heap[idx] = obj;
+    return idx;
 }
 
 function debugString(val) {
@@ -227,17 +227,6 @@ export function decrypt_pdf(buffer, password) {
 
 /**
 * @param {Uint8Array} buffer
-* @returns {number}
-*/
-export function get_total_pages(buffer) {
-    const ptr0 = passArray8ToWasm0(buffer, wasm.__wbindgen_export_0);
-    const len0 = WASM_VECTOR_LEN;
-    const ret = wasm.get_total_pages(ptr0, len0);
-    return ret;
-}
-
-/**
-* @param {Uint8Array} buffer
 * @param {number} index
 * @returns {PdfResult}
 */
@@ -319,9 +308,6 @@ export function write_block_from_callback_wasm(param, buf, size) {
 
 /**
 */
-export const PdfToolsErrorCodes = Object.freeze({ Unknown:0,"0":"Unknown",PasswordError:1,"1":"PasswordError",LoadError:2,"2":"LoadError",WrongPassword:3,"3":"WrongPassword",DecryptionError:4,"4":"DecryptionError",MalformedPdf:5,"5":"MalformedPdf", });
-/**
-*/
 export const Direction = Object.freeze({ Left:0,"0":"Left",Right:1,"1":"Right", });
 /**
 * Chroma subsampling format
@@ -343,6 +329,9 @@ Cs444:2,"2":"Cs444",
 * Monochrome.
 */
 Cs400:3,"3":"Cs400", });
+/**
+*/
+export const PdfToolsErrorCodes = Object.freeze({ Unknown:0,"0":"Unknown",PasswordError:1,"1":"PasswordError",LoadError:2,"2":"LoadError",WrongPassword:3,"3":"WrongPassword",DecryptionError:4,"4":"DecryptionError",MalformedPdf:5,"5":"MalformedPdf",FileNotFound:6,"6":"FileNotFound", });
 
 const AddFileInputFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
@@ -725,10 +714,21 @@ export class PdfTools {
     * @returns {number}
     */
     get_total_pages(id) {
-        const ptr0 = passStringToWasm0(id, wasm.__wbindgen_export_0, wasm.__wbindgen_export_1);
-        const len0 = WASM_VECTOR_LEN;
-        const ret = wasm.pdftools_get_total_pages(this.__wbg_ptr, ptr0, len0);
-        return ret;
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            const ptr0 = passStringToWasm0(id, wasm.__wbindgen_export_0, wasm.__wbindgen_export_1);
+            const len0 = WASM_VECTOR_LEN;
+            wasm.pdftools_get_total_pages(retptr, this.__wbg_ptr, ptr0, len0);
+            var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+            var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+            var r2 = getDataViewMemory0().getInt32(retptr + 4 * 2, true);
+            if (r2) {
+                throw takeObject(r1);
+            }
+            return r0 >>> 0;
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
     }
     /**
     * @param {string} id
@@ -736,10 +736,21 @@ export class PdfTools {
     * @returns {FileOperationResult}
     */
     rotate_pdf(id, direction) {
-        const ptr0 = passStringToWasm0(id, wasm.__wbindgen_export_0, wasm.__wbindgen_export_1);
-        const len0 = WASM_VECTOR_LEN;
-        const ret = wasm.pdftools_rotate_pdf(this.__wbg_ptr, ptr0, len0, direction);
-        return FileOperationResult.__wrap(ret);
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            const ptr0 = passStringToWasm0(id, wasm.__wbindgen_export_0, wasm.__wbindgen_export_1);
+            const len0 = WASM_VECTOR_LEN;
+            wasm.pdftools_rotate_pdf(retptr, this.__wbg_ptr, ptr0, len0, direction);
+            var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+            var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+            var r2 = getDataViewMemory0().getInt32(retptr + 4 * 2, true);
+            if (r2) {
+                throw takeObject(r1);
+            }
+            return FileOperationResult.__wrap(r0);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
     }
     /**
     * @param {string} id
@@ -748,10 +759,21 @@ export class PdfTools {
     * @returns {FileOperationResult}
     */
     rotate_pdf_page(id, page, direction) {
-        const ptr0 = passStringToWasm0(id, wasm.__wbindgen_export_0, wasm.__wbindgen_export_1);
-        const len0 = WASM_VECTOR_LEN;
-        const ret = wasm.pdftools_rotate_pdf_page(this.__wbg_ptr, ptr0, len0, page, direction);
-        return FileOperationResult.__wrap(ret);
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            const ptr0 = passStringToWasm0(id, wasm.__wbindgen_export_0, wasm.__wbindgen_export_1);
+            const len0 = WASM_VECTOR_LEN;
+            wasm.pdftools_rotate_pdf_page(retptr, this.__wbg_ptr, ptr0, len0, page, direction);
+            var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+            var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+            var r2 = getDataViewMemory0().getInt32(retptr + 4 * 2, true);
+            if (r2) {
+                throw takeObject(r1);
+            }
+            return FileOperationResult.__wrap(r0);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
     }
     /**
     * @param {string} id
@@ -759,10 +781,21 @@ export class PdfTools {
     * @returns {FileOperationResult}
     */
     remove_pdf_page(id, page) {
-        const ptr0 = passStringToWasm0(id, wasm.__wbindgen_export_0, wasm.__wbindgen_export_1);
-        const len0 = WASM_VECTOR_LEN;
-        const ret = wasm.pdftools_remove_pdf_page(this.__wbg_ptr, ptr0, len0, page);
-        return FileOperationResult.__wrap(ret);
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            const ptr0 = passStringToWasm0(id, wasm.__wbindgen_export_0, wasm.__wbindgen_export_1);
+            const len0 = WASM_VECTOR_LEN;
+            wasm.pdftools_remove_pdf_page(retptr, this.__wbg_ptr, ptr0, len0, page);
+            var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+            var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+            var r2 = getDataViewMemory0().getInt32(retptr + 4 * 2, true);
+            if (r2) {
+                throw takeObject(r1);
+            }
+            return FileOperationResult.__wrap(r0);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
     }
     /**
     * @param {string} id
@@ -810,6 +843,11 @@ export class PdfTools {
             wasm.pdftools_get_file_size(retptr, this.__wbg_ptr, ptr0, len0);
             var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
             var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+            var r2 = getDataViewMemory0().getInt32(retptr + 4 * 2, true);
+            var r3 = getDataViewMemory0().getInt32(retptr + 4 * 3, true);
+            if (r3) {
+                throw takeObject(r2);
+            }
             var v2 = getCachedStringFromWasm0(r0, r1);
         if (r0 !== 0) { wasm.__wbindgen_export_2(r0, r1, 1); }
         return v2;
@@ -830,6 +868,11 @@ get_file(id) {
         wasm.pdftools_get_file(retptr, ptr, ptr0, len0);
         var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
         var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+        var r2 = getDataViewMemory0().getInt32(retptr + 4 * 2, true);
+        var r3 = getDataViewMemory0().getInt32(retptr + 4 * 3, true);
+        if (r3) {
+            throw takeObject(r2);
+        }
         var v2 = getArrayU8FromWasm0(r0, r1).slice();
         wasm.__wbindgen_export_2(r0, r1 * 1, 1);
         return v2;
@@ -924,13 +967,6 @@ function __wbg_get_imports() {
         const ret = PdfToolsError.__wrap(arg0);
         return addHeapObject(ret);
     };
-    imports.wbg.__wbindgen_string_new = function(arg0, arg1) {
-        const ret = getStringFromWasm0(arg0, arg1);
-        return addHeapObject(ret);
-    };
-    imports.wbg.__wbg_log_b103404cc5920657 = function(arg0) {
-        console.log(getObject(arg0));
-    };
     imports.wbg.__wbindgen_string_get = function(arg0, arg1) {
         const obj = getObject(arg1);
         const ret = typeof(obj) === 'string' ? obj : undefined;
@@ -954,6 +990,10 @@ function __wbg_get_imports() {
         var v0 = getCachedStringFromWasm0(arg0, arg1);
     if (arg0 !== 0) { wasm.__wbindgen_export_2(arg0, arg1, 1); }
     console.error(v0);
+};
+imports.wbg.__wbindgen_string_new = function(arg0, arg1) {
+    const ret = getStringFromWasm0(arg0, arg1);
+    return addHeapObject(ret);
 };
 imports.wbg.__wbindgen_object_clone_ref = function(arg0) {
     const ret = getObject(arg0);
@@ -1150,6 +1190,9 @@ imports.wbg.__wbg_error_09480e4aadca50ad = function(arg0) {
 };
 imports.wbg.__wbg_info_c261acb2deacd903 = function(arg0) {
     console.info(getObject(arg0));
+};
+imports.wbg.__wbg_log_b103404cc5920657 = function(arg0) {
+    console.log(getObject(arg0));
 };
 imports.wbg.__wbg_warn_2b3adb99ce26c314 = function(arg0) {
     console.warn(getObject(arg0));

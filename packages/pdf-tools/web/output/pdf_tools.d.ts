@@ -8,11 +8,6 @@
 export function decrypt_pdf(buffer: Uint8Array, password: string): PdfResult;
 /**
 * @param {Uint8Array} buffer
-* @returns {number}
-*/
-export function get_total_pages(buffer: Uint8Array): number;
-/**
-* @param {Uint8Array} buffer
 * @param {number} index
 * @returns {PdfResult}
 */
@@ -52,16 +47,6 @@ export function read_block_from_callback_wasm(param: number, position: number, p
 export function write_block_from_callback_wasm(param: number, buf: number, size: number): number;
 /**
 */
-export enum PdfToolsErrorCodes {
-  Unknown = 0,
-  PasswordError = 1,
-  LoadError = 2,
-  WrongPassword = 3,
-  DecryptionError = 4,
-  MalformedPdf = 5,
-}
-/**
-*/
 export enum Direction {
   Left = 0,
   Right = 1,
@@ -86,6 +71,17 @@ export enum ChromaSampling {
 * Monochrome.
 */
   Cs400 = 3,
+}
+/**
+*/
+export enum PdfToolsErrorCodes {
+  Unknown = 0,
+  PasswordError = 1,
+  LoadError = 2,
+  WrongPassword = 3,
+  DecryptionError = 4,
+  MalformedPdf = 5,
+  FileNotFound = 6,
 }
 /**
 */
@@ -259,7 +255,6 @@ export interface InitOutput {
   readonly pdftoolserror_new: (a: number) => number;
   readonly pdftoolserror_code: (a: number) => number;
   readonly decrypt_pdf: (a: number, b: number, c: number, d: number, e: number) => void;
-  readonly get_total_pages: (a: number, b: number) => number;
   readonly remove_pdf_page: (a: number, b: number, c: number) => number;
   readonly __wbg_getthumbnailresult_free: (a: number, b: number) => void;
   readonly getthumbnailresult_new: (a: number, b: number, c: number, d: number, e: number) => number;
@@ -276,10 +271,10 @@ export interface InitOutput {
   readonly pdftools_add_file: (a: number, b: number) => void;
   readonly pdftools_get_thumbnail: (a: number, b: number, c: number, d: number, e: number) => void;
   readonly pdftools_remove_file: (a: number, b: number, c: number) => void;
-  readonly pdftools_get_total_pages: (a: number, b: number, c: number) => number;
-  readonly pdftools_rotate_pdf: (a: number, b: number, c: number, d: number) => number;
-  readonly pdftools_rotate_pdf_page: (a: number, b: number, c: number, d: number, e: number) => number;
-  readonly pdftools_remove_pdf_page: (a: number, b: number, c: number, d: number) => number;
+  readonly pdftools_get_total_pages: (a: number, b: number, c: number, d: number) => void;
+  readonly pdftools_rotate_pdf: (a: number, b: number, c: number, d: number, e: number) => void;
+  readonly pdftools_rotate_pdf_page: (a: number, b: number, c: number, d: number, e: number, f: number) => void;
+  readonly pdftools_remove_pdf_page: (a: number, b: number, c: number, d: number, e: number) => void;
   readonly pdftools_decrypt_pdf: (a: number, b: number, c: number, d: number, e: number, f: number) => void;
   readonly pdftools_merge_files: (a: number, b: number, c: number) => number;
   readonly pdftools_get_file_size: (a: number, b: number, c: number, d: number) => void;
