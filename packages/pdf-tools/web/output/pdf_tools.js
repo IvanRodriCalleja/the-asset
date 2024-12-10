@@ -307,9 +307,6 @@ export function write_block_from_callback_wasm(param, buf, size) {
 }
 
 /**
-*/
-export const Direction = Object.freeze({ Left:0,"0":"Left",Right:1,"1":"Right", });
-/**
 * Chroma subsampling format
 */
 export const ChromaSampling = Object.freeze({
@@ -332,6 +329,9 @@ Cs400:3,"3":"Cs400", });
 /**
 */
 export const PdfToolsErrorCodes = Object.freeze({ Unknown:0,"0":"Unknown",PasswordError:1,"1":"PasswordError",LoadError:2,"2":"LoadError",WrongPassword:3,"3":"WrongPassword",DecryptionError:4,"4":"DecryptionError",MalformedPdf:5,"5":"MalformedPdf",FileNotFound:6,"6":"FileNotFound", });
+/**
+*/
+export const Direction = Object.freeze({ Left:0,"0":"Left",Right:1,"1":"Right", });
 
 const AddFileInputFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
@@ -492,85 +492,6 @@ get hash() {
 }
 }
 
-const GetThumbnailResultFinalization = (typeof FinalizationRegistry === 'undefined')
-    ? { register: () => {}, unregister: () => {} }
-    : new FinalizationRegistry(ptr => wasm.__wbg_getthumbnailresult_free(ptr >>> 0, 1));
-/**
-*/
-export class GetThumbnailResult {
-
-    static __wrap(ptr) {
-        ptr = ptr >>> 0;
-        const obj = Object.create(GetThumbnailResult.prototype);
-        obj.__wbg_ptr = ptr;
-        GetThumbnailResultFinalization.register(obj, obj.__wbg_ptr, obj);
-        return obj;
-    }
-
-    __destroy_into_raw() {
-        const ptr = this.__wbg_ptr;
-        this.__wbg_ptr = 0;
-        GetThumbnailResultFinalization.unregister(this);
-        return ptr;
-    }
-
-    free() {
-        const ptr = this.__destroy_into_raw();
-        wasm.__wbg_getthumbnailresult_free(ptr, 0);
-    }
-    /**
-    * @param {string} src
-    * @param {number} width
-    * @param {number} height
-    * @param {number} rotation
-    */
-    constructor(src, width, height, rotation) {
-        const ptr0 = passStringToWasm0(src, wasm.__wbindgen_export_0, wasm.__wbindgen_export_1);
-        const len0 = WASM_VECTOR_LEN;
-        const ret = wasm.getthumbnailresult_new(ptr0, len0, width, height, rotation);
-        this.__wbg_ptr = ret >>> 0;
-        GetThumbnailResultFinalization.register(this, this.__wbg_ptr, this);
-        return this;
-    }
-    /**
-    * @returns {string}
-    */
-    get src() {
-        try {
-            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            wasm.getthumbnailresult_src(retptr, this.__wbg_ptr);
-            var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
-            var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
-            var v1 = getCachedStringFromWasm0(r0, r1);
-        if (r0 !== 0) { wasm.__wbindgen_export_2(r0, r1, 1); }
-        return v1;
-    } finally {
-        wasm.__wbindgen_add_to_stack_pointer(16);
-    }
-}
-/**
-* @returns {number}
-*/
-get width() {
-    const ret = wasm.getthumbnailresult_width(this.__wbg_ptr);
-    return ret;
-}
-/**
-* @returns {number}
-*/
-get height() {
-    const ret = wasm.getthumbnailresult_height(this.__wbg_ptr);
-    return ret;
-}
-/**
-* @returns {number}
-*/
-get rotation() {
-    const ret = wasm.getthumbnailresult_rotation(this.__wbg_ptr);
-    return ret;
-}
-}
-
 const PdfResultFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
     : new FinalizationRegistry(ptr => wasm.__wbg_pdfresult_free(ptr >>> 0, 1));
@@ -682,7 +603,7 @@ export class PdfTools {
     /**
     * @param {string} id
     * @param {number} page
-    * @returns {GetThumbnailResult}
+    * @returns {ThumbnailResult}
     */
     get_thumbnail(id, page) {
         try {
@@ -696,7 +617,7 @@ export class PdfTools {
             if (r2) {
                 throw takeObject(r1);
             }
-            return GetThumbnailResult.__wrap(r0);
+            return ThumbnailResult.__wrap(r0);
         } finally {
             wasm.__wbindgen_add_to_stack_pointer(16);
         }
@@ -924,6 +845,85 @@ export class PdfToolsError {
         const ret = wasm.pdftoolserror_code(this.__wbg_ptr);
         return ret;
     }
+}
+
+const ThumbnailResultFinalization = (typeof FinalizationRegistry === 'undefined')
+    ? { register: () => {}, unregister: () => {} }
+    : new FinalizationRegistry(ptr => wasm.__wbg_thumbnailresult_free(ptr >>> 0, 1));
+/**
+*/
+export class ThumbnailResult {
+
+    static __wrap(ptr) {
+        ptr = ptr >>> 0;
+        const obj = Object.create(ThumbnailResult.prototype);
+        obj.__wbg_ptr = ptr;
+        ThumbnailResultFinalization.register(obj, obj.__wbg_ptr, obj);
+        return obj;
+    }
+
+    __destroy_into_raw() {
+        const ptr = this.__wbg_ptr;
+        this.__wbg_ptr = 0;
+        ThumbnailResultFinalization.unregister(this);
+        return ptr;
+    }
+
+    free() {
+        const ptr = this.__destroy_into_raw();
+        wasm.__wbg_thumbnailresult_free(ptr, 0);
+    }
+    /**
+    * @param {string} src
+    * @param {number} width
+    * @param {number} height
+    * @param {number} rotation
+    */
+    constructor(src, width, height, rotation) {
+        const ptr0 = passStringToWasm0(src, wasm.__wbindgen_export_0, wasm.__wbindgen_export_1);
+        const len0 = WASM_VECTOR_LEN;
+        const ret = wasm.thumbnailresult_new(ptr0, len0, width, height, rotation);
+        this.__wbg_ptr = ret >>> 0;
+        ThumbnailResultFinalization.register(this, this.__wbg_ptr, this);
+        return this;
+    }
+    /**
+    * @returns {string}
+    */
+    get src() {
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            wasm.thumbnailresult_src(retptr, this.__wbg_ptr);
+            var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+            var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+            var v1 = getCachedStringFromWasm0(r0, r1);
+        if (r0 !== 0) { wasm.__wbindgen_export_2(r0, r1, 1); }
+        return v1;
+    } finally {
+        wasm.__wbindgen_add_to_stack_pointer(16);
+    }
+}
+/**
+* @returns {number}
+*/
+get width() {
+    const ret = wasm.thumbnailresult_width(this.__wbg_ptr);
+    return ret;
+}
+/**
+* @returns {number}
+*/
+get height() {
+    const ret = wasm.thumbnailresult_height(this.__wbg_ptr);
+    return ret;
+}
+/**
+* @returns {number}
+*/
+get rotation() {
+    const ret = wasm.thumbnailresult_rotation(this.__wbg_ptr);
+    return ret;
+}
 }
 
 async function __wbg_load(module, imports) {

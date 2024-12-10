@@ -1,9 +1,11 @@
 use crate::{
   models::{
     add_file::AddFileInput,
+    file_operation_result::FileOperationResult,
     pdf_result::PdfResult,
     pdf_tools_error::{PdfToolsError, PdfToolsErrorCodes},
     the_asset_file::TheAssetFile,
+    thumbnail_result::ThumbnailResult,
   },
   operations::{
     decrypt::decrypt_pdf,
@@ -12,36 +14,12 @@ use crate::{
     page::get_total_pages,
     remove::remove_pdf_page,
     rotate::{rotate_pdf, rotate_pdf_page, Direction},
-    thumbnail::{get_thumbnail, GetThumbnailResult},
+    thumbnail::get_thumbnail,
   },
 };
 use pdfium_render::prelude::PdfPageIndex;
 use pdfium_render::prelude::*;
 use wasm_bindgen::prelude::*;
-
-#[wasm_bindgen]
-pub struct FileOperationResult {
-  id: String,
-  hash: String,
-}
-
-#[wasm_bindgen]
-impl FileOperationResult {
-  #[wasm_bindgen(constructor)]
-  pub fn new(id: String, hash: String) -> FileOperationResult {
-    FileOperationResult { id, hash }
-  }
-
-  #[wasm_bindgen(getter)]
-  pub fn id(&self) -> String {
-    self.id.clone()
-  }
-
-  #[wasm_bindgen(getter)]
-  pub fn hash(&self) -> String {
-    self.hash.clone()
-  }
-}
 
 #[wasm_bindgen]
 pub struct PdfTools {
@@ -88,11 +66,7 @@ impl PdfTools {
     self.files.push(file);
   }
 
-  pub fn get_thumbnail(
-    &self,
-    id: String,
-    page: PdfPageIndex,
-  ) -> Result<GetThumbnailResult, JsValue> {
+  pub fn get_thumbnail(&self, id: String, page: PdfPageIndex) -> Result<ThumbnailResult, JsValue> {
     let file = self.find_file(&id)?;
     let thumbnail = get_thumbnail(file.buffer.clone(), page)?;
 

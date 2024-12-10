@@ -1,52 +1,14 @@
-use crate::models::pdf_tools_error::{PdfToolsError, PdfToolsErrorCodes};
+use crate::models::{
+  pdf_tools_error::{PdfToolsError, PdfToolsErrorCodes},
+  thumbnail_result::ThumbnailResult,
+};
 use base64::{engine::general_purpose, Engine as _};
 use image::ImageFormat;
 use pdfium_render::prelude::*;
 use std::io::Cursor;
-use wasm_bindgen::prelude::*;
+use wasm_bindgen::JsValue;
 
-#[wasm_bindgen]
-pub struct GetThumbnailResult {
-  src: String,
-  width: i32,
-  height: i32,
-  rotation: i32,
-}
-
-#[wasm_bindgen]
-impl GetThumbnailResult {
-  #[wasm_bindgen(constructor)]
-  pub fn new(src: String, width: i32, height: i32, rotation: i32) -> GetThumbnailResult {
-    GetThumbnailResult {
-      src,
-      width,
-      height,
-      rotation,
-    }
-  }
-
-  #[wasm_bindgen(getter)]
-  pub fn src(&self) -> String {
-    self.src.clone()
-  }
-
-  #[wasm_bindgen(getter)]
-  pub fn width(&self) -> i32 {
-    self.width
-  }
-
-  #[wasm_bindgen(getter)]
-  pub fn height(&self) -> i32 {
-    self.height
-  }
-
-  #[wasm_bindgen(getter)]
-  pub fn rotation(&self) -> i32 {
-    self.rotation
-  }
-}
-
-pub fn get_thumbnail(buffer: Vec<u8>, index: PdfPageIndex) -> Result<GetThumbnailResult, JsValue> {
+pub fn get_thumbnail(buffer: Vec<u8>, index: PdfPageIndex) -> Result<ThumbnailResult, JsValue> {
   let pdfium = Pdfium::default();
   let document = match pdfium.load_pdf_from_byte_vec(buffer, None) {
     Ok(doc) => doc,
@@ -72,7 +34,7 @@ pub fn get_thumbnail(buffer: Vec<u8>, index: PdfPageIndex) -> Result<GetThumbnai
 
   let rotation = get_current_rotation(&page);
 
-  Ok(GetThumbnailResult::new(
+  Ok(ThumbnailResult::new(
     base64_src,
     image.width(),
     image.height(),

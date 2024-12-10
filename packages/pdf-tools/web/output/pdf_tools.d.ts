@@ -46,12 +46,6 @@ export function read_block_from_callback_wasm(param: number, position: number, p
 */
 export function write_block_from_callback_wasm(param: number, buf: number, size: number): number;
 /**
-*/
-export enum Direction {
-  Left = 0,
-  Right = 1,
-}
-/**
 * Chroma subsampling format
 */
 export enum ChromaSampling {
@@ -82,6 +76,12 @@ export enum PdfToolsErrorCodes {
   DecryptionError = 4,
   MalformedPdf = 5,
   FileNotFound = 6,
+}
+/**
+*/
+export enum Direction {
+  Left = 0,
+  Right = 1,
 }
 /**
 */
@@ -121,30 +121,6 @@ export class FileOperationResult {
 }
 /**
 */
-export class GetThumbnailResult {
-  free(): void;
-/**
-* @param {string} src
-* @param {number} width
-* @param {number} height
-* @param {number} rotation
-*/
-  constructor(src: string, width: number, height: number, rotation: number);
-/**
-*/
-  readonly height: number;
-/**
-*/
-  readonly rotation: number;
-/**
-*/
-  readonly src: string;
-/**
-*/
-  readonly width: number;
-}
-/**
-*/
 export class PdfResult {
   free(): void;
 /**
@@ -173,9 +149,9 @@ export class PdfTools {
 /**
 * @param {string} id
 * @param {number} page
-* @returns {GetThumbnailResult}
+* @returns {ThumbnailResult}
 */
-  get_thumbnail(id: string, page: number): GetThumbnailResult;
+  get_thumbnail(id: string, page: number): ThumbnailResult;
 /**
 * @param {string} id
 */
@@ -238,6 +214,30 @@ export class PdfToolsError {
 */
   readonly code: PdfToolsErrorCodes;
 }
+/**
+*/
+export class ThumbnailResult {
+  free(): void;
+/**
+* @param {string} src
+* @param {number} width
+* @param {number} height
+* @param {number} rotation
+*/
+  constructor(src: string, width: number, height: number, rotation: number);
+/**
+*/
+  readonly height: number;
+/**
+*/
+  readonly rotation: number;
+/**
+*/
+  readonly src: string;
+/**
+*/
+  readonly width: number;
+}
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
 
@@ -248,24 +248,24 @@ export interface InitOutput {
   readonly addfileinput_id: (a: number, b: number) => void;
   readonly addfileinput_buffer: (a: number, b: number) => void;
   readonly addfileinput_name: (a: number, b: number) => void;
+  readonly __wbg_fileoperationresult_free: (a: number, b: number) => void;
+  readonly fileoperationresult_new: (a: number, b: number, c: number, d: number) => number;
+  readonly fileoperationresult_id: (a: number, b: number) => void;
+  readonly fileoperationresult_hash: (a: number, b: number) => void;
   readonly __wbg_pdfresult_free: (a: number, b: number) => void;
   readonly pdfresult_buffer: (a: number, b: number) => void;
   readonly pdfresult_hash: (a: number, b: number) => void;
   readonly __wbg_pdftoolserror_free: (a: number, b: number) => void;
   readonly pdftoolserror_new: (a: number) => number;
   readonly pdftoolserror_code: (a: number) => number;
+  readonly __wbg_thumbnailresult_free: (a: number, b: number) => void;
+  readonly thumbnailresult_new: (a: number, b: number, c: number, d: number, e: number) => number;
+  readonly thumbnailresult_src: (a: number, b: number) => void;
+  readonly thumbnailresult_width: (a: number) => number;
+  readonly thumbnailresult_height: (a: number) => number;
+  readonly thumbnailresult_rotation: (a: number) => number;
   readonly decrypt_pdf: (a: number, b: number, c: number, d: number, e: number) => void;
   readonly remove_pdf_page: (a: number, b: number, c: number) => number;
-  readonly __wbg_getthumbnailresult_free: (a: number, b: number) => void;
-  readonly getthumbnailresult_new: (a: number, b: number, c: number, d: number, e: number) => number;
-  readonly getthumbnailresult_src: (a: number, b: number) => void;
-  readonly getthumbnailresult_width: (a: number) => number;
-  readonly getthumbnailresult_height: (a: number) => number;
-  readonly getthumbnailresult_rotation: (a: number) => number;
-  readonly __wbg_fileoperationresult_free: (a: number, b: number) => void;
-  readonly fileoperationresult_new: (a: number, b: number, c: number, d: number) => number;
-  readonly fileoperationresult_id: (a: number, b: number) => void;
-  readonly fileoperationresult_hash: (a: number, b: number) => void;
   readonly __wbg_pdftools_free: (a: number, b: number) => void;
   readonly pdftools_new: () => number;
   readonly pdftools_add_file: (a: number, b: number) => void;
