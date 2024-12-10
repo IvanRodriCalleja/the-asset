@@ -142,14 +142,14 @@ impl PdfTools {
   }
 
   pub fn merge_files(&self, ids: Vec<String>) -> PdfResult {
-    let files: Vec<Vec<u8>> = ids
+    let files: Vec<&[u8]> = ids
       .iter()
       .filter_map(|id| {
         self
           .files
           .iter()
           .find(|f| &f.id == id)
-          .map(|f| f.buffer.clone())
+          .map(|f| f.buffer.as_slice())
       })
       .collect();
 

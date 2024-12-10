@@ -68,6 +68,12 @@ export enum ChromaSampling {
 }
 /**
 */
+export enum Direction {
+  Left = 0,
+  Right = 1,
+}
+/**
+*/
 export enum PdfToolsErrorCodes {
   Unknown = 0,
   PasswordError = 1,
@@ -76,12 +82,6 @@ export enum PdfToolsErrorCodes {
   DecryptionError = 4,
   MalformedPdf = 5,
   FileNotFound = 6,
-}
-/**
-*/
-export enum Direction {
-  Left = 0,
-  Right = 1,
 }
 /**
 */

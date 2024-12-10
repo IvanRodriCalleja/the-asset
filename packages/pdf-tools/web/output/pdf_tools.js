@@ -328,10 +328,10 @@ Cs444:2,"2":"Cs444",
 Cs400:3,"3":"Cs400", });
 /**
 */
-export const PdfToolsErrorCodes = Object.freeze({ Unknown:0,"0":"Unknown",PasswordError:1,"1":"PasswordError",LoadError:2,"2":"LoadError",WrongPassword:3,"3":"WrongPassword",DecryptionError:4,"4":"DecryptionError",MalformedPdf:5,"5":"MalformedPdf",FileNotFound:6,"6":"FileNotFound", });
+export const Direction = Object.freeze({ Left:0,"0":"Left",Right:1,"1":"Right", });
 /**
 */
-export const Direction = Object.freeze({ Left:0,"0":"Left",Right:1,"1":"Right", });
+export const PdfToolsErrorCodes = Object.freeze({ Unknown:0,"0":"Unknown",PasswordError:1,"1":"PasswordError",LoadError:2,"2":"LoadError",WrongPassword:3,"3":"WrongPassword",DecryptionError:4,"4":"DecryptionError",MalformedPdf:5,"5":"MalformedPdf",FileNotFound:6,"6":"FileNotFound", });
 
 const AddFileInputFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
