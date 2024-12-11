@@ -1,14 +1,14 @@
 use pdfium_render::prelude::*;
-use wasm_bindgen::prelude::wasm_bindgen;
 
 use crate::models::pdf_result::PdfResult;
 
 use super::hash::get_hash;
 
-#[wasm_bindgen]
-pub fn remove_pdf_page(buffer: Vec<u8>, index: PdfPageIndex) -> PdfResult {
+pub fn remove_pdf_page(buffer: &[u8], index: PdfPageIndex) -> PdfResult {
   let pdfium = Pdfium::default();
-  let document = pdfium.load_pdf_from_byte_vec(buffer, None).unwrap();
+  let document = pdfium
+    .load_pdf_from_byte_vec(buffer.to_vec(), None)
+    .unwrap();
 
   let total_pages = document.pages().len();
   if index >= total_pages {

@@ -23,7 +23,6 @@ export function thumbnailresult_width(a: number): number;
 export function thumbnailresult_height(a: number): number;
 export function thumbnailresult_rotation(a: number): number;
 export function decrypt_pdf(a: number, b: number, c: number, d: number, e: number): void;
-export function remove_pdf_page(a: number, b: number, c: number): number;
 export function __wbg_pdftools_free(a: number, b: number): void;
 export function pdftools_new(): number;
 export function pdftools_add_file(a: number, b: number): void;

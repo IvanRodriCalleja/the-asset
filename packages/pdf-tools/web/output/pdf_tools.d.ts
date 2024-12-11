@@ -7,12 +7,6 @@
 */
 export function decrypt_pdf(buffer: Uint8Array, password: string): PdfResult;
 /**
-* @param {Uint8Array} buffer
-* @param {number} index
-* @returns {PdfResult}
-*/
-export function remove_pdf_page(buffer: Uint8Array, index: number): PdfResult;
-/**
 * Establishes a binding between an external Pdfium WASM module and `pdfium-render`'s WASM module.
 * This function should be called from Javascript once the external Pdfium WASM module has been loaded
 * into the browser. It is essential that this function is called _before_ initializing
@@ -265,7 +259,6 @@ export interface InitOutput {
   readonly thumbnailresult_height: (a: number) => number;
   readonly thumbnailresult_rotation: (a: number) => number;
   readonly decrypt_pdf: (a: number, b: number, c: number, d: number, e: number) => void;
-  readonly remove_pdf_page: (a: number, b: number, c: number) => number;
   readonly __wbg_pdftools_free: (a: number, b: number) => void;
   readonly pdftools_new: () => number;
   readonly pdftools_add_file: (a: number, b: number) => void;

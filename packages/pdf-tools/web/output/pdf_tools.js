@@ -225,18 +225,6 @@ export function decrypt_pdf(buffer, password) {
     }
 }
 
-/**
-* @param {Uint8Array} buffer
-* @param {number} index
-* @returns {PdfResult}
-*/
-export function remove_pdf_page(buffer, index) {
-    const ptr0 = passArray8ToWasm0(buffer, wasm.__wbindgen_export_0);
-    const len0 = WASM_VECTOR_LEN;
-    const ret = wasm.remove_pdf_page(ptr0, len0, index);
-    return PdfResult.__wrap(ret);
-}
-
 function _assertClass(instance, klass) {
     if (!(instance instanceof klass)) {
         throw new Error(`expected instance of ${klass.name}`);

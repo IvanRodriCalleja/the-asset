@@ -12,13 +12,13 @@ pub enum Direction {
   Right,
 }
 
-pub fn rotate_pdf_page(buffer: Vec<u8>, index: u32, direction: Direction) -> PdfResult {
+pub fn rotate_pdf_page(buffer: &[u8], index: u32, direction: Direction) -> PdfResult {
   let angle = match direction {
     Direction::Right => 90,
     Direction::Left => -90,
   };
 
-  let mut doc = Document::load_mem(&buffer).unwrap();
+  let mut doc = Document::load_mem(buffer).unwrap();
 
   if let Some(&page_id) = doc.get_pages().get(&index) {
     // Obtiene el diccionario de la página
@@ -45,13 +45,13 @@ pub fn rotate_pdf_page(buffer: Vec<u8>, index: u32, direction: Direction) -> Pdf
   PdfResult::new(buffer.clone(), get_pdf_hash(&buffer))
 }
 
-pub fn rotate_pdf(buffer: Vec<u8>, direction: Direction) -> PdfResult {
+pub fn rotate_pdf(buffer: &[u8], direction: Direction) -> PdfResult {
   let angle = match direction {
     Direction::Right => 90,
     Direction::Left => -90,
   };
 
-  let mut doc = Document::load_mem(&buffer).unwrap();
+  let mut doc = Document::load_mem(buffer).unwrap();
 
   for (_, page_id) in doc.get_pages() {
     let page_dict = doc

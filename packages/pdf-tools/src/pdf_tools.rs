@@ -68,7 +68,7 @@ impl PdfTools {
 
   pub fn get_thumbnail(&self, id: String, page: PdfPageIndex) -> Result<ThumbnailResult, JsValue> {
     let file = self.find_file(&id)?;
-    let thumbnail = get_thumbnail(file.buffer.clone(), page)?;
+    let thumbnail = get_thumbnail(&file.buffer, page)?;
 
     Ok(thumbnail)
   }
@@ -90,7 +90,7 @@ impl PdfTools {
   ) -> Result<FileOperationResult, JsValue> {
     let file = self.find_file_mut(&id)?;
 
-    let result = rotate_pdf(file.buffer.clone(), direction);
+    let result = rotate_pdf(&file.buffer, direction);
     file.buffer = result.buffer();
     file.hash = result.hash();
 
@@ -105,7 +105,7 @@ impl PdfTools {
   ) -> Result<FileOperationResult, JsValue> {
     let file = self.find_file_mut(&id)?;
 
-    let result = rotate_pdf_page(file.buffer.clone(), page, direction);
+    let result = rotate_pdf_page(&file.buffer, page, direction);
     file.buffer = result.buffer();
     file.hash = result.hash();
 
@@ -119,7 +119,7 @@ impl PdfTools {
   ) -> Result<FileOperationResult, JsValue> {
     let file = self.find_file_mut(&id)?;
 
-    let result = remove_pdf_page(file.buffer.clone(), page);
+    let result = remove_pdf_page(&file.buffer, page);
 
     file.buffer = result.buffer();
     file.hash = result.hash();
@@ -134,7 +134,7 @@ impl PdfTools {
   ) -> Result<FileOperationResult, JsValue> {
     let file = self.find_file_mut(&id)?;
 
-    let result = decrypt_pdf(file.buffer.clone(), &password)?;
+    let result = decrypt_pdf(&file.buffer, &password)?;
     file.buffer = result.buffer();
     file.hash = result.hash();
 

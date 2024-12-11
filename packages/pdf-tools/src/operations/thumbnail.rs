@@ -8,9 +8,9 @@ use pdfium_render::prelude::*;
 use std::io::Cursor;
 use wasm_bindgen::JsValue;
 
-pub fn get_thumbnail(buffer: Vec<u8>, index: PdfPageIndex) -> Result<ThumbnailResult, JsValue> {
+pub fn get_thumbnail(buffer: &[u8], index: PdfPageIndex) -> Result<ThumbnailResult, JsValue> {
   let pdfium = Pdfium::default();
-  let document = match pdfium.load_pdf_from_byte_vec(buffer, None) {
+  let document = match pdfium.load_pdf_from_byte_vec(buffer.to_vec(), None) {
     Ok(doc) => doc,
     Err(PdfiumError::PdfiumLibraryInternalError(PdfiumInternalError::PasswordError)) => {
       return Err(PdfToolsError::new(PdfToolsErrorCodes::PasswordError).into())

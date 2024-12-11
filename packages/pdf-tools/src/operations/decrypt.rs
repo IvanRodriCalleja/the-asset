@@ -11,8 +11,8 @@ use crate::models::{
 use super::hash::get_pdf_hash;
 
 #[wasm_bindgen]
-pub fn decrypt_pdf(buffer: Vec<u8>, password: &str) -> Result<PdfResult, JsValue> {
-  let mut document = Document::load_mem(&buffer).unwrap();
+pub fn decrypt_pdf(buffer: &[u8], password: &str) -> Result<PdfResult, JsValue> {
+  let mut document = Document::load_mem(buffer).unwrap();
 
   match document.decrypt(password) {
     Ok(doc) => doc,
