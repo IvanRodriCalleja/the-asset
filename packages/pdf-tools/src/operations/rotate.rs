@@ -3,8 +3,6 @@ use std::io::Cursor;
 use lopdf::Document;
 use wasm_bindgen::prelude::*;
 
-use crate::{models::pdf_result::PdfResult, operations::hash::get_pdf_hash};
-
 #[wasm_bindgen]
 #[derive(Copy, Clone, Debug, PartialEq)]
 pub enum Direction {
@@ -12,7 +10,7 @@ pub enum Direction {
   Right,
 }
 
-pub fn rotate_pdf_page(buffer: &[u8], index: u32, direction: Direction) -> PdfResult {
+pub fn rotate_pdf_page(buffer: &[u8], index: u32, direction: Direction) -> Vec<u8> {
   let angle = match direction {
     Direction::Right => 90,
     Direction::Left => -90,
@@ -40,12 +38,10 @@ pub fn rotate_pdf_page(buffer: &[u8], index: u32, direction: Direction) -> PdfRe
   let mut buffer = Cursor::new(Vec::new());
   doc.save_to(&mut buffer).unwrap();
 
-  let buffer = buffer.into_inner();
-
-  PdfResult::new(buffer.clone(), get_pdf_hash(&buffer))
+  buffer.into_inner()
 }
 
-pub fn rotate_pdf(buffer: &[u8], direction: Direction) -> PdfResult {
+pub fn rotate_pdf(buffer: &[u8], direction: Direction) -> Vec<u8> {
   let angle = match direction {
     Direction::Right => 90,
     Direction::Left => -90,
@@ -72,7 +68,5 @@ pub fn rotate_pdf(buffer: &[u8], direction: Direction) -> PdfResult {
   let mut buffer = Cursor::new(Vec::new());
   doc.save_to(&mut buffer).unwrap();
 
-  let buffer = buffer.into_inner();
-
-  PdfResult::new(buffer.clone(), get_pdf_hash(&buffer))
+  buffer.into_inner()
 }

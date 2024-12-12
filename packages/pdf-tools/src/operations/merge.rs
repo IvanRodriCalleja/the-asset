@@ -1,13 +1,8 @@
 use pdfium_render::prelude::*;
 
-use crate::models::pdf_result::PdfResult;
-
-use super::hash::get_hash;
-
-pub fn merge_pdfs(buffers: Vec<&[u8]>) -> PdfResult {
+pub fn merge_pdfs(buffers: Vec<&[u8]>) -> Vec<u8> {
   let pdfium = Pdfium::default();
 
-  // Crear un nuevo documento PDF vacío como destino
   let mut destination_document = pdfium.create_new_pdf().unwrap();
   let destination_pages = destination_document.pages_mut();
 
@@ -28,8 +23,5 @@ pub fn merge_pdfs(buffers: Vec<&[u8]>) -> PdfResult {
     current_page_index += source_pages.len();
   }
 
-  PdfResult::new(
-    destination_document.save_to_bytes().unwrap(),
-    get_hash(&destination_document).unwrap(),
-  )
+  destination_document.save_to_bytes().unwrap()
 }

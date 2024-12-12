@@ -113,7 +113,7 @@ export const Toolbar = ({ totalPages, page, setPage, children }: ToolbarProps) =
 						onKeyUp={onKeyUp}
 					/>
 					/
-					<Text size="sm" className={css({ paddingInline: 2, width: '3ch' })}>
+					<Text size="sm" className={css({ paddingInline: 2 })}>
 						{totalPages}
 					</Text>
 				</Stack>

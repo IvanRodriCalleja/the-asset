@@ -3,15 +3,10 @@ use std::io::Cursor;
 use lopdf::{encryption::DecryptionError, Document, Error};
 use wasm_bindgen::prelude::*;
 
-use crate::models::{
-  pdf_result::PdfResult,
-  pdf_tools_error::{PdfToolsError, PdfToolsErrorCodes},
-};
-
-use super::hash::get_pdf_hash;
+use crate::models::pdf_tools_error::{PdfToolsError, PdfToolsErrorCodes};
 
 #[wasm_bindgen]
-pub fn decrypt_pdf(buffer: &[u8], password: &str) -> Result<PdfResult, JsValue> {
+pub fn decrypt_pdf(buffer: &[u8], password: &str) -> Result<Vec<u8>, JsValue> {
   let mut document = Document::load_mem(buffer).unwrap();
 
   match document.decrypt(password) {
@@ -27,5 +22,5 @@ pub fn decrypt_pdf(buffer: &[u8], password: &str) -> Result<PdfResult, JsValue> 
 
   let buffer = buffer.into_inner();
 
-  Ok(PdfResult::new(buffer.clone(), get_pdf_hash(&buffer)))
+  Ok(buffer)
 }

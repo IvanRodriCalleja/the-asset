@@ -10,6 +10,7 @@ use crate::{
   operations::{
     decrypt::decrypt_pdf,
     file_size::get_file_size,
+    hash::get_buffer_hash,
     merge::merge_pdfs,
     page::get_total_pages,
     remove::remove_pdf_page,
@@ -90,11 +91,13 @@ impl PdfTools {
   ) -> Result<FileOperationResult, JsValue> {
     let file = self.find_file_mut(&id)?;
 
-    let result = rotate_pdf(&file.buffer, direction);
-    file.buffer = result.buffer();
-    file.hash = result.hash();
+    let buffer = rotate_pdf(&file.buffer, direction);
+    let hash = get_buffer_hash(&buffer);
 
-    Ok(FileOperationResult::new(file.id.clone(), file.hash.clone()))
+    file.buffer = buffer;
+    file.hash = hash.clone();
+
+    Ok(FileOperationResult::new(file.id.clone(), hash))
   }
 
   pub fn rotate_pdf_page(
@@ -105,11 +108,13 @@ impl PdfTools {
   ) -> Result<FileOperationResult, JsValue> {
     let file = self.find_file_mut(&id)?;
 
-    let result = rotate_pdf_page(&file.buffer, page, direction);
-    file.buffer = result.buffer();
-    file.hash = result.hash();
+    let buffer = rotate_pdf_page(&file.buffer, page, direction);
+    let hash = get_buffer_hash(&buffer);
 
-    Ok(FileOperationResult::new(file.id.clone(), file.hash.clone()))
+    file.buffer = buffer;
+    file.hash = hash.clone();
+
+    Ok(FileOperationResult::new(file.id.clone(), hash))
   }
 
   pub fn remove_pdf_page(
@@ -119,12 +124,13 @@ impl PdfTools {
   ) -> Result<FileOperationResult, JsValue> {
     let file = self.find_file_mut(&id)?;
 
-    let result = remove_pdf_page(&file.buffer, page);
+    let buffer = remove_pdf_page(&file.buffer, page);
+    let hash = get_buffer_hash(&buffer);
 
-    file.buffer = result.buffer();
-    file.hash = result.hash();
+    file.buffer = buffer;
+    file.hash = hash.clone();
 
-    Ok(FileOperationResult::new(file.id.clone(), file.hash.clone()))
+    Ok(FileOperationResult::new(file.id.clone(), hash))
   }
 
   pub fn decrypt_pdf(
@@ -134,11 +140,13 @@ impl PdfTools {
   ) -> Result<FileOperationResult, JsValue> {
     let file = self.find_file_mut(&id)?;
 
-    let result = decrypt_pdf(&file.buffer, &password)?;
-    file.buffer = result.buffer();
-    file.hash = result.hash();
+    let buffer = decrypt_pdf(&file.buffer, &password)?;
+    let hash = get_buffer_hash(&buffer);
 
-    Ok(FileOperationResult::new(file.id.clone(), file.hash.clone()))
+    file.buffer = buffer;
+    file.hash = hash.clone();
+
+    Ok(FileOperationResult::new(file.id.clone(), hash))
   }
 
   pub fn merge_files(&self, ids: Vec<String>) -> PdfResult {
@@ -153,9 +161,10 @@ impl PdfTools {
       })
       .collect();
 
-    let result = merge_pdfs(files);
+    let buffer = merge_pdfs(files);
+    let hash = get_buffer_hash(&buffer);
 
-    result
+    PdfResult::new(buffer, hash)
   }
 
   pub fn get_file_size(&self, id: String) -> Result<String, JsValue> {

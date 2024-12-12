@@ -3,9 +3,9 @@
 /**
 * @param {Uint8Array} buffer
 * @param {string} password
-* @returns {PdfResult}
+* @returns {Uint8Array}
 */
-export function decrypt_pdf(buffer: Uint8Array, password: string): PdfResult;
+export function decrypt_pdf(buffer: Uint8Array, password: string): Uint8Array;
 /**
 * Establishes a binding between an external Pdfium WASM module and `pdfium-render`'s WASM module.
 * This function should be called from Javascript once the external Pdfium WASM module has been loaded
@@ -62,12 +62,6 @@ export enum ChromaSampling {
 }
 /**
 */
-export enum Direction {
-  Left = 0,
-  Right = 1,
-}
-/**
-*/
 export enum PdfToolsErrorCodes {
   Unknown = 0,
   PasswordError = 1,
@@ -76,6 +70,12 @@ export enum PdfToolsErrorCodes {
   DecryptionError = 4,
   MalformedPdf = 5,
   FileNotFound = 6,
+}
+/**
+*/
+export enum Direction {
+  Left = 0,
+  Right = 1,
 }
 /**
 */

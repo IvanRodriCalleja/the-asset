@@ -203,7 +203,7 @@ function getArrayU8FromWasm0(ptr, len) {
 /**
 * @param {Uint8Array} buffer
 * @param {string} password
-* @returns {PdfResult}
+* @returns {Uint8Array}
 */
 export function decrypt_pdf(buffer, password) {
     try {
@@ -216,10 +216,13 @@ export function decrypt_pdf(buffer, password) {
         var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
         var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
         var r2 = getDataViewMemory0().getInt32(retptr + 4 * 2, true);
-        if (r2) {
-            throw takeObject(r1);
+        var r3 = getDataViewMemory0().getInt32(retptr + 4 * 3, true);
+        if (r3) {
+            throw takeObject(r2);
         }
-        return PdfResult.__wrap(r0);
+        var v3 = getArrayU8FromWasm0(r0, r1).slice();
+        wasm.__wbindgen_export_2(r0, r1 * 1, 1);
+        return v3;
     } finally {
         wasm.__wbindgen_add_to_stack_pointer(16);
     }
@@ -316,10 +319,10 @@ Cs444:2,"2":"Cs444",
 Cs400:3,"3":"Cs400", });
 /**
 */
-export const Direction = Object.freeze({ Left:0,"0":"Left",Right:1,"1":"Right", });
+export const PdfToolsErrorCodes = Object.freeze({ Unknown:0,"0":"Unknown",PasswordError:1,"1":"PasswordError",LoadError:2,"2":"LoadError",WrongPassword:3,"3":"WrongPassword",DecryptionError:4,"4":"DecryptionError",MalformedPdf:5,"5":"MalformedPdf",FileNotFound:6,"6":"FileNotFound", });
 /**
 */
-export const PdfToolsErrorCodes = Object.freeze({ Unknown:0,"0":"Unknown",PasswordError:1,"1":"PasswordError",LoadError:2,"2":"LoadError",WrongPassword:3,"3":"WrongPassword",DecryptionError:4,"4":"DecryptionError",MalformedPdf:5,"5":"MalformedPdf",FileNotFound:6,"6":"FileNotFound", });
+export const Direction = Object.freeze({ Left:0,"0":"Left",Right:1,"1":"Right", });
 
 const AddFileInputFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }

@@ -1,10 +1,6 @@
 use pdfium_render::prelude::*;
 
-use crate::models::pdf_result::PdfResult;
-
-use super::hash::get_hash;
-
-pub fn remove_pdf_page(buffer: &[u8], index: PdfPageIndex) -> PdfResult {
+pub fn remove_pdf_page(buffer: &[u8], index: PdfPageIndex) -> Vec<u8> {
   let pdfium = Pdfium::default();
   let document = pdfium
     .load_pdf_from_byte_vec(buffer.to_vec(), None)
@@ -18,8 +14,5 @@ pub fn remove_pdf_page(buffer: &[u8], index: PdfPageIndex) -> PdfResult {
   let page = document.pages().get(index).unwrap();
   page.delete().unwrap();
 
-  PdfResult::new(
-    document.save_to_bytes().unwrap(),
-    get_hash(&document).unwrap(),
-  )
+  document.save_to_bytes().unwrap()
 }
