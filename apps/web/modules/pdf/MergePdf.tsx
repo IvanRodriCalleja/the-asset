@@ -1,10 +1,12 @@
 'use client';
 
+import { UploadIcon } from '@radix-ui/react-icons';
+
+import * as Dropzone from '@theasset/ui/drop-zone';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { ThePdfActionsProvider } from '@theasset/pdf-react/context/the-pdf-actions-context';
 import { mergeManager } from '@theasset/pdf-tools';
-import { Box, styled } from '@theasset/style-system/jsx';
-import { FilePicker } from '@theasset/ui/file-picker';
+import { Box, Stack, styled } from '@theasset/style-system/jsx';
 import { HighlightColor, HighlightMaker } from '@theasset/ui/highlight-maker';
 
 import { MainSection } from 'modules/shared/ui/MainSection';
@@ -13,6 +15,7 @@ import { SectionGradient } from 'modules/shared/ui/SectionGradient';
 import { AddMorePdfsButton } from './mergePdf/AddMorePdfsButton';
 import { FilePreview } from './mergePdf/FilePreview';
 import { MergeButton } from './mergePdf/MergeButton';
+import { useMergePdf } from './mergePdf/useMergePdf';
 
 const UploadSection = styled('section', {
 	base: {
@@ -24,58 +27,69 @@ const UploadSection = styled('section', {
 	}
 });
 
-// TODO: Rethink file upload approach
+// TODO: Inject actions
+// TODO: Make setState to one file
 
 export const MergePdf = () => {
 	const { mergePdf } = useLocale();
+	const { files, hasFiles, setFiles, onChange } = useMergePdf();
 
 	return (
 		<>
 			<UploadSection>
 				<SectionGradient />
-
-				<FilePicker
-					accept={{ 'application/pdf': [] }}
-					buttonText={mergePdf.uploadPdf}
-					preview={props => {
-						return (
-							<ThePdfActionsProvider
-								getThumbnail={mergeManager.getThumbnail}
-								getTotalPages={mergeManager.getTotalPages}>
-								<Box marginBottom="89px">
-									<FilePreview {...props} />
-								</Box>
-								<Box
-									display="flex"
-									justifyContent="center"
-									flexDirection={{ base: 'column', md: 'row' }}
-									gap={4}
-									position="fixed"
-									bottom={0}
-									padding={4}
-									borderTopStyle="solid"
-									borderTopWidth="1px"
-									borderTopColor="border"
-									width="100%"
-									background="white">
-									<AddMorePdfsButton open={props.open} />
-									<MergeButton files={props.files} />
-								</Box>
-							</ThePdfActionsProvider>
-						);
-					}}>
-					<MainSection
-						title={mergePdf.title}
-						description={
-							<>
-								{mergePdf.description}{' '}
-								<HighlightMaker color={HighlightColor.Purple}>
-									{mergePdf.descriptionImportant}
-								</HighlightMaker>
-							</>
-						}
-					/>
-				</FilePicker>
+				<Dropzone.Root accept={{ 'application/pdf': [] }} onChange={onChange}>
+					<Dropzone.Area>
+						<Stack>
+							{!hasFiles && (
+								<>
+									<MainSection
+										title={mergePdf.title}
+										description={
+											<>
+												{mergePdf.description}{' '}
+												<HighlightMaker color={HighlightColor.Purple}>
+													{mergePdf.descriptionImportant}
+												</HighlightMaker>
+											</>
+										}
+									/>
+									<Box padding={4} marginInline="auto" width="full" maxWidth="500px">
+										<Dropzone.Button size="2xl">
+											<UploadIcon />
+											{mergePdf.uploadPdf}
+										</Dropzone.Button>
+									</Box>
+								</>
+							)}
+							{hasFiles && (
+								<ThePdfActionsProvider
+									getThumbnail={mergeManager.getThumbnail}
+									getTotalPages={mergeManager.getTotalPages}>
+									<Box marginBottom="89px">
+										<FilePreview files={files} setFiles={setFiles} />
+									</Box>
+									<Box
+										display="flex"
+										justifyContent="center"
+										flexDirection={{ base: 'column', md: 'row' }}
+										gap={4}
+										position="fixed"
+										bottom={0}
+										padding={4}
+										borderTopStyle="solid"
+										borderTopWidth="1px"
+										borderTopColor="border"
+										width="100%"
+										background="white">
+										<AddMorePdfsButton open={open} />
+										<MergeButton files={files} />
+									</Box>
+								</ThePdfActionsProvider>
+							)}
+						</Stack>
+					</Dropzone.Area>
+				</Dropzone.Root>
 			</UploadSection>
 		</>
 	);

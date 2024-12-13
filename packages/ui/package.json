@@ -7,7 +7,7 @@
     "./badge": "./src/Badge.tsx",
     "./button": "./src/Button.tsx",
     "./card": "./src/Card.tsx",
-    "./file-picker": "./src/FilePicker.tsx",
+    "./drop-zone": "./src/DropZone.tsx",
 
     "./highlight-maker": "./src/HighlightMaker.tsx",
     "./label": "./src/Label.tsx",
