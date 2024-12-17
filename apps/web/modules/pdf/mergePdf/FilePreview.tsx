@@ -1,12 +1,10 @@
-import { Dispatch, SetStateAction } from 'react';
-
 import { PdfThumbnail } from '@theasset/pdf-react/ui/pdf-thumbnail';
-import { FileState } from '@theasset/pdf-tools';
 import { breakpoints } from '@theasset/style-system/breakpoints';
 import { styled } from '@theasset/style-system/jsx';
 import { SortableItem, SortableRoot } from '@theasset/ui/sortable';
 import { useMediaQuery } from '@theasset/utilities-react/use-media-query';
 
+import { useMergePdfState } from './MergePdfStateContext';
 import { MergePdfThumbnailActions } from './filePreview/MergePdfThumbnailActions';
 
 const FilePreviewList = styled('div', {
@@ -38,26 +36,25 @@ const DraggableItem = styled('div', {
 	}
 });
 
-export type FilePreviewProps = {
-	files: FileState[];
-	setFiles: Dispatch<SetStateAction<FileState[]>>;
-};
-
-export const FilePreview = (props: FilePreviewProps) => {
+export const FilePreview = () => {
 	const isDesktop = useMediaQuery(`(min-width: ${breakpoints.md})`);
 
-	const { files, setFiles } = props;
+	const { files, onSortFiles, onFileChange } = useMergePdfState();
 
 	return (
 		<SortableRoot
 			orientation={isDesktop ? 'mixed' : 'vertical'}
 			value={files}
-			onValueChange={setFiles}>
+			onValueChange={onSortFiles}>
 			<FilePreviewList>
 				{files.map(file => (
 					<SortableItem key={file.id} value={file.id} asTrigger={isDesktop} asChild>
 						<DraggableItem>
-							<PdfThumbnail file={file} setFiles={setFiles} actions={MergePdfThumbnailActions} />
+							<PdfThumbnail
+								file={file}
+								onFileChange={onFileChange}
+								actions={MergePdfThumbnailActions}
+							/>
 						</DraggableItem>
 					</SortableItem>
 				))}

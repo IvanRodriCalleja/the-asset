@@ -24,8 +24,8 @@
     "@theasset/eslint-config": "*",
     "@theasset/typescript-config": "*",
     "@types/negotiator": "0.6.3",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "^19.0.1",
+    "@types/react-dom": "^19.0.2",
     "typescript": "^5.2.2"
   },
   "dependencies": {

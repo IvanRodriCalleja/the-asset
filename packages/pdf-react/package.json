@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
-    "@radix-ui/react-icons": "^1.3.0",
+    "@radix-ui/react-icons": "^1.3.2",
     "@theasset/cache": "*",
     "@theasset/ui": "*",
     "react": "19.0.0-rc-1631855f-20241023",

@@ -11,7 +11,7 @@ import { PdfThumbnailSkeleton } from './PdfThumbnailSkeleton';
 type PdfThumbnailDetailProps = PdfThumbnailProps;
 
 export const PdfThumbnailDetail = (props: PdfThumbnailDetailProps) => {
-	const { file, actions, setFiles } = props;
+	const { file, actions } = props;
 
 	const { shared } = useLocale();
 	const { src, rotation } = useThumbnail({ file });
@@ -34,9 +34,7 @@ export const PdfThumbnailDetail = (props: PdfThumbnailDetailProps) => {
 					<Thumbnail.DragHandler />
 				</Thumbnail.Body>
 
-				<Thumbnail.ActionsBox>
-					{actions && actions({ file, isError: false, setFiles })}
-				</Thumbnail.ActionsBox>
+				<Thumbnail.ActionsBox>{actions && actions({ file, isError: false })}</Thumbnail.ActionsBox>
 			</Thumbnail.Root>
 		</Thumbnail.Suspense>
 	);

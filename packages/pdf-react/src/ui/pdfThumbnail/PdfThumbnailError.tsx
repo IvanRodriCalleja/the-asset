@@ -33,7 +33,7 @@ export const PdfThumbnailError = ({
 	error,
 	file,
 	resetErrorBoundary,
-	setFiles,
+	onFileChange,
 	actions
 }: PdfThumbnailErrorProps) => {
 	const [isPending, startTransition] = useTransition();
@@ -41,31 +41,17 @@ export const PdfThumbnailError = ({
 	const { mergePdf } = useLocale();
 
 	useEffect(() => {
-		setFiles(files => {
-			const fileIndex = files.findIndex(({ id }) => id === file.id);
-
-			const newFiles = [...files];
-			newFiles[fileIndex] = {
-				...file,
-				isEncrypted: true
-			};
-
-			return newFiles;
+		onFileChange(file.id, {
+			...file,
+			isEncrypted: true
 		});
 	}, []);
 
 	const onUnlockPdf = async (fileState: UpdatedFileState) => {
 		await startTransition(() =>
-			setFiles(files => {
-				const fileIndex = files.findIndex(({ id }) => id === file.id);
-
-				const newFiles = [...files];
-				newFiles[fileIndex] = {
-					...file,
-					...fileState
-				};
-
-				return newFiles;
+			onFileChange(file.id, {
+				...file,
+				...fileState
 			})
 		);
 		resetErrorBoundary();
@@ -99,9 +85,7 @@ export const PdfThumbnailError = ({
 
 			<Thumbnail.FileName>{file.name}</Thumbnail.FileName>
 
-			<Thumbnail.ActionsBox>
-				{actions && actions({ file, isError: true, setFiles })}
-			</Thumbnail.ActionsBox>
+			<Thumbnail.ActionsBox>{actions && actions({ file, isError: true })}</Thumbnail.ActionsBox>
 		</Thumbnail.Root>
 	);
 };

@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, startTransition } from 'react';
+import { startTransition } from 'react';
 
 import { ReloadIcon, TrashIcon } from '@radix-ui/react-icons';
 
@@ -14,18 +14,11 @@ type ViewerActionsProps = {
 	page: number;
 	totalPages: number;
 	file: FileState;
-	setFiles: Dispatch<SetStateAction<FileState[]>>;
 	setPage: (page: number) => void;
 };
 
-export const ViewerActions = ({
-	page,
-	file,
-	totalPages,
-	setPage,
-	setFiles
-}: ViewerActionsProps) => {
-	const { onRotatePage, onRemovePage, onRemoveFile } = useMergePdfActions({ file, setFiles });
+export const ViewerActions = ({ page, file, totalPages, setPage }: ViewerActionsProps) => {
+	const { onRotatePage, onRemovePage, onRemoveFile } = useMergePdfActions({ file });
 
 	const onRemove = (page: number) => {
 		startTransition(() => {

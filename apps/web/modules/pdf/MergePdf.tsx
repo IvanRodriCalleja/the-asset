@@ -15,7 +15,7 @@ import { SectionGradient } from 'modules/shared/ui/SectionGradient';
 import { AddMorePdfsButton } from './mergePdf/AddMorePdfsButton';
 import { FilePreview } from './mergePdf/FilePreview';
 import { MergeButton } from './mergePdf/MergeButton';
-import { useMergePdf } from './mergePdf/useMergePdf';
+import { useMergePdfState } from './mergePdf/MergePdfStateContext';
 
 const UploadSection = styled('section', {
 	base: {
@@ -28,11 +28,10 @@ const UploadSection = styled('section', {
 });
 
 // TODO: Inject actions
-// TODO: Make setState to one file
 
 export const MergePdf = () => {
 	const { mergePdf } = useLocale();
-	const { files, hasFiles, setFiles, onChange } = useMergePdf();
+	const { files, hasFiles, onChange } = useMergePdfState();
 
 	return (
 		<>
@@ -67,7 +66,7 @@ export const MergePdf = () => {
 									getThumbnail={mergeManager.getThumbnail}
 									getTotalPages={mergeManager.getTotalPages}>
 									<Box marginBottom="89px">
-										<FilePreview files={files} setFiles={setFiles} />
+										<FilePreview />
 									</Box>
 									<Box
 										display="flex"

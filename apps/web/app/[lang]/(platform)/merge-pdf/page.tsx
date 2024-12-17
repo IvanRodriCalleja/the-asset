@@ -5,6 +5,7 @@ import { getLocale } from '@theasset/internationalization/server/get-locale';
 import { withLocale } from '@theasset/internationalization/server/withLocale';
 
 import { MergePdf } from 'modules/pdf/MergePdf';
+import { MergePdfStateProvider } from 'modules/pdf/mergePdf/MergePdfStateContext';
 
 type MergePdfPageProps = LocaleParam;
 
@@ -17,6 +18,10 @@ export const generateMetadata = async ({ params }: MergePdfPageProps): Promise<M
 	};
 };
 
-const MergePdfPage = () => <MergePdf />;
+const MergePdfPage = () => (
+	<MergePdfStateProvider>
+		<MergePdf />
+	</MergePdfStateProvider>
+);
 
 export default withLocale(MergePdfPage);

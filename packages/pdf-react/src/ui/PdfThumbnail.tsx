@@ -1,4 +1,4 @@
-import { Dispatch, ReactNode, SetStateAction } from 'react';
+import { ReactNode } from 'react';
 
 import { ErrorBoundary } from 'react-error-boundary';
 
@@ -11,7 +11,7 @@ import { PdfThumbnailSkeleton } from './pdfThumbnail/PdfThumbnailSkeleton';
 
 export type PdfThumbnailProps = {
 	file: FileState;
-	setFiles: Dispatch<SetStateAction<FileState[]>>;
+	onFileChange: (id: string, newFile: FileState) => void;
 	actions?: PdfThumbnailAction;
 };
 
@@ -20,7 +20,6 @@ export type PdfThumbnailAction = (props: ActionProps) => ReactNode;
 type ActionProps = {
 	file: FileState;
 	isError: boolean;
-	setFiles: Dispatch<SetStateAction<FileState[]>>;
 };
 
 export const PdfThumbnail = (props: PdfThumbnailProps) => {

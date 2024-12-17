@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 
 import {
 	ChevronLeftIcon,
@@ -38,7 +38,7 @@ type ToolbarProps = {
 	totalPages: number;
 	page: number;
 	setPage: (page: number) => void;
-	children: (props: ChildrenProps) => JSX.Element;
+	children: (props: ChildrenProps) => ReactElement;
 };
 
 export const Toolbar = ({ totalPages, page, setPage, children }: ToolbarProps) => {

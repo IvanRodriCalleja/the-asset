@@ -1,5 +1,5 @@
+import { definePreset } from '@pandacss/dev';
 import pandaPreset from '@pandacss/preset-panda';
-import type { Config } from '@pandacss/types';
 
 import { breakpoints } from './breakpoints';
 import { conditions } from './conditions';
@@ -11,9 +11,8 @@ import { textStyles } from './text-styles';
 import { tokens } from './tokens';
 import { utilities } from './utilities';
 
-const defineConfig = <T extends Config>(config: T) => config;
-
-export const theAssetPreset = defineConfig({
+export const theAssetPreset = definePreset({
+	name: 'theasset',
 	presets: [pandaPreset],
 	globalCss,
 	conditions,

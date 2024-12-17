@@ -309,6 +309,7 @@ export const SortableItem = forwardRef<HTMLDivElement, SortableItemProps>(
 				<Comp
 					data-state={isDragging ? 'dragging' : undefined}
 					className={cx(grabClassName, className)}
+					// eslint-disable-next-line react-compiler/react-compiler
 					ref={composeRefs(ref, setNodeRef as Ref<HTMLDivElement>)}
 					style={style}
 					{...(asTrigger ? attributes : {})}
@@ -339,6 +340,7 @@ export const SortableDragHandle = forwardRef<
 
 	return (
 		<DragButton
+			// eslint-disable-next-line react-compiler/react-compiler
 			ref={composeRefs(ref)}
 			data-state={isDragging ? 'dragging' : undefined}
 			className={cx(grabClassName, className)}

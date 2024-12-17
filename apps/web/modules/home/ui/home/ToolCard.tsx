@@ -22,25 +22,23 @@ const ToolCardContainer = styled('div', {
 });
 
 const toolCardLink = css({
-	base: {
-		'--border-radius': '12px',
-		'--border-size': '1px',
-		'--padding': '1px',
-		'--border-bg':
-			'conic-gradient(from 180deg at 50% 50%,#e92a67 0deg,#a853ba 112.5deg,#2a8af6 228.75deg,rgba(42,138,246,0) 360deg)',
-		position: 'relative',
-		overflow: 'hidden',
-		fontSize: '2rem',
-		padding: 'calc(1px + 1px)',
-		borderRadius: '12px',
-		display: 'inline-block',
-		zIndex: 0,
-		backfaceVisibility: 'hidden',
-		perspective: 1000,
-		transform: 'translateZ(0)',
-		width: 'full',
-		height: 'full'
-	}
+	'--border-radius': '12px',
+	'--border-size': '1px',
+	'--padding': '1px',
+	'--border-bg':
+		'conic-gradient(from 180deg at 50% 50%,#e92a67 0deg,#a853ba 112.5deg,#2a8af6 228.75deg,rgba(42,138,246,0) 360deg)',
+	position: 'relative',
+	overflow: 'hidden',
+	fontSize: '2rem',
+	padding: 'calc(1px + 1px)',
+	borderRadius: '12px',
+	display: 'inline-block',
+	zIndex: 0,
+	backfaceVisibility: 'hidden',
+	perspective: 1000,
+	transform: 'translateZ(0)',
+	width: 'full',
+	height: 'full'
 });
 
 const ToolBorder = styled('i', {

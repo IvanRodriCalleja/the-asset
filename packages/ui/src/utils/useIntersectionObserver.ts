@@ -4,7 +4,7 @@ type IntersectionObserverHook = (
 	options: IntersectionObserverInit,
 	config?: { initialInView?: boolean },
 	rootRef?: RefObject<HTMLDivElement>
-) => [RefObject<HTMLDivElement>, boolean];
+) => [RefObject<HTMLDivElement | null>, boolean];
 
 export const useIntersectionObserver: IntersectionObserverHook = (
 	options,

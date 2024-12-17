@@ -45,10 +45,10 @@ const DropzoneContext = createContext<DropzoneState>({
 	acceptedFiles: [],
 	fileRejections: [],
 	rootRef: {
-		current: null
+		current: null as unknown as HTMLElement
 	},
 	inputRef: {
-		current: null
+		current: null as unknown as HTMLInputElement
 	},
 	getRootProps: () => {
 		throw new Error('Dropzone.Root must be used as a parent of Dropzone.Area');

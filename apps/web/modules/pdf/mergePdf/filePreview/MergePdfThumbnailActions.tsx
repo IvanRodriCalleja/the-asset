@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
-
 import { MagnifyingGlassIcon, ReloadIcon, TrashIcon } from '@radix-ui/react-icons';
 
 import * as Thumbnail from '@theasset/ui/thumbnail';
@@ -12,21 +10,20 @@ import { useMergePdfActions } from './mergePdfThumbnailActions/useMergePdfAction
 
 type MergePdfActionsDesktopProp = {
 	file: FileState;
-	setFiles: Dispatch<SetStateAction<FileState[]>>;
 };
 
 export const MergePdfThumbnailActions = (props: MergePdfActionsDesktopProp) => (
 	<Actions {...props} />
 );
 
-const Actions = ({ file, setFiles }: MergePdfActionsDesktopProp) => {
+const Actions = ({ file }: MergePdfActionsDesktopProp) => {
 	const { mergePdf } = useLocale();
-	const { onRemoveFile, onRotateFile } = useMergePdfActions({ file, setFiles });
+	const { onRemoveFile, onRotateFile } = useMergePdfActions({ file });
 
 	return (
 		<>
 			{!file.isEncrypted && (
-				<ViewerModalAction file={file} setFiles={setFiles}>
+				<ViewerModalAction file={file}>
 					<Thumbnail.Action aria-label={mergePdf.thumbnailActions.magnify}>
 						<MagnifyingGlassIcon />
 					</Thumbnail.Action>

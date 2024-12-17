@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { ReactElement } from 'react';
 
 import { ModalViewer } from '@theasset/pdf-react/ui/modal-viewer';
 import { FileState } from '@theasset/pdf-tools';
@@ -8,12 +8,11 @@ import { ModalClose, ModalContent, ModalRoot, ModalTrigger } from '@theasset/ui/
 import { ViewerActions } from './viewerModalAction/ViewerActions';
 
 type ViewerModalActionProps = {
-	children: JSX.Element;
+	children: ReactElement;
 	file: FileState;
-	setFiles: Dispatch<SetStateAction<FileState[]>>;
 };
 
-export const ViewerModalAction = ({ children, file, setFiles }: ViewerModalActionProps) => (
+export const ViewerModalAction = ({ children, file }: ViewerModalActionProps) => (
 	<ModalRoot>
 		<ModalTrigger>{children}</ModalTrigger>
 		<ModalContent
@@ -22,13 +21,7 @@ export const ViewerModalAction = ({ children, file, setFiles }: ViewerModalActio
 			<ModalClose />
 			<ModalViewer file={file}>
 				{({ page, totalPages, setPage }) => (
-					<ViewerActions
-						page={page}
-						file={file}
-						totalPages={totalPages}
-						setPage={setPage}
-						setFiles={setFiles}
-					/>
+					<ViewerActions page={page} file={file} totalPages={totalPages} setPage={setPage} />
 				)}
 			</ModalViewer>
 		</ModalContent>

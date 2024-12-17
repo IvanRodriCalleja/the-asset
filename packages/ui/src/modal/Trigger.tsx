@@ -1,9 +1,9 @@
-import { cloneElement } from 'react';
+import { ReactElement, cloneElement } from 'react';
 
 import { useAgModal } from '../Modal';
 
 type TriggerProps = {
-	children: JSX.Element;
+	children: ReactElement;
 };
 
 export const Trigger = ({ children }: TriggerProps) => {

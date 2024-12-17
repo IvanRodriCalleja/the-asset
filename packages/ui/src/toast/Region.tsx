@@ -16,26 +16,24 @@ type ToastRegionProps = AriaToastRegionProps & {
 
 const ToastRegion = styled('div', {
 	base: {
-		base: {
-			display: 'flex',
-			gap: 2,
-			position: 'fixed',
-			top: '0',
-			zIndex: 100,
-			maxH: 'screen',
-			w: 'full',
-			flexDirection: 'column-reverse',
-			p: '4',
+		display: 'flex',
+		gap: 2,
+		position: 'fixed',
+		top: '0',
+		zIndex: 100,
+		maxH: 'screen',
+		w: 'full',
+		flexDirection: 'column-reverse',
+		p: '4',
 
-			sm: {
-				bottom: '0',
-				right: '0',
-				top: 'auto'
-			},
+		sm: {
+			bottom: '0',
+			right: '0',
+			top: 'auto'
+		},
 
-			md: {
-				maxW: '420px'
-			}
+		md: {
+			maxW: '420px'
 		}
 	}
 });

@@ -1,4 +1,4 @@
-import { useState, useTransition } from 'react';
+import { ReactElement, useState, useTransition } from 'react';
 
 import { FileState } from '@theasset/pdf-tools';
 import { css } from '@theasset/style-system/css';
@@ -16,7 +16,7 @@ type ChildrenProps = {
 
 type ModalViewerProps = {
 	file: FileState;
-	children: (props: ChildrenProps) => JSX.Element;
+	children: (props: ChildrenProps) => ReactElement;
 };
 
 const PdfImage = styled('img', {

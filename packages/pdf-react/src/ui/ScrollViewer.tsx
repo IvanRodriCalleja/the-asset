@@ -13,7 +13,7 @@ type ScrollViewerProps = {
 export const ScrollViewer = ({ file }: ScrollViewerProps) => {
 	const totalPages = usePages(file);
 
-	const rootRef = useRef<HTMLDivElement>(null);
+	const rootRef = useRef<HTMLDivElement>(null!);
 
 	return (
 		<Stack

@@ -46,7 +46,7 @@ const ModalContext = createContext<ModalContextValue>({
 	underlayProps: {},
 	modalProps: {},
 	overlayProps: {},
-	modalRef: { current: null },
+	modalRef: { current: null as unknown as HTMLDivElement },
 	state: {
 		isOpen: false,
 		open: () => {},
@@ -60,7 +60,7 @@ const ModalContext = createContext<ModalContextValue>({
 export const useAgModal = () => useContext(ModalContext);
 
 export const ModalRoot = ({ children, variant = 'dialog', ...props }: ModalProps) => {
-	const modalRef = useRef<HTMLDivElement>(null);
+	const modalRef = useRef<HTMLDivElement>(null!);
 	const state = useOverlayTriggerState(props);
 	const { triggerProps, overlayProps } = useOverlayTrigger({ type: 'dialog' }, state);
 
