@@ -36,3 +36,5 @@ export class PdfToolsError extends Error {
 		this.name = 'PdfToolsError';
 	}
 }
+
+export { type PdfToolsImpl } from './worker';

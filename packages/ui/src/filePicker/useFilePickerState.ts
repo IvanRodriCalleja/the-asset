@@ -1,12 +1,14 @@
 import { useState } from 'react';
 
-import { FileState, mergeManager } from '@theasset/pdf-tools';
+import { useThePdfTools } from '@theasset/pdf-react/context/the-pdf-actions-context';
+import { FileState } from '@theasset/pdf-tools';
 
 export const useFilePickerState = () => {
 	const [files, setFiles] = useState<FileState[]>([]);
+	const { pdfTools } = useThePdfTools();
 
 	const onChange = async (files: File[]) => {
-		const state = await mergeManager!.addFiles(files);
+		const state = await pdfTools.addFiles(files);
 		setFiles(currentFiles => [...currentFiles, ...state]);
 	};
 

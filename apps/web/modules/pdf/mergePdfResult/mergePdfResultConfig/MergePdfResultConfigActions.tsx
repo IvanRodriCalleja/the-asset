@@ -1,7 +1,8 @@
 import { ChevronDownIcon, DownloadIcon, ReloadIcon } from '@radix-ui/react-icons';
 
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
-import { FileState, mergeManager } from '@theasset/pdf-tools';
+import { useThePdfTools } from '@theasset/pdf-react/context/the-pdf-actions-context';
+import { FileState } from '@theasset/pdf-tools';
 import { Stack, styled } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
 import { Link } from '@theasset/ui/next/link';
@@ -43,9 +44,10 @@ export const MergePdfResultConfigActions = ({
 	toggleOpen
 }: MergePdfResultConfigActionsProps) => {
 	const { shared, mergePdfResult } = useLocale();
+	const { pdfTools } = useThePdfTools();
 
 	const onDownload = async () => {
-		const buffer = await mergeManager.getFile(file.id);
+		const buffer = await pdfTools.getFile(file.id);
 		downloadFile(buffer, fileName, 'application/pdf');
 	};
 

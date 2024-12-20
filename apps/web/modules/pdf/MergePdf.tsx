@@ -4,8 +4,6 @@ import { UploadIcon } from '@radix-ui/react-icons';
 
 import * as Dropzone from '@theasset/ui/drop-zone';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
-import { ThePdfActionsProvider } from '@theasset/pdf-react/context/the-pdf-actions-context';
-import { mergeManager } from '@theasset/pdf-tools';
 import { Box, Stack, styled } from '@theasset/style-system/jsx';
 import { HighlightColor, HighlightMaker } from '@theasset/ui/highlight-maker';
 
@@ -26,8 +24,6 @@ const UploadSection = styled('section', {
 		minHeight: 'calc(100vh - 64px)'
 	}
 });
-
-// TODO: Inject actions
 
 export const MergePdf = () => {
 	const { mergePdf } = useLocale();
@@ -62,9 +58,7 @@ export const MergePdf = () => {
 								</>
 							)}
 							{hasFiles && (
-								<ThePdfActionsProvider
-									getThumbnail={mergeManager.getThumbnail}
-									getTotalPages={mergeManager.getTotalPages}>
+								<>
 									<Box marginBottom="89px">
 										<FilePreview />
 									</Box>
@@ -84,7 +78,7 @@ export const MergePdf = () => {
 										<AddMorePdfsButton open={open} />
 										<MergeButton files={files} />
 									</Box>
-								</ThePdfActionsProvider>
+								</>
 							)}
 						</Stack>
 					</Dropzone.Area>

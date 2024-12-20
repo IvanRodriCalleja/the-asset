@@ -5,10 +5,12 @@ import { useForm } from 'react-hook-form';
 import z from 'zod';
 
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
-import { FileState, UpdatedFileState, mergeManager } from '@theasset/pdf-tools';
+import { FileState, UpdatedFileState } from '@theasset/pdf-tools';
 import { PdfToolsError, PdfToolsErrorCodes } from '@theasset/pdf-tools/types';
 import { RHFFieldPassword } from '@theasset/ui/fields/password';
 import { Form } from '@theasset/ui/form';
+
+import { useThePdfTools } from '../../../../context/ThePdfActionsContext';
 
 type UnlockPdf = {
 	password: string;
@@ -21,6 +23,7 @@ type UnlockPdfFormProps = {
 
 export const UnlockPdfForm = ({ file, onUnlockPdf }: UnlockPdfFormProps) => {
 	const { shared } = useLocale();
+	const { pdfTools } = useThePdfTools();
 
 	const unlockPdfSchema = z.object({
 		password: z.string().min(1, shared.form.validations.required)
@@ -36,7 +39,7 @@ export const UnlockPdfForm = ({ file, onUnlockPdf }: UnlockPdfFormProps) => {
 
 	const onSubmit = async ({ password }: UnlockPdf) => {
 		try {
-			const decryptedFile = await mergeManager.decryptPdf(file.id, password);
+			const decryptedFile = await pdfTools.decryptPdf(file.id, password);
 
 			return onUnlockPdf(decryptedFile);
 		} catch (error) {

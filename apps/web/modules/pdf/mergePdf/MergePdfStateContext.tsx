@@ -2,7 +2,8 @@
 
 import { PropsWithChildren, createContext, use, useState } from 'react';
 
-import { FileState, mergeManager } from '@theasset/pdf-tools';
+import { useThePdfTools } from '@theasset/pdf-react/context/the-pdf-actions-context';
+import { FileState } from '@theasset/pdf-tools';
 
 type MergePdfState = {
 	files: FileState[];
@@ -32,9 +33,10 @@ const MergePdfStateContext = createContext<MergePdfState>({
 
 export const MergePdfStateProvider = ({ children }: PropsWithChildren) => {
 	const [files, setFiles] = useState<FileState[]>([]);
+	const { pdfTools } = useThePdfTools();
 
 	const onChange = async (files: File[]) => {
-		const state = await mergeManager!.addFiles(files);
+		const state = await pdfTools.addFiles(files);
 		setFiles(currentFiles => [...currentFiles, ...state]);
 	};
 

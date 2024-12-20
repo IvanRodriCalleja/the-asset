@@ -1,2 +1,5 @@
 export { createWorkerImplementationProxy } from './createWorkerImplementationProxy';
-export { createWorkerMainImplementation } from './createWorkerMainImplementation';
+export {
+	createWorkerMainImplementation,
+	type AsyncMethods
+} from './createWorkerMainImplementation';

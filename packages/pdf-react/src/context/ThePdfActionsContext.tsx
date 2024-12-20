@@ -1,29 +1,23 @@
+'use client';
+
 import { PropsWithChildren, createContext, use } from 'react';
 
-import { GetThumbnailResult } from '@theasset/pdf-tools/types';
+import { PdfToolsImpl } from '@theasset/pdf-tools/types';
+import { AsyncMethods } from '@theasset/utilities/infra';
 
 type ThePdfActionsContextValue = {
-	getTotalPages: (id: string) => Promise<number>;
-	getThumbnail: (id: string, page: number) => Promise<GetThumbnailResult>;
+	pdfTools: AsyncMethods<PdfToolsImpl>;
 };
 
 const ThePdfActionsContext = createContext<ThePdfActionsContextValue>({
-	getTotalPages: () => {
-		throw new Error('ThePdfActionsContext is not provided');
-	},
-	getThumbnail: () => {
-		throw new Error('ThePdfActionsContext is not provided');
-	}
+	pdfTools: {} as AsyncMethods<PdfToolsImpl>
 });
 
 export const ThePdfActionsProvider = ({
 	children,
-	getThumbnail,
-	getTotalPages
+	pdfTools
 }: PropsWithChildren<ThePdfActionsContextValue>) => (
-	<ThePdfActionsContext.Provider value={{ getThumbnail, getTotalPages }}>
-		{children}
-	</ThePdfActionsContext.Provider>
+	<ThePdfActionsContext value={{ pdfTools }}>{children}</ThePdfActionsContext>
 );
 
-export const useThePdfActions = () => use(ThePdfActionsContext);
+export const useThePdfTools = () => use(ThePdfActionsContext);

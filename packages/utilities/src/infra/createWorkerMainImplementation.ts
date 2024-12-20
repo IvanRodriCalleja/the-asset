@@ -4,7 +4,7 @@ type WorkerResult = {
 	error?: string;
 };
 
-type AsyncMethods<T> = {
+export type AsyncMethods<T> = {
 	[K in keyof T]: T[K] extends (...args: infer Args) => infer R
 		? R extends Promise<unknown>
 			? T[K]
