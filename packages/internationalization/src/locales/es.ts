@@ -46,6 +46,13 @@ const es: Locales = {
 		fileNameLabel: 'Nombre del fichero',
 		mergeNewPdf: 'Une un nuevo PDF'
 	},
+	splitPdf: {
+		title: 'Dividir PDF',
+		card: {
+			description:
+				'Divide un PDF en páginas individuales o extrae las que necesites con facilidad y rapidez.'
+		}
+	},
 	shared: {
 		continueWith: 'Continua con:',
 		download: 'Descargar',

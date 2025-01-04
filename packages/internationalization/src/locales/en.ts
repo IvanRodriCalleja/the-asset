@@ -43,7 +43,13 @@ const en = {
 		fileNameLabel: 'File name',
 		mergeNewPdf: 'Merge a new PDF'
 	},
-
+	splitPdf: {
+		title: 'Split PDF',
+		card: {
+			description:
+				'Split a PDF into individual pages or extract the ones you need quickly and easily.'
+		}
+	},
 	shared: {
 		continueWith: 'Continue with:',
 		download: 'Download',

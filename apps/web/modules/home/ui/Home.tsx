@@ -1,4 +1,5 @@
 import Merge from 'assets/tools/merge.svg';
+import Split from 'assets/tools/split.svg';
 
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { Grid } from '@theasset/style-system/jsx';
@@ -7,7 +8,7 @@ import { HighlightColor, HighlightMaker } from '@theasset/ui/highlight-maker';
 import { MainSection } from 'modules/shared/ui/MainSection';
 import { Section } from 'modules/shared/ui/Section';
 import { SectionGradient } from 'modules/shared/ui/SectionGradient';
-import { mergePdfPath } from 'routes';
+import { mergePdfPath, splitPdfPath } from 'routes';
 
 import { Tool } from '../domain/Tool';
 import { ToolCard } from './home/ToolCard';
@@ -50,7 +51,7 @@ export const Home = () => {
 };
 
 const useTools = (): Tool[] => {
-	const { mergePdf } = useLocale();
+	const { mergePdf, splitPdf } = useLocale();
 
 	return [
 		{
@@ -58,6 +59,13 @@ const useTools = (): Tool[] => {
 			name: mergePdf.title,
 			description: mergePdf.card.description,
 			href: mergePdfPath,
+			color: '#e92a67'
+		},
+		{
+			icon: Split,
+			name: splitPdf.title,
+			description: splitPdf.card.description,
+			href: splitPdfPath,
 			color: '#e92a67'
 		}
 	];
