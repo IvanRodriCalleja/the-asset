@@ -10,11 +10,13 @@ const pdfReactPackage = resolve(__dirname, '../pdf-react');
 
 export default defineConfig({
 	preflight: true,
+	// @ts-expect-error
 	plugins: [pluginResponsiveVariants()],
 	presets: [theAssetPreset],
 	outExtension: 'js',
 	cwd: resolve(__dirname),
-	lightningcss: true,
+	// Lightningcss is disable due to "backdropFilter" property in Header.tsx, it doesn't work if enabled
+	//lightningcss: true,
 	include: [
 		`${process.cwd()}/app/**/*.{ts,tsx,js,jsx}`,
 		`${process.cwd()}/modules/**/*.{ts,tsx,js,jsx}`,

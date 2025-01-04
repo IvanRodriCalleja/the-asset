@@ -23,7 +23,6 @@ export const useMergePdfActions = ({ file }: UseMergePdfActions) => {
 	};
 
 	const onRemovePage = async (page: number) => {
-		// TODO: Review startTransition
 		const result = await pdfTools.removePdfPage(file.id, page - 1);
 
 		onFileChange(file.id, { ...file, ...result });
