@@ -1,4 +1,4 @@
-import { useSyncExternalStore } from 'react';
+import { use, useSyncExternalStore } from 'react';
 
 import { UseCacheKey, cacheStore } from './cacheStore';
 
@@ -19,7 +19,7 @@ export function useCache<T>(key: UseCacheKey, asyncFunction: () => Promise<T>): 
 	}
 
 	if (state?.promise) {
-		throw state.promise;
+		use(state.promise);
 	}
 
 	const promise = asyncFunction()
