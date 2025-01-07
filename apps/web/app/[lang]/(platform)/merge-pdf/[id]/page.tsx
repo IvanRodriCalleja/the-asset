@@ -8,7 +8,7 @@ import { cacheStore } from '@theasset/cache/store';
 import { FileState } from '@theasset/pdf-tools';
 import { replaceParams } from '@theasset/ui/utils/replaceParams';
 
-import { MergePdfResult } from 'modules/pdf/MergePdfResult';
+import { MergePdfResult } from 'modules/pdf-merge/ui/MergePdfResult';
 import { mergePdfPath } from 'routes';
 
 type MergeResultProps = {
