@@ -11,7 +11,6 @@ const en = {
 		title: 'Merge PDF',
 		description: 'Merge multiple PDFs instantly and securely,',
 		descriptionImportant: 'all without sending data outside your browser.',
-		uploadPdf: 'Upload PDF',
 		addMoreFiles: 'Add more files',
 		mergePdfAction: 'Merge PDFs',
 		card: {
@@ -45,12 +44,12 @@ const en = {
 	},
 	splitPdf: {
 		title: 'Split PDF',
-		card: {
-			description:
-				'Split a PDF into individual pages or extract the ones you need quickly and easily.'
-		}
+		description:
+			'Split a PDF into individual pages or extract the ones you need quickly and easily.',
+		descriptionImportant: 'all without sending data outside your browser.'
 	},
 	shared: {
+		uploadPdf: 'Upload PDF',
 		continueWith: 'Continue with:',
 		download: 'Download',
 		page: {

@@ -1,6 +1,6 @@
 use crate::{
   models::{
-    add_file::AddFileInput,
+    add_file::{AddFileInput, AddFileResult},
     file_operation_result::FileOperationResult,
     pdf_result::PdfResult,
     pdf_tools_error::{PdfToolsError, PdfToolsErrorCodes},
@@ -15,6 +15,7 @@ use crate::{
     page::get_total_pages,
     remove::remove_pdf_page,
     rotate::{rotate_pdf, rotate_pdf_page, Direction},
+    split::split_into_individual_pdfs,
     thumbnail::get_thumbnail,
   },
 };
@@ -34,7 +35,7 @@ impl PdfTools {
     PdfTools { files: Vec::new() }
   }
 
-  fn find_file(&self, id: &str) -> Result<&TheAssetFile, JsValue> {
+  fn find_file(&self, id: u16) -> Result<&TheAssetFile, JsValue> {
     self
       .files
       .iter()
@@ -42,7 +43,7 @@ impl PdfTools {
       .ok_or_else(|| return PdfToolsError::new(PdfToolsErrorCodes::FileNotFound).into())
   }
 
-  fn find_file_mut(&mut self, id: &str) -> Result<&mut TheAssetFile, JsValue> {
+  fn find_file_mut(&mut self, id: u16) -> Result<&mut TheAssetFile, JsValue> {
     self
       .files
       .iter_mut()
@@ -61,35 +62,66 @@ impl PdfTools {
 
     let file = TheAssetFile {
       id: file.id(),
-      hash: file.id(),
+      hash: file.id().to_string(),
       buffer: buffer,
     };
     self.files.push(file);
   }
 
-  pub fn get_thumbnail(&self, id: String, page: PdfPageIndex) -> Result<ThumbnailResult, JsValue> {
-    let file = self.find_file(&id)?;
+  pub fn add_file_as_page(&mut self, file: AddFileInput) -> Vec<AddFileResult> {
+    let pdfium = Pdfium::default();
+
+    // This means is encrypted
+    let files = match pdfium.load_pdf_from_byte_vec(file.buffer(), None) {
+      Ok(doc) => split_into_individual_pdfs(doc, &pdfium),
+      Err(_) => vec![file.buffer()],
+    };
+
+    let files = files
+      .iter()
+      .enumerate()
+      .map(|(index, buffer)| {
+        let id = file.id() + index as u16;
+        let hash = id.to_string();
+
+        let file = TheAssetFile {
+          id: id,
+          hash: hash.clone(),
+          buffer: buffer.to_vec(),
+        };
+
+        self.files.push(file);
+
+        AddFileResult::new(id, hash)
+      })
+      .collect();
+
+    files
+  }
+
+  pub fn get_thumbnail(&self, id: u16, page: PdfPageIndex) -> Result<ThumbnailResult, JsValue> {
+    let file = self.find_file(id)?;
     let thumbnail = get_thumbnail(&file.buffer, page)?;
 
     Ok(thumbnail)
   }
 
-  pub fn remove_file(&mut self, id: String) {
+  pub fn remove_file(&mut self, id: u16) {
     self.files.retain(|f| f.id != id);
   }
 
-  pub fn get_total_pages(&self, id: String) -> Result<usize, JsValue> {
-    let file = self.find_file(&id)?;
+  pub fn get_total_pages(&self, id: u16) -> Result<usize, JsValue> {
+    let file = self.find_file(id)?;
 
     Ok(get_total_pages(&file.buffer))
   }
 
   pub fn rotate_pdf(
     &mut self,
-    id: String,
+    id: u16,
     direction: Direction,
   ) -> Result<FileOperationResult, JsValue> {
-    let file = self.find_file_mut(&id)?;
+    let file = self.find_file_mut(id)?;
 
     let buffer = rotate_pdf(&file.buffer, direction);
     let hash = get_buffer_hash(&buffer);
@@ -97,16 +129,16 @@ impl PdfTools {
     file.buffer = buffer;
     file.hash = hash.clone();
 
-    Ok(FileOperationResult::new(file.id.clone(), hash))
+    Ok(FileOperationResult::new(file.id, hash))
   }
 
   pub fn rotate_pdf_page(
     &mut self,
-    id: String,
+    id: u16,
     page: u32,
     direction: Direction,
   ) -> Result<FileOperationResult, JsValue> {
-    let file = self.find_file_mut(&id)?;
+    let file = self.find_file_mut(id)?;
 
     let buffer = rotate_pdf_page(&file.buffer, page, direction);
     let hash = get_buffer_hash(&buffer);
@@ -119,10 +151,10 @@ impl PdfTools {
 
   pub fn remove_pdf_page(
     &mut self,
-    id: String,
+    id: u16,
     page: PdfPageIndex,
   ) -> Result<FileOperationResult, JsValue> {
-    let file = self.find_file_mut(&id)?;
+    let file = self.find_file_mut(id)?;
 
     let buffer = remove_pdf_page(&file.buffer, page);
     let hash = get_buffer_hash(&buffer);
@@ -133,12 +165,8 @@ impl PdfTools {
     Ok(FileOperationResult::new(file.id.clone(), hash))
   }
 
-  pub fn decrypt_pdf(
-    &mut self,
-    id: String,
-    password: String,
-  ) -> Result<FileOperationResult, JsValue> {
-    let file = self.find_file_mut(&id)?;
+  pub fn decrypt_pdf(&mut self, id: u16, password: String) -> Result<FileOperationResult, JsValue> {
+    let file = self.find_file_mut(id)?;
 
     let buffer = decrypt_pdf(&file.buffer, &password)?;
     let hash = get_buffer_hash(&buffer);
@@ -149,7 +177,7 @@ impl PdfTools {
     Ok(FileOperationResult::new(file.id.clone(), hash))
   }
 
-  pub fn merge_files(&self, ids: Vec<String>) -> PdfResult {
+  pub fn merge_files(&self, ids: &[u16]) -> PdfResult {
     let files: Vec<&[u8]> = ids
       .iter()
       .filter_map(|id| {
@@ -167,14 +195,14 @@ impl PdfTools {
     PdfResult::new(buffer, hash)
   }
 
-  pub fn get_file_size(&self, id: String) -> Result<String, JsValue> {
-    let file = self.find_file(&id)?;
+  pub fn get_file_size(&self, id: u16) -> Result<String, JsValue> {
+    let file = self.find_file(id)?;
 
     Ok(get_file_size(&file.buffer))
   }
 
-  pub fn get_file(self, id: String) -> Result<Vec<u8>, JsValue> {
-    let file = self.find_file(&id)?;
+  pub fn get_file(self, id: u16) -> Result<Vec<u8>, JsValue> {
+    let file = self.find_file(id)?;
 
     Ok(file.buffer.clone())
   }

@@ -4,7 +4,7 @@ import { styled } from '@theasset/style-system/jsx';
 import { SortableItem, SortableRoot } from '@theasset/ui/sortable';
 import { useMediaQuery } from '@theasset/utilities-react/use-media-query';
 
-import { useMergePdfState } from './MergePdfStateContext';
+import { useMergePdfState } from '../../store/MergePdfStateContext';
 import { MergePdfThumbnailActions } from './filePreview/MergePdfThumbnailActions';
 
 const FilePreviewList = styled('div', {

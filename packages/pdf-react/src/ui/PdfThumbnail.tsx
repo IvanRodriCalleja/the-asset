@@ -11,7 +11,7 @@ import { PdfThumbnailSkeleton } from './pdfThumbnail/PdfThumbnailSkeleton';
 
 export type PdfThumbnailProps = {
 	file: FileState;
-	onFileChange: (id: string, newFile: FileState) => void;
+	onFileChange: (id: number, newFile: FileState) => void;
 	actions?: PdfThumbnailAction;
 };
 

@@ -4,7 +4,7 @@ import { useThePdfTools } from '@theasset/pdf-react/context/the-pdf-actions-cont
 import { FileState } from '@theasset/pdf-tools';
 import { Direction } from '@theasset/pdf-tools/types';
 
-import { useMergePdfState } from '../../MergePdfStateContext';
+import { useMergePdfState } from '../../../../store/MergePdfStateContext';
 
 type UseMergePdfActions = {
 	file: FileState;

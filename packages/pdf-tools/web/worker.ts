@@ -15,7 +15,7 @@ class PdfTools {
 	// @ts-expect-error
 	private mergeToolManager: PdfToolsWasm;
 
-	private addingPromises = new Map<string, Promise<void>>();
+	private addingPromises = new Map<number, Promise<void> | null>();
 
 	constructor() {
 		loadPromise.then(() => {
@@ -23,31 +23,34 @@ class PdfTools {
 		});
 	}
 
+	private readFile = (file: File): Promise<Uint8Array> =>
+		new Promise<Uint8Array>((resolve, reject) => {
+			const fileReader = new FileReader();
+
+			fileReader.onerror = reject;
+
+			fileReader.onload = event => {
+				const buffer = new Uint8Array(event.target!.result as ArrayBuffer);
+				resolve(buffer);
+			};
+
+			fileReader.readAsArrayBuffer(file);
+		});
+
 	private bridgeAddFiles = (files: File[], idFrom: number) => {
 		const promises = files.map(async (file, index) => {
-			const buffer = await new Promise<Uint8Array>((resolve, reject) => {
-				const fileReader = new FileReader();
-
-				fileReader.onerror = reject;
-
-				fileReader.onload = event => {
-					const buffer = new Uint8Array(event.target!.result as ArrayBuffer);
-					resolve(buffer);
-				};
-
-				fileReader.readAsArrayBuffer(file);
-			});
-			const id = `${idFrom + index}`;
+			const buffer = await this.readFile(file);
+			const id = idFrom + index;
 			const fileInput = new AddFileInput(id, buffer, file.name);
 
 			this.mergeToolManager.add_file(fileInput);
 		});
 
 		promises.forEach((promise, index) => {
-			this.addingPromises.set(`${idFrom + index}`, promise);
+			this.addingPromises.set(idFrom + index, promise);
 
 			promise.finally(() => {
-				this.addingPromises.delete(`${idFrom + index}`);
+				this.addingPromises.delete(idFrom + index);
 			});
 		});
 
@@ -61,14 +64,33 @@ class PdfTools {
 		this.bridgeAddFiles(files, idFrom);
 
 		return [...Array(files.length)].map((_, index) => ({
-			id: `${idFrom + index}`,
+			id: idFrom + index,
 			hash: `${idFrom + index}`,
 			isEncrypted: false,
 			name: files[index]!.name
 		}));
 	};
 
-	public removeFile = async (id: string): Promise<void> => {
+	public addFileAsPages = async (file: File): Promise<FileState[]> => {
+		this.count++;
+
+		const buffer = await this.readFile(file);
+		const fileName = file.name;
+		const fileInput = new AddFileInput(this.count, buffer, fileName);
+
+		const result = this.mergeToolManager.add_file_as_page(fileInput);
+
+		this.count += result.length;
+
+		return result.map(fileState => ({
+			id: fileState.id,
+			hash: fileState.hash,
+			isEncrypted: false,
+			name: fileName
+		}));
+	};
+
+	public removeFile = async (id: number): Promise<void> => {
 		if (this.addingPromises.has(id)) {
 			await this.addingPromises.get(id);
 		}
@@ -76,7 +98,7 @@ class PdfTools {
 		this.mergeToolManager.remove_file(id);
 	};
 
-	public getThumbnail = async (id: string, page: number): Promise<GetThumbnailResult> => {
+	public getThumbnail = async (id: number, page: number): Promise<GetThumbnailResult> => {
 		if (this.addingPromises.has(id)) {
 			await this.addingPromises.get(id);
 		}
@@ -101,7 +123,7 @@ class PdfTools {
 		}
 	};
 
-	public getTotalPages = async (id: string): Promise<number> => {
+	public getTotalPages = async (id: number): Promise<number> => {
 		if (this.addingPromises.has(id)) {
 			await this.addingPromises.get(id);
 		}
@@ -109,7 +131,7 @@ class PdfTools {
 		return this.mergeToolManager.get_total_pages(id);
 	};
 
-	public rotatePdf = async (id: string, direction: Direction): Promise<UpdatedFileState> => {
+	public rotatePdf = async (id: number, direction: Direction): Promise<UpdatedFileState> => {
 		if (this.addingPromises.has(id)) {
 			await this.addingPromises.get(id);
 		}
@@ -123,7 +145,7 @@ class PdfTools {
 	};
 
 	public rotatePdfPage = async (
-		id: string,
+		id: number,
 		page: number,
 		direction: Direction
 	): Promise<UpdatedFileState> => {
@@ -139,7 +161,7 @@ class PdfTools {
 		};
 	};
 
-	public removePdfPage = async (id: string, page: number): Promise<UpdatedFileState> => {
+	public removePdfPage = async (id: number, page: number): Promise<UpdatedFileState> => {
 		if (this.addingPromises.has(id)) {
 			await this.addingPromises.get(id);
 		}
@@ -152,18 +174,20 @@ class PdfTools {
 		};
 	};
 
-	public mergePdfs = (ids: string[]) => {
-		const result = this.mergeToolManager.merge_files(ids);
+	public mergePdfs = (ids: number[]) => {
+		const result = this.mergeToolManager.merge_files(Uint16Array.from(ids));
 		this.mergeToolManager = new PdfToolsWasm();
+		this.count++;
 
-		this.mergeToolManager.add_file(new AddFileInput(result.hash, result.buffer, 'merged.pdf'));
+		this.mergeToolManager.add_file(new AddFileInput(this.count, result.buffer, 'merged.pdf'));
 
 		return {
-			hash: result.hash
+			hash: result.hash,
+			id: this.count
 		};
 	};
 
-	public decryptPdf = async (id: string, password: string): Promise<UpdatedFileState> => {
+	public decryptPdf = async (id: number, password: string): Promise<UpdatedFileState> => {
 		if (this.addingPromises.has(id)) {
 			await this.addingPromises.get(id);
 		}
@@ -187,7 +211,7 @@ class PdfTools {
 		}
 	};
 
-	public getFileSize = async (id: string): Promise<string> => {
+	public getFileSize = async (id: number): Promise<string> => {
 		if (this.addingPromises.has(id)) {
 			await this.addingPromises.get(id);
 		}
@@ -195,7 +219,7 @@ class PdfTools {
 		return this.mergeToolManager.get_file_size(id);
 	};
 
-	public getFile = async (id: string): Promise<Uint8Array> => {
+	public getFile = async (id: number): Promise<Uint8Array> => {
 		if (this.addingPromises.has(id)) {
 			await this.addingPromises.get(id);
 		}

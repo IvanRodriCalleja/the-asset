@@ -4,8 +4,8 @@ import { LocaleParam } from '@theasset/internationalization/domain/locale-param'
 import { getLocale } from '@theasset/internationalization/server/get-locale';
 import { withLocale } from '@theasset/internationalization/server/withLocale';
 
+import { MergePdfStateProvider } from 'modules/pdf-merge/store/MergePdfStateContext';
 import { MergePdf } from 'modules/pdf-merge/ui/MergePdf';
-import { MergePdfStateProvider } from 'modules/pdf-merge/ui/mergePdf/MergePdfStateContext';
 
 type MergePdfPageProps = LocaleParam;
 

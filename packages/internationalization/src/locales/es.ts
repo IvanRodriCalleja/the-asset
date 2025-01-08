@@ -14,7 +14,6 @@ const es: Locales = {
 		title: 'Unir PDF',
 		description: 'Combina múltiples PDFs de forma instantánea y segura,',
 		descriptionImportant: 'todo sin enviar datos fuera de tu navegador.',
-		uploadPdf: 'Subir PDF',
 		addMoreFiles: 'Añadir más ficheros',
 		mergePdfAction: 'Unir PDFs',
 		card: {
@@ -48,12 +47,13 @@ const es: Locales = {
 	},
 	splitPdf: {
 		title: 'Dividir PDF',
-		card: {
-			description:
-				'Divide un PDF en páginas individuales o extrae las que necesites con facilidad y rapidez.'
-		}
+
+		description:
+			'Divide un PDF en páginas individuales o extrae las que necesites con facilidad y rapidez.',
+		descriptionImportant: 'todo sin enviar datos fuera de tu navegador.'
 	},
 	shared: {
+		uploadPdf: 'Subir PDF',
 		continueWith: 'Continua con:',
 		download: 'Descargar',
 		page: {

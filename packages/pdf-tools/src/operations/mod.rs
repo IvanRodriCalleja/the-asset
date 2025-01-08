@@ -5,4 +5,5 @@ pub mod merge;
 pub mod page;
 pub mod remove;
 pub mod rotate;
+pub mod split;
 pub mod thumbnail;

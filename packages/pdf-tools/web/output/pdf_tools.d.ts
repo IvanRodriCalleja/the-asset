@@ -62,6 +62,12 @@ export enum ChromaSampling {
 }
 /**
 */
+export enum Direction {
+  Left = 0,
+  Right = 1,
+}
+/**
+*/
 export enum PdfToolsErrorCodes {
   Unknown = 0,
   PasswordError = 1,
@@ -73,45 +79,55 @@ export enum PdfToolsErrorCodes {
 }
 /**
 */
-export enum Direction {
-  Left = 0,
-  Right = 1,
-}
-/**
-*/
 export class AddFileInput {
   free(): void;
 /**
-* @param {string} id
+* @param {number} id
 * @param {Uint8Array} buffer
 * @param {string} name
 */
-  constructor(id: string, buffer: Uint8Array, name: string);
+  constructor(id: number, buffer: Uint8Array, name: string);
 /**
 */
   readonly buffer: Uint8Array;
 /**
 */
-  readonly id: string;
+  readonly id: number;
 /**
 */
   readonly name: string;
 }
 /**
 */
-export class FileOperationResult {
+export class AddFileResult {
   free(): void;
 /**
-* @param {string} id
+* @param {number} id
 * @param {string} hash
 */
-  constructor(id: string, hash: string);
+  constructor(id: number, hash: string);
 /**
 */
   readonly hash: string;
 /**
 */
-  readonly id: string;
+  readonly id: number;
+}
+/**
+*/
+export class FileOperationResult {
+  free(): void;
+/**
+* @param {number} id
+* @param {string} hash
+*/
+  constructor(id: number, hash: string);
+/**
+*/
+  readonly hash: string;
+/**
+*/
+  readonly id: number;
 }
 /**
 */
@@ -141,60 +157,65 @@ export class PdfTools {
 */
   add_file(file: AddFileInput): void;
 /**
-* @param {string} id
+* @param {AddFileInput} file
+* @returns {(AddFileResult)[]}
+*/
+  add_file_as_page(file: AddFileInput): (AddFileResult)[];
+/**
+* @param {number} id
 * @param {number} page
 * @returns {ThumbnailResult}
 */
-  get_thumbnail(id: string, page: number): ThumbnailResult;
+  get_thumbnail(id: number, page: number): ThumbnailResult;
 /**
-* @param {string} id
+* @param {number} id
 */
-  remove_file(id: string): void;
+  remove_file(id: number): void;
 /**
-* @param {string} id
+* @param {number} id
 * @returns {number}
 */
-  get_total_pages(id: string): number;
+  get_total_pages(id: number): number;
 /**
-* @param {string} id
+* @param {number} id
 * @param {Direction} direction
 * @returns {FileOperationResult}
 */
-  rotate_pdf(id: string, direction: Direction): FileOperationResult;
+  rotate_pdf(id: number, direction: Direction): FileOperationResult;
 /**
-* @param {string} id
+* @param {number} id
 * @param {number} page
 * @param {Direction} direction
 * @returns {FileOperationResult}
 */
-  rotate_pdf_page(id: string, page: number, direction: Direction): FileOperationResult;
+  rotate_pdf_page(id: number, page: number, direction: Direction): FileOperationResult;
 /**
-* @param {string} id
+* @param {number} id
 * @param {number} page
 * @returns {FileOperationResult}
 */
-  remove_pdf_page(id: string, page: number): FileOperationResult;
+  remove_pdf_page(id: number, page: number): FileOperationResult;
 /**
-* @param {string} id
+* @param {number} id
 * @param {string} password
 * @returns {FileOperationResult}
 */
-  decrypt_pdf(id: string, password: string): FileOperationResult;
+  decrypt_pdf(id: number, password: string): FileOperationResult;
 /**
-* @param {(string)[]} ids
+* @param {Uint16Array} ids
 * @returns {PdfResult}
 */
-  merge_files(ids: (string)[]): PdfResult;
+  merge_files(ids: Uint16Array): PdfResult;
 /**
-* @param {string} id
+* @param {number} id
 * @returns {string}
 */
-  get_file_size(id: string): string;
+  get_file_size(id: number): string;
 /**
-* @param {string} id
+* @param {number} id
 * @returns {Uint8Array}
 */
-  get_file(id: string): Uint8Array;
+  get_file(id: number): Uint8Array;
 }
 /**
 */
@@ -238,15 +259,16 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
   readonly __wbg_addfileinput_free: (a: number, b: number) => void;
-  readonly addfileinput_new: (a: number, b: number, c: number, d: number, e: number, f: number) => number;
-  readonly addfileinput_id: (a: number, b: number) => void;
+  readonly addfileinput_new: (a: number, b: number, c: number, d: number, e: number) => number;
+  readonly addfileinput_id: (a: number) => number;
   readonly addfileinput_buffer: (a: number, b: number) => void;
   readonly addfileinput_name: (a: number, b: number) => void;
-  readonly __wbg_fileoperationresult_free: (a: number, b: number) => void;
-  readonly fileoperationresult_new: (a: number, b: number, c: number, d: number) => number;
-  readonly fileoperationresult_id: (a: number, b: number) => void;
-  readonly fileoperationresult_hash: (a: number, b: number) => void;
+  readonly __wbg_addfileresult_free: (a: number, b: number) => void;
+  readonly addfileresult_new: (a: number, b: number, c: number) => number;
+  readonly addfileresult_id: (a: number) => number;
+  readonly addfileresult_hash: (a: number, b: number) => void;
   readonly __wbg_pdfresult_free: (a: number, b: number) => void;
+  readonly pdfresult_new: (a: number, b: number, c: number, d: number) => number;
   readonly pdfresult_buffer: (a: number, b: number) => void;
   readonly pdfresult_hash: (a: number, b: number) => void;
   readonly __wbg_pdftoolserror_free: (a: number, b: number) => void;
@@ -262,20 +284,24 @@ export interface InitOutput {
   readonly __wbg_pdftools_free: (a: number, b: number) => void;
   readonly pdftools_new: () => number;
   readonly pdftools_add_file: (a: number, b: number) => void;
-  readonly pdftools_get_thumbnail: (a: number, b: number, c: number, d: number, e: number) => void;
-  readonly pdftools_remove_file: (a: number, b: number, c: number) => void;
-  readonly pdftools_get_total_pages: (a: number, b: number, c: number, d: number) => void;
-  readonly pdftools_rotate_pdf: (a: number, b: number, c: number, d: number, e: number) => void;
-  readonly pdftools_rotate_pdf_page: (a: number, b: number, c: number, d: number, e: number, f: number) => void;
-  readonly pdftools_remove_pdf_page: (a: number, b: number, c: number, d: number, e: number) => void;
-  readonly pdftools_decrypt_pdf: (a: number, b: number, c: number, d: number, e: number, f: number) => void;
+  readonly pdftools_add_file_as_page: (a: number, b: number, c: number) => void;
+  readonly pdftools_get_thumbnail: (a: number, b: number, c: number, d: number) => void;
+  readonly pdftools_remove_file: (a: number, b: number) => void;
+  readonly pdftools_get_total_pages: (a: number, b: number, c: number) => void;
+  readonly pdftools_rotate_pdf: (a: number, b: number, c: number, d: number) => void;
+  readonly pdftools_rotate_pdf_page: (a: number, b: number, c: number, d: number, e: number) => void;
+  readonly pdftools_remove_pdf_page: (a: number, b: number, c: number, d: number) => void;
+  readonly pdftools_decrypt_pdf: (a: number, b: number, c: number, d: number, e: number) => void;
   readonly pdftools_merge_files: (a: number, b: number, c: number) => number;
-  readonly pdftools_get_file_size: (a: number, b: number, c: number, d: number) => void;
-  readonly pdftools_get_file: (a: number, b: number, c: number, d: number) => void;
+  readonly pdftools_get_file_size: (a: number, b: number, c: number) => void;
+  readonly pdftools_get_file: (a: number, b: number, c: number) => void;
   readonly initialize_pdfium_render: (a: number, b: number, c: number) => number;
   readonly read_block_from_callback_wasm: (a: number, b: number, c: number, d: number) => number;
   readonly write_block_from_callback_wasm: (a: number, b: number, c: number) => number;
-  readonly pdfresult_new: (a: number, b: number, c: number, d: number) => number;
+  readonly __wbg_fileoperationresult_free: (a: number, b: number) => void;
+  readonly fileoperationresult_hash: (a: number, b: number) => void;
+  readonly fileoperationresult_new: (a: number, b: number, c: number) => number;
+  readonly fileoperationresult_id: (a: number) => number;
   readonly __wbindgen_export_0: (a: number, b: number) => number;
   readonly __wbindgen_export_1: (a: number, b: number, c: number, d: number) => number;
   readonly __wbindgen_add_to_stack_pointer: (a: number) => number;

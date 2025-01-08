@@ -10,10 +10,8 @@ import { HighlightColor, HighlightMaker } from '@theasset/ui/highlight-maker';
 import { MainSection } from 'modules/shared/ui/MainSection';
 import { SectionGradient } from 'modules/shared/ui/SectionGradient';
 
-import { useMergePdfState } from '../store/MergePdfStateContext';
-import { AddMorePdfsButton } from './mergePdf/AddMorePdfsButton';
-import { FilePreview } from './mergePdf/FilePreview';
-import { MergeButton } from './mergePdf/MergeButton';
+import { useSplitPdfStore } from '../store/SplitPdfStore';
+import { FilePreview } from './splitPdf/FilePreview';
 
 const UploadSection = styled('section', {
 	base: {
@@ -25,9 +23,9 @@ const UploadSection = styled('section', {
 	}
 });
 
-export const MergePdf = () => {
-	const { mergePdf, shared } = useLocale();
-	const { files, hasFiles, onChange } = useMergePdfState();
+export const SplitPdf = () => {
+	const { splitPdf, shared } = useLocale();
+	const { hasFiles, onChange } = useSplitPdfStore();
 
 	return (
 		<UploadSection>
@@ -38,12 +36,12 @@ export const MergePdf = () => {
 						{!hasFiles && (
 							<>
 								<MainSection
-									title={mergePdf.title}
+									title={splitPdf.title}
 									description={
 										<>
-											{mergePdf.description}{' '}
+											{splitPdf.description}{' '}
 											<HighlightMaker color={HighlightColor.Purple}>
-												{mergePdf.descriptionImportant}
+												{splitPdf.descriptionImportant}
 											</HighlightMaker>
 										</>
 									}
@@ -56,28 +54,11 @@ export const MergePdf = () => {
 								</Box>
 							</>
 						)}
+
 						{hasFiles && (
-							<>
-								<Box marginBottom="89px">
-									<FilePreview />
-								</Box>
-								<Box
-									display="flex"
-									justifyContent="center"
-									flexDirection={{ base: 'column', md: 'row' }}
-									gap={4}
-									position="fixed"
-									bottom={0}
-									padding={4}
-									borderTopStyle="solid"
-									borderTopWidth="1px"
-									borderTopColor="border"
-									width="100%"
-									background="white">
-									<AddMorePdfsButton open={open} />
-									<MergeButton files={files} />
-								</Box>
-							</>
+							<Box marginBottom="89px">
+								<FilePreview />
+							</Box>
 						)}
 					</Stack>
 				</Dropzone.Area>

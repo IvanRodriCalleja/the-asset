@@ -5,42 +5,44 @@ import { PropsWithChildren, createContext, use, useState } from 'react';
 import { useThePdfTools } from '@theasset/pdf-react/context/the-pdf-actions-context';
 import { FileState } from '@theasset/pdf-tools';
 
-type MergePdfState = {
+type SplitPdfState = {
 	files: FileState[];
 	hasFiles: boolean;
 	onSortFiles: (items: FileState[]) => void;
-	onFileChange: (id: string, newFile: FileState) => void;
-	onRemoveFile: (id: string) => void;
-	onChange: (files: File[]) => Promise<void>;
+	onFileChange: (id: number, newFile: FileState) => void;
+	onRemoveFile: (id: number) => void;
+	onChange: (files: File[]) => void;
 };
 
-const MergePdfStateContext = createContext<MergePdfState>({
+const SplitPdfStateContext = createContext<SplitPdfState>({
 	files: [],
 	hasFiles: false,
 	onSortFiles: () => {
-		throw new Error('No MergePdfStateContext provided');
+		throw new Error('No SplitPdfStateContext provided');
 	},
 	onFileChange: () => {
-		throw new Error('No MergePdfStateContext provided');
+		throw new Error('No SplitPdfStateContext provided');
 	},
 	onRemoveFile: () => {
-		throw new Error('No MergePdfStateContext provided');
+		throw new Error('No SplitPdfStateContext provided');
 	},
 	onChange: () => {
-		throw new Error('No MergePdfStateContext provided');
+		throw new Error('No SplitPdfStateContext provided');
 	}
 });
 
-export const MergePdfStateProvider = ({ children }: PropsWithChildren) => {
+export const SplitPdfStore = ({ children }: PropsWithChildren) => {
 	const [files, setFiles] = useState<FileState[]>([]);
 	const { pdfTools } = useThePdfTools();
 
 	const onChange = async (files: File[]) => {
-		const state = await pdfTools.addFiles(files);
-		setFiles(currentFiles => [...currentFiles, ...state]);
+		for (const file of files) {
+			const fileState = await pdfTools.addFileAsPages(file);
+			setFiles(currentFiles => [...currentFiles, ...fileState]);
+		}
 	};
 
-	const onFileChange = (id: string, newFile: FileState) => {
+	const onFileChange = (id: number, newFile: FileState) => {
 		setFiles(files => {
 			const fileIndex = files.findIndex(file => id === file.id);
 
@@ -51,7 +53,7 @@ export const MergePdfStateProvider = ({ children }: PropsWithChildren) => {
 		});
 	};
 
-	const onRemoveFile = (id: string) =>
+	const onRemoveFile = (id: number) =>
 		setFiles(currentFiles => currentFiles.filter(file => file.id !== id));
 
 	const onSortFiles = (items: FileState[]) => setFiles(items);
@@ -59,11 +61,11 @@ export const MergePdfStateProvider = ({ children }: PropsWithChildren) => {
 	const hasFiles = files.length > 0;
 
 	return (
-		<MergePdfStateContext
+		<SplitPdfStateContext
 			value={{ files, hasFiles, onSortFiles, onChange, onFileChange, onRemoveFile }}>
 			{children}
-		</MergePdfStateContext>
+		</SplitPdfStateContext>
 	);
 };
 
-export const useMergePdfState = () => use(MergePdfStateContext);
+export const useSplitPdfStore = () => use(SplitPdfStateContext);

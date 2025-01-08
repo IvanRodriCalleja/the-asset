@@ -64,7 +64,7 @@ const useTools = (): Tool[] => {
 		{
 			icon: Split,
 			name: splitPdf.title,
-			description: splitPdf.card.description,
+			description: splitPdf.description,
 			href: splitPdfPath,
 			color: '#e92a67'
 		}

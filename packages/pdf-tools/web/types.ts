@@ -1,7 +1,7 @@
 import { PdfToolsErrorCodes } from './output/pdf_tools';
 
 export type FileState = {
-	id: string;
+	id: number;
 	hash: string;
 	isEncrypted: boolean;
 	name: string;

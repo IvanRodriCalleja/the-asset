@@ -31,10 +31,10 @@ export const MergeButton = ({ files }: MergeButtonProps) => {
 	const onMerge = async () => {
 		await startTransition(async () => {
 			const decryptedFiles = files.filter(file => !file.isEncrypted);
-			const { hash } = await pdfTools.mergePdfs(decryptedFiles.map(file => file.id));
+			const { hash, id } = await pdfTools.mergePdfs(decryptedFiles.map(file => file.id));
 
 			const resultFile: FileState = {
-				id: hash,
+				id,
 				hash,
 				name: decryptedFiles[0]!.name,
 				isEncrypted: false
