@@ -1,4 +1,5 @@
 import { Stack, styled } from '@theasset/style-system/jsx';
+import { StyledVariantProps } from '@theasset/style-system/types';
 
 export const Root = styled(Stack, {
 	base: {
@@ -54,3 +55,5 @@ export const Root = styled(Stack, {
 		status: 'default'
 	}
 });
+
+export type RootVariants = StyledVariantProps<typeof Root>;

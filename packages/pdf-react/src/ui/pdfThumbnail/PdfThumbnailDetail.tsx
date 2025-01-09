@@ -1,34 +1,33 @@
 import * as Thumbnail from '@theasset/ui/thumbnail';
-import { useLocale } from '@theasset/internationalization/hooks/use-locale';
-import { getSingularOrPlural } from '@theasset/internationalization/infra/get-singular-or-plural';
+import { FileState } from '@theasset/pdf-tools';
 import { Badge } from '@theasset/ui/badge';
 
-import { usePages } from '../../hooks/usePages';
 import { useThumbnail } from '../../hooks/useThumbnail';
 import { PdfThumbnailProps } from '../PdfThumbnail';
 import { PdfThumbnailSkeleton } from './PdfThumbnailSkeleton';
 
-type PdfThumbnailDetailProps = PdfThumbnailProps;
+type PdfThumbnailDetailProps<T extends FileState> = PdfThumbnailProps<T>;
 
-export const PdfThumbnailDetail = (props: PdfThumbnailDetailProps) => {
+export const PdfThumbnailDetail = <T extends FileState>({
+	shadow = true,
+	pageText,
+	status,
+	...props
+}: PdfThumbnailDetailProps<T> & Thumbnail.RootVariants) => {
 	const { file, actions } = props;
 
-	const { shared } = useLocale();
 	const { src, rotation } = useThumbnail({ file });
-	const pages = usePages(file);
 
 	return (
 		<Thumbnail.Suspense fallback={<PdfThumbnailSkeleton {...props} />}>
-			<Thumbnail.Root>
+			<Thumbnail.Root status={status}>
 				<Thumbnail.Body>
-					<Thumbnail.Image src={src} alt={file.name} data-rotation={rotation} shadow />
+					<Thumbnail.Image src={src} alt={file.name} data-rotation={rotation} shadow={shadow} />
 
 					<Thumbnail.Metadata>
 						<Thumbnail.FileName>{file.name}</Thumbnail.FileName>
 
-						<Badge capitalize>
-							{pages} {getSingularOrPlural(shared.page, pages)}
-						</Badge>
+						{pageText && <Badge capitalize>{pageText(file)}</Badge>}
 					</Thumbnail.Metadata>
 
 					<Thumbnail.DragHandler />

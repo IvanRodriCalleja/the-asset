@@ -5,7 +5,7 @@ import { FallbackProps } from 'react-error-boundary';
 import * as Thumbnail from '@theasset/ui/thumbnail';
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { UpdatedFileState } from '@theasset/pdf-tools';
-import { PdfToolsError, PdfToolsErrorCodes } from '@theasset/pdf-tools/types';
+import { FileState, PdfToolsError, PdfToolsErrorCodes } from '@theasset/pdf-tools/types';
 import { styled } from '@theasset/style-system/jsx';
 import { Text } from '@theasset/ui/text';
 
@@ -27,15 +27,15 @@ const BadgeEncrypted = styled('div', {
 	}
 });
 
-type PdfThumbnailErrorProps = FallbackProps & PdfThumbnailProps;
+type PdfThumbnailErrorProps<T extends FileState> = FallbackProps & PdfThumbnailProps<T>;
 
-export const PdfThumbnailError = ({
+export const PdfThumbnailError = <T extends FileState>({
 	error,
 	file,
 	resetErrorBoundary,
 	onFileChange,
 	actions
-}: PdfThumbnailErrorProps) => {
+}: PdfThumbnailErrorProps<T>) => {
 	const [isPending, startTransition] = useTransition();
 
 	const { mergePdf } = useLocale();

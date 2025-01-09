@@ -5,13 +5,20 @@ import { PropsWithChildren, createContext, use, useState } from 'react';
 import { useThePdfTools } from '@theasset/pdf-react/context/the-pdf-actions-context';
 import { FileState } from '@theasset/pdf-tools';
 
+type SplitFileMetadata = {
+	page: number;
+	isCut: boolean;
+};
+export type SplitFile = FileState & SplitFileMetadata;
+
 type SplitPdfState = {
-	files: FileState[];
+	files: SplitFile[];
 	hasFiles: boolean;
-	onSortFiles: (items: FileState[]) => void;
-	onFileChange: (id: number, newFile: FileState) => void;
+	onSortFiles: (items: SplitFile[]) => void;
+	onFileChange: (id: number, newFile: SplitFile) => void;
 	onRemoveFile: (id: number) => void;
 	onChange: (files: File[]) => void;
+	toggleCut: (id: number) => void;
 };
 
 const SplitPdfStateContext = createContext<SplitPdfState>({
@@ -28,21 +35,32 @@ const SplitPdfStateContext = createContext<SplitPdfState>({
 	},
 	onChange: () => {
 		throw new Error('No SplitPdfStateContext provided');
+	},
+	toggleCut: () => {
+		throw new Error('No SplitPdfStateContext provided');
 	}
 });
 
 export const SplitPdfStore = ({ children }: PropsWithChildren) => {
-	const [files, setFiles] = useState<FileState[]>([]);
+	const [files, setFiles] = useState<SplitFile[]>([]);
 	const { pdfTools } = useThePdfTools();
 
 	const onChange = async (files: File[]) => {
 		for (const file of files) {
 			const fileState = await pdfTools.addFileAsPages(file);
-			setFiles(currentFiles => [...currentFiles, ...fileState]);
+			const splitFiles = fileState.map(
+				(file, index) =>
+					({
+						...file,
+						page: index + 1
+					}) as SplitFile
+			);
+
+			setFiles(currentFiles => [...currentFiles, ...splitFiles]);
 		}
 	};
 
-	const onFileChange = (id: number, newFile: FileState) => {
+	const onFileChange = (id: number, newFile: SplitFile) => {
 		setFiles(files => {
 			const fileIndex = files.findIndex(file => id === file.id);
 
@@ -56,13 +74,28 @@ export const SplitPdfStore = ({ children }: PropsWithChildren) => {
 	const onRemoveFile = (id: number) =>
 		setFiles(currentFiles => currentFiles.filter(file => file.id !== id));
 
-	const onSortFiles = (items: FileState[]) => setFiles(items);
+	const onSortFiles = (items: SplitFile[]) => setFiles(items);
 
 	const hasFiles = files.length > 0;
 
+	const toggleCut = (id: number) => {
+		setFiles(files =>
+			files.map(file => {
+				if (file.id === id) {
+					return {
+						...file,
+						isCut: !file.isCut
+					};
+				}
+
+				return file;
+			})
+		);
+	};
+
 	return (
 		<SplitPdfStateContext
-			value={{ files, hasFiles, onSortFiles, onChange, onFileChange, onRemoveFile }}>
+			value={{ files, hasFiles, onSortFiles, onChange, onFileChange, onRemoveFile, toggleCut }}>
 			{children}
 		</SplitPdfStateContext>
 	);

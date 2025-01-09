@@ -9,10 +9,12 @@ import { PdfThumbnailDetail } from './pdfThumbnail/PdfThumbnailDetail';
 import { PdfThumbnailError } from './pdfThumbnail/PdfThumbnailError';
 import { PdfThumbnailSkeleton } from './pdfThumbnail/PdfThumbnailSkeleton';
 
-export type PdfThumbnailProps = {
-	file: FileState;
-	onFileChange: (id: number, newFile: FileState) => void;
+export type PdfThumbnailProps<T extends FileState> = {
+	file: T;
+	shadow?: boolean;
+	onFileChange: (id: number, newFile: T) => void;
 	actions?: PdfThumbnailAction;
+	pageText?: (file: T) => ReactNode;
 };
 
 export type PdfThumbnailAction = (props: ActionProps) => ReactNode;
@@ -22,7 +24,9 @@ type ActionProps = {
 	isError: boolean;
 };
 
-export const PdfThumbnail = (props: PdfThumbnailProps) => {
+export const PdfThumbnail = <T extends FileState>(
+	props: PdfThumbnailProps<T> & Thumbnail.RootVariants
+) => {
 	return (
 		<Thumbnail.Suspense fallback={<PdfThumbnailSkeleton {...props} />}>
 			<ErrorBoundary

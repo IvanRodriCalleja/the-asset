@@ -4,7 +4,7 @@ import { Body } from './thumbnail/Body';
 import { DragHandler } from './thumbnail/DragHandler';
 import { Image, ImageArea } from './thumbnail/Image';
 import { FileName, Metadata } from './thumbnail/Metadata';
-import { Root } from './thumbnail/Root';
+import { Root, type RootVariants } from './thumbnail/Root';
 import { Suspense } from './thumbnail/Suspense';
 
 export {
@@ -17,5 +17,6 @@ export {
 	FileName,
 	Metadata,
 	Root,
+	RootVariants,
 	Suspense
 };
