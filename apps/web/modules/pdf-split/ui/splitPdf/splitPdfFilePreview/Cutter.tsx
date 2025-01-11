@@ -2,8 +2,6 @@ import Split from 'assets/tools/split.svg';
 
 import { styled } from '@theasset/style-system/jsx';
 
-import { SplitFile, useSplitPdfStore } from 'modules/pdf-split/store/SplitPdfStore';
-
 const CutterContainer = styled('div', {
 	base: {
 		cursor: 'pointer',
@@ -47,6 +45,10 @@ const CutterContainer = styled('div', {
 				base: 0,
 				md: '2px'
 			},
+			borderLeftColor: {
+				base: 'none',
+				md: 'gray.500'
+			},
 			// Mobile
 			borderTopStyle: {
 				base: 'dashed',
@@ -55,11 +57,38 @@ const CutterContainer = styled('div', {
 			borderTopWidth: {
 				base: '2px',
 				md: 0
+			},
+			borderTopColor: {
+				base: 'gray.500',
+				md: 'none'
+			}
+		},
+		'& > div': {
+			backgroundColor: 'gray.500'
+		},
+		_hover: {
+			_before: {
+				// Desktop
+				borderLeftColor: {
+					base: 'none',
+					md: 'primary'
+				},
+				// Mobile
+				borderTopColor: {
+					base: 'primary',
+					md: 'none'
+				}
+			},
+			'& > div': {
+				backgroundColor: 'primary'
 			}
 		}
 	},
 	variants: {
-		active: {
+		isInRange: {
+			true: {}
+		},
+		isEndOfRange: {
 			true: {
 				_before: {
 					// Desktop
@@ -84,44 +113,14 @@ const CutterContainer = styled('div', {
 				'& > div': {
 					backgroundColor: 'primary'
 				}
-			},
-			false: {
-				_before: {
-					// Desktop
-					borderLeftColor: {
-						base: 'none',
-						md: 'gray.500'
-					},
-					// Mobile
-					borderTopColor: {
-						base: 'gray.500',
-						md: 'none'
-					}
-				},
-				'& > div': {
-					backgroundColor: 'gray.500'
-				},
-				_hover: {
-					_before: {
-						// Desktop
-						borderLeftColor: {
-							base: 'none',
-							md: 'primary'
-						},
-						// Mobile
-						borderTopColor: {
-							base: 'primary',
-							md: 'none'
-						}
-					},
-					'& > div': {
-						backgroundColor: 'primary'
-					}
-				}
 			}
-		},
-		isInRange: {
-			true: {
+		}
+	},
+	compoundVariants: [
+		{
+			isInRange: true,
+			isEndOfRange: false,
+			css: {
 				background: '#f3eaff',
 				_after: {
 					content: '""',
@@ -148,9 +147,10 @@ const CutterContainer = styled('div', {
 				}
 			}
 		}
-	},
+	],
 	defaultVariants: {
-		active: false
+		isInRange: false,
+		isEndOfRange: false
 	}
 });
 
@@ -173,18 +173,19 @@ const SplitIcon = styled('div', {
 });
 
 type CutterProps = {
-	file: SplitFile;
-	isAnyFileCut: boolean;
+	isInRange: boolean;
+	index: number;
+	isEndOfRange: boolean;
+	onToggleCut: (id: number, value: boolean) => void;
 };
 
-export const Cutter = ({ file, isAnyFileCut }: CutterProps) => {
-	const { toggleCut } = useSplitPdfStore();
-
+export const Cutter = ({ isInRange, index, isEndOfRange, onToggleCut }: CutterProps) => {
+	console.log({ isInRange, index, isEndOfRange });
 	return (
 		<CutterContainer
-			active={file.isCut}
-			isInRange={isAnyFileCut && !file.isCut}
-			onClick={() => toggleCut(file.id)}>
+			isEndOfRange={isEndOfRange}
+			isInRange={isInRange}
+			onClick={() => onToggleCut(index, !isEndOfRange)}>
 			<SplitIcon>
 				<Split />
 			</SplitIcon>

@@ -1,7 +1,8 @@
 import { PdfThumbnail } from '@theasset/pdf-react/ui/pdf-thumbnail';
 import { styled } from '@theasset/style-system/jsx';
 
-import { useSplitPdfStore } from 'modules/pdf-split/store/SplitPdfStore';
+import { SplitRange, isFileEndOfRange, isFileInRange } from 'modules/pdf-split/domain/SplitRange';
+import { SplitFile, useSplitPdfStore } from 'modules/pdf-split/store/SplitPdfStore';
 
 import { Cutter } from './splitPdfFilePreview/Cutter';
 
@@ -46,25 +47,64 @@ const SplitContainer = styled('div', {
 });
 
 export const SplitPdfFilePreview = () => {
-	const { files, onFileChange } = useSplitPdfStore();
-
-	const isAnyFileCut = files.some(file => file.isCut);
+	const { files, ranges, onFileChange, toggleCut } = useSplitPdfStore();
 
 	return (
 		<FilePreviewList>
 			{files.map((file, index) => (
-				<SplitContainer key={file.id}>
-					<PdfThumbnail
-						status={isAnyFileCut ? 'active' : 'default'}
-						file={file}
-						onFileChange={onFileChange}
-						actions={() => null}
-						shadow={false}
-						pageText={file => file.page}
-					/>
-					{index < files.length - 1 && <Cutter file={file} isAnyFileCut={isAnyFileCut} />}
-				</SplitContainer>
+				<SplitPdfThumbnail
+					key={file.id}
+					file={file}
+					index={index}
+					ranges={ranges}
+					hasCutter={index < files.length - 1}
+					onFileChange={onFileChange}
+					onToggleCut={toggleCut}
+				/>
 			))}
 		</FilePreviewList>
+	);
+};
+
+type SplitPdfThumbnailProps = {
+	file: SplitFile;
+	index: number;
+	ranges: SplitRange[];
+	hasCutter: boolean;
+	onFileChange: (id: number, newFile: SplitFile) => void;
+	onToggleCut: (id: number, value: boolean) => void;
+};
+
+const SplitPdfThumbnail = ({
+	file,
+	index,
+	ranges,
+	hasCutter,
+	onFileChange,
+	onToggleCut
+}: SplitPdfThumbnailProps) => {
+	// TODO: Do it just in one operation
+	const isInRange = isFileInRange(ranges, index);
+	const isEndOfRange = isFileEndOfRange(ranges, index);
+
+	return (
+		<SplitContainer key={file.id}>
+			<PdfThumbnail
+				status={isInRange ? 'active' : 'default'}
+				file={file}
+				onFileChange={onFileChange}
+				actions={() => null}
+				shadow={false}
+				pageText={file => file.page}
+			/>
+			{hasCutter && (
+				<Cutter
+					isInRange={isInRange}
+					isEndOfRange={isEndOfRange}
+					index={index}
+					onToggleCut={onToggleCut}
+				/>
+			)}
+		</SplitContainer>
 	);
 };

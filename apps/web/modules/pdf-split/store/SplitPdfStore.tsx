@@ -5,6 +5,8 @@ import { PropsWithChildren, createContext, use, useState } from 'react';
 import { useThePdfTools } from '@theasset/pdf-react/context/the-pdf-actions-context';
 import { FileState } from '@theasset/pdf-tools';
 
+import { SplitRange, addRange, removeRangeByIndex } from '../domain/SplitRange';
+
 type SplitFileMetadata = {
 	page: number;
 	isCut: boolean;
@@ -13,16 +15,18 @@ export type SplitFile = FileState & SplitFileMetadata;
 
 type SplitPdfState = {
 	files: SplitFile[];
+	ranges: SplitRange[];
 	hasFiles: boolean;
 	onSortFiles: (items: SplitFile[]) => void;
 	onFileChange: (id: number, newFile: SplitFile) => void;
 	onRemoveFile: (id: number) => void;
 	onChange: (files: File[]) => void;
-	toggleCut: (id: number) => void;
+	toggleCut: (id: number, value: boolean) => void;
 };
 
 const SplitPdfStateContext = createContext<SplitPdfState>({
 	files: [],
+	ranges: [],
 	hasFiles: false,
 	onSortFiles: () => {
 		throw new Error('No SplitPdfStateContext provided');
@@ -42,6 +46,7 @@ const SplitPdfStateContext = createContext<SplitPdfState>({
 });
 
 export const SplitPdfStore = ({ children }: PropsWithChildren) => {
+	const [ranges, setRange] = useState<SplitRange[]>([]);
 	const [files, setFiles] = useState<SplitFile[]>([]);
 	const { pdfTools } = useThePdfTools();
 
@@ -78,24 +83,28 @@ export const SplitPdfStore = ({ children }: PropsWithChildren) => {
 
 	const hasFiles = files.length > 0;
 
-	const toggleCut = (id: number) => {
-		setFiles(files =>
-			files.map(file => {
-				if (file.id === id) {
-					return {
-						...file,
-						isCut: !file.isCut
-					};
-				}
-
-				return file;
-			})
-		);
+	const toggleCut = (index: number, value: boolean) => {
+		if (value) {
+			const newRanges = addRange(ranges, index);
+			setRange(newRanges);
+		} else {
+			const newRanges = removeRangeByIndex(ranges, index);
+			setRange(newRanges);
+		}
 	};
 
 	return (
 		<SplitPdfStateContext
-			value={{ files, hasFiles, onSortFiles, onChange, onFileChange, onRemoveFile, toggleCut }}>
+			value={{
+				files,
+				hasFiles,
+				ranges,
+				onSortFiles,
+				onChange,
+				onFileChange,
+				onRemoveFile,
+				toggleCut
+			}}>
 			{children}
 		</SplitPdfStateContext>
 	);

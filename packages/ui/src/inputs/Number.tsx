@@ -1,30 +1,75 @@
 'use client';
 
-import { PropsWithChildren, useRef } from 'react';
+import { PropsWithChildren, Ref, useImperativeHandle, useRef } from 'react';
 
-import { MinusIcon, PlusIcon } from '@radix-ui/react-icons';
+import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
 import { useLocale } from '@react-aria/i18n';
 import { AriaNumberFieldProps, useNumberField } from '@react-aria/numberfield';
 import { useNumberFieldState } from '@react-stately/numberfield';
 import { AriaButtonProps } from '@react-types/button';
 
 import { RecipeVariantProps, sva } from '@theasset/style-system/css';
+import { HStack, VStack } from '@theasset/style-system/jsx';
 
 import { Button } from '../Button';
 import { Input } from './Input';
 
+// NOTE: Buttons and lead height should be based on size variant
+
 const numberInput = sva({
-	slots: ['root', 'incrementTrigger', 'decrementTrigger', 'input', 'button'],
+	slots: ['root', 'incrementTrigger', 'decrementTrigger', 'input', 'button', 'lead'],
 	base: {
-		root: { display: 'flex', alignItems: 'center', gap: '2' },
+		root: {
+			display: 'flex',
+			alignItems: 'center',
+			gap: '2',
+			rounded: 'md',
+			border: 'input',
+			_focusWithin: {
+				borderColor: 'primary',
+				boxShadow: '0 0 0 1px var(--shadow-color)',
+				shadowColor: 'primary'
+			}
+		},
+		lead: {
+			display: 'flex',
+			alignItems: 'center',
+			color: 'gray.500',
+			height: '40px',
+			borderRightColor: 'input',
+			borderRightWidth: '1px',
+			borderRightStyle: 'solid',
+			paddingInline: 4,
+			textStyle: 'sm'
+		},
 		input: {
-			textAlign: 'center'
+			textAlign: 'right',
+			border: 'none',
+			flex: 1,
+			_focusVisible: {
+				border: 'none',
+				boxShadow: 'none'
+			}
 		},
 		incrementTrigger: {},
 		decrementTrigger: {},
 		button: {
-			borderRadius: '50%',
-			padding: '0'
+			height: '20px',
+			width: '40px',
+			borderRadius: '0',
+			padding: '0',
+			borderLeftColor: 'input',
+			borderLeftWidth: '1px',
+			borderLeftStyle: 'solid',
+			'&:first-child': {
+				borderBottomColor: 'input',
+				borderBottomStyle: 'solid',
+				borderBottomWidth: '1px',
+				borderTopRightRadius: 'md'
+			},
+			'&:last-child': {
+				borderBottomRightRadius: 'md'
+			}
 		}
 	},
 	variants: {
@@ -64,7 +109,10 @@ const numberInput = sva({
 export type NumberVariants = RecipeVariantProps<typeof numberInput>;
 export type NumberProps = AriaNumberFieldProps &
 	NumberVariants & {
+		name?: string;
+		ref?: Ref<HTMLInputElement>;
 		hasControls?: boolean;
+		lead?: string;
 	};
 
 export const Number = (props: NumberProps) => {
@@ -80,20 +128,25 @@ export const Number = (props: NumberProps) => {
 		inputRef
 	);
 
+	useImperativeHandle(props.ref, () => inputRef.current!);
+
 	return (
-		<div className={styles.root}>
-			{hasControls && (
-				<NumberIconButton {...decrementButtonProps} className={styles.button}>
-					<MinusIcon />
-				</NumberIconButton>
-			)}
+		<HStack className={styles.root} gap={0}>
+			{props.lead && <div className={styles.lead}>{props.lead}</div>}
 			<Input {...inputProps} className={styles.input} ref={inputRef} />
-			{hasControls && (
-				<NumberIconButton {...incrementButtonProps} className={styles.button}>
-					<PlusIcon />
-				</NumberIconButton>
-			)}
-		</div>
+			<VStack gap={0}>
+				{hasControls && (
+					<NumberIconButton {...incrementButtonProps} className={styles.button}>
+						<ChevronUpIcon />
+					</NumberIconButton>
+				)}
+				{hasControls && (
+					<NumberIconButton {...decrementButtonProps} className={styles.button}>
+						<ChevronDownIcon />
+					</NumberIconButton>
+				)}
+			</VStack>
+		</HStack>
 	);
 };
 const NumberIconButton = ({
@@ -101,7 +154,7 @@ const NumberIconButton = ({
 	className
 }: PropsWithChildren<AriaButtonProps<'button'> & { className?: string }>) => {
 	return (
-		<Button className={className} size="icon" type="button">
+		<Button className={className} type="button" variant={'ghost'}>
 			{children}
 		</Button>
 	);

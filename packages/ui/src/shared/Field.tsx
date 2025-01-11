@@ -10,7 +10,7 @@ import { FieldError, FieldErrorProps } from './field/FieldError';
 export type FieldProps = FieldErrorProps & {
 	id: string;
 	name: string;
-	label: string;
+	label?: string;
 	optional?: boolean;
 };
 
@@ -24,7 +24,7 @@ export const Field = ({
 	const locales = useLocale();
 
 	return (
-		<Stack gap={2}>
+		<Stack gap={2} width="100%">
 			{label && (
 				<Label htmlFor={name}>
 					{label}
