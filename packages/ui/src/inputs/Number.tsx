@@ -1,15 +1,17 @@
 'use client';
 
-import { PropsWithChildren, Ref, useImperativeHandle, useRef } from 'react';
+import { PropsWithChildren, Ref } from 'react';
 
 import { ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
-import { useLocale } from '@react-aria/i18n';
-import { AriaNumberFieldProps, useNumberField } from '@react-aria/numberfield';
-import { useNumberFieldState } from '@react-stately/numberfield';
-import { AriaButtonProps } from '@react-types/button';
+import {
+	type NumberFieldProps as AriaNumberFieldProps,
+	type ButtonProps,
+	Group,
+	NumberField
+} from 'react-aria-components';
 
 import { RecipeVariantProps, sva } from '@theasset/style-system/css';
-import { HStack, VStack } from '@theasset/style-system/jsx';
+import { VStack } from '@theasset/style-system/jsx';
 
 import { Button } from '../Button';
 import { Input } from './Input';
@@ -17,9 +19,11 @@ import { Input } from './Input';
 // NOTE: Buttons and lead height should be based on size variant
 
 const numberInput = sva({
-	slots: ['root', 'incrementTrigger', 'decrementTrigger', 'input', 'button', 'lead'],
+	slots: ['root', 'group', 'input', 'button', 'lead'],
 	base: {
 		root: {
+			'--input-height': '40px',
+			height: 'var(--input-height)',
 			display: 'flex',
 			alignItems: 'center',
 			gap: '2',
@@ -31,11 +35,16 @@ const numberInput = sva({
 				shadowColor: 'primary'
 			}
 		},
+		group: {
+			display: 'flex',
+			flexDirection: 'row',
+			gap: 0
+		},
 		lead: {
 			display: 'flex',
 			alignItems: 'center',
 			color: 'gray.500',
-			height: '40px',
+			height: 'calc(var(--input-height) - 2px)',
 			borderRightColor: 'input',
 			borderRightWidth: '1px',
 			borderRightStyle: 'solid',
@@ -43,6 +52,7 @@ const numberInput = sva({
 			textStyle: 'sm'
 		},
 		input: {
+			height: 'calc(var(--input-height) - 2px)',
 			textAlign: 'right',
 			border: 'none',
 			flex: 1,
@@ -51,10 +61,8 @@ const numberInput = sva({
 				boxShadow: 'none'
 			}
 		},
-		incrementTrigger: {},
-		decrementTrigger: {},
 		button: {
-			height: '20px',
+			height: 'calc(var(--input-height) / 2 - 1px)',
 			width: '40px',
 			borderRadius: '0',
 			padding: '0',
@@ -71,38 +79,6 @@ const numberInput = sva({
 				borderBottomRightRadius: 'md'
 			}
 		}
-	},
-	variants: {
-		size: {
-			sm: {
-				input: {
-					width: 'calc(1ch + 1.5rem + 2px)'
-				}
-			},
-			md: {
-				input: {
-					width: 'calc(2ch + 1.5rem + 3px)'
-				}
-			},
-			lg: {
-				input: {
-					width: 'calc(3ch + 1.5rem  + 4px)'
-				}
-			},
-			xl: {
-				input: {
-					width: 'calc(4ch + 1.5rem + 5px)'
-				}
-			},
-			'2xl': {
-				input: {
-					width: 'calc(5ch + 1.5rem)'
-				}
-			}
-		}
-	},
-	defaultVariants: {
-		size: 'sm'
 	}
 });
 
@@ -116,46 +92,29 @@ export type NumberProps = AriaNumberFieldProps &
 	};
 
 export const Number = (props: NumberProps) => {
-	const { size, hasControls = true } = props;
-	const styles = numberInput({ size });
-
-	const { locale } = useLocale();
-	const state = useNumberFieldState({ ...props, locale });
-	const inputRef = useRef(null);
-	const { inputProps, incrementButtonProps, decrementButtonProps } = useNumberField(
-		props,
-		state,
-		inputRef
-	);
-
-	useImperativeHandle(props.ref, () => inputRef.current!);
+	const { hasControls = true } = props;
+	const styles = numberInput({});
 
 	return (
-		<HStack className={styles.root} gap={0}>
-			{props.lead && <div className={styles.lead}>{props.lead}</div>}
-			<Input {...inputProps} className={styles.input} ref={inputRef} />
-			<VStack gap={0}>
+		<NumberField {...props} className={styles.root}>
+			<Group className={styles.group}>
+				{props.lead && <div className={styles.lead}>{props.lead}</div>}
+				<Input className={styles.input} />
 				{hasControls && (
-					<NumberIconButton {...incrementButtonProps} className={styles.button}>
-						<ChevronUpIcon />
-					</NumberIconButton>
+					<VStack gap={0}>
+						<NumberIconButton slot="increment" className={styles.button}>
+							<ChevronUpIcon />
+						</NumberIconButton>
+						<NumberIconButton slot="decrement" className={styles.button}>
+							<ChevronDownIcon />
+						</NumberIconButton>
+					</VStack>
 				)}
-				{hasControls && (
-					<NumberIconButton {...decrementButtonProps} className={styles.button}>
-						<ChevronDownIcon />
-					</NumberIconButton>
-				)}
-			</VStack>
-		</HStack>
+			</Group>
+		</NumberField>
 	);
 };
-const NumberIconButton = ({
-	children,
-	className
-}: PropsWithChildren<AriaButtonProps<'button'> & { className?: string }>) => {
-	return (
-		<Button className={className} type="button" variant={'ghost'}>
-			{children}
-		</Button>
-	);
-};
+
+const NumberIconButton = (props: PropsWithChildren<ButtonProps & { className?: string }>) => (
+	<Button {...props} type="button" variant={'ghost'} />
+);

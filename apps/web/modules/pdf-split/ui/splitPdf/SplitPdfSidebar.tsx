@@ -34,7 +34,18 @@ export const SplitPdfSidebar = () => (
 
 // TODO: Literals
 const SplitPdfRanges = () => {
-	const { ranges } = useSplitPdfStore();
+	const { ranges, onRangeFocus, onRangeBlur } = useSplitPdfStore();
+
+	const onFocus = (index: number) => {
+		const range = ranges[index];
+		const rangeNode = document.getElementById(`file-${range?.from}`);
+
+		if (rangeNode) {
+			rangeNode.scrollIntoView({ block: 'start', behavior: 'smooth' });
+		}
+
+		onRangeFocus(index);
+	};
 
 	return (
 		<Stack gap={4}>
@@ -48,9 +59,21 @@ const SplitPdfRanges = () => {
 						</HStack>
 
 						<HStack>
-							<FieldNumber name="aaaa" value={range.from} lead="desde" />
+							<FieldNumber
+								name="aaaa"
+								value={range.from}
+								lead="desde"
+								onFocus={() => onFocus(index)}
+								onBlur={onRangeBlur}
+							/>
 
-							<FieldNumber name="bbb" value={range.to} lead="hasta" />
+							<FieldNumber
+								name="bbb"
+								value={range.to}
+								lead="hasta"
+								onFocus={() => onFocus(index)}
+								onBlur={onRangeBlur}
+							/>
 						</HStack>
 					</Stack>
 				))}

@@ -2,6 +2,7 @@ export type SplitRange = {
 	name: string;
 	from: number;
 	to: number;
+	isFocused: boolean;
 };
 
 let rangeId = 1;
@@ -12,20 +13,28 @@ export const resetRangeId = () => {
 
 export const addRange = (ranges: SplitRange[], index: number): SplitRange[] => {
 	if (ranges.length === 0) {
-		const newRange: SplitRange[] = [{ from: 0, to: index, name: `range ${rangeId}` }];
+		const newRange: SplitRange[] = [
+			{ from: 0, to: index, name: `range ${rangeId}`, isFocused: false }
+		];
 		rangeId++;
 		return newRange;
 	} else {
-		const isInRange = isFileInRange(ranges, index);
+		const [isInRange] = isFileInRange(ranges, index);
 
 		if (isInRange) {
 			const newRange = ranges.reduce((acc, range) => {
 				if (range.from <= index && range.to >= index) {
-					const a: SplitRange = { from: range.from, to: index, name: range.name };
+					const a: SplitRange = {
+						from: range.from,
+						to: index,
+						name: range.name,
+						isFocused: range.isFocused
+					};
 					const b: SplitRange = {
 						from: index + 1,
 						to: range.to,
-						name: `range ${rangeId}`
+						name: `range ${rangeId}`,
+						isFocused: false
 					};
 
 					rangeId++;
@@ -43,7 +52,12 @@ export const addRange = (ranges: SplitRange[], index: number): SplitRange[] => {
 			const rangeIndex = getClosestRangeIndex(ranges, index);
 
 			if (rangeIndex === -1) {
-				const newRange: SplitRange = { from: 0, to: index, name: `range ${rangeId}` };
+				const newRange: SplitRange = {
+					from: 0,
+					to: index,
+					name: `range ${rangeId}`,
+					isFocused: false
+				};
 				rangeId++;
 				return [newRange, ...ranges];
 			}
@@ -54,7 +68,8 @@ export const addRange = (ranges: SplitRange[], index: number): SplitRange[] => {
 			newRange.splice(newRangeIndex, 0, {
 				from: ranges[rangeIndex]!.to + 1,
 				to: index,
-				name: `range ${rangeId}`
+				name: `range ${rangeId}`,
+				isFocused: false
 			});
 
 			rangeId++;
@@ -86,8 +101,14 @@ const getClosestRangeIndex = (ranges: SplitRange[], index: number): number => {
 	return closestIndex;
 };
 
-export const isFileInRange = (ranges: SplitRange[], fileIndex: number): boolean =>
-	ranges.some(range => range.from <= fileIndex && range.to >= fileIndex);
+export const isFileInRange = (
+	ranges: SplitRange[],
+	fileIndex: number
+): [boolean, SplitRange | undefined] => {
+	const range = ranges.find(range => range.from <= fileIndex && range.to >= fileIndex);
+
+	return [range !== undefined, range];
+};
 
 export const isFileEndOfRange = (ranges: SplitRange[], fileIndex: number): boolean =>
 	ranges.some(range => range.to === fileIndex);

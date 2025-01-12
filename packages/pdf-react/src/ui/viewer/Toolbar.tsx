@@ -10,7 +10,7 @@ import { KeyboardEvent } from '@react-types/shared';
 
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { css } from '@theasset/style-system/css';
-import { Flex, Stack, styled } from '@theasset/style-system/jsx';
+import { Box, Flex, Stack, styled } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
 import { Number } from '@theasset/ui/inputs/number';
 import { Text } from '@theasset/ui/text';
@@ -103,15 +103,16 @@ export const Toolbar = ({ totalPages, page, setPage, children }: ToolbarProps) =
 				</TooltipTrigger>
 
 				<Stack direction="row" alignItems="center">
-					<Number
-						size="lg"
-						aria-label={viewer.toolbar.currentPage}
-						hasControls={false}
-						value={editablePage}
-						onChange={onEdit}
-						onBlur={onBlur}
-						onKeyUp={onKeyUp}
-					/>
+					<Box width="54px">
+						<Number
+							aria-label={viewer.toolbar.currentPage}
+							hasControls={false}
+							value={editablePage}
+							onChange={onEdit}
+							onBlur={onBlur}
+							onKeyUp={onKeyUp}
+						/>
+					</Box>
 					/
 					<Text size="sm" className={css({ paddingInline: 2 })}>
 						{totalPages}

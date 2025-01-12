@@ -1,9 +1,11 @@
 import { InputHTMLAttributes } from 'react';
 
+import { Input as AriaInput } from 'react-aria-components';
+
 import { styled } from '@theasset/style-system/jsx';
 import { StyledVariantProps } from '@theasset/style-system/types';
 
-export const Input = styled('input', {
+export const Input = styled(AriaInput, {
 	base: {
 		display: 'flex',
 		h: '10',

@@ -12,6 +12,7 @@ import { PdfThumbnailSkeleton } from './pdfThumbnail/PdfThumbnailSkeleton';
 export type PdfThumbnailProps<T extends FileState> = {
 	file: T;
 	shadow?: boolean;
+	className?: string;
 	onFileChange: (id: number, newFile: T) => void;
 	actions?: PdfThumbnailAction;
 	pageText?: (file: T) => ReactNode;

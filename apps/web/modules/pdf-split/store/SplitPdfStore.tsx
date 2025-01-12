@@ -22,6 +22,8 @@ type SplitPdfState = {
 	onRemoveFile: (id: number) => void;
 	onChange: (files: File[]) => void;
 	toggleCut: (id: number, value: boolean) => void;
+	onRangeFocus: (index: number) => void;
+	onRangeBlur: () => void;
 };
 
 const SplitPdfStateContext = createContext<SplitPdfState>({
@@ -41,6 +43,12 @@ const SplitPdfStateContext = createContext<SplitPdfState>({
 		throw new Error('No SplitPdfStateContext provided');
 	},
 	toggleCut: () => {
+		throw new Error('No SplitPdfStateContext provided');
+	},
+	onRangeFocus: () => {
+		throw new Error('No SplitPdfStateContext provided');
+	},
+	onRangeBlur: () => {
 		throw new Error('No SplitPdfStateContext provided');
 	}
 });
@@ -81,17 +89,30 @@ export const SplitPdfStore = ({ children }: PropsWithChildren) => {
 
 	const onSortFiles = (items: SplitFile[]) => setFiles(items);
 
-	const hasFiles = files.length > 0;
-
 	const toggleCut = (index: number, value: boolean) => {
-		if (value) {
-			const newRanges = addRange(ranges, index);
-			setRange(newRanges);
-		} else {
-			const newRanges = removeRangeByIndex(ranges, index);
-			setRange(newRanges);
-		}
+		const newRanges = value ? addRange(ranges, index) : removeRangeByIndex(ranges, index);
+		setRange(newRanges);
 	};
+
+	const onRangeFocus = (index: number) => {
+		const newRanges = ranges.map((range, i) => ({
+			...range,
+			isFocused: i === index
+		}));
+
+		setRange(newRanges);
+	};
+
+	const onRangeBlur = () => {
+		const newRanges = ranges.map(range => ({
+			...range,
+			isFocused: false
+		}));
+
+		setRange(newRanges);
+	};
+
+	const hasFiles = files.length > 0;
 
 	return (
 		<SplitPdfStateContext
@@ -103,7 +124,9 @@ export const SplitPdfStore = ({ children }: PropsWithChildren) => {
 				onChange,
 				onFileChange,
 				onRemoveFile,
-				toggleCut
+				toggleCut,
+				onRangeFocus,
+				onRangeBlur
 			}}>
 			{children}
 		</SplitPdfStateContext>

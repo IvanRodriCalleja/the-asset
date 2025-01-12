@@ -1,7 +1,8 @@
 import { PdfThumbnail } from '@theasset/pdf-react/ui/pdf-thumbnail';
+import { sva } from '@theasset/style-system/css';
 import { styled } from '@theasset/style-system/jsx';
 
-import { SplitRange, isFileEndOfRange, isFileInRange } from 'modules/pdf-split/domain/SplitRange';
+import { SplitRange, isFileInRange } from 'modules/pdf-split/domain/SplitRange';
 import { SplitFile, useSplitPdfStore } from 'modules/pdf-split/store/SplitPdfStore';
 
 import { Cutter } from './splitPdfFilePreview/Cutter';
@@ -22,7 +23,6 @@ const FilePreviewList = styled('div', {
 		},
 		marginInline: 'auto',
 		flexWrap: 'wrap',
-		//justifyContent: 'center', // NOTE: We need to align to the right as the cutter disaligns the thumbnails
 		justifyContent: 'flex-start',
 		height: '100%',
 		overflow: 'auto',
@@ -32,18 +32,95 @@ const FilePreviewList = styled('div', {
 			base: 4,
 			md: 8
 		}
-		//gap: 4 //NOTE: No gap needed here as we need to have cutter between the thumbnails
 	}
 });
 
 const SplitContainer = styled('div', {
 	base: {
 		display: 'flex',
+		borderStyle: 'solid',
+		borderBlockColor: 'transparent',
 		flexDirection: {
 			base: 'column',
 			md: 'row'
 		}
 	}
+});
+
+// TODO: Add mobile responsive
+const rangeFocus = sva({
+	slots: ['thumbnail', 'cutter'],
+	base: {
+		thumbnail: {
+			borderWidth: '2px',
+			borderColor: 'transparent'
+		},
+		cutter: {
+			_after: {
+				borderBlockWidth: '2px',
+				borderBlockColor: 'transparent'
+			}
+		}
+	},
+	variants: {
+		isFocused: {
+			true: {
+				thumbnail: {
+					borderBlockColor: 'primary !important'
+				},
+				cutter: {
+					_after: {
+						borderColor: 'primary'
+					}
+				}
+			}
+		},
+		isStartOfRange: {
+			true: {}
+		},
+		isEndOfRange: {
+			true: {}
+		}
+	},
+	compoundVariants: [
+		{
+			isFocused: true,
+			isStartOfRange: true,
+			css: {
+				thumbnail: {
+					borderLeftWidth: '2px',
+					borderLeftColor: 'primary',
+					borderRightRadius: 0
+				}
+			}
+		},
+		{
+			isFocused: true,
+			isEndOfRange: true,
+			css: {
+				thumbnail: {
+					borderRightWidth: '2px',
+					borderRightColor: 'primary',
+					borderLeftRadius: 0
+				},
+				cutter: {
+					_after: {
+						borderColor: 'transparent'
+					}
+				}
+			}
+		},
+		{
+			isFocused: true,
+			isStartOfRange: false,
+			isEndOfRange: false,
+			css: {
+				thumbnail: {
+					borderRadius: 0
+				}
+			}
+		}
+	]
 });
 
 export const SplitPdfFilePreview = () => {
@@ -83,12 +160,16 @@ const SplitPdfThumbnail = ({
 	onFileChange,
 	onToggleCut
 }: SplitPdfThumbnailProps) => {
-	// TODO: Do it just in one operation
-	const isInRange = isFileInRange(ranges, index);
-	const isEndOfRange = isFileEndOfRange(ranges, index);
+	const [isInRange, range] = isFileInRange(ranges, index);
+
+	const { isFocused = false, from, to } = range || {};
+	const isStartOfRange = from === index;
+	const isEndOfRange = to === index;
+
+	const styles = rangeFocus({ isFocused, isStartOfRange, isEndOfRange });
 
 	return (
-		<SplitContainer key={file.id}>
+		<SplitContainer id={`file-${index}`} key={file.id}>
 			<PdfThumbnail
 				status={isInRange ? 'active' : 'default'}
 				file={file}
@@ -96,6 +177,7 @@ const SplitPdfThumbnail = ({
 				actions={() => null}
 				shadow={false}
 				pageText={file => file.page}
+				className={styles.thumbnail}
 			/>
 			{hasCutter && (
 				<Cutter
@@ -103,6 +185,7 @@ const SplitPdfThumbnail = ({
 					isEndOfRange={isEndOfRange}
 					index={index}
 					onToggleCut={onToggleCut}
+					className={styles.cutter}
 				/>
 			)}
 		</SplitContainer>

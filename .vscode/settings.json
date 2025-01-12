@@ -36,7 +36,7 @@
       "*.ts": "$(capture).ts, $(capture).spec.ts, $(capture).spec.tsx",
       "package.json": "yarn.lock, .editorconfig, .prettierrc, .prettierignore, .eslintrc, .eslintignore"
     },
-    "jestrunner.jestCommand": ". javascript/config/test/jest-runner.sh",
+    "jestrunner.jestCommand": ". test/jest-runner.sh",
     "jestrunner.changeDirectoryToWorkspaceRoot": true,
     "cSpell.words": [
       "agentero",

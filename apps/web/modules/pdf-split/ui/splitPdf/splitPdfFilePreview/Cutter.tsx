@@ -61,10 +61,12 @@ const CutterContainer = styled('div', {
 			borderTopColor: {
 				base: 'gray.500',
 				md: 'none'
-			}
+			},
+			zIndex: 2
 		},
 		'& > div': {
-			backgroundColor: 'gray.500'
+			backgroundColor: 'gray.500',
+			zIndex: 3
 		},
 		_hover: {
 			_before: {
@@ -126,24 +128,24 @@ const CutterContainer = styled('div', {
 					content: '""',
 					position: 'absolute',
 					top: {
-						base: '-4px',
+						base: '-6px',
 						md: 0
 					},
 					left: {
 						base: 0,
-						md: '-4px'
+						md: '-6px'
 					},
 					right: {
 						base: 0,
-						md: '-4px'
+						md: '-6px'
 					},
 					bottom: {
-						base: '-4px',
+						base: '-6px',
 						md: 0
 					},
 					display: 'block',
 					background: '#f3eaff',
-					zIndex: -1
+					zIndex: 1
 				}
 			}
 		}
@@ -176,19 +178,18 @@ type CutterProps = {
 	isInRange: boolean;
 	index: number;
 	isEndOfRange: boolean;
+	className?: string;
 	onToggleCut: (id: number, value: boolean) => void;
 };
 
-export const Cutter = ({ isInRange, index, isEndOfRange, onToggleCut }: CutterProps) => {
-	console.log({ isInRange, index, isEndOfRange });
-	return (
-		<CutterContainer
-			isEndOfRange={isEndOfRange}
-			isInRange={isInRange}
-			onClick={() => onToggleCut(index, !isEndOfRange)}>
-			<SplitIcon>
-				<Split />
-			</SplitIcon>
-		</CutterContainer>
-	);
-};
+export const Cutter = ({ isInRange, index, isEndOfRange, className, onToggleCut }: CutterProps) => (
+	<CutterContainer
+		isEndOfRange={isEndOfRange}
+		isInRange={isInRange}
+		className={className}
+		onClick={() => onToggleCut(index, !isEndOfRange)}>
+		<SplitIcon>
+			<Split />
+		</SplitIcon>
+	</CutterContainer>
+);

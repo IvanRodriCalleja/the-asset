@@ -6,7 +6,9 @@ import { useThumbnail } from '../../hooks/useThumbnail';
 import { PdfThumbnailProps } from '../PdfThumbnail';
 import { PdfThumbnailSkeleton } from './PdfThumbnailSkeleton';
 
-type PdfThumbnailDetailProps<T extends FileState> = PdfThumbnailProps<T>;
+type PdfThumbnailDetailProps<T extends FileState> = PdfThumbnailProps<T> & {
+	className?: string;
+};
 
 export const PdfThumbnailDetail = <T extends FileState>({
 	shadow = true,
@@ -20,7 +22,7 @@ export const PdfThumbnailDetail = <T extends FileState>({
 
 	return (
 		<Thumbnail.Suspense fallback={<PdfThumbnailSkeleton {...props} />}>
-			<Thumbnail.Root status={status}>
+			<Thumbnail.Root status={status} className={props.className}>
 				<Thumbnail.Body>
 					<Thumbnail.Image src={src} alt={file.name} data-rotation={rotation} shadow={shadow} />
 
