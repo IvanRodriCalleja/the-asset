@@ -1,4 +1,5 @@
 export type SplitRange = {
+	id: number;
 	name: string;
 	from: number;
 	to: number;
@@ -14,7 +15,7 @@ export const resetRangeId = () => {
 export const addRange = (ranges: SplitRange[], index: number): SplitRange[] => {
 	if (ranges.length === 0) {
 		const newRange: SplitRange[] = [
-			{ from: 0, to: index, name: `range ${rangeId}`, isFocused: false }
+			{ id: rangeId, from: 0, to: index, name: `range ${rangeId}`, isFocused: false }
 		];
 		rangeId++;
 		return newRange;
@@ -25,12 +26,14 @@ export const addRange = (ranges: SplitRange[], index: number): SplitRange[] => {
 			const newRange = ranges.reduce((acc, range) => {
 				if (range.from <= index && range.to >= index) {
 					const a: SplitRange = {
+						id: range.id,
 						from: range.from,
 						to: index,
 						name: range.name,
 						isFocused: range.isFocused
 					};
 					const b: SplitRange = {
+						id: rangeId,
 						from: index + 1,
 						to: range.to,
 						name: `range ${rangeId}`,
@@ -53,6 +56,7 @@ export const addRange = (ranges: SplitRange[], index: number): SplitRange[] => {
 
 			if (rangeIndex === -1) {
 				const newRange: SplitRange = {
+					id: rangeId,
 					from: 0,
 					to: index,
 					name: `range ${rangeId}`,
@@ -66,6 +70,7 @@ export const addRange = (ranges: SplitRange[], index: number): SplitRange[] => {
 			const newRangeIndex = rangeIndex + 1;
 
 			newRange.splice(newRangeIndex, 0, {
+				id: rangeId,
 				from: ranges[rangeIndex]!.to + 1,
 				to: index,
 				name: `range ${rangeId}`,
@@ -110,5 +115,89 @@ export const isFileInRange = (
 	return [range !== undefined, range];
 };
 
-export const isFileEndOfRange = (ranges: SplitRange[], fileIndex: number): boolean =>
-	ranges.some(range => range.to === fileIndex);
+export const changeRangeFrom = (
+	ranges: SplitRange[],
+	index: number,
+	value: number
+): SplitRange[] => {
+	if (value < 0) {
+		return ranges;
+	}
+
+	if (value > ranges[index]!.to) {
+		return ranges;
+	}
+
+	const prevIndex = index - 1;
+	const prevRange = ranges[prevIndex];
+	const newRanges = [...ranges];
+
+	if (prevRange && value <= prevRange.to) {
+		const newPrevToValue = value - 1;
+
+		newRanges[prevIndex] = {
+			...newRanges[prevIndex]!,
+			to: newPrevToValue
+		};
+
+		newRanges[index] = {
+			...newRanges[index]!,
+			from: value
+		};
+
+		if (newPrevToValue < newRanges[prevIndex].from) {
+			newRanges.splice(prevIndex, 1);
+		}
+
+		return newRanges;
+	}
+
+	return ranges.map((range, i) => ({
+		...range,
+		from: i === index ? value : range.from
+	}));
+};
+
+export const changeRangeTo = (
+	ranges: SplitRange[],
+	index: number,
+	value: number,
+	filesLength: number
+) => {
+	if (value >= filesLength) {
+		return ranges;
+	}
+
+	if (value < ranges[index]!.from) {
+		return ranges;
+	}
+
+	const nextIndex = index + 1;
+	const nextRange = ranges[nextIndex];
+	const newRanges = [...ranges];
+
+	if (nextRange && value >= nextRange.from) {
+		const newNextFromValue = value + 1;
+
+		newRanges[nextIndex] = {
+			...newRanges[nextIndex]!,
+			from: newNextFromValue
+		};
+
+		newRanges[index] = {
+			...newRanges[index]!,
+			to: value
+		};
+
+		if (newNextFromValue > newRanges[nextIndex].to) {
+			newRanges.splice(nextIndex, 1);
+		}
+
+		return newRanges;
+	}
+
+	return ranges.map((range, i) => ({
+		...range,
+		to: i === index ? value : range.to
+	}));
+};

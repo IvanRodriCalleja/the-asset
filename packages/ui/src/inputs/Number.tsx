@@ -17,7 +17,6 @@ import { Button } from '../Button';
 import { Input } from './Input';
 
 // NOTE: Buttons and lead height should be based on size variant
-
 const numberInput = sva({
 	slots: ['root', 'group', 'input', 'button', 'lead'],
 	base: {

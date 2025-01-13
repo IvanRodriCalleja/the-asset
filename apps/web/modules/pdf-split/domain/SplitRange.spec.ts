@@ -17,7 +17,7 @@ describe('SplitRange', () => {
 			const result = addRange(ranges, index);
 
 			// Then
-			expect(result).toEqual([{ from: 0, to: 3, name: 'range 1', isFocused: false }]);
+			expect(result).toEqual([{ id: 1, from: 0, to: 3, name: 'range 1', isFocused: false }]);
 		});
 
 		it('Should add a range from 0 to 0 when index is 0', () => {
@@ -29,12 +29,14 @@ describe('SplitRange', () => {
 			const result = addRange(ranges, index);
 
 			// Then
-			expect(result).toEqual([{ from: 0, to: 0, name: 'range 1', isFocused: false }]);
+			expect(result).toEqual([{ id: 1, from: 0, to: 0, name: 'range 1', isFocused: false }]);
 		});
 
 		it('Should split a range in two when index is in the middle of the range', () => {
 			// Given
-			const ranges: SplitRange[] = [{ from: 0, to: 4, name: 'custom range', isFocused: false }];
+			const ranges: SplitRange[] = [
+				{ id: 100, from: 0, to: 4, name: 'custom range', isFocused: false }
+			];
 			const index = 2;
 
 			// When
@@ -42,17 +44,17 @@ describe('SplitRange', () => {
 
 			// Then
 			expect(result).toEqual([
-				{ from: 0, to: 2, name: 'custom range', isFocused: false },
-				{ from: 3, to: 4, name: 'range 1', isFocused: false }
+				{ id: 100, from: 0, to: 2, name: 'custom range', isFocused: false },
+				{ id: 1, from: 3, to: 4, name: 'range 1', isFocused: false }
 			]);
 		});
 
 		it('Should split a range in two when index is in the middle of the range when multiple ranges', () => {
 			// Given
 			const ranges: SplitRange[] = [
-				{ from: 0, to: 4, name: 'custom range 1', isFocused: false },
-				{ from: 5, to: 8, name: 'custom range 2', isFocused: false },
-				{ from: 9, to: 12, name: 'custom range 3', isFocused: false }
+				{ id: 100, from: 0, to: 4, name: 'custom range 1', isFocused: false },
+				{ id: 101, from: 5, to: 8, name: 'custom range 2', isFocused: false },
+				{ id: 102, from: 9, to: 12, name: 'custom range 3', isFocused: false }
 			];
 			const index = 7;
 
@@ -61,16 +63,18 @@ describe('SplitRange', () => {
 
 			// Then
 			expect(result).toEqual([
-				{ from: 0, to: 4, name: 'custom range 1', isFocused: false },
-				{ from: 5, to: 7, name: 'custom range 2', isFocused: false },
-				{ from: 8, to: 8, name: 'range 1', isFocused: false },
-				{ from: 9, to: 12, name: 'custom range 3', isFocused: false }
+				{ id: 100, from: 0, to: 4, name: 'custom range 1', isFocused: false },
+				{ id: 101, from: 5, to: 7, name: 'custom range 2', isFocused: false },
+				{ id: 1, from: 8, to: 8, name: 'range 1', isFocused: false },
+				{ id: 102, from: 9, to: 12, name: 'custom range 3', isFocused: false }
 			]);
 		});
 
 		it('Should generate a new range from nearest range when index is out of any existing range', () => {
 			// Given
-			const ranges: SplitRange[] = [{ from: 0, to: 4, name: 'custom range', isFocused: false }];
+			const ranges: SplitRange[] = [
+				{ id: 100, from: 0, to: 4, name: 'custom range', isFocused: false }
+			];
 			const index = 8;
 
 			// When
@@ -78,14 +82,16 @@ describe('SplitRange', () => {
 
 			// Then
 			expect(result).toEqual([
-				{ from: 0, to: 4, name: 'custom range', isFocused: false },
-				{ from: 5, to: 8, name: 'range 1', isFocused: false }
+				{ id: 100, from: 0, to: 4, name: 'custom range', isFocused: false },
+				{ id: 1, from: 5, to: 8, name: 'range 1', isFocused: false }
 			]);
 		});
 
 		it('Should generate a new range  at the beginning when no nearest range (it means is for position 0)', () => {
 			// Given
-			const ranges: SplitRange[] = [{ from: 5, to: 8, name: 'custom range', isFocused: false }];
+			const ranges: SplitRange[] = [
+				{ id: 100, from: 5, to: 8, name: 'custom range', isFocused: false }
+			];
 			const index = 3;
 
 			// When
@@ -93,8 +99,8 @@ describe('SplitRange', () => {
 
 			// Then
 			expect(result).toEqual([
-				{ from: 0, to: 3, name: 'range 1', isFocused: false },
-				{ from: 5, to: 8, name: 'custom range', isFocused: false }
+				{ id: 1, from: 0, to: 3, name: 'range 1', isFocused: false },
+				{ id: 100, from: 5, to: 8, name: 'custom range', isFocused: false }
 			]);
 		});
 	});
@@ -103,9 +109,9 @@ describe('SplitRange', () => {
 		it('Should remove a range by index', () => {
 			// Given
 			const ranges: SplitRange[] = [
-				{ from: 0, to: 4, name: 'custom range 1', isFocused: false },
-				{ from: 5, to: 8, name: 'custom range 2', isFocused: false },
-				{ from: 9, to: 12, name: 'custom range 3', isFocused: false }
+				{ id: 100, from: 0, to: 4, name: 'custom range 1', isFocused: false },
+				{ id: 101, from: 5, to: 8, name: 'custom range 2', isFocused: false },
+				{ id: 102, from: 9, to: 12, name: 'custom range 3', isFocused: false }
 			];
 			const index = 8;
 
@@ -114,8 +120,8 @@ describe('SplitRange', () => {
 
 			// Then
 			expect(result).toEqual([
-				{ from: 0, to: 4, name: 'custom range 1', isFocused: false },
-				{ from: 9, to: 12, name: 'custom range 3', isFocused: false }
+				{ id: 100, from: 0, to: 4, name: 'custom range 1', isFocused: false },
+				{ id: 102, from: 9, to: 12, name: 'custom range 3', isFocused: false }
 			]);
 		});
 	});

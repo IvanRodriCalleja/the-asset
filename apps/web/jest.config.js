@@ -11,5 +11,5 @@ module.exports = createJestConfig({
 	testEnvironment: 'jsdom',
 	roots: ['<rootDir>/modules'],
 	testMatch: ['**/__tests__/**/*.+(ts|tsx|js)', '**/?(*.)+(spec|test).+(ts|tsx|js)'],
-	testPathIgnorePatterns: ['<rootDir>../../node_modules/'],
+	testPathIgnorePatterns: ['<rootDir>../../node_modules/']
 });

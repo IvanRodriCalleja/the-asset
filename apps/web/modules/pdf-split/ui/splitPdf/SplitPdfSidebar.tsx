@@ -34,49 +34,74 @@ export const SplitPdfSidebar = () => (
 
 // TODO: Literals
 const SplitPdfRanges = () => {
-	const { ranges, onRangeFocus, onRangeBlur } = useSplitPdfStore();
+	const { ranges, onRangeFocus, onRangeBlur, onRangeFromChange, onRangeToChange } =
+		useSplitPdfStore();
 
-	const onFocus = (index: number) => {
-		const range = ranges[index];
-		const rangeNode = document.getElementById(`file-${range?.from}`);
+	const scrollToPage = (pageIndex?: number) => {
+		if (pageIndex === undefined) return;
+
+		const rangeNode = document.getElementById(`file-${pageIndex < 0 ? 0 : pageIndex}`);
 
 		if (rangeNode) {
-			rangeNode.scrollIntoView({ block: 'start', behavior: 'smooth' });
+			rangeNode.scrollIntoView({ block: 'center', behavior: 'smooth' });
 		}
+	};
+
+	const onFocus = (index: number, page: number) => {
+		scrollToPage(page);
 
 		onRangeFocus(index);
+	};
+
+	const onFromChange = (index: number, value: number) => {
+		const realValue = value - 1;
+		scrollToPage(realValue);
+
+		onRangeFromChange(index, realValue);
+	};
+
+	const onToChange = (index: number, value: number) => {
+		const realValue = value - 1;
+		scrollToPage(realValue);
+
+		onRangeToChange(index, realValue);
 	};
 
 	return (
 		<Stack gap={4}>
 			<Text size="xl">Rangos!!</Text>
 			<Stack gap={2}>
-				{/* TODO: Avoid using index as key*/}
-				{ranges.map((range, index) => (
-					<Stack key={index}>
-						<HStack>
-							<Text size="lg">{range.name}</Text>
-						</HStack>
+				{ranges.map((range, index) => {
+					const fromValue = range.from + 1;
+					const toValue = range.to + 1;
 
-						<HStack>
-							<FieldNumber
-								name="aaaa"
-								value={range.from}
-								lead="desde"
-								onFocus={() => onFocus(index)}
-								onBlur={onRangeBlur}
-							/>
+					return (
+						<Stack key={range.id}>
+							<HStack>
+								<Text size="lg">{range.name}</Text>
+							</HStack>
+							<HStack>
+								<FieldNumber
+									name="aaaa"
+									value={fromValue}
+									lead="desde"
+									onFocus={() => onFocus(index, range.from)}
+									onBlur={onRangeBlur}
+									onChange={value => onFromChange(index, value)}
+								/>
 
-							<FieldNumber
-								name="bbb"
-								value={range.to}
-								lead="hasta"
-								onFocus={() => onFocus(index)}
-								onBlur={onRangeBlur}
-							/>
-						</HStack>
-					</Stack>
-				))}
+								<FieldNumber
+									name="bbb"
+									value={toValue}
+									lead="hasta"
+									onFocus={() => onFocus(index, range.to)}
+									onBlur={onRangeBlur}
+									onChange={value => onToChange(index, value)}
+								/>
+							</HStack>
+						</Stack>
+					);
+				})}
 			</Stack>
 		</Stack>
 	);

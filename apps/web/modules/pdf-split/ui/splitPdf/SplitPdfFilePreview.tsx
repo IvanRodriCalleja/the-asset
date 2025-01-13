@@ -134,7 +134,6 @@ export const SplitPdfFilePreview = () => {
 					file={file}
 					index={index}
 					ranges={ranges}
-					hasCutter={index < files.length - 1}
 					onFileChange={onFileChange}
 					onToggleCut={toggleCut}
 				/>
@@ -147,7 +146,6 @@ type SplitPdfThumbnailProps = {
 	file: SplitFile;
 	index: number;
 	ranges: SplitRange[];
-	hasCutter: boolean;
 	onFileChange: (id: number, newFile: SplitFile) => void;
 	onToggleCut: (id: number, value: boolean) => void;
 };
@@ -156,7 +154,6 @@ const SplitPdfThumbnail = ({
 	file,
 	index,
 	ranges,
-	hasCutter,
 	onFileChange,
 	onToggleCut
 }: SplitPdfThumbnailProps) => {
@@ -179,15 +176,14 @@ const SplitPdfThumbnail = ({
 				pageText={file => file.page}
 				className={styles.thumbnail}
 			/>
-			{hasCutter && (
-				<Cutter
-					isInRange={isInRange}
-					isEndOfRange={isEndOfRange}
-					index={index}
-					onToggleCut={onToggleCut}
-					className={styles.cutter}
-				/>
-			)}
+
+			<Cutter
+				isInRange={isInRange}
+				isEndOfRange={isEndOfRange}
+				index={index}
+				onToggleCut={onToggleCut}
+				className={styles.cutter}
+			/>
 		</SplitContainer>
 	);
 };

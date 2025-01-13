@@ -5,7 +5,13 @@ import { PropsWithChildren, createContext, use, useState } from 'react';
 import { useThePdfTools } from '@theasset/pdf-react/context/the-pdf-actions-context';
 import { FileState } from '@theasset/pdf-tools';
 
-import { SplitRange, addRange, removeRangeByIndex } from '../domain/SplitRange';
+import {
+	SplitRange,
+	addRange,
+	changeRangeFrom,
+	changeRangeTo,
+	removeRangeByIndex
+} from '../domain/SplitRange';
 
 type SplitFileMetadata = {
 	page: number;
@@ -24,6 +30,8 @@ type SplitPdfState = {
 	toggleCut: (id: number, value: boolean) => void;
 	onRangeFocus: (index: number) => void;
 	onRangeBlur: () => void;
+	onRangeFromChange: (index: number, value: number) => void;
+	onRangeToChange: (index: number, value: number) => void;
 };
 
 const SplitPdfStateContext = createContext<SplitPdfState>({
@@ -49,6 +57,12 @@ const SplitPdfStateContext = createContext<SplitPdfState>({
 		throw new Error('No SplitPdfStateContext provided');
 	},
 	onRangeBlur: () => {
+		throw new Error('No SplitPdfStateContext provided');
+	},
+	onRangeFromChange: () => {
+		throw new Error('No SplitPdfStateContext provided');
+	},
+	onRangeToChange: () => {
 		throw new Error('No SplitPdfStateContext provided');
 	}
 });
@@ -95,12 +109,12 @@ export const SplitPdfStore = ({ children }: PropsWithChildren) => {
 	};
 
 	const onRangeFocus = (index: number) => {
-		const newRanges = ranges.map((range, i) => ({
-			...range,
-			isFocused: i === index
-		}));
-
-		setRange(newRanges);
+		setRange(currentRanges =>
+			currentRanges.map((range, i) => ({
+				...range,
+				isFocused: i === index
+			}))
+		);
 	};
 
 	const onRangeBlur = () => {
@@ -110,6 +124,14 @@ export const SplitPdfStore = ({ children }: PropsWithChildren) => {
 		}));
 
 		setRange(newRanges);
+	};
+
+	const onRangeFromChange = (index: number, value: number) => {
+		setRange(currentRanges => changeRangeFrom(currentRanges, index, value));
+	};
+
+	const onRangeToChange = (index: number, value: number) => {
+		setRange(currentRanges => changeRangeTo(currentRanges, index, value, files.length));
 	};
 
 	const hasFiles = files.length > 0;
@@ -126,7 +148,9 @@ export const SplitPdfStore = ({ children }: PropsWithChildren) => {
 				onRemoveFile,
 				toggleCut,
 				onRangeFocus,
-				onRangeBlur
+				onRangeBlur,
+				onRangeFromChange,
+				onRangeToChange
 			}}>
 			{children}
 		</SplitPdfStateContext>
