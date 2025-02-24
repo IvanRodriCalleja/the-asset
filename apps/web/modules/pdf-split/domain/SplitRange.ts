@@ -15,7 +15,7 @@ export const resetRangeId = () => {
 export const addRange = (ranges: SplitRange[], index: number): SplitRange[] => {
 	if (ranges.length === 0) {
 		const newRange: SplitRange[] = [
-			{ id: rangeId, from: 0, to: index, name: `range ${rangeId}`, isFocused: false }
+			{ id: rangeId, from: 0, to: index, name: `range ${rangeId}.pdf`, isFocused: false }
 		];
 		rangeId++;
 		return newRange;
@@ -36,7 +36,7 @@ export const addRange = (ranges: SplitRange[], index: number): SplitRange[] => {
 						id: rangeId,
 						from: index + 1,
 						to: range.to,
-						name: `range ${rangeId}`,
+						name: `range ${rangeId}.pdf`,
 						isFocused: false
 					};
 
@@ -59,7 +59,7 @@ export const addRange = (ranges: SplitRange[], index: number): SplitRange[] => {
 					id: rangeId,
 					from: 0,
 					to: index,
-					name: `range ${rangeId}`,
+					name: `range ${rangeId}.pdf`,
 					isFocused: false
 				};
 				rangeId++;
@@ -73,7 +73,7 @@ export const addRange = (ranges: SplitRange[], index: number): SplitRange[] => {
 				id: rangeId,
 				from: ranges[rangeIndex]!.to + 1,
 				to: index,
-				name: `range ${rangeId}`,
+				name: `range ${rangeId}.pdf`,
 				isFocused: false
 			});
 

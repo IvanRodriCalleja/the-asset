@@ -74,7 +74,9 @@ export const MergePdf = () => {
 									borderTopColor="border"
 									width="100%"
 									background="white">
-									<AddMorePdfsButton open={open} />
+									<Stack flex={1} maxWidth={{ base: 'full', md: '300px' }}>
+										<AddMorePdfsButton open={open} />
+									</Stack>
 									<MergeButton files={files} />
 								</Box>
 							</>

@@ -32,6 +32,8 @@ type SplitPdfState = {
 	onRangeBlur: () => void;
 	onRangeFromChange: (index: number, value: number) => void;
 	onRangeToChange: (index: number, value: number) => void;
+	onRemoveRange: (index: number) => void;
+	onRenameRange: (index: number, name: string) => void;
 };
 
 const SplitPdfStateContext = createContext<SplitPdfState>({
@@ -63,6 +65,12 @@ const SplitPdfStateContext = createContext<SplitPdfState>({
 		throw new Error('No SplitPdfStateContext provided');
 	},
 	onRangeToChange: () => {
+		throw new Error('No SplitPdfStateContext provided');
+	},
+	onRemoveRange: () => {
+		throw new Error('No SplitPdfStateContext provided');
+	},
+	onRenameRange: () => {
 		throw new Error('No SplitPdfStateContext provided');
 	}
 });
@@ -126,13 +134,19 @@ export const SplitPdfStore = ({ children }: PropsWithChildren) => {
 		setRange(newRanges);
 	};
 
-	const onRangeFromChange = (index: number, value: number) => {
+	const onRangeFromChange = (index: number, value: number) =>
 		setRange(currentRanges => changeRangeFrom(currentRanges, index, value));
-	};
 
-	const onRangeToChange = (index: number, value: number) => {
+	const onRangeToChange = (index: number, value: number) =>
 		setRange(currentRanges => changeRangeTo(currentRanges, index, value, files.length));
-	};
+
+	const onRemoveRange = (index: number) =>
+		setRange(currentRanges => currentRanges.filter((_, i) => i !== index));
+
+	const onRenameRange = (index: number, name: string) =>
+		setRange(currentRanges =>
+			currentRanges.map((range, i) => (i === index ? { ...range, name } : range))
+		);
 
 	const hasFiles = files.length > 0;
 
@@ -150,7 +164,9 @@ export const SplitPdfStore = ({ children }: PropsWithChildren) => {
 				onRangeFocus,
 				onRangeBlur,
 				onRangeFromChange,
-				onRangeToChange
+				onRangeToChange,
+				onRemoveRange,
+				onRenameRange
 			}}>
 			{children}
 		</SplitPdfStateContext>

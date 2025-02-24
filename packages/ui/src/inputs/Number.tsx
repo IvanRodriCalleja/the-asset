@@ -28,6 +28,7 @@ const numberInput = sva({
 			gap: '2',
 			rounded: 'md',
 			border: 'input',
+			background: 'white',
 			_focusWithin: {
 				borderColor: 'primary',
 				boxShadow: '0 0 0 1px var(--shadow-color)',

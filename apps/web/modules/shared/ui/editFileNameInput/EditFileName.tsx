@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { ChangeEvent } from 'react';
 
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { Stack } from '@theasset/style-system/jsx';
@@ -8,7 +8,7 @@ import { Label } from '@theasset/ui/label';
 type EditFileNameProps = {
 	name: string;
 	extension: string;
-	setName: Dispatch<SetStateAction<string>>;
+	setName: (name: string) => void;
 };
 
 export const EditFileName = ({ name, extension, setName }: EditFileNameProps) => {
