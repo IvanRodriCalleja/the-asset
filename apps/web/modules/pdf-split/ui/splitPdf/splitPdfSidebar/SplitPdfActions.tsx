@@ -9,18 +9,13 @@ import { AddMorePdfsButton } from 'modules/pdf-merge/ui/mergePdf/AddMorePdfsButt
 // TODO: Repeated from merge result actions
 // TODO: Add more files
 export const SplitPdfActions = () => (
-	<Stack paddingInline={4}>
+	<Stack paddingInline={12} paddingBottom={12}>
 		<AddMorePdfsButton open={open} />
 		<Stack direction="row" gap="1px">
 			<Button size="lg" className={css({ flex: 1 })}>
 				<Split />
 				fwrfwfrw
 			</Button>
-			{/*<OpenPanelButton size="icon-lg" onPress={toggleOpen}>
-				<ChevronDownIcon
-					style={{ rotate: isOpen ? '0deg' : '180deg', transition: 'rotate 0.3s ease-out' }}
-				/>
-			</OpenPanelButton>*/}
 		</Stack>
 	</Stack>
 );

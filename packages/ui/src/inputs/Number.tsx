@@ -64,7 +64,7 @@ const numberInput = sva({
 		button: {
 			height: 'calc(var(--input-height) / 2 - 1px)',
 			width: '40px',
-			borderRadius: '0',
+			borderRadius: '0 !important',
 			padding: '0',
 			borderLeftColor: 'input',
 			borderLeftWidth: '1px',
@@ -73,10 +73,10 @@ const numberInput = sva({
 				borderBottomColor: 'input',
 				borderBottomStyle: 'solid',
 				borderBottomWidth: '1px',
-				borderTopRightRadius: 'md'
+				borderTopRightRadius: 'md !important'
 			},
 			'&:last-child': {
-				borderBottomRightRadius: 'md'
+				borderBottomRightRadius: 'md !important'
 			}
 		}
 	}
@@ -99,7 +99,7 @@ export const Number = (props: NumberProps) => {
 		<NumberField {...props} className={styles.root}>
 			<Group className={styles.group}>
 				{props.lead && <div className={styles.lead}>{props.lead}</div>}
-				<Input className={styles.input} />
+				<Input id={props.id} className={styles.input} />
 				{hasControls && (
 					<VStack gap={0}>
 						<NumberIconButton slot="increment" className={styles.button}>

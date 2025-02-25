@@ -1,6 +1,6 @@
 'use client';
 
-import { PropsWithChildren, createContext, use, useState } from 'react';
+import { PropsWithChildren, createContext, startTransition, use, useState } from 'react';
 
 import { useThePdfTools } from '@theasset/pdf-react/context/the-pdf-actions-context';
 import { FileState } from '@theasset/pdf-tools';
@@ -34,6 +34,7 @@ type SplitPdfState = {
 	onRangeToChange: (index: number, value: number) => void;
 	onRemoveRange: (index: number) => void;
 	onRenameRange: (index: number, name: string) => void;
+	onAddRange: () => void;
 };
 
 const SplitPdfStateContext = createContext<SplitPdfState>({
@@ -71,6 +72,9 @@ const SplitPdfStateContext = createContext<SplitPdfState>({
 		throw new Error('No SplitPdfStateContext provided');
 	},
 	onRenameRange: () => {
+		throw new Error('No SplitPdfStateContext provided');
+	},
+	onAddRange: () => {
 		throw new Error('No SplitPdfStateContext provided');
 	}
 });
@@ -148,6 +152,22 @@ export const SplitPdfStore = ({ children }: PropsWithChildren) => {
 			currentRanges.map((range, i) => (i === index ? { ...range, name } : range))
 		);
 
+	const onAddRange = () => {
+		const lastRange = ranges[ranges.length - 1];
+		const newRange = {
+			id: lastRange ? lastRange.id + 1 : 0,
+			from: lastRange ? lastRange.to + 1 : 0,
+			to: lastRange ? lastRange.to + 1 : 0,
+			name: '',
+			isFocused: false
+		};
+
+		return startTransition(() => {
+			const newRanges = addRange(ranges, newRange.from);
+			setRange(newRanges);
+		});
+	};
+
 	const hasFiles = files.length > 0;
 
 	return (
@@ -166,7 +186,8 @@ export const SplitPdfStore = ({ children }: PropsWithChildren) => {
 				onRangeFromChange,
 				onRangeToChange,
 				onRemoveRange,
-				onRenameRange
+				onRenameRange,
+				onAddRange
 			}}>
 			{children}
 		</SplitPdfStateContext>

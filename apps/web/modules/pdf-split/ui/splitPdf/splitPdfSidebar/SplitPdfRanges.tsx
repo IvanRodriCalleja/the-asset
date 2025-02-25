@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 
-import { TrashIcon } from '@radix-ui/react-icons';
+import { PlusIcon, TrashIcon } from '@radix-ui/react-icons';
 
 import { Divider, HStack, Stack, styled } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
@@ -25,7 +25,6 @@ const RangesList = styled(Stack, {
 		gap: 0,
 		marginInline: '-48px',
 		display: 'flex',
-		flex: 1,
 		overflow: 'auto',
 		_before: {
 			content: '""',
@@ -57,7 +56,8 @@ export const SplitPdfRanges = () => {
 		onRangeFromChange,
 		onRangeToChange,
 		onRemoveRange,
-		onRenameRange
+		onRenameRange,
+		onAddRange
 	} = useSplitPdfStore();
 
 	const scrollToPage = (pageIndex?: number) => {
@@ -90,49 +90,65 @@ export const SplitPdfRanges = () => {
 		onRangeToChange(index, realValue);
 	};
 
+	const addRange = async () => {
+		await onAddRange();
+
+		setTimeout(() => {
+			document.getElementById(`from-${ranges.length}`)?.focus();
+		}, 100);
+	};
+
 	return (
-		<RangesList>
-			{ranges.map((range, index) => {
-				const fromValue = range.from + 1;
-				const toValue = range.to + 1;
+		<Stack flex={1} overflow="auto">
+			<RangesList paddingInline={12}>
+				{ranges.map((range, index) => {
+					const fromValue = range.from + 1;
+					const toValue = range.to + 1;
 
-				return (
-					<Fragment key={range.id}>
-						<RangeItem>
-							<HStack justifyContent="space-between">
-								<EditFileNameInput
-									name={range.name}
-									setName={value => onRenameRange(index, value)}
-								/>
+					return (
+						<Fragment key={range.id}>
+							<RangeItem>
+								<HStack justifyContent="space-between">
+									<EditFileNameInput
+										name={range.name}
+										setName={value => onRenameRange(index, value)}
+									/>
 
-								<Button size="icon" variant="transparent" onPress={() => onRemoveRange(index)}>
-									<TrashIcon />
-								</Button>
-							</HStack>
-							<HStack>
-								<FieldNumber
-									name="aaaa"
-									value={fromValue}
-									lead="desde"
-									onFocus={() => onFocus(index, range.from)}
-									onBlur={onRangeBlur}
-									onChange={value => onFromChange(index, value)}
-								/>
+									<Button size="icon" variant="transparent" onPress={() => onRemoveRange(index)}>
+										<TrashIcon />
+									</Button>
+								</HStack>
+								<HStack>
+									<FieldNumber
+										name={`from-${index}`}
+										value={fromValue}
+										lead="desde"
+										onFocus={() => onFocus(index, range.from)}
+										onBlur={onRangeBlur}
+										onChange={value => onFromChange(index, value)}
+									/>
 
-								<FieldNumber
-									name="bbb"
-									value={toValue}
-									lead="hasta"
-									onFocus={() => onFocus(index, range.to)}
-									onBlur={onRangeBlur}
-									onChange={value => onToChange(index, value)}
-								/>
-							</HStack>
-						</RangeItem>
-						{index < ranges.length - 1 && <Divider color="border" />}
-					</Fragment>
-				);
-			})}
-		</RangesList>
+									<FieldNumber
+										name={`to-${index}`}
+										value={toValue}
+										lead="hasta"
+										onFocus={() => onFocus(index, range.to)}
+										onBlur={onRangeBlur}
+										onChange={value => onToChange(index, value)}
+									/>
+								</HStack>
+							</RangeItem>
+							{index < ranges.length - 1 && <Divider color="border" />}
+						</Fragment>
+					);
+				})}
+			</RangesList>
+			<Stack width="100%" paddingInline={12}>
+				<Button variant="secondary" onPress={addRange}>
+					<PlusIcon />
+					Add range
+				</Button>
+			</Stack>
+		</Stack>
 	);
 };

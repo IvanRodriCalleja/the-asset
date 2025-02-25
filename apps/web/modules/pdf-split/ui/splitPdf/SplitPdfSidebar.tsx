@@ -1,3 +1,4 @@
+import { css } from '@theasset/style-system/css';
 import { Stack, styled } from '@theasset/style-system/jsx';
 import { Text } from '@theasset/ui/text';
 
@@ -20,8 +21,8 @@ const SplitPdfSidebarContainer = styled('div', {
 export const SplitPdfSidebar = () => (
 	<SplitPdfSidebarContainer>
 		<SplitPdfSidebarContent>
-			<Stack flex={1} overflow="auto" padding={12}>
-				<h3>
+			<Stack flex={1} overflow="auto">
+				<h3 className={css({ paddingInline: 12, paddingTop: 12 })}>
 					<Text size="2xl">
 						<b>A uiudoiwu doiewusssss</b>
 					</Text>
