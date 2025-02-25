@@ -24,7 +24,7 @@ export const SplitPdfSidebar = () => (
 			<Stack flex={1} overflow="auto">
 				<h3 className={css({ paddingInline: 12, paddingTop: 12 })}>
 					<Text size="2xl">
-						<b>A uiudoiwu doiewusssss</b>
+						<b>Cut your pages in ranges</b>
 					</Text>
 				</h3>
 

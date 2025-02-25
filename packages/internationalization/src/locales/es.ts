@@ -50,7 +50,18 @@ const es: Locales = {
 
 		description:
 			'Divide un PDF en páginas individuales o extrae las que necesites con facilidad y rapidez.',
-		descriptionImportant: 'todo sin enviar datos fuera de tu navegador.'
+		descriptionImportant: 'todo sin enviar datos fuera de tu navegador.',
+		sidebar: {
+			title: 'Separa las páginas en rangos',
+			actions: {
+				split: 'Divide PDFs',
+				addRange: 'Añadir rango'
+			},
+			ranges: {
+				from: 'desde',
+				to: 'hasta'
+			}
+		}
 	},
 	shared: {
 		uploadPdf: 'Subir PDF',

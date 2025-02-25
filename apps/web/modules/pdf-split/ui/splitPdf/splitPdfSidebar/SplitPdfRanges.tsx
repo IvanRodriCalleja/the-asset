@@ -2,6 +2,7 @@ import { Fragment } from 'react';
 
 import { PlusIcon, TrashIcon } from '@radix-ui/react-icons';
 
+import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { Divider, HStack, Stack, styled } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
 import { FieldNumber } from '@theasset/ui/fields/number';
@@ -34,20 +35,25 @@ const RangesList = styled(Stack, {
 			borderTopStyle: 'solid',
 			borderTopWidth: '1px',
 			borderTopColor: 'border'
-		},
-		_after: {
-			content: '""',
-			position: 'sticky',
-			bottom: 0,
-			width: '100%',
-			borderTopStyle: 'solid',
-			borderTopWidth: '1px',
-			borderTopColor: 'border'
+		}
+	},
+	variants: {
+		hasRanges: {
+			true: {
+				_after: {
+					content: '""',
+					position: 'sticky',
+					bottom: 0,
+					width: '100%',
+					borderTopStyle: 'solid',
+					borderTopWidth: '1px',
+					borderTopColor: 'border'
+				}
+			}
 		}
 	}
 });
 
-// TODO: Literals
 export const SplitPdfRanges = () => {
 	const {
 		ranges,
@@ -59,6 +65,7 @@ export const SplitPdfRanges = () => {
 		onRenameRange,
 		onAddRange
 	} = useSplitPdfStore();
+	const { splitPdf } = useLocale();
 
 	const scrollToPage = (pageIndex?: number) => {
 		if (pageIndex === undefined) return;
@@ -100,7 +107,7 @@ export const SplitPdfRanges = () => {
 
 	return (
 		<Stack flex={1} overflow="auto">
-			<RangesList paddingInline={12}>
+			<RangesList paddingInline={12} hasRanges={ranges.length > 0}>
 				{ranges.map((range, index) => {
 					const fromValue = range.from + 1;
 					const toValue = range.to + 1;
@@ -122,7 +129,7 @@ export const SplitPdfRanges = () => {
 									<FieldNumber
 										name={`from-${index}`}
 										value={fromValue}
-										lead="desde"
+										lead={splitPdf.sidebar.ranges.from}
 										onFocus={() => onFocus(index, range.from)}
 										onBlur={onRangeBlur}
 										onChange={value => onFromChange(index, value)}
@@ -131,7 +138,7 @@ export const SplitPdfRanges = () => {
 									<FieldNumber
 										name={`to-${index}`}
 										value={toValue}
-										lead="hasta"
+										lead={splitPdf.sidebar.ranges.to}
 										onFocus={() => onFocus(index, range.to)}
 										onBlur={onRangeBlur}
 										onChange={value => onToChange(index, value)}
@@ -146,7 +153,7 @@ export const SplitPdfRanges = () => {
 			<Stack width="100%" paddingInline={12}>
 				<Button variant="secondary" onPress={addRange}>
 					<PlusIcon />
-					Add range
+					{splitPdf.sidebar.actions.addRange}
 				</Button>
 			</Stack>
 		</Stack>

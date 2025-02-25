@@ -46,7 +46,18 @@ const en = {
 		title: 'Split PDF',
 		description:
 			'Split a PDF into individual pages or extract the ones you need quickly and easily.',
-		descriptionImportant: 'all without sending data outside your browser.'
+		descriptionImportant: 'all without sending data outside your browser.',
+		sidebar: {
+			title: 'Split pages in ranges',
+			actions: {
+				split: 'Split PDFs',
+				addRange: 'Add range'
+			},
+			ranges: {
+				from: 'from',
+				to: 'to'
+			}
+		}
 	},
 	shared: {
 		uploadPdf: 'Upload PDF',
