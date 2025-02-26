@@ -10,6 +10,9 @@ export function __wbg_addfileresult_free(a: number, b: number): void;
 export function addfileresult_new(a: number, b: number, c: number): number;
 export function addfileresult_id(a: number): number;
 export function addfileresult_hash(a: number, b: number): void;
+export function __wbg_pdfpagesrange_free(a: number, b: number): void;
+export function pdfpagesrange_new(a: number, b: number): number;
+export function pdfpagesrange_pages(a: number, b: number): void;
 export function __wbg_pdfresult_free(a: number, b: number): void;
 export function pdfresult_new(a: number, b: number, c: number, d: number): number;
 export function pdfresult_buffer(a: number, b: number): void;
@@ -36,6 +39,7 @@ export function pdftools_rotate_pdf_page(a: number, b: number, c: number, d: num
 export function pdftools_remove_pdf_page(a: number, b: number, c: number, d: number): void;
 export function pdftools_decrypt_pdf(a: number, b: number, c: number, d: number, e: number): void;
 export function pdftools_merge_files(a: number, b: number, c: number): number;
+export function pdftools_split_pdf(a: number, b: number, c: number, d: number): void;
 export function pdftools_get_file_size(a: number, b: number, c: number): void;
 export function pdftools_get_file(a: number, b: number, c: number): void;
 export function initialize_pdfium_render(a: number, b: number, c: number): number;

@@ -4,9 +4,17 @@ import { loadTools } from './loadPdfTools';
 import {
 	AddFileInput,
 	PdfToolsError as PdfError,
+	PdfPagesRange,
 	PdfTools as PdfToolsWasm
 } from './output/pdf_tools';
-import { Direction, ErrorCode, FileState, GetThumbnailResult, UpdatedFileState } from './types';
+import {
+	Direction,
+	ErrorCode,
+	FileState,
+	GetThumbnailResult,
+	SplitPdfRange,
+	UpdatedFileState
+} from './types';
 
 const loadPromise = loadTools();
 
@@ -185,6 +193,24 @@ class PdfTools {
 			hash: result.hash,
 			id: this.count
 		};
+	};
+
+	public splitPdf = (ranges: SplitPdfRange[]) => {
+		const request = ranges.map(range => new PdfPagesRange(range.pages.map(String)));
+
+		const result = this.mergeToolManager.split_pdf(request);
+		this.mergeToolManager = new PdfToolsWasm();
+
+		return result.map(splitResult => {
+			this.count++;
+
+			this.mergeToolManager.add_file(new AddFileInput(this.count, splitResult.buffer, 'split.pdf'));
+
+			return {
+				hash: splitResult.hash,
+				id: this.count
+			};
+		});
 	};
 
 	public decryptPdf = async (id: number, password: string): Promise<UpdatedFileState> => {

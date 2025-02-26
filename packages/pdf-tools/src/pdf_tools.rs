@@ -2,6 +2,7 @@ use crate::{
   models::{
     add_file::{AddFileInput, AddFileResult},
     file_operation_result::FileOperationResult,
+    pdf_pages_range::PdfPagesRange,
     pdf_result::PdfResult,
     pdf_tools_error::{PdfToolsError, PdfToolsErrorCodes},
     the_asset_file::TheAssetFile,
@@ -21,6 +22,7 @@ use crate::{
 };
 use pdfium_render::prelude::PdfPageIndex;
 use pdfium_render::prelude::*;
+use rayon::range;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
@@ -193,6 +195,18 @@ impl PdfTools {
     let hash = get_buffer_hash(&buffer);
 
     PdfResult::new(buffer, hash)
+  }
+
+  pub fn split_pdf(&self, ranges: Vec<PdfPagesRange>) -> Result<Vec<PdfResult>, JsValue> {
+    let results: Vec<PdfResult> = ranges
+      .iter()
+      .map(|range| {
+        let pages: Vec<u16> = range.pages().iter().map(|s| s.parse().unwrap()).collect();
+        self.merge_files(&pages)
+      })
+      .collect();
+
+    Ok(results)
   }
 
   pub fn get_file_size(&self, id: u16) -> Result<String, JsValue> {

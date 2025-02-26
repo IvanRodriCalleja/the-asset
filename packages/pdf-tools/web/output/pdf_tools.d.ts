@@ -40,6 +40,23 @@ export function read_block_from_callback_wasm(param: number, position: number, p
 */
 export function write_block_from_callback_wasm(param: number, buf: number, size: number): number;
 /**
+*/
+export enum PdfToolsErrorCodes {
+  Unknown = 0,
+  PasswordError = 1,
+  LoadError = 2,
+  WrongPassword = 3,
+  DecryptionError = 4,
+  MalformedPdf = 5,
+  FileNotFound = 6,
+}
+/**
+*/
+export enum Direction {
+  Left = 0,
+  Right = 1,
+}
+/**
 * Chroma subsampling format
 */
 export enum ChromaSampling {
@@ -59,23 +76,6 @@ export enum ChromaSampling {
 * Monochrome.
 */
   Cs400 = 3,
-}
-/**
-*/
-export enum Direction {
-  Left = 0,
-  Right = 1,
-}
-/**
-*/
-export enum PdfToolsErrorCodes {
-  Unknown = 0,
-  PasswordError = 1,
-  LoadError = 2,
-  WrongPassword = 3,
-  DecryptionError = 4,
-  MalformedPdf = 5,
-  FileNotFound = 6,
 }
 /**
 */
@@ -128,6 +128,18 @@ export class FileOperationResult {
 /**
 */
   readonly id: number;
+}
+/**
+*/
+export class PdfPagesRange {
+  free(): void;
+/**
+* @param {(string)[]} pages
+*/
+  constructor(pages: (string)[]);
+/**
+*/
+  readonly pages: (string)[];
 }
 /**
 */
@@ -207,6 +219,11 @@ export class PdfTools {
 */
   merge_files(ids: Uint16Array): PdfResult;
 /**
+* @param {(PdfPagesRange)[]} ranges
+* @returns {(PdfResult)[]}
+*/
+  split_pdf(ranges: (PdfPagesRange)[]): (PdfResult)[];
+/**
 * @param {number} id
 * @returns {string}
 */
@@ -267,6 +284,9 @@ export interface InitOutput {
   readonly addfileresult_new: (a: number, b: number, c: number) => number;
   readonly addfileresult_id: (a: number) => number;
   readonly addfileresult_hash: (a: number, b: number) => void;
+  readonly __wbg_pdfpagesrange_free: (a: number, b: number) => void;
+  readonly pdfpagesrange_new: (a: number, b: number) => number;
+  readonly pdfpagesrange_pages: (a: number, b: number) => void;
   readonly __wbg_pdfresult_free: (a: number, b: number) => void;
   readonly pdfresult_new: (a: number, b: number, c: number, d: number) => number;
   readonly pdfresult_buffer: (a: number, b: number) => void;
@@ -293,6 +313,7 @@ export interface InitOutput {
   readonly pdftools_remove_pdf_page: (a: number, b: number, c: number, d: number) => void;
   readonly pdftools_decrypt_pdf: (a: number, b: number, c: number, d: number, e: number) => void;
   readonly pdftools_merge_files: (a: number, b: number, c: number) => number;
+  readonly pdftools_split_pdf: (a: number, b: number, c: number, d: number) => void;
   readonly pdftools_get_file_size: (a: number, b: number, c: number) => void;
   readonly pdftools_get_file: (a: number, b: number, c: number) => void;
   readonly initialize_pdfium_render: (a: number, b: number, c: number) => number;

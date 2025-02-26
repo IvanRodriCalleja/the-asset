@@ -25,6 +25,10 @@ export type ErrorCode = {
 	code: PdfToolsErrorCodes;
 };
 
+export type SplitPdfRange = {
+	pages: number[];
+};
+
 export { Direction } from './output/pdf_tools';
 export { PdfToolsErrorCodes };
 export class PdfToolsError extends Error {

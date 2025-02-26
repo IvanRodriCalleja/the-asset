@@ -9,6 +9,10 @@ import { Cutter } from './splitPdfFilePreview/Cutter';
 
 // TODO: Unify with merge FilePreview
 // TODO: Use more powerful decrypt pdf library
+// TODO: Intersection observer for lazy loading images
+// TODO: Add preview image globally
+// TODO: Add rotate, delete page
+// TODO: Change title to split pdf
 
 const FilePreviewList = styled('div', {
 	base: {
@@ -43,7 +47,9 @@ const SplitContainer = styled('div', {
 		flexDirection: {
 			base: 'column',
 			md: 'row'
-		}
+		},
+		contentVisibility: 'auto',
+		containIntrinsicSize: 'auto'
 	}
 });
 
