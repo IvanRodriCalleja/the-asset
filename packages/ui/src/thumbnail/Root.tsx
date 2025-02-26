@@ -34,7 +34,9 @@ export const Root = styled(Stack, {
 
 		_hover: {
 			background: '#f3eaff'
-		}
+		},
+
+		contentVisibility: 'auto'
 	},
 	variants: {
 		status: {

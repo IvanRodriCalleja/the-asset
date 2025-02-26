@@ -1,19 +1,20 @@
-import { PdfThumbnail } from '@theasset/pdf-react/ui/pdf-thumbnail';
+import { RefObject, useRef } from 'react';
+
+import { PdfThumbnail, PdfThumbnailSkeleton } from '@theasset/pdf-react/ui/pdf-thumbnail';
 import { sva } from '@theasset/style-system/css';
 import { styled } from '@theasset/style-system/jsx';
+import { useIntersectionObserver } from '@theasset/ui/utils/use-intersection-observer';
 
 import { SplitRange, isFileInRange } from 'modules/pdf-split/domain/SplitRange';
 import { SplitFile, useSplitPdfStore } from 'modules/pdf-split/store/SplitPdfStore';
 
 import { Cutter } from './splitPdfFilePreview/Cutter';
 
-// TODO: Unify with merge FilePreview
 // TODO: Use more powerful decrypt pdf library
-// TODO: Intersection observer for lazy loading images
 // TODO: Add preview image globally
 // TODO: Add rotate, delete page
-// TODO: Change title to split pdf
 
+// TODO: Unify with merge FilePreview
 const FilePreviewList = styled('div', {
 	base: {
 		display: 'flex',
@@ -47,9 +48,7 @@ const SplitContainer = styled('div', {
 		flexDirection: {
 			base: 'column',
 			md: 'row'
-		},
-		contentVisibility: 'auto',
-		containIntrinsicSize: 'auto'
+		}
 	}
 });
 
@@ -122,7 +121,7 @@ const rangeFocus = sva({
 			isEndOfRange: false,
 			css: {
 				thumbnail: {
-					borderRadius: 0
+					borderRadius: '0 !important'
 				}
 			}
 		}
@@ -131,6 +130,7 @@ const rangeFocus = sva({
 
 export const SplitPdfFilePreview = () => {
 	const { files, ranges, onFileChange, toggleCut } = useSplitPdfStore();
+	const rootRef = useRef<HTMLDivElement>(null!);
 
 	return (
 		<FilePreviewList>
@@ -140,6 +140,7 @@ export const SplitPdfFilePreview = () => {
 					file={file}
 					index={index}
 					ranges={ranges}
+					rootRef={rootRef}
 					onFileChange={onFileChange}
 					onToggleCut={toggleCut}
 				/>
@@ -152,6 +153,7 @@ type SplitPdfThumbnailProps = {
 	file: SplitFile;
 	index: number;
 	ranges: SplitRange[];
+	rootRef: RefObject<HTMLDivElement>;
 	onFileChange: (id: number, newFile: SplitFile) => void;
 	onToggleCut: (id: number, value: boolean) => void;
 };
@@ -160,9 +162,19 @@ const SplitPdfThumbnail = ({
 	file,
 	index,
 	ranges,
+	rootRef,
 	onFileChange,
 	onToggleCut
 }: SplitPdfThumbnailProps) => {
+	const [ref, isInViewPort] = useIntersectionObserver(
+		{
+			rootMargin: '100px 0px 100px 0px',
+			threshold: 0
+		},
+		{ initialInView: index < 20 },
+		rootRef
+	);
+
 	const [isInRange, range] = isFileInRange(ranges, index);
 
 	const { isFocused = false, from, to } = range || {};
@@ -172,16 +184,20 @@ const SplitPdfThumbnail = ({
 	const styles = rangeFocus({ isFocused, isStartOfRange, isEndOfRange });
 
 	return (
-		<SplitContainer id={`file-${index}`} key={file.id}>
-			<PdfThumbnail
-				status={isInRange ? 'active' : 'default'}
-				file={file}
-				onFileChange={onFileChange}
-				actions={() => null}
-				shadow={false}
-				pageText={file => file.page}
-				className={styles.thumbnail}
-			/>
+		<SplitContainer ref={ref} id={`file-${index}`} key={file.id}>
+			{isInViewPort ? (
+				<PdfThumbnail
+					status={isInRange ? 'active' : 'default'}
+					file={file}
+					onFileChange={onFileChange}
+					actions={() => null}
+					shadow={false}
+					pageText={file => file.page}
+					className={styles.thumbnail}
+				/>
+			) : (
+				<PdfThumbnailSkeleton file={file} />
+			)}
 
 			<Cutter
 				isInRange={isInRange}

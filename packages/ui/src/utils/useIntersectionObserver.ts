@@ -4,14 +4,14 @@ type IntersectionObserverHook = (
 	options: IntersectionObserverInit,
 	config?: { initialInView?: boolean },
 	rootRef?: RefObject<HTMLDivElement>
-) => [RefObject<HTMLDivElement | null>, boolean];
+) => [RefObject<HTMLDivElement>, boolean];
 
 export const useIntersectionObserver: IntersectionObserverHook = (
 	options,
 	config = {},
 	rootRef
 ) => {
-	const targetRef = useRef<HTMLDivElement>(null);
+	const targetRef = useRef<HTMLDivElement>(null!);
 	const [isInView, setIsInView] = useState(config.initialInView ?? false);
 
 	useEffect(() => {

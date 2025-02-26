@@ -12,9 +12,9 @@ type SplitPdfPageProps = LocaleParam;
 export const generateMetadata = async ({ params }: SplitPdfPageProps): Promise<Metadata> => {
 	const { lang } = await params;
 
-	const { mergePdf } = getLocale(lang);
+	const { splitPdf } = getLocale(lang);
 	return {
-		title: mergePdf.metadata.title
+		title: splitPdf.metadata.title
 	};
 };
 

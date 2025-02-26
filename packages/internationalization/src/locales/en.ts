@@ -47,6 +47,9 @@ const en = {
 		description:
 			'Split a PDF into individual pages or extract the ones you need quickly and easily.',
 		descriptionImportant: 'all without sending data outside your browser.',
+		metadata: {
+			title: 'Split PDF Online - Cut PDF Files Privately for Free'
+		},
 		sidebar: {
 			title: 'Split pages in ranges',
 			actions: {

@@ -51,6 +51,9 @@ const es: Locales = {
 		description:
 			'Divide un PDF en páginas individuales o extrae las que necesites con facilidad y rapidez.',
 		descriptionImportant: 'todo sin enviar datos fuera de tu navegador.',
+		metadata: {
+			title: 'Corta PDFs Online - Separa ficheros PDF de manera privada y gratis'
+		},
 		sidebar: {
 			title: 'Separa las páginas en rangos',
 			actions: {
