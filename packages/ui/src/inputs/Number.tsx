@@ -38,6 +38,7 @@ const numberInput = sva({
 		group: {
 			display: 'flex',
 			flexDirection: 'row',
+			width: '100%',
 			gap: 0
 		},
 		lead: {
@@ -57,8 +58,8 @@ const numberInput = sva({
 			border: 'none',
 			flex: 1,
 			_focusVisible: {
-				border: 'none',
-				boxShadow: 'none'
+				border: 'none !important',
+				boxShadow: 'none !important'
 			}
 		},
 		button: {

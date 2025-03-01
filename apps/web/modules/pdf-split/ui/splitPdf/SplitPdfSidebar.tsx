@@ -1,41 +1,24 @@
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
-import { css } from '@theasset/style-system/css';
-import { Stack, styled } from '@theasset/style-system/jsx';
-import { Text } from '@theasset/ui/text';
+import { Sidebar } from '@theasset/ui/sidebar';
 
 import { SplitPdfActions } from './splitPdfSidebar/SplitPdfActions';
 import { SplitPdfRanges } from './splitPdfSidebar/SplitPdfRanges';
-import { SplitPdfSidebarContent } from './splitPdfSidebar/SplitPdfSidebarContent';
-
-const SplitPdfSidebarContainer = styled('div', {
-	base: {
-		position: 'relative',
-		width: '480px',
-		minWidth: '480px',
-		height: '100%',
-		zIndex: 1
-	}
-});
-
-// TODO:Repeated from merge result (panel, title, etc)
 
 export const SplitPdfSidebar = () => {
 	const { splitPdf } = useLocale();
 
 	return (
-		<SplitPdfSidebarContainer>
-			<SplitPdfSidebarContent>
-				<Stack flex={1} overflow="auto">
-					<h3 className={css({ paddingInline: 12, paddingTop: 12 })}>
-						<Text size="2xl">
-							<b>{splitPdf.sidebar.title}</b>
-						</Text>
-					</h3>
-
+		<Sidebar.Root>
+			<Sidebar.Body>
+				<Sidebar.Title>{splitPdf.sidebar.title}</Sidebar.Title>
+				<Sidebar.Content variant="full">
 					<SplitPdfRanges />
-					<SplitPdfActions />
-				</Stack>
-			</SplitPdfSidebarContent>
-		</SplitPdfSidebarContainer>
+				</Sidebar.Content>
+			</Sidebar.Body>
+			<Sidebar.Separator />
+			<Sidebar.Footer>
+				<SplitPdfActions />
+			</Sidebar.Footer>
+		</Sidebar.Root>
 	);
 };

@@ -81,7 +81,9 @@ const en = {
 				invalidPassword: 'Invalid password',
 				decryptionError: "Pdf can't be decrypted maybe is corrupted or encryption is not supported"
 			}
-		}
+		},
+		openPanel: 'Open configuration panel',
+		closePanel: 'Close configuration panel'
 	},
 	components: {
 		viewer: {

@@ -20,6 +20,7 @@
     "./tooltip": "./src/Tooltip.tsx",
     "./thumbnail": "./src/Thumbnail.tsx",
     "./popover": "./src/Popover.tsx",
+    "./sidebar": "./src/Sidebar.tsx",
     "./utils/replaceParams": "./utils/replaceParams.ts",
     "./utils/use-intersection-observer": "./src/utils/useIntersectionObserver.ts",
 

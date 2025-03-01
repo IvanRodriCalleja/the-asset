@@ -3,6 +3,7 @@ import { Fragment } from 'react';
 import { PlusIcon, TrashIcon } from '@radix-ui/react-icons';
 
 import { useLocale } from '@theasset/internationalization/hooks/use-locale';
+import { css } from '@theasset/style-system/css';
 import { Divider, HStack, Stack, styled } from '@theasset/style-system/jsx';
 import { Button } from '@theasset/ui/button';
 import { FieldNumber } from '@theasset/ui/fields/number';
@@ -13,7 +14,11 @@ import { EditFileNameInput } from 'modules/shared/ui/EditFileNameInput';
 const RangeItem = styled(Stack, {
 	base: {
 		paddingBlock: 4,
-		paddingInline: 12,
+		paddingInline: {
+			base: 6,
+			sm: 8,
+			lg: 12
+		},
 		_hover: {
 			backgroundColor: 'accent'
 		}
@@ -23,10 +28,8 @@ const RangeItem = styled(Stack, {
 const RangesList = styled(Stack, {
 	base: {
 		position: 'relative',
-		gap: 0,
-		marginInline: '-48px',
-		display: 'flex',
 		overflow: 'auto',
+		gap: 0,
 		_before: {
 			content: '""',
 			position: 'sticky',
@@ -106,8 +109,8 @@ export const SplitPdfRanges = () => {
 	};
 
 	return (
-		<Stack flex={1} overflow="auto">
-			<RangesList paddingInline={12} hasRanges={ranges.length > 0}>
+		<Stack flex={1} overflow="hidden">
+			<RangesList hasRanges={ranges.length > 0}>
 				{ranges.map((range, index) => {
 					const fromValue = range.from + 1;
 					const toValue = range.to + 1;
@@ -150,8 +153,11 @@ export const SplitPdfRanges = () => {
 					);
 				})}
 			</RangesList>
-			<Stack width="100%" paddingInline={12}>
-				<Button variant="secondary" onPress={addRange}>
+			<Stack width="100%" paddingInline={{ base: 6, sm: 8, lg: 12 }}>
+				<Button
+					variant="secondary"
+					onPress={addRange}
+					className={css({ _focusVisible: { outline: 'none !important', boxShadow: 'none !important' } })}>
 					<PlusIcon />
 					{splitPdf.sidebar.actions.addRange}
 				</Button>

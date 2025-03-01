@@ -10,6 +10,7 @@ import { SplitFile, useSplitPdfStore } from 'modules/pdf-split/store/SplitPdfSto
 
 import { Cutter } from './splitPdfFilePreview/Cutter';
 
+// TODO: Review why the app compile thousands of modules and IDE is very slow
 // TODO: Use more powerful decrypt pdf library
 // TODO: Add preview image globally
 // TODO: Add rotate, delete page
@@ -22,10 +23,7 @@ const FilePreviewList = styled('div', {
 			base: 0,
 			md: 6
 		},
-		flexDirection: {
-			base: 'column',
-			md: 'row'
-		},
+		flexDirection: 'row',
 		marginInline: 'auto',
 		flexWrap: 'wrap',
 		justifyContent: 'flex-start',
@@ -48,11 +46,14 @@ const SplitContainer = styled('div', {
 		flexDirection: {
 			base: 'column',
 			md: 'row'
+		},
+		width: {
+			base: '100%',
+			md: 'unset'
 		}
 	}
 });
 
-// TODO: Add mobile responsive
 const rangeFocus = sva({
 	slots: ['thumbnail', 'cutter'],
 	base: {
@@ -62,8 +63,15 @@ const rangeFocus = sva({
 		},
 		cutter: {
 			_after: {
-				borderBlockWidth: '2px',
-				borderBlockColor: 'transparent'
+				borderBlockWidth: {
+					base: 0,
+					md: '2px'
+				},
+				borderInlineWidth: {
+					base: '2px',
+					md: 0
+				},
+				borderColor: 'transparent'
 			}
 		}
 	},
@@ -71,11 +79,41 @@ const rangeFocus = sva({
 		isFocused: {
 			true: {
 				thumbnail: {
-					borderBlockColor: 'primary !important'
+					borderTopColor: {
+						base: 'transparent',
+						md: 'primary'
+					},
+					borderBottomColor: {
+						base: 'transparent',
+						md: 'primary'
+					},
+					borderLeftColor: {
+						base: 'primary',
+						md: 'transparent'
+					},
+					borderRightColor: {
+						base: 'primary',
+						md: 'transparent'
+					}
 				},
 				cutter: {
 					_after: {
-						borderColor: 'primary'
+						borderLeftColor: {
+							base: 'primary',
+							md: 'transparent'
+						},
+						borderRightColor: {
+							base: 'primary',
+							md: 'transparent'
+						},
+						borderTopColor: {
+							base: 'transparent',
+							md: 'primary'
+						},
+						borderBottomColor: {
+							base: 'transparent',
+							md: 'primary'
+						}
 					}
 				}
 			}
@@ -93,9 +131,16 @@ const rangeFocus = sva({
 			isStartOfRange: true,
 			css: {
 				thumbnail: {
-					borderLeftWidth: '2px',
 					borderLeftColor: 'primary',
-					borderRightRadius: 0
+					borderTopColor: 'primary',
+					borderRightRadius: {
+						base: 'md',
+						md: 0
+					},
+					borderBottomRadius: {
+						base: 0,
+						md: 'md'
+					}
 				}
 			}
 		},
@@ -104,9 +149,16 @@ const rangeFocus = sva({
 			isEndOfRange: true,
 			css: {
 				thumbnail: {
-					borderRightWidth: '2px',
 					borderRightColor: 'primary',
-					borderLeftRadius: 0
+					borderBottomColor: 'primary',
+					borderLeftRadius: {
+						base: 'md',
+						md: 0
+					},
+					borderTopRadius: {
+						base: 0,
+						md: 'md'
+					}
 				},
 				cutter: {
 					_after: {

@@ -86,7 +86,9 @@ const es: Locales = {
 				decryptionError:
 					'El pdf no pudo ser desencriptado, puede que esté corrupto o el  tipo de encriptación no esté soportado'
 			}
-		}
+		},
+		openPanel: 'Abrir panel de configuración',
+		closePanel: 'Cerrar panel de configuración'
 	},
 	components: {
 		viewer: {

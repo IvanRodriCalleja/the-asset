@@ -8,7 +8,6 @@ import { Flex } from '@theasset/style-system/jsx';
 
 import { InnerScrollSection } from 'modules/shared/ui/InnerScrollSection';
 
-import { MergePdfResultConfig } from './mergePdfResult/MergePdfResultConfig';
 import { MergePdfResultFileContainer } from './mergePdfResult/MergePdfResultFileContainer';
 import { MergePdfResultSidebar } from './mergePdfResult/MergePdfResultSidebar';
 import { MergePdfResultSkeleton } from './mergePdfResult/MergePdfResultSkeleton';
@@ -31,9 +30,7 @@ export const MergePdfResult = ({ file }: MergePdfResultProps) => {
 					</Suspense>
 				</MergePdfResultFileContainer>
 
-				<MergePdfResultSidebar isOpen={isOpen}>
-					<MergePdfResultConfig file={file} isOpen={isOpen} toggleOpen={toggleOpen} />
-				</MergePdfResultSidebar>
+				<MergePdfResultSidebar file={file} />
 			</Flex>
 		</InnerScrollSection>
 	);
