@@ -22,7 +22,6 @@ use crate::{
 };
 use pdfium_render::prelude::PdfPageIndex;
 use pdfium_render::prelude::*;
-use rayon::range;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
@@ -51,6 +50,28 @@ impl PdfTools {
       .iter_mut()
       .find(|f| f.id == id)
       .ok_or_else(|| return PdfToolsError::new(PdfToolsErrorCodes::FileNotFound).into())
+  }
+
+  pub fn get_file_buffer(&self, id: u16) -> Result<Vec<u8>, JsValue> {
+    let file = self.find_file(id)?;
+
+    Ok(file.buffer.clone())
+  }
+
+  pub fn replace_file(&mut self, id: u16, buffer: Vec<u8>) -> Result<AddFileResult, JsValue> {
+    self.files.retain(|f| f.id != id);
+
+    let hash = get_buffer_hash(&buffer);
+
+    let file = TheAssetFile {
+      id: id,
+      hash: hash.clone(),
+      buffer: buffer,
+    };
+
+    self.files.push(file);
+
+    Ok(AddFileResult::new(id, hash))
   }
 
   pub fn add_file(&mut self, file: AddFileInput) {

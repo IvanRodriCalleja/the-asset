@@ -29,6 +29,8 @@ export function thumbnailresult_rotation(a: number): number;
 export function decrypt_pdf(a: number, b: number, c: number, d: number, e: number): void;
 export function __wbg_pdftools_free(a: number, b: number): void;
 export function pdftools_new(): number;
+export function pdftools_get_file_buffer(a: number, b: number, c: number): void;
+export function pdftools_replace_file(a: number, b: number, c: number, d: number, e: number): void;
 export function pdftools_add_file(a: number, b: number): void;
 export function pdftools_add_file_as_page(a: number, b: number, c: number): void;
 export function pdftools_get_thumbnail(a: number, b: number, c: number, d: number): void;

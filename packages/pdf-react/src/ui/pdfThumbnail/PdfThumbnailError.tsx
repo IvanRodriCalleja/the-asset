@@ -48,12 +48,12 @@ export const PdfThumbnailError = <T extends FileState>({
 	}, []);
 
 	const onUnlockPdf = async (fileState: UpdatedFileState) => {
-		await startTransition(() =>
+		await startTransition(() => {
 			onFileChange(file.id, {
 				...file,
 				...fileState
-			})
-		);
+			});
+		});
 		resetErrorBoundary();
 	};
 

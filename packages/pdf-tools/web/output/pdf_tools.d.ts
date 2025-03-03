@@ -41,6 +41,12 @@ export function read_block_from_callback_wasm(param: number, position: number, p
 export function write_block_from_callback_wasm(param: number, buf: number, size: number): number;
 /**
 */
+export enum Direction {
+  Left = 0,
+  Right = 1,
+}
+/**
+*/
 export enum PdfToolsErrorCodes {
   Unknown = 0,
   PasswordError = 1,
@@ -49,12 +55,6 @@ export enum PdfToolsErrorCodes {
   DecryptionError = 4,
   MalformedPdf = 5,
   FileNotFound = 6,
-}
-/**
-*/
-export enum Direction {
-  Left = 0,
-  Right = 1,
 }
 /**
 * Chroma subsampling format
@@ -164,6 +164,17 @@ export class PdfTools {
 /**
 */
   constructor();
+/**
+* @param {number} id
+* @returns {Uint8Array}
+*/
+  get_file_buffer(id: number): Uint8Array;
+/**
+* @param {number} id
+* @param {Uint8Array} buffer
+* @returns {AddFileResult}
+*/
+  replace_file(id: number, buffer: Uint8Array): AddFileResult;
 /**
 * @param {AddFileInput} file
 */
@@ -303,6 +314,8 @@ export interface InitOutput {
   readonly decrypt_pdf: (a: number, b: number, c: number, d: number, e: number) => void;
   readonly __wbg_pdftools_free: (a: number, b: number) => void;
   readonly pdftools_new: () => number;
+  readonly pdftools_get_file_buffer: (a: number, b: number, c: number) => void;
+  readonly pdftools_replace_file: (a: number, b: number, c: number, d: number, e: number) => void;
   readonly pdftools_add_file: (a: number, b: number) => void;
   readonly pdftools_add_file_as_page: (a: number, b: number, c: number) => void;
   readonly pdftools_get_thumbnail: (a: number, b: number, c: number, d: number) => void;

@@ -41,4 +41,10 @@ export class PdfToolsError extends Error {
 	}
 }
 
+export class DecryptError extends Error {
+	constructor() {
+		super('File encrypted with password');
+	}
+}
+
 export { type PdfToolsImpl } from './worker';

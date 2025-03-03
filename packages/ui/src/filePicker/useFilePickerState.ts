@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { useThePdfTools } from '@theasset/pdf-react/context/the-pdf-actions-context';
-import { FileState } from '@theasset/pdf-tools';
+import { type FileState } from '@theasset/pdf-tools';
 
 export const useFilePickerState = () => {
 	const [files, setFiles] = useState<FileState[]>([]);

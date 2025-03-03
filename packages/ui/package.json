@@ -68,7 +68,7 @@
     "@react-stately/toast": "3.0.0-nightly-d87cc4422-250109",
     "@react-types/shared": "3.0.0-nightly-d87cc4422-250109",
     "@theasset/cache": "*",
-    "react": "19.0.0-rc-1631855f-20241023",
+    "react": "19.0.0",
     "react-aria-components": "3.0.0-nightly-d87cc4422-250109",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.53.0"

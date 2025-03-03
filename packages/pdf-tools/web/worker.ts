@@ -5,6 +5,7 @@ import {
 	AddFileInput,
 	PdfToolsError as PdfError,
 	PdfPagesRange,
+	PdfToolsErrorCodes,
 	PdfTools as PdfToolsWasm
 } from './output/pdf_tools';
 import {
@@ -218,19 +219,30 @@ class PdfTools {
 			await this.addingPromises.get(id);
 		}
 
+		const { decryptPdf, fromMemory, toMemory } = await import(
+			'coherentpdf/dist/coherentpdf.browser.min.js'
+		);
+
+		const buffer = await this.mergeToolManager.get_file_buffer(id);
+
 		try {
-			const result = this.mergeToolManager.decrypt_pdf(id, password);
+			const arr = new Uint8Array(buffer);
+
+			const pdf = fromMemory(arr, password);
+
+			decryptPdf(pdf, password);
+
+			const newBuffer = toMemory(pdf, false, false);
+
+			const result = this.mergeToolManager.replace_file(id, newBuffer);
 
 			return {
 				hash: result.hash,
-				id,
-				isEncrypted: false
+				id: result.id
 			};
 		} catch (error) {
-			const pdfError = error as PdfError;
-
 			const errorCode: ErrorCode = {
-				code: pdfError.code
+				code: PdfToolsErrorCodes.WrongPassword
 			};
 
 			throw errorCode;

@@ -325,10 +325,10 @@ export function write_block_from_callback_wasm(param, buf, size) {
 
 /**
 */
-export const PdfToolsErrorCodes = Object.freeze({ Unknown:0,"0":"Unknown",PasswordError:1,"1":"PasswordError",LoadError:2,"2":"LoadError",WrongPassword:3,"3":"WrongPassword",DecryptionError:4,"4":"DecryptionError",MalformedPdf:5,"5":"MalformedPdf",FileNotFound:6,"6":"FileNotFound", });
+export const Direction = Object.freeze({ Left:0,"0":"Left",Right:1,"1":"Right", });
 /**
 */
-export const Direction = Object.freeze({ Left:0,"0":"Left",Right:1,"1":"Right", });
+export const PdfToolsErrorCodes = Object.freeze({ Unknown:0,"0":"Unknown",PasswordError:1,"1":"PasswordError",LoadError:2,"2":"LoadError",WrongPassword:3,"3":"WrongPassword",DecryptionError:4,"4":"DecryptionError",MalformedPdf:5,"5":"MalformedPdf",FileNotFound:6,"6":"FileNotFound", });
 /**
 * Chroma subsampling format
 */
@@ -703,6 +703,50 @@ export class PdfTools {
         this.__wbg_ptr = ret >>> 0;
         PdfToolsFinalization.register(this, this.__wbg_ptr, this);
         return this;
+    }
+    /**
+    * @param {number} id
+    * @returns {Uint8Array}
+    */
+    get_file_buffer(id) {
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            wasm.pdftools_get_file_buffer(retptr, this.__wbg_ptr, id);
+            var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+            var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+            var r2 = getDataViewMemory0().getInt32(retptr + 4 * 2, true);
+            var r3 = getDataViewMemory0().getInt32(retptr + 4 * 3, true);
+            if (r3) {
+                throw takeObject(r2);
+            }
+            var v1 = getArrayU8FromWasm0(r0, r1).slice();
+            wasm.__wbindgen_export_2(r0, r1 * 1, 1);
+            return v1;
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
+    }
+    /**
+    * @param {number} id
+    * @param {Uint8Array} buffer
+    * @returns {AddFileResult}
+    */
+    replace_file(id, buffer) {
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            const ptr0 = passArray8ToWasm0(buffer, wasm.__wbindgen_export_0);
+            const len0 = WASM_VECTOR_LEN;
+            wasm.pdftools_replace_file(retptr, this.__wbg_ptr, id, ptr0, len0);
+            var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+            var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+            var r2 = getDataViewMemory0().getInt32(retptr + 4 * 2, true);
+            if (r2) {
+                throw takeObject(r1);
+            }
+            return AddFileResult.__wrap(r0);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+        }
     }
     /**
     * @param {AddFileInput} file

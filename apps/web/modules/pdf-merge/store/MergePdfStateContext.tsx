@@ -42,6 +42,7 @@ export const MergePdfStateProvider = ({ children }: PropsWithChildren) => {
 
 	const onFileChange = (id: number, newFile: FileState) => {
 		setFiles(files => {
+			debugger;
 			const fileIndex = files.findIndex(file => id === file.id);
 
 			const newFiles = [...files];

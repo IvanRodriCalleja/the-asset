@@ -24,6 +24,7 @@
     "@types/node": "^22.5.5"
   },
   "dependencies": {
-    "@theasset/utilities": "*"
+    "@theasset/utilities": "*",
+    "coherentpdf": "^2.5.5"
   }
 }
