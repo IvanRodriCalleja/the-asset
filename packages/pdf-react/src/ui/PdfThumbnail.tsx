@@ -29,10 +29,12 @@ export const PdfThumbnail = <T extends FileState>(
 	props: PdfThumbnailProps<T> & Thumbnail.RootVariants
 ) => {
 	return (
-		<ErrorBoundary
-			fallbackRender={fallbackProps => <PdfThumbnailError {...fallbackProps} {...props} />}>
-			<PdfThumbnailDetail {...props} />
-		</ErrorBoundary>
+		<Thumbnail.Suspense fallback={<PdfThumbnailSkeleton {...props} />}>
+			<ErrorBoundary
+				fallbackRender={fallbackProps => <PdfThumbnailError {...fallbackProps} {...props} />}>
+				<PdfThumbnailDetail {...props} />
+			</ErrorBoundary>
+		</Thumbnail.Suspense>
 	);
 };
 
