@@ -56,6 +56,8 @@ const es: Locales = {
 		},
 		sidebar: {
 			title: 'Separa las páginas en rangos',
+			splitInEqualRanges: 'Divide en rangos iguales',
+			of: 'de',
 			actions: {
 				split: 'Divide PDFs',
 				addRange: 'Añadir rango'

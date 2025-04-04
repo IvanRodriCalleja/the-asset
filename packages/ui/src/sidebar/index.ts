@@ -4,5 +4,5 @@ export { Body } from './Body';
 export { Content } from './Content';
 export { Title } from './Title';
 export { SubTitle } from './SubTitle';
-export { Separator } from './Separator'
+export { Separator } from './Separator';
 export { ActionWithConfigButton } from './ActionWithConfigButton';

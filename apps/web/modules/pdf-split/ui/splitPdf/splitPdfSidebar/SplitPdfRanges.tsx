@@ -157,7 +157,9 @@ export const SplitPdfRanges = () => {
 				<Button
 					variant="secondary"
 					onPress={addRange}
-					className={css({ _focusVisible: { outline: 'none !important', boxShadow: 'none !important' } })}>
+					className={css({
+						_focusVisible: { outline: 'none !important', boxShadow: 'none !important' }
+					})}>
 					<PlusIcon />
 					{splitPdf.sidebar.actions.addRange}
 				</Button>

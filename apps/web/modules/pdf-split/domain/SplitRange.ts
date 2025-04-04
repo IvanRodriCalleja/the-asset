@@ -201,3 +201,25 @@ export const changeRangeTo = (
 		to: i === index ? value : range.to
 	}));
 };
+
+export const splitInEqualRanges = (totalPages: number, splitAfterNPages: number): SplitRange[] => {
+	const totalRanges = Math.ceil(totalPages / splitAfterNPages);
+
+	const ranges = [...Array(totalRanges)].map((_, i) => {
+		const from = i * splitAfterNPages;
+		const to = Math.min(from + splitAfterNPages - 1, totalPages - 1);
+
+		rangeId++;
+		return {
+			id: rangeId,
+			from,
+			to,
+			name: `range ${rangeId}.pdf`,
+			isFocused: false
+		} as SplitRange;
+	});
+
+	rangeId++;
+
+	return ranges;
+};

@@ -1,6 +1,7 @@
+import { cva } from '@theasset/style-system/css';
 import { styled } from '@theasset/style-system/jsx';
 
-export const Label = styled('label', {
+export const labelRecipe = cva({
 	base: {
 		textStyle: 'sm',
 		leading: 'none',
@@ -12,3 +13,5 @@ export const Label = styled('label', {
 		}
 	}
 });
+
+export const Label = styled('label', labelRecipe);

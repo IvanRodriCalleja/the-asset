@@ -2,6 +2,7 @@ import { useLocale } from '@theasset/internationalization/hooks/use-locale';
 import { Sidebar } from '@theasset/ui/sidebar';
 
 import { SplitPdfActions } from './splitPdfSidebar/SplitPdfActions';
+import { SplitPdfEqualRanges } from './splitPdfSidebar/SplitPdfEqualRanges';
 import { SplitPdfRanges } from './splitPdfSidebar/SplitPdfRanges';
 
 export const SplitPdfSidebar = () => {
@@ -12,6 +13,7 @@ export const SplitPdfSidebar = () => {
 			<Sidebar.Body>
 				<Sidebar.Title>{splitPdf.sidebar.title}</Sidebar.Title>
 				<Sidebar.Content variant="full">
+					<SplitPdfEqualRanges />
 					<SplitPdfRanges />
 				</Sidebar.Content>
 			</Sidebar.Body>
