@@ -29,6 +29,7 @@ const numberInput = sva({
 			rounded: 'md',
 			border: 'input',
 			background: 'white',
+			width: '100%',
 			_focusWithin: {
 				borderColor: 'primary',
 				boxShadow: '0 0 0 1px var(--shadow-color)',
@@ -50,7 +51,10 @@ const numberInput = sva({
 			borderRightWidth: '1px',
 			borderRightStyle: 'solid',
 			paddingInline: 4,
-			textStyle: 'sm'
+			textStyle: 'sm',
+			'&:last-child': {
+				borderRightWidth: 0
+			}
 		},
 		input: {
 			height: 'calc(var(--input-height) - 2px)',
@@ -73,11 +77,29 @@ const numberInput = sva({
 			'&:first-child': {
 				borderBottomColor: 'input',
 				borderBottomStyle: 'solid',
-				borderBottomWidth: '1px',
-				borderTopRightRadius: 'md !important'
+				borderBottomWidth: '1px'
+			}
+		}
+	},
+	variants: {
+		isLeadEnd: {
+			true: {
+				button: {
+					borderRadiusRight: '0 !important',
+					borderRightColor: 'input',
+					borderRightWidth: '1px',
+					borderRightStyle: 'solid'
+				}
 			},
-			'&:last-child': {
-				borderBottomRightRadius: 'md !important'
+			false: {
+				button: {
+					'&:first-child': {
+						borderTopRightRadius: 'md !important'
+					},
+					'&:last-child': {
+						borderBottomRightRadius: 'md !important'
+					}
+				}
 			}
 		}
 	}
@@ -90,11 +112,13 @@ export type NumberProps = AriaNumberFieldProps &
 		ref?: Ref<HTMLInputElement>;
 		hasControls?: boolean;
 		lead?: string;
+		leadEnd?: string;
 	};
 
 export const Number = (props: NumberProps) => {
 	const { hasControls = true } = props;
-	const styles = numberInput({});
+	const isLeadEnd = !!props.leadEnd && props.leadEnd.length > 0;
+	const styles = numberInput({ isLeadEnd });
 
 	return (
 		<NumberField {...props} className={styles.root}>
@@ -111,6 +135,7 @@ export const Number = (props: NumberProps) => {
 						</NumberIconButton>
 					</VStack>
 				)}
+				{props.leadEnd && <div className={styles.lead}>{props.leadEnd}</div>}
 			</Group>
 		</NumberField>
 	);

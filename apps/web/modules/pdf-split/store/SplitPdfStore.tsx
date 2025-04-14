@@ -10,7 +10,8 @@ import {
 	addRange,
 	changeRangeFrom,
 	changeRangeTo,
-	removeRangeByIndex
+	removeRangeByIndex,
+	splitInEqualRanges
 } from '../domain/SplitRange';
 
 type SplitFileMetadata = {
@@ -35,6 +36,7 @@ type SplitPdfState = {
 	onRemoveRange: (index: number) => void;
 	onRenameRange: (index: number, name: string) => void;
 	onAddRange: () => void;
+	onSplitInEqualRanges: (splitAfterNPages: number) => void;
 };
 
 const SplitPdfStateContext = createContext<SplitPdfState>({
@@ -75,6 +77,9 @@ const SplitPdfStateContext = createContext<SplitPdfState>({
 		throw new Error('No SplitPdfStateContext provided');
 	},
 	onAddRange: () => {
+		throw new Error('No SplitPdfStateContext provided');
+	},
+	onSplitInEqualRanges: () => {
 		throw new Error('No SplitPdfStateContext provided');
 	}
 });
@@ -168,6 +173,12 @@ export const SplitPdfStore = ({ children }: PropsWithChildren) => {
 		});
 	};
 
+	const onSplitInEqualRanges = (splitAfterNPages: number) => {
+		debugger;
+		const newRanges = splitInEqualRanges(files.length, splitAfterNPages);
+		setRange(newRanges);
+	};
+
 	const hasFiles = files.length > 0;
 
 	return (
@@ -187,7 +198,8 @@ export const SplitPdfStore = ({ children }: PropsWithChildren) => {
 				onRangeToChange,
 				onRemoveRange,
 				onRenameRange,
-				onAddRange
+				onAddRange,
+				onSplitInEqualRanges
 			}}>
 			{children}
 		</SplitPdfStateContext>

@@ -27,6 +27,7 @@
 
     "./form": "./src/Form.tsx",
     "./inputs/number": "./src/inputs/Number.tsx",
+    "./inputs/checkbox": "./src/inputs/Checkbox.tsx",
     "./inputs/password": "./src/inputs/Password.tsx",
     "./inputs/text": "./src/inputs/Text.tsx",
     "./fields/text": "./src/fields/FieldText.tsx",

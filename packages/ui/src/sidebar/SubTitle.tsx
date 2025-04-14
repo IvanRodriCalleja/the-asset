@@ -10,7 +10,7 @@ const SubTitleText = styled(Text, {
 			base: 6,
 			sm: 8,
 			lg: 12
-		},
+		}
 	}
 });
 

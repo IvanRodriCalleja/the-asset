@@ -52,6 +52,8 @@ const en = {
 		},
 		sidebar: {
 			title: 'Split pages in ranges',
+			splitInEqualRanges: 'Split in equal ranges',
+			of: 'of',
 			actions: {
 				split: 'Split PDFs',
 				addRange: 'Add range'
