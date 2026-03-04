@@ -54,15 +54,15 @@ const RootLayout = async ({ children, params }: PropsWithChildren<LocaleParam>) 
 	return (
 		<html lang={lang} className={`${GeistSans.variable} ${GeistMono.variable}`}>
 			<head>
-				  {(process.env.NODE_ENV === "development" || process.env.VERCEL_ENV === "preview") && (
-				    // eslint-disable-next-line @next/next/no-sync-scripts
-				    <script
-				      data-recording-token="1cPyauaMQ21pTsN5Gz8nbgM2FBzttDoREYEn2sWP"
-				      data-is-production-environment="false"
-				      src="https://snippet.meticulous.ai/v1/meticulous.js"
-				    />
-				  )}
-				</head>
+				{(process.env.NODE_ENV === "development" || process.env.VERCEL_ENV === "preview") && (
+						// eslint-disable-next-line @next/next/no-sync-scripts
+						<script
+							data-recording-token="1cPyauaMQ21pTsN5Gz8nbgM2FBzttDoREYEn2sWP"
+							data-is-production-environment="false"
+							src="https://snippet.meticulous.ai/v1/meticulous.js"
+						/>
+					)}
+			</head>
 			<I18nProvider locales={locales} currentLanguage={lang}>
 				<body>
 					{children}
